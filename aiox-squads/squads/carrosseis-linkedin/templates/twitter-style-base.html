@@ -1,0 +1,192 @@
+<!--
+  Template Base: Twitter-Style — Carrosséis LinkedIn
+  Squad: carrosseis-linkedin
+  Viewport: 1080 x 1350 (4:5, otimizado para feed LinkedIn)
+  
+  INSTRUÇÕES PARA O DESIGNER (Denis Design):
+  1. Use este template como BASE — personalize para cada carrossel
+  2. Slide 1: inclua print de autoridade como hook visual
+  3. Slides seguintes: foco em texto/ensinamento (sem print)
+  4. Último slide: CTA claro
+  5. HTML self-contained (sem dependências externas exceto Google Fonts)
+  6. Renderizar via Playwright para PNG
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #1A1A2E;
+      color: #FFFFFF;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: 1080px;
+      height: 1350px;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* ── Header: Perfil ── */
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .profile-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-name {
+      font-size: 28px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .profile-handle {
+      font-size: 22px;
+      font-weight: 400;
+      color: #8B8B8B;
+    }
+
+    /* ── Conteúdo ── */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 32px;
+    }
+
+    .hero-text {
+      font-size: 58px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: #FFFFFF;
+    }
+
+    .body-text {
+      font-size: 38px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: #E0E0E0;
+    }
+
+    .highlight {
+      color: #14B8A6;
+      font-weight: 700;
+    }
+
+    /* ── Print de Autoridade (Slide 1) ── */
+    .authority-print {
+      background: #27293D;
+      border-radius: 0px;
+      padding: 32px;
+      border: 1px solid #3F3F5C;
+    }
+
+    .authority-print img {
+      width: 100%;
+      border-radius: 0px;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .slide-number {
+      font-size: 24px;
+      font-weight: 500;
+      color: #555555;
+    }
+
+    .swipe-hint {
+      font-size: 22px;
+      font-weight: 500;
+      color: #64748B;
+    }
+
+    /* ── CTA (Último Slide) ── */
+    .cta-container {
+      text-align: center;
+    }
+
+    .cta-text {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 40px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: #14B8A6;
+      color: #1A1A2E;
+      font-size: 32px;
+      font-weight: 700;
+      padding: 20px 48px;
+      border-radius: 50px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- ═══════════════════════════════════════════
+       SLIDE 1: Hook + Print de Autoridade
+       ═══════════════════════════════════════════ -->
+  <div class="slide">
+    <div class="profile">
+      <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1 class="hero-text">
+        <!-- HOOK: max 210 chars -->
+        Seu texto de hook vai aqui.
+        <span class="highlight">Destaque</span> em amarelo.
+      </h1>
+
+      <div class="authority-print">
+        <!-- Print de autoridade: screenshot de post/notícia -->
+        <img src="[URL_DO_PRINT]" alt="Print de autoridade">
+      </div>
+    </div>
+
+    <div class="footer">
+      <span class="slide-number">1/[N]</span>
+      <span class="swipe-hint">Deslize →</span>
+    </div>
+  </div>
+</body>
+</html>

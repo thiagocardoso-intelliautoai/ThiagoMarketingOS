@@ -1,0 +1,176 @@
+<!--
+  Template: Pessoa + Texto — Capas LinkedIn/Instagram
+  Squad: capas-linkedin
+  Viewport: 1080 x 1350 (4:5, otimizado para feed)
+  
+  INSTRUÇÕES PARA O DESIGNER (Dani Design):
+  1. Use este template como BASE — personalize para cada capa
+  2. Substituir [URL_SUPABASE] com URL pública retornada por:
+     node shared/scripts/list-source-photos-cli.js --category photos
+     Source of truth: Supabase. Fallback: assets/photos/ local.
+  3. Ajustar overlay gradient conforme luminosidade da foto
+  4. Posicionar texto no terço superior ou inferior
+  5. Max 3-7 palavras sobre a foto
+  6. HTML self-contained (sem dependências externas exceto Google Fonts)
+  7. Renderizar via Playwright para PNG (1080x1350)
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Montserrat', sans-serif;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      position: relative;
+    }
+
+    /* ── Background: Foto ── */
+    .bg-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    /* ── Overlay de Contraste ── */
+    .overlay {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.15) 0%,
+        rgba(0, 0, 0, 0.30) 30%,
+        rgba(0, 0, 0, 0.65) 70%,
+        rgba(0, 0, 0, 0.88) 100%
+      );
+    }
+
+    /* ── Conteúdo sobre a foto ── */
+    .content-wrapper {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      padding: 60px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    /* ── Texto principal ── */
+    .hero-text {
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: #FFFFFF;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+
+    .highlight {
+      color: #4FC3F7;
+      font-weight: 800;
+    }
+
+    /* ── Linha de acento ── */
+    .accent-line {
+      width: 64px;
+      height: 4px;
+      background: #4FC3F7;
+      border-radius: 2px;
+      margin-bottom: 32px;
+    }
+
+    /* ── Marca ── */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .brand-photo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-size: 22px;
+      font-weight: 600;
+      color: #FFFFFF;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand-handle {
+      font-size: 17px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <!-- Foto de fundo (URL Supabase via list-source-photos-cli.js --category photos) -->
+    <!-- Source of truth: Supabase. Fallback: assets/photos/[FOTO] -->
+    <img class="bg-photo" src="[URL_SUPABASE]" alt="Foto de contexto">
+    
+    <!-- Overlay de contraste -->
+    <div class="overlay"></div>
+
+    <!-- Conteúdo sobre a foto -->
+    <div class="content-wrapper">
+      <div class="brand">
+        <!-- Profile photo: URL Supabase. Fallback: profile-photo.png local -->
+        <img class="brand-photo" src="[URL_SUPABASE_PROFILE]" alt="Thiago C.Lima">
+        <div class="brand-info">
+          <span class="brand-name">Thiago C.Lima</span>
+          <span class="brand-handle">@othiago-clima</span>
+        </div>
+      </div>
+
+      <div class="accent-line"></div>
+
+      <h1 class="hero-text">
+        <!-- FRASE: max 3-7 palavras -->
+        IA não substitui
+        <span class="highlight">processo.</span>
+      </h1>
+    </div>
+  </div>
+</body>
+</html>

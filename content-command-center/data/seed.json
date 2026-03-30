@@ -1,0 +1,128 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-03-28T13:24:00-03:00",
+  "posts": [
+    {
+      "id": "post-003",
+      "title": "Automação sem redesenho é bagunça mais rápida",
+      "theme": "Por que 95% dos pilotos de IA em vendas falham — e como evitar",
+      "pillar": "C",
+      "pillarLabel": "Credibilidade",
+      "hookText": "95% dos pilotos de IA em vendas falham.\nNão pela tecnologia. Pelo processo que já não funcionava antes.",
+      "hookStructure": "Dado Chocante (#6)",
+      "framework": "PAS",
+      "body": "95% dos pilotos de IA em vendas falham.\n\nNão pela tecnologia. Pelo processo que já não funcionava antes.\n\nA empresa compra a ferramenta. Pluga no CRM do jeito que tá. Espera 3 meses.\n\nNada muda.\n\nUm levantamento de 2026 mostrou que 63% dessas falhas vêm do mesmo erro: tentar automatizar um processo quebrado. Chamam de \"integration fallacy\" — a ilusão de que plugar IA resolve o que o processo não resolveu.\n\nNo Brasil, segundo a Exame, 72% das empresas ainda tão no estágio experimental com IA. E quase metade dos profissionais usa ferramentas por conta própria, sem a empresa nem saber.\n\nO gargalo não é a IA. É o processo que você quer automatizar.\n\nAntes de plugar qualquer ferramenta, pergunta:\n\n→ O processo funciona bem no manual?\n→ O time sabe por que faz cada etapa?\n→ Os dados do CRM tão limpos?\n\nSe a resposta é \"não\" pra qualquer uma dessas, redesenha antes. Automatiza depois.",
+      "cta": "E no teu time — plugou ou redesenhou primeiro?",
+      "hashtags": ["#VendasB2B", "#IAemVendas", "#ProcessoDeVendas"],
+      "sources": ["Análise enterprise 2026 (integration fallacy)", "Exame Brasil (72% estágio experimental)"],
+      "reviewScore": 95,
+      "status": "aprovado",
+      "urgency": "urgente",
+      "createdAt": "2026-03-28T13:24:00-03:00",
+      "publishedAt": null,
+      "derivations": {
+        "carousel": null,
+        "cover": null
+      }
+    },
+    {
+      "id": "post-004",
+      "title": "AI SDR vs. AI Coach — substituir ou empoderar?",
+      "theme": "A diferença entre substituir vendedores por IA e usar IA pra potencializar o time",
+      "pillar": "R",
+      "pillarLabel": "Retorno",
+      "hookText": "Tem empresa substituindo SDR por IA.\nTem empresa usando IA pra fazer cada SDR valer por 3.\nSó uma dessas tá funcionando.",
+      "hookStructure": "Contraste (#8)",
+      "framework": "Contraste",
+      "body": "Tem empresa substituindo SDR por IA.\n\nTem empresa usando IA pra fazer cada SDR valer por 3.\n\nSó uma dessas tá funcionando.\n\nA primeira manda 10.000 emails genéricos por semana. Volume alto. Conversão baixa. Resposta do prospect: silêncio.\n\nA segunda usa IA pra pesquisar o lead, personalizar a abordagem e priorizar quem tá mostrando sinais de compra.\n\nSegundo a McKinsey, times que usam IA em vendas fecham 35% mais deals. Com o mesmo time.\n\nA diferença? Uma trata IA como substituto. A outra trata como copiloto.\n\nAinda segundo a McKinsey, 80% dos times de vendas nem começaram a usar IA de verdade. E a Autobound mostrou que quem começou pelo caminho errado — spray-and-pray automatizado — tá criando um cemitério de emails que ninguém lê.\n\nO gargalo não é ter IA.\n\nÉ saber se ela tá substituindo ou empoderando seu time.",
+      "cta": "No teu time: a IA tá substituindo gente ou fazendo cada um render mais?",
+      "hashtags": ["#VendasB2B", "#IAemVendas", "#SDR"],
+      "sources": ["McKinsey (35% mais deals / 80% nem começaram)", "Autobound (signal-based selling)"],
+      "reviewScore": 97,
+      "status": "aprovado",
+      "urgency": "urgente",
+      "createdAt": "2026-03-28T13:24:00-03:00",
+      "publishedAt": null,
+      "derivations": {
+        "carousel": null,
+        "cover": null
+      }
+    },
+    {
+      "id": "post-005",
+      "title": "Playbook de vendas tem prazo de validade",
+      "theme": "Por que playbooks estáticos viram shelfware e como montar um sistema vivo",
+      "pillar": "C",
+      "pillarLabel": "Credibilidade",
+      "hookText": "Confissão: o playbook que eu montei pro meu time durou 4 meses.\nDepois disso, tava atrapalhando mais do que ajudando.",
+      "hookStructure": "Confissão Profissional (#9)",
+      "framework": "Storytelling",
+      "body": "Confissão: o playbook que eu montei pro meu time durou 4 meses.\n\nDepois disso, tava atrapalhando mais do que ajudando.\n\nO messaging não batia mais com o que o mercado tava pedindo. O time parou de consultar. Os deals começaram a travar no meio do funil.\n\nO problema não era o playbook. Era tratar ele como documento em vez de sistema.\n\nA Sandler Training fala que playbooks top-down — gestor monta, time apenas segue — têm adoção baixíssima. A Forbes foi mais direta: chamou de \"shelfware\" — aquele PDF que fica na pasta e ninguém abre.\n\nPlaybook bom tem data de validade.\n\nSe o teu não se adapta todo mês, ele fica desatualizado todo trimestre.\n\n3 sinais de que o seu venceu:\n\n→ Reps dão respostas diferentes pra mesma objeção\n→ Deals travam sempre no mesmo estágio\n→ Ninguém abre o arquivo faz mais de 30 dias\n\nHoje a gente trata o playbook como sistema vivo. Review mensal com input do time de campo. Integrado no CRM — não numa pasta que ninguém acha.",
+      "cta": "Quando foi a última vez que você atualizou o playbook do teu time?",
+      "hashtags": ["#VendasB2B", "#GestãoDeVendas", "#Playbook"],
+      "sources": ["Sandler Training (adoção top-down)", "Forbes (shelfware)"],
+      "reviewScore": 94,
+      "status": "aprovado",
+      "urgency": "urgente",
+      "createdAt": "2026-03-28T13:24:00-03:00",
+      "publishedAt": null,
+      "derivations": {
+        "carousel": null,
+        "cover": null
+      }
+    },
+    {
+      "id": "post-001",
+      "title": "Sua empresa depende da marca de UMA pessoa?",
+      "theme": "O risco do founder-dependent brand em vendas B2B",
+      "pillar": "E",
+      "pillarLabel": "Engajamento",
+      "hookText": "Pare de construir marca pessoal achando que está construindo marca da empresa.\n\nUma é ativo seu. A outra é ativo do negócio.",
+      "hookStructure": "Pare de... (#5)",
+      "framework": "PAS",
+      "body": "Pare de construir marca pessoal achando que está construindo marca da empresa.\n\nUma é ativo seu. A outra é ativo do negócio.\n\nA G4 Educação era indissociável do fundador.\n\nPipeline, posicionamento, credibilidade — tudo passava por uma pessoa.\n\nQuando o fundador tropeçou, a marca tropeçou junto.\n\nNo B2B brasileiro, isso é padrão:\n\n→ O fundador é o LinkedIn da empresa\n→ O fundador é o closer de enterprise\n→ O fundador é a única autoridade visível\n\nA alternativa: marca do time, não só do líder.\n\nVendedor que sabe apresentar sem o fundador na sala.\nConteúdo que roda sem depender de um rosto.\nProcesso que fecha deal sem herói.\n\nSe o fundador sumir do LinkedIn amanhã, seu pipeline sobrevive?",
+      "cta": "Se o fundador sumir do LinkedIn amanhã, seu pipeline sobrevive?",
+      "hashtags": ["#VendasB2B", "#MarcaPessoal", "#GestãoComercial"],
+      "sources": ["Case G4 Educação (referência indireta)"],
+      "reviewScore": 95,
+      "status": "aprovado",
+      "urgency": "relevante",
+      "createdAt": "2025-07-25T00:00:00-03:00",
+      "publishedAt": null,
+      "derivations": {
+        "carousel": null,
+        "cover": null
+      }
+    },
+    {
+      "id": "post-002",
+      "title": "IA como sistema nervoso do negócio — os números reais",
+      "theme": "A diferença entre 'usar IA' e 'ter IA como sistema nervoso'",
+      "pillar": "C",
+      "pillarLabel": "Credibilidade",
+      "hookText": "A G4 construiu um marketplace em 12h.\n\n34% dos tickets resolvidos sem humano.\nConversão subiu 6 pontos.\nUS$ 1,5 a 2 milhões a mais. Por mês.",
+      "hookStructure": "Dado Chocante (#6)",
+      "framework": "Lista de Dados + Declaração+Defesa",
+      "body": "A G4 construiu um marketplace em 12h.\n\n34% dos tickets resolvidos sem humano.\nConversão subiu 6 pontos.\nUS$ 1,5 a 2 milhões a mais. Por mês.\n\nIsso não é \"usar IA\".\nÉ outra coisa.\n\nA maioria dos times compra ferramenta e acha que tá fazendo transformação.\n\nNão tá.\n\nIA como sistema nervoso é diferente:\n\n→ 15% dos leads gerenciados por IA\n→ 34% dos tickets sem humano\n→ Preparo de reunião automático\n→ Margem subindo mês a mês\n\nFerramenta de IA vira commodity rápido.\n\nA vantagem não é QUAL IA você usa.\nÉ COMO você monta o sistema.\n\nSeu time tá usando IA ou só comprou licença?",
+      "cta": "Seu time tá usando IA ou só comprou licença?",
+      "hashtags": ["#VendasB2B", "#IAemVendas", "#GestãoComercial"],
+      "sources": ["Case G4 Educação (dados públicos)"],
+      "reviewScore": 93,
+      "status": "aprovado",
+      "urgency": "urgente",
+      "createdAt": "2025-07-25T00:00:00-03:00",
+      "publishedAt": null,
+      "derivations": {
+        "carousel": null,
+        "cover": null
+      }
+    }
+  ],
+  "pipeline": {
+    "active": false,
+    "mode": null,
+    "currentStep": null,
+    "startedAt": null,
+    "briefingTheme": null
+  }
+}

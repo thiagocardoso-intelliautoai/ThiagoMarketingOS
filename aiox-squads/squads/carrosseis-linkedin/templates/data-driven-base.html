@@ -1,0 +1,295 @@
+<!--
+  Template Base: Data-Driven — Carrosséis LinkedIn
+  Squad: carrosseis-linkedin
+  Viewport: 1080 x 1350 (4:5, otimizado para feed LinkedIn)
+  
+  INSTRUÇÕES PARA O DESIGNER (Denis Design):
+  1. Use este template como BASE — personalize para cada carrossel
+  2. Fundo navy escuro com números gigantes de impacto
+  3. Barras de progresso e dados visuais em CSS puro
+  4. Cada slide deve ter UM dado/número central de impacto
+  5. HTML self-contained (sem dependências externas exceto Google Fonts)
+  6. Renderizar via Playwright para PNG
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #1A1A2E;
+      color: #F1F5F9;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: 1080px;
+      height: 1350px;
+      padding: 72px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* ── Header: Perfil ── */
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .profile-photo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(241, 245, 249, 0.2);
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #F1F5F9;
+      letter-spacing: -0.02em;
+    }
+
+    .profile-handle {
+      font-size: 17px;
+      font-weight: 400;
+      color: #64748B;
+    }
+
+    /* ── Conteúdo ── */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .hero-text {
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: #F1F5F9;
+      letter-spacing: -0.02em;
+    }
+
+    .body-text {
+      font-size: 34px;
+      font-weight: 500;
+      line-height: 1.45;
+      color: #94A3B8;
+    }
+
+    /* ── Número de Impacto (elemento central) ── */
+    .impact-number {
+      font-size: 96px;
+      font-weight: 900;
+      color: #14B8A6;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .impact-label {
+      font-size: 28px;
+      font-weight: 500;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 8px;
+    }
+
+    /* ── Accent Colors ── */
+    .highlight-cyan {
+      color: #14B8A6;
+      font-weight: 800;
+    }
+
+    .highlight-purple {
+      color: #F59E0B;
+      font-weight: 800;
+    }
+
+    /* ── Barra de Progresso ── */
+    .progress-bar {
+      width: 100%;
+      height: 16px;
+      background: #27293D;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #14B8A6, #F59E0B);
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .progress-text {
+      font-size: 24px;
+      font-weight: 500;
+      color: #94A3B8;
+    }
+
+    .progress-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: #14B8A6;
+    }
+
+    /* ── Card de Dado ── */
+    .data-card {
+      background: #27293D;
+      border-radius: 0px;
+      padding: 32px;
+      border: 1px solid #3F3F5C;
+    }
+
+    /* ── Separador ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: #3F3F5C;
+    }
+
+    /* ── Comparação lado a lado ── */
+    .comparison {
+      display: flex;
+      gap: 24px;
+    }
+
+    .comparison-col {
+      flex: 1;
+      padding: 28px;
+      border-radius: 0px;
+    }
+
+    .comparison-before {
+      background: #27293D;
+      border: 1px solid #3F3F5C;
+    }
+
+    .comparison-after {
+      background: rgba(20, 184, 166, 0.08);
+      border: 1px solid rgba(20, 184, 166, 0.25);
+    }
+
+    .comparison-label {
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    .label-before { color: #64748B; }
+    .label-after { color: #14B8A6; }
+
+    /* ── Footer ── */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 24px;
+      border-top: 1px solid #27293D;
+    }
+
+    .footer-brand {
+      font-size: 18px;
+      font-weight: 600;
+      color: #475569;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .swipe-hint {
+      font-size: 20px;
+      font-weight: 500;
+      color: #475569;
+    }
+
+    /* ── CTA (Último Slide) ── */
+    .cta-text {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 40px;
+      color: #F1F5F9;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: #14B8A6;
+      color: #1A1A2E;
+      font-size: 28px;
+      font-weight: 700;
+      padding: 18px 44px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- ═══════════════════════════════════════════
+       SLIDE: Data-Driven — Hook com Número de Impacto
+       ═══════════════════════════════════════════ -->
+  <div class="slide">
+    <div class="profile">
+      <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1 class="hero-text">
+        <!-- HOOK: contextualiza o dado -->
+        Nosso time reduziu qualificação de leads de
+      </h1>
+
+      <div>
+        <div class="impact-number">4h → 15min</div>
+        <div class="impact-label">Tempo de qualificação por lead</div>
+      </div>
+
+      <div class="data-card">
+        <p class="body-text">
+          Em <span class="highlight-cyan">30 dias</span>, sem aumentar headcount.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span class="footer-brand">Thiago C.Lima</span>
+      <span class="swipe-hint">Deslize para ver como →</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!--
+  Template: Micro-Infográfico — Capas LinkedIn/Instagram
+  Squad: capas-linkedin
+  Viewport: 1080 x 1350 (4:5, otimizado para feed)
+  
+  INSTRUÇÕES PARA O DESIGNER (Dani Design):
+  1. Use este template como BASE — personalize para cada capa
+  2. Substituir número, legenda e fonte com dados do post
+  3. APENAS UM dado principal por capa
+  4. Fonte do dado SEMPRE citada
+  5. Ícone SVG inline adequado ao contexto
+  6. HTML self-contained (sem dependências externas exceto Google Fonts)
+  7. Renderizar via Playwright para PNG (1080x1350)
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      background: #1A1A2E;
+    }
+
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      padding: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    /* ── Noise texture sutil (Anti-AI: substituiu radial glow) ── */
+    .cover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── Ícone contextual ── */
+    .icon-container {
+      z-index: 2;
+      margin-bottom: 40px;
+    }
+
+    .icon-container svg {
+      width: 64px;
+      height: 64px;
+      fill: none;
+      stroke: #14B8A6;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── Número hero ── */
+    .data-number {
+      font-size: 96px;
+      font-weight: 900;
+      line-height: 1;
+      z-index: 2;
+      color: #14B8A6;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    /* ── Legenda ── */
+    .data-label {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: #E5E7EB;
+      text-align: left;
+      z-index: 2;
+      max-width: 800px;
+      margin-bottom: 48px;
+    }
+
+    /* ── Barra de contexto (mini chart) ── */
+    .mini-chart {
+      z-index: 2;
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      height: 80px;
+      margin-bottom: 48px;
+    }
+
+    .chart-bar {
+      width: 40px;
+      background: rgba(20, 184, 166, 0.15);
+      border-radius: 0px;
+      transition: all 0.3s;
+    }
+
+    .chart-bar.active {
+      background: #14B8A6;
+    }
+
+    /* ── Separador ── */
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: rgba(20, 184, 166, 0.3);
+      border-radius: 2px;
+      margin-bottom: 32px;
+      z-index: 2;
+    }
+
+    /* ── Fonte ── */
+    .source {
+      font-size: 18px;
+      font-weight: 400;
+      color: #6B7280;
+      z-index: 2;
+      margin-bottom: 16px;
+    }
+
+    /* ── Marca ── */
+    .brand {
+      position: absolute;
+      bottom: 60px;
+      left: 80px;
+      transform: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+    }
+
+    .brand-photo {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .brand-name {
+      font-size: 18px;
+      font-weight: 500;
+      color: #64748B;
+    }
+  </style>
+</head>
+<body>
+    <div class="cover">
+
+    <!-- Ícone contextual (SVG inline) -->
+    <div class="icon-container">
+      <!-- Exemplo: ícone de trending up -->
+      <svg viewBox="0 0 24 24">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+        <polyline points="17 6 23 6 23 12"></polyline>
+      </svg>
+    </div>
+
+    <!-- NÚMERO PRINCIPAL: o dado hero -->
+    <div class="data-number">67%</div>
+
+    <!-- LEGENDA: o que o número significa -->
+    <p class="data-label">
+      das empresas B2B que adotaram IA em vendas
+      viram ROI em menos de 6 meses
+    </p>
+
+    <!-- Mini chart (opcional — reforça visualmente o dado) -->
+    <div class="mini-chart">
+      <div class="chart-bar" style="height: 25px;"></div>
+      <div class="chart-bar" style="height: 40px;"></div>
+      <div class="chart-bar" style="height: 35px;"></div>
+      <div class="chart-bar active" style="height: 70px;"></div>
+      <div class="chart-bar" style="height: 50px;"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- FONTE (obrigatório para credibilidade) -->
+    <p class="source">Fonte: Gartner, 2025</p>
+
+    <div class="brand">
+      <img class="brand-photo" src="profile-photo.png" alt="Thiago C.Lima">
+      <span class="brand-name">Thiago C.Lima</span>
+    </div>
+  </div>
+</body>
+</html>

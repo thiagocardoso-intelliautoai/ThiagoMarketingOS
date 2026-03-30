@@ -1,0 +1,292 @@
+<!--
+  Capa: Print de Autoridade — IA como sistema nervoso do negócio
+  Squad: capas-linkedin
+  Viewport: 1080 x 1350 (4:5, feed LinkedIn/Instagram)
+  Estilo: 4 — Print de Autoridade
+  Slug: ia-sistema-nervoso-numeros-reais
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #000000;
+      color: #FFFFFF;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+    }
+
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      padding: 52px 60px 44px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ── Ambient glow ── */
+    .cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 10%, rgba(255,215,0,0.025) 0%, transparent 55%),
+                  radial-gradient(ellipse at 70% 90%, rgba(245,158,11,0.015) 0%, transparent 45%);
+      pointer-events: none;
+    }
+
+    /* ── Header: Perfil ── */
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .profile-photo {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2.5px solid rgba(255, 215, 0, 0.18);
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-name {
+      font-size: 27px;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+    }
+
+    .profile-handle {
+      font-size: 20px;
+      font-weight: 400;
+      color: #777777;
+    }
+
+    /* ── Hero Text: Opinião do Thiago ── */
+    .hero-section {
+      margin-bottom: 32px;
+    }
+
+    .hero-text {
+      font-size: 46px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: #FFFFFF;
+      letter-spacing: -0.025em;
+    }
+
+    .highlight {
+      color: #FFD700;
+      font-weight: 800;
+    }
+
+    .hero-sub {
+      font-size: 24px;
+      font-weight: 500;
+      color: #999999;
+      margin-top: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Print de Autoridade: Dashboard de Dados ── */
+    .authority-print {
+      background: linear-gradient(180deg, #0E0E0E 0%, #0A0A0A 100%);
+      border-radius: 20px;
+      padding: 32px 36px 28px;
+      border: 1px solid #1C1C1C;
+      box-shadow: 0 16px 56px rgba(0, 0, 0, 0.6),
+                  inset 0 1px 0 rgba(255,255,255,0.02);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+
+    .print-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .print-dot {
+      width: 10px;
+      height: 10px;
+      background: #FFD700;
+      border-radius: 2px;
+    }
+
+    .print-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #666666;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    /* ── Metrics Grid ── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 40px;
+    }
+
+    .metric-card {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .metric-value {
+      font-size: 64px;
+      font-weight: 800;
+      color: #FFD700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .metric-value .unit {
+      font-size: 36px;
+      font-weight: 700;
+      color: #C9A200;
+    }
+
+    .metric-label {
+      font-size: 17px;
+      font-weight: 500;
+      color: #888888;
+      line-height: 1.35;
+    }
+
+    /* ── Separator ── */
+    .metrics-sep {
+      grid-column: 1 / -1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, #1F1F1F 15%, #1F1F1F 85%, transparent 100%);
+    }
+
+    /* ── Bottom metric (full width) ── */
+    .metric-full {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+    }
+
+    .metric-full .metric-value {
+      font-size: 54px;
+    }
+
+    .metric-full .metric-label {
+      font-size: 19px;
+      color: #777777;
+    }
+
+    .print-source {
+      font-size: 14px;
+      font-weight: 400;
+      color: #444444;
+      margin-top: 28px;
+      text-align: right;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 28px;
+    }
+
+    .footer-line {
+      width: 56px;
+      height: 3px;
+      background: linear-gradient(90deg, #FFD700, #F59E0B);
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="profile">
+      <img class="profile-photo" src="../../../assets/profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="hero-section">
+      <h1 class="hero-text">
+        Isso não é "usar IA".<br>
+        É <span class="highlight">outra coisa.</span>
+      </h1>
+      <p class="hero-sub">Os números reais da G4 Educação</p>
+    </div>
+
+    <div class="authority-print">
+      <div class="print-header">
+        <div class="print-dot"></div>
+        <span class="print-title">Resultados com IA — G4 Educação</span>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-value">12<span class="unit">h</span></span>
+          <span class="metric-label">Marketplace construído<br>do zero com IA</span>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-value">34<span class="unit">%</span></span>
+          <span class="metric-label">Tickets resolvidos<br>sem humano</span>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-value">+6<span class="unit">p.p.</span></span>
+          <span class="metric-label">Na taxa de conversão<br>(pontos percentuais)</span>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-value">US$2<span class="unit">M</span></span>
+          <span class="metric-label">Receita adicional<br>por mês</span>
+        </div>
+
+        <div class="metrics-sep"></div>
+
+        <div class="metric-full">
+          <span class="metric-value">15<span class="unit">%</span></span>
+          <span class="metric-label">dos leads gerenciados inteiramente por IA</span>
+        </div>
+      </div>
+
+      <p class="print-source">Fonte: G4 Educação — resultados operacionais com IA integrada</p>
+    </div>
+
+    <div class="footer">
+      <div class="footer-line"></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+name: "Pesquisa e Geração de Conteúdo"
+code: pesquisa-conteudo-linkedin
+icon: 📝
+description: >
+  Squad para pesquisar tendências, gerar ideias e criar posts
+  otimizados para LinkedIn e Instagram. Opera em 3 modos:
+  pesquisa semanal (Forma 1), benchmark de concorrentes (Forma 2),
+  e ideias sob demanda (Forma 3). Mantém um armazém de ideias
+  estruturado e produz posts prontos para publicação.
+
+performance_mode: hybrid
+formats:
+  - linkedin-post
+
+skills:
+  - web_search
+  - web_fetch
+
+data:
+  - pipeline/data/research-sources.md
+  - pipeline/data/competitors.md
+  - pipeline/data/hook-structures.md
+  - pipeline/data/post-structure-linkedin.md
+  - pipeline/data/lead-magnet-template.md
+  - pipeline/data/tone-of-voice.md
+  - pipeline/data/linkedin-strategy.md
+
+agents:
+  - id: pesquisador
+    name: "Pedro Pesquisa"
+    file: ./agents/pesquisador.agent.md
+  - id: redator
+    name: "Ricardo Redator"
+    file: ./agents/redator.agent.md
+  - id: revisor
+    name: "Rafael Revisor"
+    file: ./agents/revisor.agent.md
+
+pipeline:
+  entry: pipeline/pipeline.yaml
+  steps:
+    - step-01-modo-operacao
+    - step-02-pesquisa
+    - step-03-aprovar-pesquisa
+    - step-04-salvar-armazem
+    - step-05-selecionar-ideia
+    - step-06-criar-hook
+    - step-07-estruturar-post
+    - step-08-revisao
+    - step-09-post-criado
+  checkpoints:
+    - step-01-modo-operacao
+    - step-03-aprovar-pesquisa
+    - step-05-selecionar-ideia
+    - step-09-post-criado

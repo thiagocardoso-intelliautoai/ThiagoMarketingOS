@@ -1,0 +1,170 @@
+<!--
+  Cover: "3 perguntas antes de comprar IA pro teu time"
+  Estilo: 2 — Pessoa + Texto
+  Viewport: 1080 x 1350 (4:5, LinkedIn/Instagram)
+  Squad: capas-linkedin
+  Self-contained HTML — sem CDN, sem JS, só Google Fonts
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      position: relative;
+      background: #0A0A0A;
+    }
+
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      position: relative;
+    }
+
+    /* ── Background: Foto real ── */
+    .bg-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    /* ── Overlay de Contraste (gradient 60%+ conforme spec) ── */
+    .overlay {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.10) 0%,
+        rgba(0, 0, 0, 0.25) 25%,
+        rgba(0, 0, 0, 0.55) 55%,
+        rgba(0, 0, 0, 0.82) 75%,
+        rgba(0, 0, 0, 0.92) 100%
+      );
+    }
+
+    /* ── Conteúdo sobre a foto ── */
+    .content-wrapper {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      padding: 60px 72px 72px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    /* ── Marca ── */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 0;
+    }
+
+    .brand-photo {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.45);
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-size: 22px;
+      font-weight: 600;
+      color: #FFFFFF;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+      line-height: 1.3;
+    }
+
+    .brand-handle {
+      font-size: 17px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.3;
+    }
+
+    /* ── Linha de acento ── */
+    .accent-line {
+      width: 64px;
+      height: 4px;
+      background: #FFD54F;
+      border-radius: 2px;
+      margin-top: 28px;
+      margin-bottom: 20px;
+    }
+
+    /* ── Texto principal ── */
+    .hero-text {
+      font-size: 54px;
+      font-weight: 700;
+      line-height: 1.18;
+      color: #FFFFFF;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.75);
+      letter-spacing: -0.02em;
+      margin-bottom: 0;
+    }
+
+    .highlight {
+      color: #FFD54F;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <!-- Foto de fundo (do banco assets/photos/) -->
+    <img class="bg-photo" src="../../../assets/photos/WhatsApp Image 2026-03-24 at 14.12.11.jpeg" alt="Setup de trabalho com caderno Winning Sales">
+
+    <!-- Overlay de contraste -->
+    <div class="overlay"></div>
+
+    <!-- Conteúdo sobre a foto -->
+    <div class="content-wrapper">
+      <h1 class="hero-text">
+        Antes de comprar IA,<br>
+        <span class="highlight">mapeia.</span>
+      </h1>
+
+      <div class="accent-line"></div>
+
+      <div class="brand">
+        <img class="brand-photo" src="../../../assets/profile-photo.png" alt="Thiago C.Lima">
+        <div class="brand-info">
+          <span class="brand-name">Thiago C.Lima</span>
+          <span class="brand-handle">@othiago-clima</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

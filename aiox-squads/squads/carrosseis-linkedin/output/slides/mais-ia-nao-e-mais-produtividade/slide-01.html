@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F8F8F8;
+      color: #1A1A1A;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: 1080px;
+      height: 1350px;
+      padding: 64px 80px 56px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .profile-photo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1A1A1A;
+      letter-spacing: -0.02em;
+    }
+
+    .profile-handle {
+      font-size: 17px;
+      font-weight: 400;
+      color: #888888;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 36px;
+      padding: 0 0 20px;
+    }
+
+    .divider {
+      width: 80px;
+      height: 5px;
+      background: #2563EB;
+      border-radius: 2px;
+    }
+
+    .hero-text {
+      font-size: 64px;
+      font-weight: 800;
+      line-height: 1.08;
+      color: #1A1A1A;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-sub {
+      font-size: 60px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #333;
+      letter-spacing: -0.03em;
+      margin-top: 20px;
+    }
+
+    .highlight {
+      color: #2563EB;
+    }
+
+    .subtitle {
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: #888;
+      letter-spacing: -0.01em;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 24px;
+      border-top: 1px solid #E0E0E0;
+    }
+
+    .footer-brand {
+      font-size: 18px;
+      font-weight: 600;
+      color: #AAAAAA;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .swipe-hint {
+      font-size: 20px;
+      font-weight: 500;
+      color: #AAAAAA;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="profile">
+      <img class="profile-photo" src="profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="divider"></div>
+
+      <div>
+        <h1 class="hero-text">
+          Seu time não precisa<br>de <span class="highlight">mais IA.</span>
+        </h1>
+        <p class="hero-sub">
+          Precisa de<br><span class="highlight">profundidade.</span>
+        </p>
+      </div>
+
+      <p class="subtitle">Por que consolidar vence acumular</p>
+    </div>
+
+    <div class="footer">
+      <span class="footer-brand">Thiago C.Lima</span>
+      <span class="swipe-hint">Deslize →</span>
+    </div>
+  </div>
+</body>
+</html>

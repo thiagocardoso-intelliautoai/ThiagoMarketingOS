@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      background: #000000;
+      font-family: 'Inter', sans-serif;
+      padding: 52px 64px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 60px;
+    }
+    .profile-photo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #222;
+      flex-shrink: 0;
+    }
+    .profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .profile-info { display: flex; flex-direction: column; gap: 1px; }
+    .profile-name { font-size: 20px; font-weight: 700; color: #FFFFFF; }
+    .profile-handle { font-size: 16px; font-weight: 500; color: #6B7A8D; }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 44px;
+    }
+
+    .section-tag {
+      font-size: 18px;
+      font-weight: 700;
+      color: #4DA6FF;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .main-headline {
+      font-size: 52px;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.2;
+    }
+    .main-headline .accent { color: #4DA6FF; }
+
+    .analogy-container {
+      display: flex;
+      gap: 32px;
+    }
+    .analogy-card {
+      flex: 1;
+      background: #0D0D0D;
+      border: 1px solid #1A1A1A;
+      border-radius: 16px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .analogy-icon {
+      font-size: 48px;
+    }
+    .analogy-label {
+      font-size: 20px;
+      font-weight: 700;
+      color: #6B7A8D;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .analogy-text {
+      font-size: 30px;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+
+    .plus-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: 800;
+      color: #FF4D4D;
+      padding-top: 16px;
+    }
+
+    .conclusion {
+      font-size: 36px;
+      font-weight: 700;
+      color: #9EB3C8;
+      line-height: 1.4;
+      border-left: 4px solid #4DA6FF;
+      padding-left: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile">
+    <div class="profile-photo">
+      <img src="../../assets/profile-photo.png" alt="Thiago C.Lima">
+    </div>
+    <div class="profile-info">
+      <span class="profile-name">Thiago C.Lima</span>
+      <span class="profile-handle">@othiago-clima</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="section-tag">A Falácia</div>
+    <div class="main-headline">
+      Você quer as <span class="accent">duas casas</span><br>ao mesmo tempo.
+    </div>
+
+    <div class="analogy-container">
+      <div class="analogy-card">
+        <div class="analogy-icon">🏖️</div>
+        <div class="analogy-label">Casa</div>
+        <div class="analogy-text">Na areia,<br>de frente<br>pro mar</div>
+      </div>
+      <div class="plus-divider">+</div>
+      <div class="analogy-card">
+        <div class="analogy-icon">⛷️</div>
+        <div class="analogy-label">Casa</div>
+        <div class="analogy-text">Na montanha<br>de esqui</div>
+      </div>
+    </div>
+
+    <div class="conclusion">
+      É <strong>estruturalmente impossível.</strong><br>
+      E no B2B, a gente tenta fazer isso todo dia.
+    </div>
+  </div>
+
+</body>
+</html>

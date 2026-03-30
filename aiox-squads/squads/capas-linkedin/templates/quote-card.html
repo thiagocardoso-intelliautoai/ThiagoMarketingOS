@@ -1,0 +1,174 @@
+<!--
+  Template: Quote Card — Capas LinkedIn/Instagram
+  Squad: capas-linkedin
+  Viewport: 1080 x 1350 (4:5, otimizado para feed)
+  
+  INSTRUÇÕES PARA O DESIGNER (Dani Design):
+  1. Use este template como BASE — personalize para cada capa
+  2. Substituir citação com frase do post
+  3. Ajustar atribuição (Thiago ou referência)
+  4. Cor de acento pode ser alterada para variar
+  5. HTML self-contained (sem dependências externas exceto Google Fonts)
+  6. Renderizar via Playwright para PNG (1080x1350)
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      background: #1A1A2E;
+    }
+
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      padding: 100px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    /* ── Textura de noise (CSS puro) ── */
+    .noise {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      z-index: 1;
+    }
+
+    /* ── Aspas decorativas ── */
+    .quote-mark {
+      position: absolute;
+      top: 140px;
+      left: 60px;
+      font-size: 200px;
+      font-weight: 800;
+      line-height: 1;
+      color: rgba(20, 184, 166, 0.15);
+      z-index: 2;
+      font-family: Georgia, serif;
+    }
+
+    /* ── Barra lateral de acento ── */
+    .accent-bar {
+      position: absolute;
+      left: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 300px;
+      background: #14B8A6;
+      border-radius: 2px;
+      z-index: 2;
+    }
+
+    /* ── Citação ── */
+    .quote-text {
+      font-size: 44px;
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.35;
+      color: #F3F4F6;
+      z-index: 3;
+      max-width: 850px;
+      padding-left: 32px;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Separador ── */
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: #14B8A6;
+      border-radius: 2px;
+      margin: 48px 0 36px 32px;
+      z-index: 3;
+    }
+
+    /* ── Atribuição ── */
+    .attribution {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-left: 32px;
+      z-index: 3;
+    }
+
+    .attr-photo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(20, 184, 166, 0.3);
+    }
+
+    .attr-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .attr-name {
+      font-size: 22px;
+      font-weight: 600;
+      color: #D1D5DB;
+      font-style: normal;
+    }
+
+    .attr-role {
+      font-size: 17px;
+      font-weight: 400;
+      color: #6B7280;
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="noise"></div>
+
+    <!-- Aspas decorativas (elemento gráfico, não texto) -->
+    <div class="quote-mark">"</div>
+
+    <!-- Barra lateral de acento -->
+    <div class="accent-bar"></div>
+
+    <!-- CITAÇÃO -->
+    <blockquote class="quote-text">
+      <!-- FRASE: forte, opinativa, falsificável -->
+      "IA sem processo é só velocidade
+      para o lugar errado. Escala o que
+      já funciona."
+    </blockquote>
+
+    <div class="divider"></div>
+
+    <!-- ATRIBUIÇÃO -->
+    <div class="attribution">
+      <img class="attr-photo" src="profile-photo.png" alt="Thiago C.Lima">
+      <div class="attr-info">
+        <span class="attr-name">Thiago C.Lima</span>
+        <span class="attr-role">Head de Automação e IA — Winning Sales</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

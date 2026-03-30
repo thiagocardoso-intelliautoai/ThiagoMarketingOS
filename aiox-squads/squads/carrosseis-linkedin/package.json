@@ -1,0 +1,16 @@
+{
+  "name": "carrosseis-linkedin",
+  "version": "1.0.0",
+  "description": "> Pipeline completo de criação de carrosséis visuais para o perfil LinkedIn > do Thiago C.Lima / Winning Sales. > 2 estilos: Twitter-style (fundo preto) e Pessoa-style (fotos reais).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "puppeteer": "^24.40.0"
+  }
+}

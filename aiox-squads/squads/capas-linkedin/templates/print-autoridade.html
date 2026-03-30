@@ -1,0 +1,167 @@
+<!--
+  Template: Print de Autoridade — Capas LinkedIn/Instagram
+  Squad: capas-linkedin
+  Viewport: 1080 x 1350 (4:5, otimizado para feed)
+  
+  INSTRUÇÕES PARA O DESIGNER (Dani Design):
+  1. Use este template como BASE — personalize para cada capa
+  2. Substituir texto do Thiago com opinião/chamada
+  3. Substituir [URL_DO_PRINT] com screenshot real
+  4. Print deve ocupar max 40-50% da altura
+  5. Texto do Thiago é o elemento principal
+  6. HTML self-contained (sem dependências externas exceto Google Fonts)
+  7. Renderizar via Playwright para PNG (1080x1350)
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #1A1A2E;
+      color: #FFFFFF;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+    }
+
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* ── Header: Perfil ── */
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .profile-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-name {
+      font-size: 28px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .profile-handle {
+      font-size: 22px;
+      font-weight: 400;
+      color: #64748B;
+    }
+
+    /* ── Conteúdo ── */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .hero-text {
+      font-size: 44px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+    }
+
+    .highlight {
+      color: #14B8A6;
+      font-weight: 800;
+    }
+
+    /* ── Print de Autoridade ── */
+    .authority-print {
+      background: #27293D;
+      border-radius: 0px;
+      padding: 28px;
+      border: 1px solid #3F3F5C;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .authority-print img {
+      width: 100%;
+      border-radius: 0px;
+      display: block;
+    }
+
+    .print-source {
+      font-size: 16px;
+      font-weight: 400;
+      color: #64748B;
+      margin-top: 12px;
+      text-align: right;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .footer-line {
+      width: 60px;
+      height: 3px;
+      background: #14B8A6;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="profile">
+      <img class="profile-photo" src="profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1 class="hero-text">
+        <!-- OPINIÃO/CHAMADA do Thiago sobre o print -->
+        Isso muda tudo pra quem opera
+        <span class="highlight">vendas B2B.</span>
+      </h1>
+
+      <div class="authority-print">
+        <!-- Print de autoridade: screenshot de post/notícia/tweet -->
+        <img src="[URL_DO_PRINT]" alt="Print de autoridade">
+        <p class="print-source">via @referencia_aqui</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-line"></div>
+    </div>
+  </div>
+</body>
+</html>

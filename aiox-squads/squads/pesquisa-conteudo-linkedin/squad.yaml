@@ -1,0 +1,139 @@
+# Squad: Pesquisa e Conteúdo LinkedIn
+# Formato: AIOX v1.0
+# Descrição: Pipeline completo de pesquisa → criação → revisão de posts texto para LinkedIn
+
+name: pesquisa-conteudo-linkedin
+version: "2.0"
+description: >
+  Squad especializada em pesquisa de mercado, geração de insights e criação
+  de posts de texto para o perfil LinkedIn do Thiago C.Lima / Winning Sales.
+  Foco em IA aplicada a vendas B2B, gestão comercial e automação.
+
+# ─── Agentes ───────────────────────────────────────────────
+agents:
+  - id: pesquisador
+    name: "Pedro Pesquisa 🔍"
+    file: agents/pesquisador.md
+    description: Analista de mercado e tendências — pesquisa semanal, benchmark de concorrentes e briefing on-demand
+    skills: [web_search, web_fetch]
+
+  - id: redator
+    name: "Ricardo Redator ✍️"
+    file: agents/redator.md
+    description: Copywriter LinkedIn — hooks, estrutura de post e tom de voz Thiago C.Lima
+
+  - id: revisor
+    name: "Rafael Revisor 🔎"
+    file: agents/revisor.md
+    description: Editor e quality gate — checklist de revisão, veto conditions, aprovação/rejeição de posts
+
+# ─── Workflow ──────────────────────────────────────────────
+workflow:
+  file: workflows/workflow.yaml
+  description: Pipeline otimizado com 5 modos de operação e 4 checkpoints humanos — da seleção de modo à aprovação final com integração Content Command Center
+
+# ─── Dados de Referência ──────────────────────────────────
+data:
+  - id: linkedin-strategy
+    file: data/linkedin-strategy.md
+    description: Estratégia LinkedIn, pilares ACRE, ICP, frequência e métricas
+
+  - id: tone-of-voice
+    file: data/tone-of-voice.md
+    description: Tom de voz Thiago C.Lima — 5 pilares, vocabulário permitido/proibido, emojis
+
+  - id: hook-structures
+    file: data/hook-structures.md
+    description: Biblioteca de 9 estruturas de hook validadas com templates e exemplos
+
+  - id: post-structure
+    file: data/post-structure-linkedin.md
+    description: Anatomia do post, frameworks (PAS, Contraste, Storytelling, Lista, Declaração+Defesa)
+
+  - id: research-sources
+    file: data/research-sources.md
+    description: Fontes de pesquisa Tier 1/2/3 — Gartner, Forrester, McKinsey, newsletters
+
+  - id: competitors
+    file: data/competitors.md
+    description: Benchmark de concorrentes gringos — 17 influenciadores B2B Sales/AI
+
+  - id: lead-magnet-template
+    file: data/lead-magnet-template.md
+    description: Template de lead magnet para quando 4+ insights convergem
+
+# ─── Templates de Output ──────────────────────────────────
+templates:
+  - id: post-template
+    file: templates/post-template.md
+    description: Template padrão para post final
+
+  - id: armazem-template
+    file: templates/armazem-template.md
+    description: Template de entrada no Armazém de Ideias
+
+# ─── Checklists ───────────────────────────────────────────
+checklists:
+  - id: review-checklist
+    file: checklists/review-checklist.md
+    description: Checklist de revisão de post (4 blocos — Hook 40%, Estrutura 25%, Tom 20%, CTA 15%)
+
+# ─── Tasks ────────────────────────────────────────────────
+tasks:
+  - id: selecao-modo
+    file: tasks/00-selecao-modo.md
+    description: Checkpoint — seleção do modo de operação (1/2/3/4)
+
+  - id: pesquisa-semanal
+    file: tasks/01-pesquisa-semanal.md
+    description: Modo 1 — Pesquisa semanal em fontes Tier 1/2/3
+
+  - id: benchmark-concorrentes
+    file: tasks/01-benchmark-concorrentes.md
+    description: Modo 2 — Benchmark de concorrentes gringos
+
+  - id: briefing-on-demand
+    file: tasks/01-briefing-on-demand.md
+    description: Modo 3 — Pesquisa de tema fornecido pelo usuário
+
+  - id: aprofundamento
+    file: tasks/03-aprofundamento.md
+    description: "⚠️ DEPRECIADO — Absorvido pelo Step 01 (Contexto BR integrado)"
+
+  - id: criacao-hooks
+    file: tasks/05-criacao-hooks.md
+    description: Criação de 3 opções de hook
+
+  - id: estruturacao-post
+    file: tasks/07-estruturacao-post.md
+    description: Criação do post final completo com revisão de qualidade integrada (4 blocos + score)
+
+  - id: revisao-qualidade
+    file: tasks/08-revisao-qualidade.md
+    description: "⚠️ DEPRECIADO — Absorvido pelo Step 07 (revisão integrada no Redator)"
+
+  - id: planejamento-mensal
+    file: tasks/05-planejamento-mensal.md
+    description: Modo 5 — Planejamento mensal de 12 posts (4 semanas) com metodologia DTC + ACRE
+
+# ─── Output ───────────────────────────────────────────────
+output:
+  directory: output/
+  files:
+    - armazem/ideias.md     # Armazém cronológico de ideias
+    - research-report.md    # Relatório de pesquisa (qualquer modo)
+    - hooks.md              # Hooks gerados para seleção
+    - post-final.md         # Post aprovado final (com score de qualidade)
+    - planejamento-mensal-tabela.md  # Tabela de 12 posts (Modo 5)
+    - planejamento-mensal/post-01.md # Posts individuais do planejamento
+    - planejamento-mensal/post-02.md
+    - planejamento-mensal/post-03.md
+    - planejamento-mensal/post-04.md
+    - planejamento-mensal/post-05.md
+    - planejamento-mensal/post-06.md
+    - planejamento-mensal/post-07.md
+    - planejamento-mensal/post-08.md
+    - planejamento-mensal/post-09.md
+    - planejamento-mensal/post-10.md
+    - planejamento-mensal/post-11.md
+    - planejamento-mensal/post-12.md

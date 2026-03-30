@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      background: #000000;
+      font-family: 'Inter', sans-serif;
+      padding: 52px 64px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 52px;
+    }
+    .profile-photo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #222;
+      flex-shrink: 0;
+    }
+    .profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .profile-name { font-size: 20px; font-weight: 700; color: #FFFFFF; }
+    .profile-handle { font-size: 16px; font-weight: 500; color: #6B7A8D; }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    .section-tag {
+      font-size: 18px;
+      font-weight: 700;
+      color: #FF6B35;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .main-headline {
+      font-size: 50px;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.2;
+    }
+    .main-headline .accent { color: #FF6B35; }
+
+    .wish-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: #080808;
+      border: 1px solid #1A1A1A;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .wish-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 24px 28px;
+      border-bottom: 1px solid #111;
+    }
+    .wish-item:last-child { border-bottom: none; }
+    .wish-icon {
+      font-size: 26px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .wish-text {
+      font-size: 30px;
+      font-weight: 500;
+      color: #9EB3C8;
+      line-height: 1.35;
+    }
+    .wish-text strong { color: #FFFFFF; font-weight: 700; }
+
+    .red-label {
+      font-size: 34px;
+      font-weight: 800;
+      color: #FF4D4D;
+      line-height: 1.25;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile">
+    <div class="profile-photo">
+      <img src="../../assets/profile-photo.png" alt="Thiago C.Lima">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1px;">
+      <span class="profile-name">Thiago C.Lima</span>
+      <span class="profile-handle">@othiago-clima</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="section-tag">A "Casa Mágica" do B2B</div>
+    <div class="main-headline">
+      Todo mundo tentando<br>construir o <span class="accent">impossível:</span>
+    </div>
+
+    <div class="wish-list">
+      <div class="wish-item">
+        <span class="wish-icon">◆</span>
+        <span class="wish-text"><strong>Quero</strong> autoridade de líder de mercado.</span>
+      </div>
+      <div class="wish-item">
+        <span class="wish-icon">◆</span>
+        <span class="wish-text"><strong>Mas não quero</strong> gastar tempo produzindo conteúdo.</span>
+      </div>
+      <div class="wish-item">
+        <span class="wish-icon">◆</span>
+        <span class="wish-text"><strong>E não quero</strong> contratar ninguém para fazer.</span>
+      </div>
+      <div class="wish-item">
+        <span class="wish-icon">◆</span>
+        <span class="wish-text"><strong>E quero</strong> leads qualificados para ontem.</span>
+      </div>
+    </div>
+
+    <div class="red-label">
+      Isso não é estratégia.<br>É alucinação.
+    </div>
+  </div>
+
+</body>
+</html>

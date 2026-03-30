@@ -1,0 +1,103 @@
+# Squad: Carrosséis LinkedIn
+# Pipeline de criação de carrosséis visuais para LinkedIn
+# 4 estilos: Twitter-style, Editorial Clean, Data-Driven, Notebook Raw
+
+name: "Carrosséis LinkedIn"
+code: carrosseis-linkedin
+icon: 🎯
+version: "2.0"
+format: aiox-v1
+
+description: >
+  Squad para criar carrosséis LinkedIn com 4 estilos visuais
+  (Twitter-style, Editorial Clean, Data-Driven, Notebook Raw).
+  Recebe um tema, gera ângulos, cria copy otimizado e produz
+  slides visuais em HTML/CSS renderizados via browser tool (Playwright).
+
+owner: thiago-clima
+platform: linkedin
+content_type: carousel
+
+# Os 3 agentes da squad
+agents:
+  - id: copywriter
+    name: "Caio Carrossel"
+    file: agents/copywriter.md
+
+  - id: designer
+    name: "Denis Design"
+    file: agents/designer.md
+
+  - id: reviewer
+    name: "Raul Revisão"
+    file: agents/reviewer.md
+
+# Workflow principal
+workflow:
+  entry: workflows/workflow.yaml
+
+# Dados de referência
+data:
+  - data/linkedin-strategy.md
+  - data/tone-of-voice.md
+  - data/visual-styles.md
+  - data/domain-framework.md
+  - data/quality-criteria.md
+  - data/output-examples.md
+  - data/anti-patterns.md
+  - data/research-brief.md
+  - ../../data/anti-ai-design-rules.md
+  - ../../data/design-system.md
+
+# Assets visuais
+assets:
+  - assets/profile-photo.png
+
+# Checklists
+checklists:
+  - id: review-checklist
+    file: checklists/review-checklist.md
+    description: Checklist de revisão visual (copy + design + consistência + estratégia)
+
+# Templates HTML de referência
+templates:
+  - id: twitter-style-base
+    file: templates/twitter-style-base.html
+    description: Template HTML base para estilo Twitter-style (fundo preto, print de autoridade)
+
+  - id: editorial-clean-base
+    file: templates/editorial-clean-base.html
+    description: Template HTML base para estilo Editorial Clean (fundo claro, tipografia bold, whitespace premium)
+
+  - id: data-driven-base
+    file: templates/data-driven-base.html
+    description: Template HTML base para estilo Data-Driven (fundo navy, números gigantes, barras de progresso)
+
+  - id: notebook-raw-base
+    file: templates/notebook-raw-base.html
+    description: Template HTML base para estilo Notebook Raw (papel craft, escrita manual, anti-AI)
+
+# Checkpoints humanos
+checkpoints:
+  - step-01: "Tema e estilo visual"
+  - step-03: "Seleção do ângulo"
+  - step-05: "Aprovação do copy"
+  - step-07: "Aprovação visual dos slides"
+  - step-09: "Aprovação final"
+
+# Steps automáticos pós-aprovação
+post_approval_steps:
+  - step-10: "Gerar PDF do carrossel (automático)"
+  - step-11: "Publicar no Content Command Center (automático)"
+
+# Scripts utilitários
+scripts:
+  - id: render-slides
+    file: scripts/render-slides.js
+    description: Renderiza slides HTML como PNGs limpos via Puppeteer headless (sem borda azul do browser agent)
+    usage: "node scripts/render-slides.js output/slides/{slug}"
+
+  - id: png-to-pdf
+    file: scripts/png-to-pdf.js
+    description: Combina PNGs de slides em PDF de carrossel (Node.js + pdf-lib)
+    usage: "node scripts/png-to-pdf.js output/slides/{slug}"

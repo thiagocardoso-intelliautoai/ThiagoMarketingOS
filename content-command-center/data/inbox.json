@@ -1,0 +1,289 @@
+{
+  "posts": [
+    {
+      "title": "72% usam IA, só 12% mudaram resultado",
+      "theme": "IA em vendas — uso vs resultado",
+      "pillar": "A",
+      "hookText": "72% dos times de vendas usam IA. Só 12% mudaram algum resultado real. O problema não é a ferramenta.",
+      "hookStructure": "Dado Chocante (#6)",
+      "framework": "Declaração + Defesa",
+      "body": "72% dos times de vendas usam IA.\nSó 12% mudaram algum resultado real.\n\nO problema não é a ferramenta.\n\nSão 3 gargalos que eu vejo toda semana:\n\n1. Automação sem processo.\nAutomatizar bagunça = bagunça mais rápida.\n\n2. IA genérica que não conhece teu ICP.\nOutput padrão → ninguém usa → \"IA não funciona\".\n\n3. Medir \"uso\" em vez de resultado.\nO time usa todo dia. Pipeline não mexeu. E ninguém questiona.\n\nA ferramenta virou commodity.\nO sistema por trás é o diferencial.\n\nTeu time \"usa IA\" ou gera resultado com IA?",
+      "cta": "Teu time \"usa IA\" ou gera resultado com IA?",
+      "hashtags": ["#VendasB2B", "#IAemVendas", "#Pipeline"],
+      "sources": [],
+      "reviewScore": "88",
+      "status": "aprovado",
+      "urgency": "relevante",
+      "week": 1,
+      "postNumber": 1
+    },
+    {
+      "title": "IA vai acabar com empregos? Abre o livro de história",
+      "theme": "Padrão histórico — IA não acaba com empregos",
+      "pillar": "A",
+      "hookText": "Claude Code, Lovable, G4 OS... Toda semana uma IA nova que vai \"acabar com os empregos\". Antes de surtar, abre o livro de história.",
+      "hookStructure": "Declaração Contrária (#2)",
+      "framework": "PAS",
+      "body": "Claude Code, Lovable, G4 OS...\n\nToda semana uma IA nova que vai \"acabar com os empregos\".\n\nAntes de surtar, abre o livro de história.\n\nTear mecânico ia acabar com tecelões.\n→ Surgiu a indústria têxtil inteira.\n\nATMs iam acabar com bancários.\n→ Número de bancários cresceu. Abriu mais agência.\n\nExcel ia acabar com contadores.\n→ Contadores viraram estrategistas. Ganham mais.\n\nO padrão é claro:\nTecnologia elimina tarefa, não profissão.\n\nQuem se adapta, sobe.\nQuem fica parado esperando guru dizer o que fazer, fica pra trás.\n\nA pergunta certa não é \"a IA vai tirar meu emprego\".\n\nÉ: o que eu faço quando a tarefa repetitiva desaparece?",
+      "cta": "A pergunta certa não é \"a IA vai tirar meu emprego\". É: o que eu faço quando a tarefa repetitiva desaparece?",
+      "hashtags": ["#IA", "#Tecnologia", "#VendasB2B"],
+      "sources": [],
+      "reviewScore": "91",
+      "status": "aprovado",
+      "urgency": "urgente",
+      "week": 1,
+      "postNumber": 2,
+      "contentType": "cover",
+      "derivations": {
+        "cover": {
+          "slug": "ia-elimina-tarefa-nao-profissao",
+          "coverPath": "aiox-squads/squads/capas-linkedin/output/covers/ia-elimina-tarefa-nao-profissao/cover.png",
+          "style": "Quote Card"
+        }
+      }
+    },
+    {
+      "title": "Viajei pra BH — 3 sócios, 3 perfis opostos",
+      "theme": "Viagem BH — 3 sócios complementares da Winning Sales",
+      "pillar": "E",
+      "hookText": "Viajei pra BH conhecer a Winning por dentro. 3 sócios. 3 perfis opostos. E uma coisa em comum que explica tudo.",
+      "hookStructure": "Eu verbo passado (#4)",
+      "framework": "Storytelling",
+      "body": "Viajei pra BH conhecer a Winning por dentro.\n\n3 sócios. 3 perfis opostos.\nE uma coisa em comum que explica tudo.\n\nIvan → visão estratégica + IA. Enxerga 3 passos à frente. O conhecimento de tecnologia dele coloca a empresa na frente dos concorrentes.\n\nRafael Faria → executor. O cara que me \"descobriu\". Mão na massa sempre. \"Não deu certo? Próxima. Deu? Vamos investir.\" Velocidade pura.\n\nCoutinho → coordena marketing. Lê pessoas de um jeito que impressiona. Visão estratégica também.\n\nPerfis opostos. Mas os 3 têm algo raro:\n\nSão absurdos de bons com pessoas e comunicação.\nDominam marketing e vendas.\nE têm humildade intelectual — perguntam, escutam, buscam.\n\nNão é à toa que são donos da maior empresa de marketing pra LinkedIn do Brasil.\n\nTua sociedade ou time funciona por complementaridade ou trava por ego?",
+      "cta": "Tua sociedade ou time funciona por complementaridade ou trava por ego?",
+      "hashtags": ["#Liderança", "#Sociedade", "#VendasB2B"],
+      "sources": [],
+      "reviewScore": "92",
+      "status": "aprovado",
+      "urgency": "urgente",
+      "week": 1,
+      "postNumber": 3
+    },
+    {
+      "title": "De 12h para 1h por cliente — case real",
+      "theme": "Case real — de 12h para 1h por relatório",
+      "pillar": "C",
+      "hookText": "Um relatório que demorava 12 horas por cliente. POR CLIENTE. Hoje demora no máximo 1 hora. O que mudou não foi a ferramenta.",
+      "hookStructure": "Dado Chocante (#6) + Contraste Temporal (#8)",
+      "framework": "PAS",
+      "body": "Um relatório que demorava 12 horas por cliente.\n\nPOR CLIENTE.\n\nHoje demora no máximo 1 hora.\n\nO que mudou não foi a ferramenta.\n\nFoi o processo:\n\n1. Conversei com quem executava. Mapeei cada etapa manual.\n2. Levei pros sócios. Definimos prioridade.\n3. Voltei. Entendi o que podia ser automatizado.\n4. Automatizei.\n\nDe 12h pra 1h de revisão + visão estratégica humana.\n\nO ponto que ninguém fala:\nNão foi \"comprar uma IA\".\n\nFoi mapear → avaliar se tá eficaz → melhorar → depois automatizar.\n\nNessa ordem. Sempre.\n\nQual processo do teu time vc sabe que tá lento, mas ninguém parou pra mapear ainda?",
+      "cta": "Qual processo do teu time vc sabe que tá lento, mas ninguém parou pra mapear ainda?",
+      "hashtags": ["#Automação", "#ProcessoComercial", "#VendasB2B"],
+      "sources": [],
+      "reviewScore": "93",
+      "status": "aprovado",
+      "urgency": "urgente",
+      "week": 2,
+      "postNumber": 4
+    },
+    {
+      "title": "3 métricas de pipeline + a 1 que prevê o mês",
+      "theme": "Métricas de pipeline — velocidade por stage",
+      "pillar": "C",
+      "hookText": "3 métricas de pipeline que teu CRM mostra. E a 1 que realmente prevê se o mês vai fechar.",
+      "hookStructure": "Número + Resultado (#1)",
+      "framework": "Lista",
+      "body": "3 métricas de pipeline que teu CRM mostra.\nE a 1 que realmente prevê se o mês vai fechar.\n\nA maioria olha:\n\n→ Volume de pipeline. Diz o tamanho, não a qualidade.\n→ Taxa de conversão. Retrovisor, não previsão.\n→ Ticket médio. Importante, mas não prevê timing.\n\nNenhuma dessas prevê o mês.\n\nA que falta: velocidade de pipeline por stage.\n\nTempo médio que o deal fica em cada etapa do funil.\nOnde trava. Onde acelera. Onde morre.\n\nTimes que medem velocidade por stage erram 40% menos no forecast.\n\nParece simples.\nQuase ninguém faz.\n\nQual métrica de pipeline vc olha todo dia?\n\nSe for só volume, a gente precisa conversar.",
+      "cta": "Qual métrica de pipeline vc olha todo dia? Se for só volume, a gente precisa conversar.",
+      "hashtags": ["#Pipeline", "#CRM", "#VendasB2B"],
+      "sources": [],
+      "reviewScore": "89",
+      "status": "aprovado",
+      "urgency": "relevante",
+      "week": 2,
+      "postNumber": 5
+    },
+    {
+      "title": "3 perguntas antes de comprar IA pro teu time",
+      "theme": "3 perguntas obrigatórias antes de comprar IA",
+      "pillar": "C",
+      "hookText": "Antes de comprar qualquer ferramenta de IA pro teu time de vendas, responda essas 3 perguntas.",
+      "hookStructure": "Pare de (#5) adaptado",
+      "framework": "Lista",
+      "body": "Antes de comprar qualquer ferramenta de IA pro teu time de vendas, responda essas 3 perguntas.\n\n1. Qual processo manual consome mais tempo do time?\nSe não sabe, não tem como escolher a ferramenta certa. Mapeia antes.\n\n2. Teus dados estão limpos?\nIA com dado sujo = resultado sujo. CRM bagunçado gera automação de bagunça.\n\n3. Quem vai ser o dono da implementação?\nSem dono, a ferramenta vira shelfware em 30 dias.\n\nSe respondeu \"não sei\" pra qualquer uma:\n\nNÃO compre a ferramenta ainda.\n\nMapeia o processo. Limpa o dado. Define o dono.\nDepois compra.\n\nQuer trocar ideia sobre isso? Me chama.",
+      "cta": "Quer trocar ideia sobre isso? Me chama.",
+      "hashtags": ["#IAemVendas", "#ProcessoComercial", "#VendasB2B"],
+      "sources": [],
+      "reviewScore": "87",
+      "status": "aprovado",
+      "urgency": "relevante",
+      "week": 3,
+      "postNumber": 6,
+      "contentType": "cover",
+      "derivations": {
+        "cover": {
+          "slug": "3-perguntas-antes-de-comprar-ia",
+          "coverPath": "aiox-squads/squads/capas-linkedin/output/covers/3-perguntas-antes-de-comprar-ia/cover.png",
+          "style": "Pessoa + Texto"
+        }
+      }
+    },
+    {
+      "title": "Software como gerador de leads — o que eu faço",
+      "theme": "Software como gerador de leads — reciprocidade",
+      "pillar": "C",
+      "hookText": "Todo mundo fala que software não é mais diferencial. Ninguém faz nada com isso. Aqui tá o que eu faço.",
+      "hookStructure": "Declaração Contrária (#2)",
+      "framework": "Declaração + Defesa",
+      "body": "Todo mundo fala que software não é mais diferencial.\n\nNinguém faz nada com isso.\n\nAqui tá o que eu faço.\n\nCriar software ficou barato. Rápido. Acessível.\n\nEntão eu crio soluções enxutas que resolvem um problema real do meu público.\n\nNão complica. Não tenta fazer um produto inteiro.\nCria algo rápido, que com base na tua experiência resolva uma dor de verdade.\n\nExemplo: criei uma IA que analisa reuniões de venda do time.\n\nNão é produto pra vender.\nÉ demonstração de competência.\n\nEntrega valor antes de pedir qualquer coisa em troca.\n\n→ Agrega valor real\n→ Gera reciprocidade\n→ O cara te acompanha ou quer saber mais do teu serviço\n\nA vantagem não é de quem sabe codar.\nÉ de quem usa isso como estratégia.\n\nSe vc pudesse criar uma solução simples que mostrasse pro teu cliente que vc entende a dor dele, o que seria?",
+      "cta": "Se vc pudesse criar uma solução simples que mostrasse pro teu cliente que vc entende a dor dele, o que seria?",
+      "hashtags": ["#Software", "#GeraçãoDeLeads", "#VendasB2B"],
+      "sources": [],
+      "reviewScore": "90",
+      "status": "aprovado",
+      "urgency": "relevante",
+      "week": 3,
+      "postNumber": 7,
+      "contentType": "cover",
+      "derivations": {
+        "cover": {
+          "slug": "software-como-gerador-de-leads",
+          "coverPath": "aiox-squads/squads/capas-linkedin/output/covers/software-como-gerador-de-leads/cover.png",
+          "style": "Rascunho no Papel"
+        }
+      }
+    },
+    {
+      "title": "[VISUAL] Pipeline B2B 2026 — 3 camadas",
+      "theme": "Pipeline B2B 2026 — 3 camadas",
+      "pillar": "R",
+      "hookText": "O pipeline de vendas B2B em 2026 tem 3 camadas que a maioria dos times ignora. Esse é o mapa completo.",
+      "hookStructure": "Número + Resultado (#1)",
+      "framework": "Lista",
+      "body": "O pipeline de vendas B2B em 2026 tem 3 camadas que a maioria dos times ignora.\n\nEsse é o mapa completo.\n\nLayer 1 → Dados.\nIA alimentando scoring + enriquecimento de leads.\nSem dado limpo, nada funciona.\n\nLayer 2 → Humano.\nVendedor consultivo nos momentos certos.\nNão em tudo — só onde faz diferença real.\n\nLayer 3 → Automação.\nFollow-up, nurturing, handoff entre stages.\nTudo que é repetitivo roda sozinho.\n\nO power move: integrar os 3.\n\nDado alimenta decisão humana.\nDecisão humana é amplificada por automação.\n\nSalva esse mapa.\nUsa na próxima reunião de pipeline.\n\nSe quiser o framework detalhado, me chama.",
+      "cta": "Se quiser o framework detalhado, me chama.",
+      "hashtags": ["#Pipeline", "#VendasB2B", "#Automação"],
+      "sources": [],
+      "reviewScore": "86",
+      "status": "aprovado",
+      "urgency": "relevante",
+      "week": 4,
+      "postNumber": 8,
+      "contentType": "cover",
+      "derivations": {
+        "cover": {
+          "slug": "pipeline-b2b-2026-3-camadas",
+          "coverPath": "aiox-squads/squads/capas-linkedin/output/covers/pipeline-b2b-2026-3-camadas/cover.png",
+          "style": "Rascunho no Papel"
+        }
+      }
+    },
+    {
+      "title": "Pense como usuário — 6 palavras que mudaram tudo",
+      "theme": "Lição de BH — pensar como usuário + erro pessoal",
+      "pillar": "E",
+      "hookText": "\"Pense sempre como um usuário.\" 6 palavras. Me disseram isso em BH e mudou como eu penso sobre vendas, marketing e software.",
+      "hookStructure": "Eu verbo passado (#4) + Confissão (#9)",
+      "framework": "Storytelling",
+      "body": "\"Pense sempre como um usuário.\"\n\n6 palavras. Me disseram isso em BH.\nE mudou como eu penso sobre vendas, marketing e software.\n\nEu errei. Criei um projeto inteiro pro sócio.\nNão pro usuário.\n\nFicou pronto. Funcional.\nMas poderia ser 10x melhor.\n\nDesde então, 3 perguntas antes de qualquer decisão.\n\nDeslize pra ver quais →\n\n#UserFirst #VendasB2B #MarketingB2B #Software #IAaplicada",
+      "cta": "Qual frase mudou como você trabalha?",
+      "hashtags": ["#UserFirst", "#VendasB2B", "#MarketingB2B", "#Software", "#IAaplicada"],
+      "sources": [],
+      "reviewScore": "88",
+      "status": "aprovado",
+      "urgency": "urgente",
+      "week": 4,
+      "postNumber": 9,
+      "contentType": "carousel",
+      "slideCount": 7,
+      "visualStyle": "twitter-style",
+      "pdfPath": "aiox-squads/squads/carrosseis-linkedin/output/slides/pense-como-usuario-6-palavras/carrossel-pense-como-usuario-6-palavras.pdf",
+      "slidesDir": "aiox-squads/squads/carrosseis-linkedin/output/slides/pense-como-usuario-6-palavras/"
+    },
+    {
+      "title": "70% sobrecarregados com IA — e 43% não batem a meta",
+      "theme": "Sobrecarga de ferramentas de IA em times de vendas B2B",
+      "pillar": "C",
+      "hookText": "70% dos vendedores B2B se sentem sobrecarregados com ferramentas de IA.\nE os sobrecarregados são 43% menos propensos a bater a meta. (Pesquisa B2B Sales Tech, 2025)",
+      "hookStructure": "Dado Chocante (#6)",
+      "framework": "PAS",
+      "body": "70% dos vendedores B2B se sentem sobrecarregados com ferramentas de IA.\nE os sobrecarregados são 43% menos propensos a bater a meta. (Pesquisa B2B Sales Tech, 2025)\n\nToda semana sai ferramenta nova. Claude, Copilot, Gemini, automação de email, IA no CRM.\n\nO time testa tudo. Não aprofunda em nada.\n\nResultado: mais abas abertas, mais \"tô testando ainda\", zero processo implementado.\n\nE aí vem o dado que dói:\n\nUma pesquisa com 5.000 profissionais mostrou que 40% dizem que IA não economiza tempo nenhum. Enquanto isso, 76% dos C-Levels acham que economiza 4h por semana. (Programs.com, 2026)\n\nO gap tá aí.\n\nLiderança acredita que tá funcionando. O time sabe que não tá.\n\nO gargalo não é falta de IA.\n\nÉ excesso de frentes abertas sem profundidade.\n\nFerramenta de IA sem processo é só uma aba a mais no Chrome.\n\nQuantas ferramentas de IA seu time tá usando? E quantas viraram processo de verdade?\n\n#VendasB2B #IAemVendas #GestãoComercial",
+      "cta": "Quantas ferramentas de IA seu time tá usando? E quantas viraram processo de verdade?",
+      "hashtags": ["#VendasB2B", "#IAemVendas", "#GestãoComercial"],
+      "sources": ["Pesquisa B2B Sales Tech, 2025", "Programs.com (survey 5.000 profissionais), 2026"],
+      "reviewScore": "90",
+      "status": "aprovado",
+      "urgency": "urgente",
+      "series": "Sobrecarga de IA",
+      "seriesOrder": 1,
+      "contentType": "cover",
+      "derivations": {
+        "cover": {
+          "slug": "70-sobrecarregados-ia-43-nao-batem-meta",
+          "coverPath": "aiox-squads/squads/capas-linkedin/output/covers/70-sobrecarregados-ia-43-nao-batem-meta/cover.png",
+          "style": "Micro-Infográfico"
+        }
+      }
+    },
+    {
+      "title": "Acumular informação sobre IA não é aprender",
+      "theme": "Acúmulo de informação sobre IA vs. aprendizado real",
+      "pillar": "A",
+      "hookText": "Acumular informação sobre IA não é aprender.\nÉ a ilusão de progresso mais perigosa do mercado.",
+      "hookStructure": "Declaração Contrária (#2)",
+      "framework": "Declaração + Defesa",
+      "body": "Acumular informação sobre IA não é aprender.\nÉ a ilusão de progresso mais perigosa do mercado.\n\n88% dos profissionais usam IA no trabalho.\nApenas 5% tiram resultado de verdade. (EY, 2025)\n\nOs outros 83%? Estão no loop:\n\n→ Vê ferramenta nova\n→ Testa por 2 dias\n→ Não aprofunda\n→ Vê outra\n→ Reseta tudo\n\nToda semana um nome novo.\n\nToda semana o mesmo resultado: mais informação, menos implementação.\n\nO problema não é que você não aprende.\n\nÉ que você consome no modo passivo — scroll infinito, newsletters acumulando, 15 abas de \"vou ler depois\".\n\nConsumo sem filtro é ruído disfarçado de estudo.\n\nA diferença entre quem usa IA de verdade e quem só fala sobre IA é uma palavra: profundidade.\n\nSalva esse post. E me conta: você tá acumulando ou implementando?\n\n#InteligênciaArtificial #Produtividade #VendasB2B",
+      "cta": "Salva esse post. E me conta: você tá acumulando ou implementando?",
+      "hashtags": ["#InteligênciaArtificial", "#Produtividade", "#VendasB2B"],
+      "sources": ["EY Research, 2025"],
+      "reviewScore": "90",
+      "status": "aprovado",
+      "urgency": "urgente",
+      "series": "Sobrecarga de IA",
+      "seriesOrder": 2,
+      "contentType": "cover",
+      "derivations": {
+        "cover": {
+          "slug": "acumular-nao-e-aprender",
+          "coverPath": "aiox-squads/squads/capas-linkedin/output/covers/acumular-nao-e-aprender/cover.png",
+          "style": "Pessoa + Texto"
+        }
+      }
+    },
+    {
+      "title": "Pare de adotar ferramenta nova toda semana",
+      "theme": "Consolidação de IA > Adoção desenfreada + AI Brain Fry",
+      "pillar": "R",
+      "hookText": "Pare de adotar ferramenta nova toda semana.\nSeu time não precisa de mais IA — precisa de profundidade.",
+      "hookStructure": "Pare de (#5)",
+      "framework": "PAS + Contraste Temporal",
+      "body": "Pare de adotar ferramenta nova toda semana.\nSeu time não precisa de mais IA — precisa de profundidade.\n\nEm 2024, a corrida era adotar o máximo de IA possível.\n\nEm 2026, as empresas que cresceram fizeram o oposto: cortaram.\n\nSó 1 em cada 3 empresas conseguiu escalar IA com sucesso. (McKinsey)\n\nAs outras 2? Ficaram no piloto infinito. Testando, testando — sem integrar no processo real.\n\nE tem um custo que ninguém calcula:\n\n26% dos profissionais de marketing e 18% dos de operações já reportam \"AI Brain Fry\" — fadiga mental por supervisionar output de IA o dia inteiro.\n\nMais IA ≠ mais produtividade.\n\nMais IA sem processo = mais cansaço e menos resultado.\n\nA tendência não é adotar mais.\n\nÉ consolidar. Escolher UMA ferramenta. Ir fundo. Integrar no workflow. E só depois pensar na próxima.\n\nProfundidade vence amplitude. Sempre.\n\nQual é a UMA ferramenta de IA que fez diferença real no seu time? Me conta nos comentários.\n\n#VendasB2B #IAemVendas #Produtividade",
+      "cta": "Qual é a UMA ferramenta de IA que fez diferença real no seu time? Me conta nos comentários.",
+      "hashtags": ["#VendasB2B", "#IAemVendas", "#Produtividade"],
+      "sources": ["McKinsey, 2025", "Global News / AI Brain Fry Research, 2025-2026"],
+      "reviewScore": "89",
+      "status": "aprovado",
+      "urgency": "urgente",
+      "series": "Sobrecarga de IA",
+      "seriesOrder": 3,
+      "contentType": "carousel",
+      "slideCount": 8,
+      "visualStyle": "editorial-clean",
+      "pdfPath": "aiox-squads/squads/carrosseis-linkedin/output/slides/mais-ia-nao-e-mais-produtividade/carrossel-mais-ia-nao-e-mais-produtividade.pdf",
+      "slidesDir": "aiox-squads/squads/carrosseis-linkedin/output/slides/mais-ia-nao-e-mais-produtividade/"
+    },
+    {
+      "title": "IA como sistema nervoso do negócio — os números reais",
+      "theme": "IA como sistema nervoso do negócio — os números reais",
+      "pillar": "C",
+      "hookText": "A G4 construiu um marketplace em 12h.\n\n34% dos tickets resolvidos sem humano.\nConversão subiu 6 pontos.\nUS$ 1,5 a 2 milhões a mais. Por mês.\n\nIsso não é \"usar IA\".\nÉ outra coisa.",
+      "hookStructure": "Dado Chocante (#6)",
+      "framework": "Lista de Dados",
+      "body": "A G4 construiu um marketplace em 12h.\n\n34% dos tickets resolvidos sem humano.\nConversão subiu 6 pontos.\nUS$ 1,5 a 2 milhões a mais. Por mês.\n\nIsso não é \"usar IA\".\nÉ outra coisa.\n\nA maioria dos times compra ferramenta e acha que tá fazendo transformação.\n\nNão tá.\n\nIA como sistema nervoso é diferente:\n\n→ 15% dos leads gerenciados por IA\n→ 34% dos tickets sem humano\n→ Preparo de reunião automático\n→ Margem subindo mês a mês\n\nFerramenta de IA vira commodity rápido.\n\nA vantagem não é QUAL IA você usa.\nÉ COMO você monta o sistema.\n\nSeu time tá usando IA ou só comprou licença?",
+      "cta": "Seu time tá usando IA ou só comprou licença?",
+      "hashtags": ["#VendasB2B", "#IAemVendas", "#GestãoComercial"],
+      "sources": ["G4 Educação — resultados operacionais com IA integrada"],
+      "reviewScore": "82",
+      "status": "aprovado",
+      "urgency": "urgente",
+      "contentType": "cover",
+      "derivations": {
+        "cover": {
+          "slug": "ia-sistema-nervoso-numeros-reais",
+          "coverPath": "aiox-squads/squads/capas-linkedin/output/covers/ia-sistema-nervoso-numeros-reais/cover.png",
+          "style": "Print de Autoridade"
+        }
+      }
+    }
+  ]
+}

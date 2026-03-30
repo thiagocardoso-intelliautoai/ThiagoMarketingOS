@@ -1,0 +1,94 @@
+# Squad: Capas LinkedIn & Instagram
+# Pipeline de criação de capas visuais (imagem única) para posts de texto
+# 5 estilos: Rascunho no Papel, Pessoa+Texto, Micro-Infográfico, Print de Autoridade, Quote Card
+
+name: "Capas LinkedIn & Instagram"
+code: capas-linkedin
+icon: 🖼️
+version: "1.0"
+format: aiox-v1
+
+description: >
+  Squad para criar capas visuais (imagem única) para posts de texto
+  no LinkedIn e Instagram. 5 estilos pesquisados e validados por dados
+  de performance algorítmica. Recebe o post finalizado do squad de pesquisa,
+  o usuário escolhe o estilo, e o squad gera a capa em HTML/CSS
+  renderizada via browser tool (Playwright) para PNG.
+
+owner: thiago-clima
+platform: linkedin-instagram
+content_type: cover
+
+# Os 2 agentes da squad
+agents:
+  - id: designer
+    name: "Dani Design"
+    file: agents/designer.md
+
+  - id: reviewer
+    name: "Rui Revisão"
+    file: agents/reviewer.md
+
+# Workflow principal
+workflow:
+  entry: workflows/workflow.yaml
+
+# Dados de referência
+data:
+  - data/linkedin-strategy.md
+  - data/tone-of-voice.md
+  - data/visual-styles.md
+  - data/quality-criteria.md
+  - ../../data/anti-ai-design-rules.md
+  - ../../data/design-system.md
+
+# Assets visuais
+# Source of truth: Supabase (content-assets/source-photos/)
+# Fallback: local assets/ (fase de transição)
+# CLI: node shared/scripts/list-source-photos-cli.js
+assets:
+  source: supabase  # content-assets/source-photos/
+  fallback: local   # assets/ (fase de transição)
+  cli: shared/scripts/list-source-photos-cli.js
+  items:
+    - profile-photo: supabase/content-assets/source-photos/profile-photo.png  # fallback: assets/profile-photo.png
+    - photos: supabase/source_photos?category=photos  # fallback: assets/photos/
+    - papers: supabase/source_photos?category=papers   # fallback: assets/papers/
+
+# Checklists
+checklists:
+  - id: review-checklist
+    file: checklists/review-checklist.md
+    description: Checklist de revisão visual (design + consistência + estratégia + legibilidade)
+
+# Templates HTML de referência (1 por estilo)
+templates:
+  - id: rascunho-papel
+    file: templates/rascunho-papel.md
+    description: Foto real de papel + infográfico desenhado à lápis. Para posts com muita informação e hook fraco.
+
+  - id: pessoa-texto
+    file: templates/pessoa-texto.html
+    description: Foto real do banco com overlay de texto protegido por gradient.
+
+  - id: micro-infografico
+    file: templates/micro-infografico.html
+    description: UM dado/métrica/insight visualizado de forma limpa e impactante.
+
+  - id: print-autoridade
+    file: templates/print-autoridade.html
+    description: Screenshot estilizado de fonte de autoridade com contexto do Thiago.
+
+  - id: quote-card
+    file: templates/quote-card.html
+    description: Citação estilizada com design editorial premium.
+
+# Checkpoints humanos
+checkpoints:
+  - step-01: "Post e estilo visual"
+  - step-04: "Aprovação visual da capa"
+  - step-06: "Aprovação final"
+
+# Steps automáticos pós-aprovação
+post_approval_steps:
+  - step-07: "Publicar no Content Command Center (automático)"

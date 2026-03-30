@@ -1,0 +1,91 @@
+# Capas LinkedIn & Instagram — Workflow
+# Pipeline de 7 steps com 3 checkpoints humanos
+
+name: "Capas LinkedIn & Instagram Pipeline"
+squad: capas-linkedin
+
+steps:
+  # ──────────────────────────────────────────
+  # FASE 1: Input do post e estilo
+  # ──────────────────────────────────────────
+  - id: step-01-cover-input
+    type: checkpoint
+    label: "Post e Estilo Visual"
+    description: >
+      Usuário fornece o post de texto finalizado e escolhe o estilo visual da capa:
+      1 = 📝 Rascunho no Papel (infográfico à lápis sobre foto de papel real)
+      2 = 👤 Pessoa + Texto (foto real com overlay de texto)
+      3 = 📊 Micro-Infográfico (um dado/métrica hero)
+      4 = 🖼️ Print de Autoridade (screenshot + opinião)
+      5 = ⚡ Quote Card (citação editorial premium)
+      
+      O designer pode RECOMENDAR o estilo com base no conteúdo,
+      mas a decisão final é do usuário.
+    output: output/cover-input.md
+
+  # ──────────────────────────────────────────
+  # FASE 2: Extração e preparação
+  # ──────────────────────────────────────────
+  - id: step-02-prepare
+    type: agent
+    agent: designer
+    label: "Preparação do Design"
+    description: >
+      O designer lê o post, extrai o elemento visual principal
+      (frase, dado, print, citação), define o design system,
+      e documenta as decisões antes de criar.
+    input: output/cover-input.md
+    output: output/design-system.md
+
+  # ──────────────────────────────────────────
+  # FASE 3: Criação da capa
+  # ──────────────────────────────────────────
+  - id: step-03-create-cover
+    type: agent
+    agent: designer
+    task: tasks/create-cover.md
+    input: output/cover-input.md
+    output: output/cover-report.md
+
+  - id: step-04-approve-visual
+    type: checkpoint
+    label: "Aprovação Visual"
+    description: >
+      Usuário verifica a capa renderizada (HTML + PNG).
+      Pode pedir ajustes de cor, fonte, layout, texto ou aprovar.
+    input: output/cover-report.md
+
+  # ──────────────────────────────────────────
+  # FASE 4: Revisão e aprovação final
+  # ──────────────────────────────────────────
+  - id: step-05-review
+    type: agent
+    agent: reviewer
+    task: tasks/review.md
+    input: output/cover-report.md
+    output: output/review.md
+    on_reject: step-03-create-cover
+
+  - id: step-06-final-approval
+    type: checkpoint
+    label: "Aprovação Final"
+    description: >
+      Usuário revisa o parecer do Rui Revisão.
+      Se APPROVE: capa pronta para publicação.
+      Se REJECT: volta ao step-03 para ajustes.
+    input: output/review.md
+
+  # ──────────────────────────────────────────
+  # FASE 5: Publicação automática (pós-aprovação)
+  # ──────────────────────────────────────────
+  - id: step-07-publish-to-ccc
+    type: agent
+    agent: designer
+    task: tasks/publish-to-ccc.md
+    input:
+      - output/cover-input.md
+      - output/cover-report.md
+    output: output/publish-report.md
+    description: >
+      Publica o post com capa no Content Command Center via inbox.json.
+      O post aparece automaticamente em http://localhost:5500/

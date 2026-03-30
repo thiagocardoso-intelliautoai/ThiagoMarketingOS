@@ -1,0 +1,236 @@
+<!--
+  Capa: "Acumular não é aprender."
+  Estilo: 2 — Pessoa + Texto
+  Squad: capas-linkedin
+  Viewport: 1080 x 1350
+
+  Design System:
+  - Foto: IMG_20260224_220325463.jpg (selfie espelho, headphones, foco)
+  - Overlay: gradient bottom→top, 70% opacity para contraste máximo
+  - Texto: Inter 700, 54px, branco puro com text-shadow pesado
+  - Accent: linha horizontal 64px em Teal (#14B8A6)
+  - Assinatura: Inter 500, 22px, branco 60% opacity
+  - Layout: texto no terço inferior, alinhado à esquerda (anti-AI)
+  - Max palavras: 4 ("Acumular não é aprender.")
+  - Contraste: #FFFFFF sobre overlay preto 70% = 15.3:1 ✅
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      position: relative;
+    }
+
+    /* ── Background: Foto Real ── */
+    .bg-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    /* ── Overlay: Gradient editorial, não uniforme ── */
+    .overlay {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      background: linear-gradient(
+        180deg,
+        rgba(26, 26, 46, 0.10) 0%,
+        rgba(26, 26, 46, 0.20) 25%,
+        rgba(26, 26, 46, 0.50) 55%,
+        rgba(26, 26, 46, 0.82) 75%,
+        rgba(26, 26, 46, 0.94) 100%
+      );
+    }
+
+    /* ── Noise texture — orgânico, anti-AI ── */
+    .noise {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 128px 128px;
+      pointer-events: none;
+    }
+
+    /* ── Conteúdo principal ── */
+    .content-wrapper {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 4;
+      padding: 64px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    /* ── Dado do post — contextualiza o tema ── */
+    .stat-block {
+      margin-bottom: 40px;
+    }
+
+    .stat-number {
+      font-size: 88px;
+      font-weight: 900;
+      color: #14B8A6;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .stat-label {
+      font-size: 24px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.55);
+      margin-top: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Linha de acento (Teal) ── */
+    .accent-line {
+      width: 64px;
+      height: 4px;
+      background: #14B8A6;
+      margin-bottom: 32px;
+    }
+
+    /* ── Hero text ── */
+    .hero-text {
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.12;
+      color: #FFFFFF;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+      max-width: 820px;
+    }
+
+    .hero-emphasis {
+      color: #14B8A6;
+      font-weight: 800;
+    }
+
+    /* ── Subtítulo — insight do post ── */
+    .subtitle {
+      font-size: 26px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.50);
+      line-height: 1.4;
+      max-width: 700px;
+      margin-bottom: 48px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Brand footer ── */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-photo {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.60);
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand-handle {
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.35);
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <!-- Foto real — selfie espelho, headphones, expressão determinada -->
+    <img class="bg-photo" src="photos/IMG_20260224_220325463.jpg" alt="Thiago C.Lima — foco">
+
+    <!-- Overlay editorial gradient -->
+    <div class="overlay"></div>
+
+    <!-- Noise texture — anti-AI marker -->
+    <div class="noise"></div>
+
+    <!-- Conteúdo sobre a foto -->
+    <div class="content-wrapper">
+
+      <!-- Dado do post — reforça autoridade -->
+      <div class="stat-block">
+        <div class="stat-number">83%</div>
+        <div class="stat-label">não tiram resultado real com IA</div>
+      </div>
+
+      <!-- Accent line -->
+      <div class="accent-line"></div>
+
+      <!-- Frase hero — 4 palavras -->
+      <h1 class="hero-text">
+        Acumular não é<br><span class="hero-emphasis">aprender.</span>
+      </h1>
+
+      <!-- Subtítulo — insight do post -->
+      <p class="subtitle">Profundidade > informação</p>
+
+      <!-- Brand -->
+      <div class="brand">
+        <img class="brand-photo" src="profile-photo.png" alt="Thiago C.Lima">
+        <div class="brand-info">
+          <span class="brand-name">Thiago C.Lima</span>
+          <span class="brand-handle">@othiago-clima</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

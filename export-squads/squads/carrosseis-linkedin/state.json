@@ -1,0 +1,34 @@
+{
+  "squad": "carrosseis-linkedin",
+  "status": "running",
+  "step": { "current": 1, "total": 9, "label": "step-01-theme-input" },
+  "agents": [
+    {
+      "id": "copywriter",
+      "name": "Caio Carrossel",
+      "icon": "🎯",
+      "status": "idle",
+      "deliverTo": null,
+      "desk": { "col": 1, "row": 1 }
+    },
+    {
+      "id": "designer",
+      "name": "Denis Design",
+      "icon": "🎨",
+      "status": "idle",
+      "deliverTo": null,
+      "desk": { "col": 2, "row": 1 }
+    },
+    {
+      "id": "reviewer",
+      "name": "Raul Revisão",
+      "icon": "✅",
+      "status": "idle",
+      "deliverTo": null,
+      "desk": { "col": 3, "row": 1 }
+    }
+  ],
+  "handoff": null,
+  "startedAt": "2026-03-24T14:31:41-03:00",
+  "updatedAt": "2026-03-24T14:31:41-03:00"
+}

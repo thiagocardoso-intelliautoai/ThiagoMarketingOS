@@ -1,0 +1,147 @@
+<!--
+  Cover: Pipeline B2B 2026 — 3 Camadas
+  Style: Bold Statement
+  Squad: capas-linkedin
+  Viewport: 1080 x 1350 (4:5, feed LinkedIn/Instagram)
+  
+  Design System v2:
+  - BG: #0A0A0A puro (sem blue tint)
+  - Text: #FFFFFF (19.6:1 contrast)
+  - Accent: #FFD700 (gold) for "3 camadas"
+  - Subtitle: #9CA3AF
+  - Brand: #666666
+  - Font: Inter 56px/700 hero, 34px/500 subtitle
+  - Words: 19 total ✅
+  - FIX: Removed blue gradient + blue glow that was cutting across
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      background: #0A0A0A;
+    }
+
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      padding: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* ── Glow sutil dourado (sem azul) ── */
+    .bg-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.03) 0%, transparent 70%);
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+
+    /* ── Texto principal (hero) ── */
+    .hero-text {
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #FFFFFF;
+      text-align: center;
+      z-index: 2;
+      max-width: 920px;
+      letter-spacing: -0.02em;
+    }
+
+    .highlight {
+      color: #FFD700;
+      font-weight: 800;
+    }
+
+    /* ── Subtítulo ── */
+    .subtitle {
+      font-size: 34px;
+      font-weight: 500;
+      color: #9CA3AF;
+      text-align: center;
+      z-index: 2;
+      margin-top: 40px;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Divider decorativo ── */
+    .divider {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #FFD700, #F59E0B);
+      border-radius: 2px;
+      margin-top: 48px;
+      z-index: 2;
+    }
+
+    /* ── Marca ── */
+    .brand {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+    }
+
+    .brand-photo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 500;
+      color: #666666;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="bg-glow"></div>
+
+    <h1 class="hero-text">
+      O pipeline B2B em 2026 tem
+      <span class="highlight">3 camadas</span>
+      que a maioria dos times ignora.
+    </h1>
+
+    <p class="subtitle">Esse é o mapa completo.</p>
+
+    <div class="divider"></div>
+
+    <div class="brand">
+      <img class="brand-photo" src="/assets/profile-photo.png" alt="Thiago C.Lima">
+      <span class="brand-name">Thiago C.Lima</span>
+    </div>
+  </div>
+</body>
+</html>

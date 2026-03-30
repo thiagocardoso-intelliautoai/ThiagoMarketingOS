@@ -1,0 +1,211 @@
+<!--
+  Capa: 70% sobrecarregados com IA — e 43% não batem a meta
+  Estilo: 3 — Micro-Infográfico (dado/métrica hero)
+  Viewport: 1080 x 1350 (4:5, feed LinkedIn/Instagram)
+  
+  ANTI-AI DESIGN:
+  ✅ Zero gradient text fill — cores sólidas flat
+  ✅ Zero radial glow — fundo limpo com noise texture
+  ✅ Zero ícones literais — tipografia comunica sozinha
+  ✅ Assimetria intencional — alinhado à esquerda, grid editorial
+  ✅ Máx. 2 elementos decorativos — regra horizontal + barra lateral
+  ✅ Referência: Bloomberg data viz / The Economist infographic
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      background: #0A0A0A;
+    }
+
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      padding: 100px 100px 80px 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* ── Noise texture (orgânico, anti-IA) ── */
+    .cover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 128px 128px;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* ── Acento lateral (sutil, elemento decorativo 1/2) ── */
+    .side-rule {
+      position: absolute;
+      left: 60px;
+      top: 280px;
+      width: 3px;
+      height: 180px;
+      background: #D97706;
+      z-index: 2;
+    }
+
+    /* ── Contexto superior (label discreto) ── */
+    .context-tag {
+      font-size: 14px;
+      font-weight: 600;
+      color: #D97706;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 56px;
+      z-index: 2;
+    }
+
+    /* ── Número hero ── */
+    .data-number {
+      font-size: 160px;
+      font-weight: 900;
+      line-height: 0.85;
+      color: #F5F5F5;
+      letter-spacing: -0.06em;
+      z-index: 2;
+      margin-bottom: 24px;
+    }
+
+    /* ── Legenda principal ── */
+    .data-label {
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: #A1A1AA;
+      z-index: 2;
+      max-width: 680px;
+      margin-bottom: 72px;
+    }
+
+    .data-label strong {
+      color: #E4E4E7;
+      font-weight: 600;
+    }
+
+    /* ── Regra horizontal (elemento decorativo 2/2) ── */
+    .rule {
+      width: 64px;
+      height: 2px;
+      background: #3F3F46;
+      margin-bottom: 72px;
+      z-index: 2;
+    }
+
+    /* ── Bloco secundário ── */
+    .secondary-block {
+      z-index: 2;
+      margin-bottom: 24px;
+    }
+
+    .secondary-number {
+      font-size: 72px;
+      font-weight: 800;
+      line-height: 0.9;
+      color: #D97706;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+    }
+
+    .secondary-label {
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #71717A;
+      max-width: 560px;
+    }
+
+    /* ── Fonte citada ── */
+    .source {
+      font-size: 15px;
+      font-weight: 400;
+      color: #52525B;
+      z-index: 2;
+      margin-top: 64px;
+    }
+
+    /* ── Marca ── */
+    .brand {
+      position: absolute;
+      bottom: 64px;
+      left: 100px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+    }
+
+    .brand-photo {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      opacity: 0.6;
+    }
+
+    .brand-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: #52525B;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <!-- Acento lateral -->
+    <div class="side-rule"></div>
+
+    <!-- Contexto -->
+    <p class="context-tag">Pesquisa B2B Sales Tech 2025</p>
+
+    <!-- NÚMERO HERO -->
+    <div class="data-number">70%</div>
+
+    <!-- LEGENDA -->
+    <p class="data-label">
+      dos vendedores B2B se sentem<br>
+      <strong>sobrecarregados com ferramentas de IA</strong>
+    </p>
+
+    <!-- Regra horizontal -->
+    <div class="rule"></div>
+
+    <!-- DADO SECUNDÁRIO -->
+    <div class="secondary-block">
+      <div class="secondary-number">43%</div>
+      <p class="secondary-label">
+        menos propensos a bater a meta de vendas
+      </p>
+    </div>
+
+    <!-- Fonte -->
+    <p class="source">Fonte: B2B Sales Tech Report, 2025</p>
+
+    <!-- Marca -->
+    <div class="brand">
+      <img class="brand-photo" src="../../../assets/profile-photo.png" alt="Thiago C.Lima">
+      <span class="brand-name">Thiago C.Lima</span>
+    </div>
+  </div>
+</body>
+</html>

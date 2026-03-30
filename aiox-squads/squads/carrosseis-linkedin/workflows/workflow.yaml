@@ -1,0 +1,125 @@
+# Carrosséis LinkedIn — Workflow
+# Pipeline de 11 steps com 5 checkpoints humanos + 2 automações
+
+name: "Carrosséis LinkedIn Pipeline"
+squad: carrosseis-linkedin
+
+steps:
+  # ──────────────────────────────────────────
+  # FASE 1: Input do tema
+  # ──────────────────────────────────────────
+  - id: step-01-theme-input
+    type: checkpoint
+    label: "Tema e Estilo Visual"
+    description: >
+      Usuário informa o tema do carrossel e escolhe o estilo visual:
+      1 = Twitter-style (fundo preto, print de autoridade)
+      2 = Editorial Clean (fundo claro, tipografia bold, premium)
+      3 = Data-Driven (fundo navy, números gigantes, dados)
+      4 = Notebook Raw (papel craft, escrita manual, anti-AI)
+      
+      Guia rápido de seleção:
+      - Tem print/screenshot? → Twitter-style
+      - É framework/tutorial? → Editorial Clean
+      - Tem dados/números? → Data-Driven
+      - Opinião/provocação? → Notebook Raw
+      - Não sabe? → Editorial Clean (mais versátil)
+    output: data/theme-input.md
+
+  # ──────────────────────────────────────────
+  # FASE 2: Geração de ângulos
+  # ──────────────────────────────────────────
+  - id: step-02-generate-angles
+    type: agent
+    agent: copywriter
+    task: tasks/generate-angles.md
+    input: data/theme-input.md
+    output: output/angles.md
+
+  - id: step-03-select-angle
+    type: checkpoint
+    label: "Seleção do Ângulo"
+    description: >
+      Usuário escolhe 1 dos 5 ângulos gerados (Medo, Oportunidade,
+      Educacional, Contrário, Inspiracional) e confirma o tom de voz.
+    input: output/angles.md
+
+  # ──────────────────────────────────────────
+  # FASE 3: Criação do copy
+  # ──────────────────────────────────────────
+  - id: step-04-create-copy
+    type: agent
+    agent: copywriter
+    task: tasks/create-copy.md
+    input: output/angles.md
+    output: output/carousel-copy.md
+
+  - id: step-05-approve-copy
+    type: checkpoint
+    label: "Aprovação do Copy"
+    description: >
+      Usuário revisa caption + slides. Pode solicitar ajustes ou aprovar.
+    input: output/carousel-copy.md
+
+  # ──────────────────────────────────────────
+  # FASE 4: Design visual dos slides
+  # ──────────────────────────────────────────
+  - id: step-06-create-slides
+    type: agent
+    agent: designer
+    task: tasks/create-slides.md
+    input: output/carousel-copy.md
+    output: output/slides-report.md
+
+  - id: step-07-approve-visual
+    type: checkpoint
+    label: "Aprovação Visual"
+    description: >
+      Usuário verifica os slides renderizados (HTML + PNG).
+      Pode pedir ajustes de cor, fonte, layout ou aprovar.
+    input: output/slides-report.md
+
+  # ──────────────────────────────────────────
+  # FASE 5: Revisão e aprovação final
+  # ──────────────────────────────────────────
+  - id: step-08-review
+    type: agent
+    agent: reviewer
+    task: tasks/review.md
+    input: output/slides-report.md
+    output: output/review.md
+    on_reject: step-04-create-copy
+
+  - id: step-09-final-approval
+    type: checkpoint
+    label: "Aprovação Final"
+    description: >
+      Usuário revisa o parecer do Raul Revisão.
+      Se APPROVE: carrossel pronto para publicação.
+      Se REJECT: volta ao step-04 para ajustes.
+    input: output/review.md
+
+  # ──────────────────────────────────────────
+  # FASE 6: Exportação automática (pós-aprovação)
+  # ──────────────────────────────────────────
+  - id: step-10-generate-pdf
+    type: agent
+    agent: designer
+    task: tasks/generate-pdf.md
+    input: output/slides-report.md
+    output: output/carousel-pdf-report.md
+    description: >
+      Gera PDF com todos os PNGs em sequência (determinístico via Node.js script).
+      Comando: node scripts/png-to-pdf.js output/slides/{slug}
+
+  - id: step-11-publish-to-ccc
+    type: agent
+    agent: designer
+    task: tasks/publish-to-ccc.md
+    input:
+      - output/carousel-copy.md
+      - output/carousel-pdf-report.md
+    output: output/publish-report.md
+    description: >
+      Publica o post no Content Command Center via inbox.json.
+      O post aparece automaticamente em http://localhost:5500/

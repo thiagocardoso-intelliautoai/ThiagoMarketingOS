@@ -1,0 +1,256 @@
+# Workflow: Pesquisa e Conteúdo LinkedIn
+# Pipeline com 5 modos de operação — da pesquisa semanal à aprovação final do post
+# v2.0 — Pipeline otimizado (10→7 steps nos modos 1/2/3)
+
+name: pesquisa-conteudo-linkedin
+version: "2.0"
+description: >
+  Pipeline otimizado para criação de posts de texto LinkedIn.
+  5 modos de operação + 4 checkpoints humanos obrigatórios.
+  Modos 1/2/3 passam por pesquisa → seleção/decisão → criação.
+  Modo 4 pula pesquisa e vai direto para criação.
+  Modo 5 gera planejamento mensal de 12 posts.
+  Revisão de qualidade integrada no Step 07 (sem step separado do Revisor).
+
+# ─── Steps ─────────────────────────────────────────────────
+
+steps:
+
+  # ─── STEP 00: SELEÇÃO DE MODO ────────────────────────────
+  - id: step-00
+    name: "⏸️ CHECKPOINT — Seleção de Modo"
+    type: human-checkpoint
+    task: tasks/00-selecao-modo.md
+    description: >
+      Thiago escolhe o modo de operação:
+      1 = Pesquisa Semanal (fontes Tier 1/2/3)
+      2 = Benchmark de Concorrentes (análise de top players)
+      3 = Briefing On-Demand (tema fornecido pelo usuário)
+      4 = Escrever Post Direto (pula pesquisa, vai pro hooks)
+      5 = Planejamento Mensal (12 posts de uma vez, 4 semanas)
+    output: modo-selecionado
+    branching:
+      - condition: "modo == 1"
+        goto: step-01-pesquisa
+      - condition: "modo == 2"
+        goto: step-01-benchmark
+      - condition: "modo == 3"
+        goto: step-01-briefing
+      - condition: "modo == 4"
+        goto: step-02
+      - condition: "modo == 5"
+        goto: step-01-planejamento-mensal
+
+  # ─── FASE 1: PESQUISA (3 modos) ─────────────────────────
+
+  # MODO 1 — Pesquisa Semanal
+  - id: step-01-pesquisa
+    name: "Pesquisa Semanal"
+    agent: pesquisador
+    task: tasks/01-pesquisa-semanal.md
+    data:
+      - data/research-sources.md
+      - data/competitors.md
+      - data/linkedin-strategy.md
+    output: output/research-report.md
+    description: >
+      Pesquisador varre fontes Tier 1/2/3 e identifica 5-10 insights
+      relevantes para o ICP. Filtra para 3-5 com potencial de post.
+      Inclui Contexto BR e Contra-argumentos para cada insight.
+    next: step-02
+
+  # MODO 2 — Benchmark de Concorrentes
+  - id: step-01-benchmark
+    name: "Benchmark de Concorrentes"
+    agent: pesquisador
+    task: tasks/01-benchmark-concorrentes.md
+    data:
+      - data/competitors.md
+      - data/linkedin-strategy.md
+      - data/research-sources.md
+    output: output/research-report.md
+    description: >
+      Pesquisador analisa posts recentes dos concorrentes gringos,
+      extrai frameworks e ângulos (nunca copy), e gera ideias.
+      Inclui Contexto BR e Contra-argumentos para cada insight.
+    next: step-02
+
+  # MODO 3 — Briefing On-Demand
+  - id: step-01-briefing
+    name: "Briefing On-Demand"
+    agent: pesquisador
+    task: tasks/01-briefing-on-demand.md
+    data:
+      - data/research-sources.md
+      - data/linkedin-strategy.md
+    input: tema-fornecido
+    output: output/research-report.md
+    description: >
+      Pesquisador pesquisa a fundo um tema fornecido pelo usuário,
+      cruzando com fontes Tier 1-3. Entrega briefing completo.
+      Inclui Contexto BR e Contra-argumentos para cada insight.
+    next: step-02
+
+  # ─── MODO 5: PLANEJAMENTO MENSAL (12 POSTS) ─────────────
+
+  - id: step-01-planejamento-mensal
+    name: "Planejamento Mensal — 12 Posts"
+    agent: redator
+    task: tasks/05-planejamento-mensal.md
+    data:
+      - data/linkedin-strategy.md
+      - data/tone-of-voice.md
+      - data/hook-structures.md
+      - data/post-structure-linkedin.md
+    input: direcao-tematica
+    output: output/planejamento-mensal-tabela.md
+    description: >
+      Redator gera tabela completa de 12 posts distribuídos em 4 semanas
+      usando metodologia DTC + ACRE. Cada post com hook real, tipo de
+      conteúdo e direcionamento de escrita.
+    next: step-02-planejamento
+
+  - id: step-02-planejamento
+    name: "⏸️ CHECKPOINT — Revisão do Planejamento"
+    type: human-checkpoint
+    description: >
+      Thiago revisa a tabela de 12 posts. Pode aprovar, ajustar posts
+      individuais, trocar tipos de conteúdo ou pedir nova geração.
+      Após aprovação, cada post é salvo individualmente no armazém.
+    input: output/planejamento-mensal-tabela.md
+    output:
+      - output/planejamento-mensal/post-01.md
+      - output/planejamento-mensal/post-02.md
+      - output/planejamento-mensal/post-03.md
+      - output/planejamento-mensal/post-04.md
+      - output/planejamento-mensal/post-05.md
+      - output/planejamento-mensal/post-06.md
+      - output/planejamento-mensal/post-07.md
+      - output/planejamento-mensal/post-08.md
+      - output/planejamento-mensal/post-09.md
+      - output/planejamento-mensal/post-10.md
+      - output/planejamento-mensal/post-11.md
+      - output/planejamento-mensal/post-12.md
+
+  # ─── FASE 1.5: SELEÇÃO E DECISÃO (fusão steps 02+04) ────
+
+  - id: step-02
+    name: "⏸️ CHECKPOINT — Seleção e Decisão"
+    type: human-checkpoint
+    description: >
+      Thiago revisa os insights da pesquisa e toma a decisão completa:
+      1. Escolhe qual insight vira post AGORA
+      2. Os demais são salvos automaticamente no Armazém de Ideias
+      No Modo 4, o usuário pode escolher uma ideia do armazém
+      ou fornecer uma ideia nova diretamente.
+    input: output/research-report.md
+    output:
+      - output/armazem/ideias.md    # Ideias para uso futuro
+      - ideia-aprovada               # Ideia que segue para hooks
+
+  # ─── FASE 2: CRIAÇÃO ────────────────────────────────────
+  - id: step-05
+    name: "Criação de Hooks"
+    agent: redator
+    task: tasks/05-criacao-hooks.md
+    data:
+      - data/hook-structures.md
+      - data/tone-of-voice.md
+      - data/linkedin-strategy.md
+    input: ideia-aprovada
+    output: output/hooks.md
+    description: >
+      Redator cria 3 opções de hook usando estruturas diferentes de
+      hook-structures.md. Max 210 chars cada. Recomenda o mais forte.
+
+  - id: step-06
+    name: "⏸️ CHECKPOINT — Escolha do Hook"
+    type: human-checkpoint
+    description: >
+      Thiago escolhe o hook que mais funciona (ou pede variações).
+      Hook aprovado segue para criação do post final.
+    input: output/hooks.md
+    output: hook-escolhido
+
+  - id: step-07
+    name: "Criação do Post Final"
+    agent: redator
+    task: tasks/07-estruturacao-post.md
+    data:
+      - data/post-structure-linkedin.md
+      - data/tone-of-voice.md
+      - data/linkedin-strategy.md
+      - data/hook-structures.md
+    checklist: checklists/review-checklist.md
+    input: hook-escolhido
+    output: output/post-final.md
+    description: >
+      Redator estrutura post completo usando framework adequado
+      (PAS, Contraste, Storytelling, Lista, Declaração+Defesa).
+      Aplica revisão de qualidade integrada (4 blocos com peso +
+      6 veto conditions + score ponderado). Score ≥ 80% = segue
+      para aprovação. < 80% = refaz automaticamente (max 1 retry).
+    on_failure:
+      max_retries: 1
+      fallback: "Reescrever do zero com nova abordagem"
+
+  # ─── FASE 3: APROVAÇÃO + INTEGRAÇÃO CCC ──────────────────
+  - id: step-09
+    name: "⏸️ CHECKPOINT FINAL — Aprovação do Thiago"
+    type: human-checkpoint
+    description: >
+      Thiago lê o post final, pode aprovar ou pedir ajustes.
+      Se aprovado:
+      1. Salva em output/post-final.md
+      2. Escreve o post em content-command-center/data/inbox.json
+         (formato JSON com title, theme, pillar, hookText, body, cta, etc.)
+      3. O Content Command Center importa automaticamente no próximo refresh
+      Postar entre 7h-9h BRT. Responder comentários em até 2h.
+    input: output/post-final.md
+    output: output/post-final.md
+    post_approval_actions:
+      - type: file-write
+        target: "content-command-center/data/inbox.json"
+        format: json
+        schema: |
+          {
+            "posts": [{
+              "title": "<título do post>",
+              "theme": "<tema central>",
+              "pillar": "<A|C|R|E>",
+              "hookText": "<texto do hook aprovado>",
+              "hookStructure": "<estrutura de hook usada>",
+              "framework": "<framework usado>",
+              "body": "<corpo completo do post>",
+              "cta": "<call to action>",
+              "sources": ["<fonte1>", "<fonte2>"],
+              "reviewScore": "<score 0-100>",
+              "status": "aprovado",
+              "urgency": "<urgente|relevante|pode_esperar>"
+            }]
+          }
+        instruction: >
+          Após aprovação do Thiago, salvar o post aprovado no arquivo
+          content-command-center/data/inbox.json. O Content Command Center
+          importará automaticamente no próximo refresh.
+          Dedup automática por título — posts já existentes são ignorados.
+
+# ─── Resumo dos Modos ─────────────────────────────────────
+# Modo 1: step-00 → step-01-pesquisa  → step-02 → step-05 → step-06 → step-07 → step-09
+# Modo 2: step-00 → step-01-benchmark → step-02 → step-05 → step-06 → step-07 → step-09
+# Modo 3: step-00 → step-01-briefing  → step-02 → step-05 → step-06 → step-07 → step-09
+# Modo 4: step-00 → step-02 (pula pesquisa) → step-05 → step-06 → step-07 → step-09
+# Modo 5: step-00 → step-01-planejamento-mensal → step-02-planejamento (12 posts individuais)
+
+# ─── Resumo dos Checkpoints ───────────────────────────────
+# step-00: Seleção de modo (1, 2, 3, 4 ou 5)
+# step-02: Seleção e Decisão (qual vira post, quais guardam no armazém)
+# step-02-planejamento: Revisão do planejamento mensal (12 posts)
+# step-06: Escolha do hook (qual das 3 opções)
+# step-09: Aprovação final + Salvar no Content Command Center
+
+# ─── Mudanças v2.0 ────────────────────────────────────────
+# REMOVIDO: step-03 (Aprofundamento) — absorvido pelo Step 01 com Contexto BR
+# REMOVIDO: step-04 (Armazém checkpoint separado) — fundido com Step 02
+# REMOVIDO: step-08 (Revisão separada do Revisor) — integrado no Step 07
+# RESULTADO: 10 → 7 steps (Modos 1/2/3), 7 → 6 steps (Modo 4)

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      background: #000000;
+      font-family: 'Inter', sans-serif;
+      padding: 60px 64px 48px 64px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Profile */
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 56px;
+    }
+    .profile-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #222;
+      flex-shrink: 0;
+    }
+    .profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .profile-info { display: flex; flex-direction: column; gap: 2px; }
+    .profile-name { font-size: 26px; font-weight: 700; color: #FFFFFF; }
+    .profile-handle { font-size: 20px; font-weight: 500; color: #6B7A8D; }
+
+    /* Main text */
+    .hook-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 32px;
+    }
+    .hook-label {
+      font-size: 20px;
+      font-weight: 600;
+      color: #4DA6FF;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .hook-text {
+      font-size: 60px;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.15;
+    }
+    .hook-text .accent { color: #4DA6FF; }
+    .hook-sub {
+      font-size: 32px;
+      font-weight: 500;
+      color: #9EB3C8;
+      line-height: 1.4;
+    }
+
+    /* Authority box */
+    .authority-box {
+      background: #0F1923;
+      border: 1px solid #1E2D3D;
+      border-left: 4px solid #4DA6FF;
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-top: 32px;
+    }
+    .authority-quote {
+      font-size: 26px;
+      font-weight: 600;
+      color: #FFFFFF;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .authority-source {
+      font-size: 20px;
+      font-weight: 500;
+      color: #4DA6FF;
+    }
+
+    /* Swipe cta */
+    .swipe-hint {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 36px;
+    }
+    .swipe-text {
+      font-size: 22px;
+      font-weight: 600;
+      color: #4DA6FF;
+    }
+    .swipe-arrow { font-size: 22px; color: #4DA6FF; }
+  </style>
+</head>
+<body>
+
+  <!-- Profile -->
+  <div class="profile">
+    <div class="profile-photo">
+      <img src="../../assets/profile-photo.png" alt="Thiago C.Lima">
+    </div>
+    <div class="profile-info">
+      <span class="profile-name">Thiago C.Lima</span>
+      <span class="profile-handle">@othiago-clima</span>
+    </div>
+  </div>
+
+  <!-- Hook -->
+  <div class="hook-area">
+    <div class="hook-label">Trade-offs em Vendas B2B</div>
+    <div class="hook-text">
+      O erro <span class="accent">matemático</span> que<br>
+      99% dos fundadores<br>
+      cometem ao buscar leads.
+    </div>
+    <div class="hook-sub">
+      Alex Hormozi chama isso de<br>
+      "A Falácia da Casa na Praia".
+    </div>
+
+    <!-- Authority box simulating a quote -->
+    <div class="authority-box">
+      <div class="authority-quote">
+        "You want the oceanfront house AND the ski chalet.<br>
+        That's structurally impossible."
+      </div>
+      <div class="authority-source">— Alex Hormozi · $100M Offers</div>
+    </div>
+
+    <div class="swipe-hint">
+      <span class="swipe-text">Deslize para entender o erro</span>
+      <span class="swipe-arrow">→</span>
+    </div>
+  </div>
+
+</body>
+</html>

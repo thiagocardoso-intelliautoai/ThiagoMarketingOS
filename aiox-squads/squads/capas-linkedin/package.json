@@ -1,0 +1,19 @@
+{
+  "name": "capas-linkedin",
+  "version": "1.0.0",
+  "description": "Squad para criação de capas visuais (imagem única) para posts de texto no LinkedIn e Instagram.",
+  "main": "index.js",
+  "scripts": {
+    "render": "node scripts/render-cover.js",
+    "generate-pro": "node scripts/generate-cover-pro.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^1.47.0",
+    "dotenv": "^17.3.1",
+    "puppeteer": "^24.40.0"
+  }
+}
