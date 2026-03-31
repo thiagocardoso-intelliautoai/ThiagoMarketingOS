@@ -283,6 +283,8 @@ export const DataStore = {
         if (error) throw error;
       } catch (err) {
         console.error('[DataStore] Error deleting post from Supabase:', err.message);
+        // If RLS blocks delete, remove from local cache only (soft delete)
+        console.warn('[DataStore] Post removed locally. Server may require elevated permissions.');
       }
     }
 
