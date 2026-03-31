@@ -24,10 +24,11 @@ Este arquivo define as instrucoes do projeto para o Codex CLI.
 ## Project Map
 
 - Core framework: `.aiox-core/`
-- CLI entrypoints: `bin/`
-- Shared packages: `packages/`
-- Tests: `tests/`
-- Docs: `docs/`
+- Stories: `docs/stories/`
+- Architecture docs: `docs/architecture/`
+- Supabase migrations: `supabase/migrations/`
+- Dashboard: `../content-command-center/`
+- Squads: `../aiox-squads/squads/`
 <!-- AIOX-MANAGED-END: codebase -->
 
 <!-- AIOX-MANAGED-START: commands -->

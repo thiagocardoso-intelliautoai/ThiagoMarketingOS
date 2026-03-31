@@ -1,4 +1,0 @@
-name,role,path,execution
-Caio Carrossel,Copywriter,./agents/copywriter.agent.md,inline
-Denis Design,Designer Visual,./agents/designer.agent.md,inline
-Raul Revisão,Revisor de Qualidade,./agents/reviewer.agent.md,inline

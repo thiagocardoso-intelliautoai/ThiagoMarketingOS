@@ -8,6 +8,8 @@ import {
   deleteSourceImage,
   getPublicUrl
 } from './supabase.js';
+import { showToast } from './toast.js';
+import { closeModal } from './modal.js';
 
 // ─── STATE ───
 let currentCategory = null;
@@ -583,24 +585,3 @@ function orientationLabel(o) {
   return map[o] || o;
 }
 
-function closeModal() {
-  const overlay = document.getElementById('modal-overlay');
-  overlay.classList.remove('modal-open');
-  document.body.style.overflow = '';
-}
-
-function showToast(message, type = 'info') {
-  const container = document.getElementById('toast-container');
-  if (!container) return;
-
-  const toast = document.createElement('div');
-  toast.className = `toast toast-${type}`;
-  toast.textContent = message;
-  container.appendChild(toast);
-
-  requestAnimationFrame(() => toast.classList.add('toast-visible'));
-  setTimeout(() => {
-    toast.classList.remove('toast-visible');
-    setTimeout(() => toast.remove(), 300);
-  }, 3500);
-}

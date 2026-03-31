@@ -61,3 +61,16 @@ content-command-center/
 ## Persistência
 
 Dados são salvos no `localStorage` do browser. Use Export/Import para backup.
+
+## Supabase Integration
+
+Dados são armazenados no Supabase (PostgreSQL + Storage):
+- **Tabelas:** `posts`, `covers`, `carousels`, `carousel_slides`, `source_photos`
+- **Storage:** Bucket `content-assets` (capas, carrosséis, fotos de referência)
+- **Fallback:** Se o Supabase estiver offline, o CCC funciona com localStorage
+
+### Settings Drawer
+
+Acessível via ícone ⚙️ no header:
+- **Banco de Imagens** — CRUD de fotos de referência (Supabase Storage)
+- *Em breve:* Perfil LinkedIn, Estilos de Capa, Conexão Supabase

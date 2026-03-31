@@ -31,3 +31,25 @@ export const MODE_LABELS = {
     badge: '12 posts'
   },
 };
+
+// ─── PILLAR CONFIG ───
+// Extracted from render.js [HARDENING-002]
+export const PILLAR_CONFIG = {
+  A: { label: 'Alcance', cssClass: 'badge-autoridade' },
+  C: { label: 'Credibilidade', cssClass: 'badge-conexao' },
+  R: { label: 'Retorno', cssClass: 'badge-resultado' },
+  E: { label: 'Engajamento', cssClass: 'badge-engajamento' },
+};
+
+export const STATUS_LABELS = {
+  armazem: 'Armazém',
+  em_producao: 'Em produção',
+  aprovado: 'Aprovado',
+  publicado: 'Publicado',
+};
+
+export const URGENCY_LABELS = {
+  urgente: 'Urgente',
+  relevante: 'Relevante',
+  pode_esperar: 'Pode esperar',
+};

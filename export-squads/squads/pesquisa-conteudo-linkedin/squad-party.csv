@@ -1,4 +1,0 @@
-name,role,path,execution
-Pedro Pesquisa,Pesquisador de Tendências,./agents/pesquisador.agent.md,inline
-Ricardo Redator,Copywriter de Posts LinkedIn,./agents/redator.agent.md,inline
-Rafael Revisor,Revisor de Qualidade,./agents/revisor.agent.md,inline

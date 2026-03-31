@@ -1,4 +1,12 @@
 {
+  "name": "thiago-marketing-os",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "aiox-squads",
+    "aiox-squads/squads/capas-linkedin",
+    "aiox-squads/squads/carrosseis-linkedin"
+  ],
   "dependencies": {
     "@supabase/supabase-js": "^2.100.1",
     "playwright": "^1.58.2"
