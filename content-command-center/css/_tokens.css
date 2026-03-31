@@ -1,0 +1,83 @@
+/* ═══════════════════════════════════════════════════════════
+   Content Command Center — Design Tokens
+   Charcoal & Teal · Anti-AI · Editorial Premium
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+/* ─── DESIGN TOKENS — Charcoal & Teal ─── */
+:root {
+  /* Backgrounds (Charcoal palette) */
+  --bg-primary: #1A1A2E;
+  --bg-secondary: #27293D;
+  --bg-tertiary: #1E2035;
+  --bg-card: rgba(39, 41, 61, 0.55);
+  --bg-card-hover: rgba(39, 41, 61, 0.75);
+  --bg-card-active: rgba(39, 41, 61, 0.85);
+  --bg-surface: rgba(39, 41, 61, 0.35);
+
+  /* Text (Chalk / Mist / Fog) */
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-inverse: #1A1A2E;
+
+  /* Accents (Teal primary, Amber secondary) */
+  --accent-primary: #14B8A6;
+  --accent-secondary: #F59E0B;
+  --accent-green: #10B981;
+  --accent-amber: #F59E0B;
+  --accent-red: #EF4444;
+  --accent-cyan: #06B6D4;
+  --accent-blue: #3B82F6;
+
+  /* Borders (Zinc) */
+  --border: #3F3F5C;
+  --border-subtle: rgba(63, 63, 92, 0.5);
+
+  /* Glass */
+  --glass-bg: rgba(39, 41, 61, 0.4);
+  --glass-border: rgba(63, 63, 92, 0.5);
+  --glass-border-hover: rgba(63, 63, 92, 0.8);
+  --glass-blur: blur(24px);
+
+  /* Spacing */
+  --space-2xs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  /* Radius — Anti-AI: content cards get minimal radius */
+  --radius-none: 0px;
+  --radius-card: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 14px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* Fonts */
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Shadows (neutral, no colored glow) */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.2);
+  --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.3);
+  --shadow-float: 0 20px 60px rgba(0, 0, 0, 0.35);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-smooth: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}

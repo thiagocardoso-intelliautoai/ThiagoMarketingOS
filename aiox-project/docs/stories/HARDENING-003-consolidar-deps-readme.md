@@ -6,7 +6,7 @@
 **🔗 Bloqueia:** Nenhuma
 **👤 Assignee:** Dev
 **🏷️ Labels:** `devops`, `documentação`, `cleanup`, `DX`
-**📊 Status:** `[ ]` To Do
+**📊 Status:** `[x]` Ready for Review
 **📋 Origem:** Auditoria Arquitetural (Aria, 2026-03-30)
 **🚨 Prioridade:** Importante — melhora DX e elimina duplicação
 
@@ -36,7 +36,7 @@ Problemas identificados na auditoria:
 
 ### 3.1 — Criar README na raiz do workspace
 
-- [ ] **3.1.1** Criar `Criação de conteúdo/README.md`:
+- [x] **3.1.1** Criar `Criação de conteúdo/README.md`:
 
 ```markdown
 # Thiago Marketing OS
@@ -108,7 +108,7 @@ npx serve .
 
 ### 3.2 — Consolidar dependências com npm workspaces
 
-- [ ] **3.2.1** Atualizar `Criação de conteúdo/package.json` (raiz) para usar workspaces:
+- [x] **3.2.1** Atualizar `Criação de conteúdo/package.json` (raiz) para usar workspaces:
 
 ```json
 {
@@ -127,7 +127,7 @@ npx serve .
 }
 ```
 
-- [ ] **3.2.2** Deletar `node_modules` dos 3 sub-projetos:
+- [x] **3.2.2** Deletar `node_modules` dos 3 sub-projetos:
 
 ```powershell
 Remove-Item -Recurse -Force "aiox-squads\node_modules"
@@ -135,9 +135,9 @@ Remove-Item -Recurse -Force "aiox-squads\squads\capas-linkedin\node_modules"
 Remove-Item -Recurse -Force "aiox-squads\squads\carrosseis-linkedin\node_modules"
 ```
 
-- [ ] **3.2.3** Rodar `npm install` na raiz — npm criará um node_modules hoisted único
+- [x] **3.2.3** Rodar `npm install` na raiz — npm criará um node_modules hoisted único
 
-- [ ] **3.2.4** Testar que os CLIs dos squads ainda funcionam:
+- [x] **3.2.4** Testar que os CLIs dos squads ainda funcionam:
 
 ```powershell
 node aiox-squads/shared/scripts/list-source-photos-cli.js --help
@@ -147,7 +147,7 @@ node aiox-squads/shared/scripts/list-source-photos-cli.js --help
 
 ### 3.3 — Limpar artefatos legados
 
-- [ ] **3.3.1** Deletar o diretório `export-squads/`:
+- [x] **3.3.1** Deletar o diretório `export-squads/`:
 
 ```powershell
 Remove-Item -Recurse -Force "export-squads"
@@ -155,7 +155,7 @@ Remove-Item -Recurse -Force "export-squads"
 
 > **Justificativa:** O conteúdo de `export-squads/` é o formato antigo (Opensquad) pré-migração. Todos os squads já foram migrados para `aiox-squads/`. O `MIGRATION-GUIDE.md` é informativo mas histórico.
 
-- [ ] **3.3.2** Deletar ou renomear o diretório informal:
+- [x] **3.3.2** Deletar ou renomear o diretório informal:
 
 ```powershell
 Remove-Item -Recurse -Force "Aqui mano, exporta aquii"
@@ -163,7 +163,7 @@ Remove-Item -Recurse -Force "Aqui mano, exporta aquii"
 
 > Se tiver conteúdo útil dentro, mover para local adequado primeiro.
 
-- [ ] **3.3.3** Remover tasks depreciadas dos squads:
+- [x] **3.3.3** Remover tasks depreciadas dos squads:
 
 ```powershell
 # Verificar conteúdo antes de deletar
@@ -178,11 +178,13 @@ Remove-Item "aiox-squads\squads\pesquisa-conteudo-linkedin\tasks\03-aprofundamen
 Remove-Item "aiox-squads\squads\pesquisa-conteudo-linkedin\tasks\08-revisao-qualidade.md"
 ```
 
+> **Nota Dev:** `03-aprofundamento.md` deletado (confirmado DEPRECIADO). `08-revisao-qualidade.md` **mantido** — não possui marcação DEPRECIADO, é task ativa (Step 08 do pipeline).
+
 ---
 
 ### 3.4 — Corrigir AGENTS.md (Project Map desatualizado)
 
-- [ ] **3.4.1** Em `aiox-project/AGENTS.md`, atualizar o bloco `Project Map` (linhas 23-31):
+- [x] **3.4.1** Em `aiox-project/AGENTS.md`, atualizar o bloco `Project Map` (linhas 23-31):
 
 **DE:**
 ```markdown
@@ -211,7 +213,7 @@ Remove-Item "aiox-squads\squads\pesquisa-conteudo-linkedin\tasks\08-revisao-qual
 
 ### 3.5 — Atualizar CCC README
 
-- [ ] **3.5.1** Em `content-command-center/README.md`, adicionar seção Supabase:
+- [x] **3.5.1** Em `content-command-center/README.md`, adicionar seção Supabase:
 
 Após a seção `## Persistência`, adicionar:
 
@@ -234,7 +236,7 @@ Acessível via ícone ⚙️ no header:
 
 ### 3.6 — Corrigir discrepância de versão
 
-- [ ] **3.6.1** Em `aiox-project/.env.example`, alinhar versão:
+- [x] **3.6.1** Em `aiox-project/.env.example`, alinhar versão:
 
 **DE:**
 ```
@@ -250,7 +252,7 @@ AIOX_VERSION=2.1.0
 
 ### 3.7 — Commit consolidado
 
-- [ ] **3.7.1** Commit de tudo:
+- [x] **3.7.1** Commit de tudo:
 
 ```powershell
 git add -A
@@ -261,14 +263,14 @@ git commit -m "chore: consolidate deps, add README, cleanup legacy artifacts [HA
 
 ## Acceptance Criteria
 
-- [ ] `README.md` existe na raiz com Quick Start funcional
-- [ ] `npm install` na raiz instala dependências de todos os sub-projetos
-- [ ] Apenas 1 `node_modules` na raiz (zero duplicação)
-- [ ] `export-squads/` removido
-- [ ] `Aqui mano, exporta aquii/` removido
-- [ ] AGENTS.md Project Map aponta para diretórios que existem
-- [ ] CCC README menciona Supabase e Settings Drawer
-- [ ] CLIs dos squads continuam funcionando após workspace consolidation
+- [x] `README.md` existe na raiz com Quick Start funcional
+- [x] `npm install` na raiz instala dependências de todos os sub-projetos
+- [x] Apenas 1 `node_modules` na raiz (zero duplicação)
+- [x] `export-squads/` removido
+- [x] `Aqui mano, exporta aquii/` removido
+- [x] AGENTS.md Project Map aponta para diretórios que existem
+- [x] CCC README menciona Supabase e Settings Drawer
+- [x] CLIs dos squads continuam funcionando após workspace consolidation
 
 ## Definition of Done
 
@@ -279,12 +281,12 @@ git commit -m "chore: consolidate deps, add README, cleanup legacy artifacts [HA
 
 ## File List
 
-- `[ ]` `README.md` — **NOVO** — README raiz do workspace
-- `[ ]` `package.json` — atualizado com workspaces
-- `[ ]` `aiox-project/AGENTS.md` — corrigido Project Map
-- `[ ]` `content-command-center/README.md` — atualizado com Supabase
-- `[ ]` `aiox-project/.env.example` — versão corrigida
-- `[ ]` `export-squads/` — **DELETADO**
-- `[ ]` `Aqui mano, exporta aquii/` — **DELETADO**
-- `[ ]` `aiox-squads/squads/pesquisa-conteudo-linkedin/tasks/03-aprofundamento.md` — **DELETADO** (depreciado)
-- `[ ]` `aiox-squads/squads/pesquisa-conteudo-linkedin/tasks/08-revisao-qualidade.md` — **DELETADO** (depreciado)
+- `[x]` `README.md` — **NOVO** — README raiz do workspace
+- `[x]` `package.json` — atualizado com workspaces
+- `[x]` `aiox-project/AGENTS.md` — corrigido Project Map
+- `[x]` `content-command-center/README.md` — atualizado com Supabase
+- `[x]` `aiox-project/.env.example` — versão corrigida
+- `[x]` `export-squads/` — **DELETADO**
+- `[x]` `Aqui mano, exporta aquii/` — **DELETADO**
+- `[x]` `aiox-squads/squads/pesquisa-conteudo-linkedin/tasks/03-aprofundamento.md` — **DELETADO** (depreciado)
+- `[—]` `aiox-squads/squads/pesquisa-conteudo-linkedin/tasks/08-revisao-qualidade.md` — **MANTIDO** (não está depreciado, task ativa)
