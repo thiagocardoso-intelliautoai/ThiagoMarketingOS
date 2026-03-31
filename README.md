@@ -31,6 +31,10 @@ cp aiox-project/.env.example aiox-project/.env
 
 ### 3. Abrir o Dashboard
 ```bash
+# Produção (Vercel)
+# Abrir https://content-command-center-rose.vercel.app
+
+# Local (dev)
 cd content-command-center
 npx serve .
 # Abrir http://localhost:3000

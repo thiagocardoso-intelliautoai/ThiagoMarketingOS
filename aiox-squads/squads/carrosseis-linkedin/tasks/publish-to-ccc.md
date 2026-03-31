@@ -66,7 +66,7 @@ Carregar antes de executar:
 ### Importante
 - **Dedup:** Verificar se já existe um post com o mesmo título antes de adicionar
 - **Preservar:** Não remover posts existentes no inbox.json
-- O post aparecerá automaticamente no Content Command Center (`http://localhost:5500/`) na próxima vez que a página for carregada
+- O post aparecerá automaticamente no Content Command Center (`https://content-command-center-rose.vercel.app/`) na próxima vez que a página for carregada
 
 ---
 

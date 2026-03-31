@@ -4,7 +4,9 @@ Dashboard visual para orquestrar os squads de conteúdo LinkedIn.
 
 ## Como Usar
 
-1. **Abrir:** Precisa de um server local (ES Modules exigem HTTP, não file://)
+1. **Produção:** [content-command-center-rose.vercel.app](https://content-command-center-rose.vercel.app)
+
+2. **Local (dev):** Precisa de um server local (ES Modules exigem HTTP, não file://)
 
 ```bash
 # Opção 1: Python
@@ -17,7 +19,7 @@ npx serve .
 # Opção 3: VS Code Live Server extension
 ```
 
-2. **Abrir no browser:** `http://localhost:5500`
+3. **Abrir no browser:** `http://localhost:5500` (modo dev)
 
 ## Funcionalidades
 

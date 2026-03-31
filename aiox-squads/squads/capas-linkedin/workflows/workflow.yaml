@@ -87,5 +87,5 @@ steps:
       - output/cover-report.md
     output: output/publish-report.md
     description: >
-      Publica o post com capa no Content Command Center via inbox.json.
-      O post aparece automaticamente em http://localhost:5500/
+      Publica o post com capa no Content Command Center via Supabase.
+      O post aparece automaticamente em https://content-command-center-rose.vercel.app/

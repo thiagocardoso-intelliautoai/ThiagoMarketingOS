@@ -17,7 +17,8 @@ let allPhotos = [];
 
 // ─── MAIN RENDER ───
 export async function renderAssets() {
-  const target = document.getElementById('settings-drawer-content') 
+  const target = document.getElementById('assets-mount-point') 
+                || document.getElementById('settings-content-area')
                 || document.getElementById('main-content');
   target.innerHTML = buildPageHTML();
 
@@ -41,7 +42,7 @@ export async function renderAssets() {
 
 function buildPageHTML() {
   return `
-    <section class="assets-page assets-page--drawer">
+    <section class="assets-page">
       <div class="assets-header">
         <span class="assets-header-label">Fotos de referência para composição visual</span>
         <button class="btn-primary btn-sm" id="btn-upload-photo">

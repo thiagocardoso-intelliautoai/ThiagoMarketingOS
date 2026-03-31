@@ -1,24 +1,47 @@
 // app.js — Entry Point & Hash Router
 import { DataStore } from './data.js';
 import { renderDashboard, renderLibrary } from './render.js';
+import { renderSettings, setPreviousRoute, cleanupSettings } from './settings.js';
+
+// ─── ROUTE HISTORY ───
+let lastNonSettingsRoute = '#dashboard';
 
 // ─── ROUTER ───
 async function route() {
   const hash = window.location.hash || '#dashboard';
   
-  // Fallback: old #ativos bookmark → redirect to dashboard + open settings
+  // Fallback: old #ativos bookmark → redirect to settings
   if (hash === '#ativos') {
-    window.location.hash = '#dashboard';
-    setTimeout(() => openSettings(), 300);
+    window.location.hash = '#settings';
     return;
   }
 
-  // Update nav active state
+  // Track previous route for back button
+  if (hash !== '#settings') {
+    lastNonSettingsRoute = hash;
+    setPreviousRoute(hash);
+  }
+
+  // Cleanup settings state when leaving
+  if (hash !== '#settings') {
+    cleanupSettings();
+  }
+
+  // Update nav active state (nav links only, not settings trigger)
   document.querySelectorAll('.nav-link').forEach(l => {
     l.classList.toggle('nav-active', l.getAttribute('href') === hash);
   });
 
+  // Update settings trigger active state
+  const settingsTrigger = document.getElementById('settings-trigger');
+  if (settingsTrigger) {
+    settingsTrigger.classList.toggle('nav-active', hash === '#settings');
+  }
+
   switch (hash) {
+    case '#settings':
+      renderSettings();
+      break;
     case '#conteudos':
       renderLibrary();
       break;
@@ -29,68 +52,11 @@ async function route() {
   }
 }
 
-// ─── SETTINGS DRAWER CONTROLLER ───
+// ─── SETTINGS TRIGGER ───
 const settingsTrigger = document.getElementById('settings-trigger');
-const settingsDrawer = document.getElementById('settings-drawer');
-const settingsOverlay = document.getElementById('settings-overlay');
-const settingsClose = document.getElementById('settings-close');
-
-function openSettings() {
-  settingsDrawer.classList.add('settings-open');
-  settingsOverlay.classList.add('settings-overlay-visible');
-  document.body.style.overflow = 'hidden';
-  // Lazy-load settings menu + assets module on first open
-  if (!settingsDrawer.dataset.loaded) {
-    loadSettingsMenu();
-    settingsDrawer.dataset.loaded = 'true';
-  }
-}
-
-function closeSettings() {
-  settingsDrawer.classList.remove('settings-open');
-  settingsOverlay.classList.remove('settings-overlay-visible');
-  document.body.style.overflow = '';
-}
-
-async function loadSettingsMenu() {
-  const menu = document.getElementById('settings-menu');
-
-  const sections = [
-    { id: 'photos', icon: '📸', label: 'Banco de Imagens', active: true },
-    { id: 'profile', icon: '👤', label: 'Perfil LinkedIn', active: false },
-    { id: 'cover-styles', icon: '🎨', label: 'Estilos de Capa', active: false },
-    { id: 'carousel-styles', icon: '🎠', label: 'Estilos de Carrossel', active: false },
-    { id: 'connection', icon: '🔗', label: 'Conexão Supabase', active: false },
-    { id: 'prompts', icon: '📝', label: 'Templates de Prompt', active: false },
-  ];
-
-  menu.innerHTML = sections.map(s => `
-    <button class="settings-menu-item ${s.active ? 'settings-menu-active' : ''} ${!s.active ? 'settings-menu-disabled' : ''}"
-            data-section="${s.id}" ${!s.active ? 'disabled' : ''}>
-      <span class="settings-menu-icon">${s.icon}</span>
-      <span class="settings-menu-label">${s.label}</span>
-      ${!s.active ? '<span class="settings-menu-badge">Em breve</span>' : ''}
-    </button>
-  `).join('');
-
-  // Load Banco de Imagens (active section)
-  try {
-    const { renderAssets } = await import('./assets.js');
-    renderAssets();
-  } catch (err) {
-    console.error('[Settings] Failed to load assets module:', err);
-    const content = document.getElementById('settings-drawer-content');
-    if (content) content.innerHTML = `<div class="gallery-empty"><p>Erro ao carregar</p><span>${err.message}</span></div>`;
-  }
-}
-
-settingsTrigger?.addEventListener('click', openSettings);
-settingsOverlay?.addEventListener('click', closeSettings);
-settingsClose?.addEventListener('click', closeSettings);
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && settingsDrawer?.classList.contains('settings-open')) {
-    closeSettings();
-  }
+settingsTrigger?.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.location.hash = '#settings';
 });
 
 // ─── INIT ───
