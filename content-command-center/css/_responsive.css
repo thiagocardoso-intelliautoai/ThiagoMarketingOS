@@ -1,0 +1,123 @@
+﻿/* ─── ANIMATIONS ─── */
+@keyframes badgePop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .main-container {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .mode-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .library-filters {
+    flex-direction: column;
+  }
+
+  .filter-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .post-card-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .post-card-secondary {
+    margin-left: 0;
+    text-align: right;
+  }
+
+  .style-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-overlay {
+    padding: var(--space-md);
+    align-items: flex-end;
+  }
+
+  .modal-container {
+    max-height: 90vh;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .header-nav {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-link {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .section-title {
+    font-size: 1.35rem;
+  }
+
+  .modal-container {
+    max-height: 95vh;
+  }
+
+  .post-card {
+    padding: var(--space-lg);
+  }
+
+  .mode-card {
+    padding: var(--space-lg);
+  }
+
+  .fab {
+    bottom: var(--space-md);
+    right: var(--space-md);
+    width: 52px;
+    height: 52px;
+  }
+}
+

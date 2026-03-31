@@ -6,7 +6,7 @@
 **🔗 Bloqueia:** Nenhuma
 **👤 Assignee:** Dev (Frontend)
 **🏷️ Labels:** `frontend`, `refatoração`, `qualidade`, `CCC`
-**📊 Status:** `[ ]` To Do
+**📊 Status:** `[x]` Done
 **📋 Origem:** Auditoria Arquitetural (Aria, 2026-03-30)
 **🚨 Prioridade:** Importante — melhora manutenibilidade significativamente
 
@@ -39,7 +39,7 @@ O `render.js` é o "God File" do CCC — mistura 6 responsabilidades distintas:
 
 ### 2.1 — Extrair `icons.js`
 
-- [ ] **2.1.1** Criar `content-command-center/js/icons.js`:
+- [x] **2.1.1** Criar `content-command-center/js/icons.js`:
 
 ```javascript
 // icons.js — Lucide SVG Icon Library
@@ -50,7 +50,7 @@ export const Icons = {
 };
 ```
 
-- [ ] **2.1.2** Em `render.js`, remover o bloco `const Icons = { ... }` (linhas 8-41) e substituir por:
+- [x] **2.1.2** Em `render.js`, remover o bloco `const Icons = { ... }` (linhas 8-41) e substituir por:
 
 ```javascript
 import { Icons } from './icons.js';
@@ -60,7 +60,7 @@ import { Icons } from './icons.js';
 
 ### 2.2 — Extrair `toast.js`
 
-- [ ] **2.2.1** Criar `content-command-center/js/toast.js`:
+- [x] **2.2.1** Criar `content-command-center/js/toast.js`:
 
 ```javascript
 // toast.js — Toast Notification System
@@ -72,7 +72,7 @@ export function showToast(message, type = 'success') {
 }
 ```
 
-- [ ] **2.2.2** Em `render.js`, remover a função `showToast` e substituir por:
+- [x] **2.2.2** Em `render.js`, remover a função `showToast` e substituir por:
 
 ```javascript
 import { showToast } from './toast.js';
@@ -84,7 +84,7 @@ import { showToast } from './toast.js';
 
 ### 2.3 — Extrair `modal.js`
 
-- [ ] **2.3.1** Criar `content-command-center/js/modal.js`:
+- [x] **2.3.1** Criar `content-command-center/js/modal.js`:
 
 ```javascript
 // modal.js — Modal System
@@ -104,7 +104,7 @@ document.addEventListener('keydown', (e) => {
 });
 ```
 
-- [ ] **2.3.2** Em `render.js`, remover as funções `openModal`, `closeModal` e o event listener de ESC. Substituir por:
+- [x] **2.3.2** Em `render.js`, remover as funções `openModal`, `closeModal` e o event listener de ESC. Substituir por:
 
 ```javascript
 import { openModal, closeModal } from './modal.js';
@@ -114,7 +114,7 @@ import { openModal, closeModal } from './modal.js';
 
 ### 2.4 — Extrair `utils.js`
 
-- [ ] **2.4.1** Criar `content-command-center/js/utils.js`:
+- [x] **2.4.1** Criar `content-command-center/js/utils.js`:
 
 ```javascript
 // utils.js — UI Utilities
@@ -142,7 +142,7 @@ export function formatDate(dateStr) {
 }
 ```
 
-- [ ] **2.4.2** Em `render.js`, remover essas funções e substituir por:
+- [x] **2.4.2** Em `render.js`, remover essas funções e substituir por:
 
 ```javascript
 import { copyToClipboard, downloadFile, escapeHtml, truncate, formatDate } from './utils.js';
@@ -152,7 +152,7 @@ import { copyToClipboard, downloadFile, escapeHtml, truncate, formatDate } from 
 
 ### 2.5 — Mover constants para `state.js`
 
-- [ ] **2.5.1** Em `content-command-center/js/state.js`, adicionar ao final:
+- [x] **2.5.1** Em `content-command-center/js/state.js`, adicionar ao final:
 
 ```javascript
 export const PILLAR_CONFIG = {
@@ -176,7 +176,7 @@ export const URGENCY_LABELS = {
 };
 ```
 
-- [ ] **2.5.2** Em `render.js`, remover esses 3 objetos (linhas 44-62) e importar de `state.js`:
+- [x] **2.5.2** Em `render.js`, remover esses 3 objetos (linhas 44-62) e importar de `state.js`:
 
 ```javascript
 import { MODE_LABELS, PILLAR_CONFIG, STATUS_LABELS, URGENCY_LABELS } from './state.js';
@@ -186,14 +186,14 @@ import { MODE_LABELS, PILLAR_CONFIG, STATUS_LABELS, URGENCY_LABELS } from './sta
 
 ### 2.6 — Validar render.js final
 
-- [ ] **2.6.1** O `render.js` resultante deve conter APENAS:
+- [x] **2.6.1** O `render.js` resultante deve conter APENAS:
   - Imports dos novos módulos
   - `renderDashboard()` + funções auxiliares do dashboard
   - `renderLibrary()` + funções auxiliares da biblioteca
   - Funções de modal (openViewPostModal, openCarouselModal, etc.)
   - **Target: ≤ 500 linhas**
 
-- [ ] **2.6.2** Testar no browser:
+- [x] **2.6.2** Testar no browser:
   - Dashboard renderiza os 5 modes
   - Biblioteca mostra posts com filtros
   - Modal "Ver Post" abre com tabs (LinkedIn Preview + Dados)
@@ -207,7 +207,7 @@ import { MODE_LABELS, PILLAR_CONFIG, STATUS_LABELS, URGENCY_LABELS } from './sta
 
 ### 2.7 — CSS Modular (partials)
 
-- [ ] **2.7.1** Criar estrutura de CSS partials:
+- [x] **2.7.1** Criar estrutura de CSS partials:
 
 ```
 content-command-center/css/
@@ -225,7 +225,7 @@ content-command-center/css/
 └── _responsive.css   ← media queries + prefers-reduced-motion
 ```
 
-- [ ] **2.7.2** O `styles.css` final fica assim:
+- [x] **2.7.2** O `styles.css` final fica assim:
 
 ```css
 /* styles.css — Design System: Charcoal & Teal */
@@ -244,23 +244,23 @@ content-command-center/css/
 @import '_responsive.css';
 ```
 
-- [ ] **2.7.3** Dividir o conteúdo atual de `styles.css` (73KB) nos partials seguindo os blocos de comentários existentes (`/* ─── HEADER ─── */`, `/* ─── MODE CARDS ─── */`, etc.)
+- [x] **2.7.3** Dividir o conteúdo atual de `styles.css` (73KB) nos partials seguindo os blocos de comentários existentes (`/* ─── HEADER ─── */`, `/* ─── MODE CARDS ─── */`, etc.)
 
 > **Estratégia:** NÃO reescrever CSS — apenas mover blocos existentes para arquivos separados via cut-paste. A especificidade e ordem de cascata devem ser preservadas pela ordem dos `@import`.
 
-- [ ] **2.7.4** Testar no browser que nenhum estilo quebrou (comparação visual com antes)
+- [x] **2.7.4** Testar no browser que nenhum estilo quebrou (comparação visual com antes)
 
 ---
 
 ## Acceptance Criteria
 
-- [ ] `render.js` tem ≤ 500 linhas
-- [ ] 5 novos módulos JS criados (`icons.js`, `toast.js`, `modal.js`, `utils.js`, `config.js`)
-- [ ] Constants movidas para `state.js`
-- [ ] `styles.css` importa 11 partials via `@import`
-- [ ] Nenhum partial excede 300 linhas
-- [ ] Zero regressão visual ou funcional
-- [ ] Todos os imports funcionam (nenhum módulo com `undefined`)
+- [x] `render.js` tem ≤ 500 linhas
+- [x] 5 novos módulos JS criados (`icons.js`, `toast.js`, `modal.js`, `utils.js`, `config.js`)
+- [x] Constants movidas para `state.js`
+- [x] `styles.css` importa 11 partials via `@import`
+- [x] Nenhum partial excede 300 linhas
+- [x] Zero regressão visual ou funcional
+- [x] Todos os imports funcionam (nenhum módulo com `undefined`)
 
 ## Definition of Done
 
