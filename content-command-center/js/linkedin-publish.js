@@ -87,18 +87,7 @@ export function openPublishModal(postId) {
         <span class="publish-badge-soon">Em breve</span>
       </div>
 
-      <div class="publish-option-card publish-option-card--locked" id="option-card-draft">
-        <div class="publish-option-info">
-          <div class="publish-option-icon">
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/></svg>
-          </div>
-          <div>
-            <p class="publish-option-title">Salvar como rascunho</p>
-            <p class="publish-option-desc">Salvar no LinkedIn sem publicar</p>
-          </div>
-        </div>
-        <span class="publish-badge-soon">Em breve</span>
-      </div>
+
     </div>
   `;
 
