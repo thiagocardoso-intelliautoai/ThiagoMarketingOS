@@ -1,5 +1,6 @@
 // settings.js — Full-Width Settings Page Module
 import { renderAssets } from './assets.js';
+import { CONFIG } from './config.js';
 
 // ─── STATE ───
 let activeSection = 'photos';
@@ -19,7 +20,7 @@ const SECTIONS = [
     id: 'profile',
     icon: '👤',
     label: 'Perfil LinkedIn',
-    enabled: false,
+    enabled: true,
     title: 'Perfil LinkedIn',
     desc: 'Configure seu perfil e preferências de conteúdo no LinkedIn',
     features: [
@@ -189,6 +190,9 @@ async function loadSection(section) {
             `<div class="gallery-empty"><p>Erro ao carregar</p><span>${err.message}</span></div>`;
         }
         break;
+      case 'profile':
+        renderLinkedInProfile(contentArea, section);
+        break;
       default:
         renderPlaceholder(contentArea, section);
     }
@@ -221,6 +225,157 @@ function renderPlaceholder(container, section) {
       ${featuresHTML}
     </div>
   `;
+}
+
+// ─── LINKEDIN PROFILE SECTION ───
+const SUPABASE_FUNCTIONS_URL = `${CONFIG.SUPABASE_URL}/functions/v1`;
+
+async function getLinkedInStatus() {
+  try {
+    const res = await fetch(`${SUPABASE_FUNCTIONS_URL}/linkedin-status`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+async function renderLinkedInProfile(container, section) {
+  container.innerHTML = `
+    <div class="settings-section-enter">
+      <div class="settings-section-header">
+        <h1 class="settings-section-title">${section.title}</h1>
+        <p class="settings-section-desc">${section.desc}</p>
+      </div>
+      <div id="linkedin-profile-mount">
+        <div class="linkedin-profile-loading">
+          <div class="gallery-spinner"></div>
+          <span>Verificando conexão...</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const mount = document.getElementById('linkedin-profile-mount');
+  const status = await getLinkedInStatus();
+
+  if (status && status.connected) {
+    renderConnectedState(mount, status);
+  } else {
+    renderDisconnectedState(mount);
+  }
+}
+
+function renderDisconnectedState(mount) {
+  mount.innerHTML = `
+    <div class="linkedin-connect-card">
+      <div class="linkedin-connect-icon">
+        <svg viewBox="0 0 24 24" width="40" height="40" fill="none">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="2" y="9" width="4" height="12" rx="0.5" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <h3>Conectar ao LinkedIn</h3>
+      <p>Vincule sua conta para publicar posts, agendar conteúdo e acompanhar métricas diretamente do Command Center.</p>
+      <button class="linkedin-connect-btn" id="btn-linkedin-connect">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/>
+          <rect x="2" y="9" width="4" height="12" rx="0.5"/>
+          <circle cx="4" cy="4" r="2"/>
+        </svg>
+        Conectar com LinkedIn
+      </button>
+      <span class="linkedin-connect-hint">Você será redirecionado ao LinkedIn para autorizar o acesso</span>
+    </div>
+
+    <div class="settings-placeholder-features" style="margin-top: var(--space-2xl);">
+      ${[
+        { icon: '🎯', text: 'Tom de voz e pilares de conteúdo' },
+        { icon: '📊', text: 'Metas de publicação semanal' },
+        { icon: '🏷️', text: 'Hashtags e palavras-chave favoritas' },
+        { icon: '👥', text: 'Público-alvo e persona' }
+      ].map(f => `
+        <div class="settings-placeholder-feature">
+          <span class="settings-placeholder-feature-icon">${f.icon}</span>
+          <span>${f.text}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  document.getElementById('btn-linkedin-connect')?.addEventListener('click', () => {
+    window.location.href = `${SUPABASE_FUNCTIONS_URL}/linkedin-auth`;
+  });
+}
+
+function renderConnectedState(mount, status) {
+  const expiresAt = new Date(status.expires_at);
+  const now = new Date();
+  const daysLeft = Math.max(0, Math.ceil((expiresAt - now) / (1000 * 60 * 60 * 24)));
+  const isExpiring = daysLeft <= 7;
+
+  mount.innerHTML = `
+    <div class="linkedin-profile-card">
+      <div class="linkedin-profile-header">
+        <img class="linkedin-profile-avatar"
+             src="${status.profile_picture_url || ''}"
+             alt="${status.display_name || 'LinkedIn'}"
+             onerror="this.style.display='none'" />
+        <div class="linkedin-profile-info">
+          <h3>${status.display_name || 'Perfil LinkedIn'}</h3>
+          <span class="linkedin-profile-status linkedin-profile-status--connected">
+            <span class="linkedin-status-dot"></span>
+            Conectado
+          </span>
+        </div>
+        <button class="btn-sm btn-outline-danger" id="btn-linkedin-disconnect" title="Desconectar">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+          </svg>
+          Desconectar
+        </button>
+      </div>
+
+      <div class="linkedin-profile-meta">
+        <div class="linkedin-meta-item">
+          <span class="linkedin-meta-label">Token expira em</span>
+          <span class="linkedin-meta-value ${isExpiring ? 'linkedin-meta-warning' : ''}">
+            ${daysLeft} dia${daysLeft !== 1 ? 's' : ''}
+            ${isExpiring ? '⚠️' : '✅'}
+          </span>
+        </div>
+        <div class="linkedin-meta-item">
+          <span class="linkedin-meta-label">Person URN</span>
+          <span class="linkedin-meta-value linkedin-meta-urn">${status.person_urn || '—'}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-placeholder-features" style="margin-top: var(--space-2xl);">
+      ${[
+        { icon: '🎯', text: 'Tom de voz e pilares de conteúdo' },
+        { icon: '📊', text: 'Metas de publicação semanal' },
+        { icon: '🏷️', text: 'Hashtags e palavras-chave favoritas' },
+        { icon: '👥', text: 'Público-alvo e persona' }
+      ].map(f => `
+        <div class="settings-placeholder-feature">
+          <span class="settings-placeholder-feature-icon">${f.icon}</span>
+          <span>${f.text}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  document.getElementById('btn-linkedin-disconnect')?.addEventListener('click', async () => {
+    if (!confirm('Tem certeza que deseja desconectar sua conta LinkedIn?')) return;
+    try {
+      await fetch(`${SUPABASE_FUNCTIONS_URL}/linkedin-disconnect`, { method: 'POST' });
+      renderDisconnectedState(mount);
+    } catch (err) {
+      console.error('[Settings] Disconnect failed:', err);
+    }
+  });
 }
 
 // ─── CLEANUP (when leaving settings) ───
