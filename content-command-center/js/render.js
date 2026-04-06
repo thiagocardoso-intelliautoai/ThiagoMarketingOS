@@ -7,6 +7,7 @@ import { Icons } from './icons.js';
 import { showToast } from './toast.js';
 import { openModal, closeModal } from './modal.js';
 import { copyToClipboard, downloadFile, escapeHtml, truncate, formatDate } from './utils.js';
+import { openPublishModal } from './linkedin-publish.js';
 
 // ─── RENDER DASHBOARD ───
 export function renderDashboard() {
@@ -409,6 +410,7 @@ function openViewPostModal(postId) {
           ? `<button class="btn-download btn-sm" id="modal-download-pdf" data-url="${post.carousels.pdf_url}" data-filename="carrossel-${(post.title || 'post').replace(/[^a-zA-Z0-9]/g, '-').slice(0, 40)}.pdf">${Icons.download} Baixar PDF</button>`
           : `<button class="btn-primary btn-sm" id="modal-gen-carousel" data-id="${post.id}">${Icons.layers} Gerar Carrossel</button>`
         }
+        <button class="btn-linkedin btn-sm" id="modal-publish-btn" data-id="${post.id}">${Icons.send} Publicar</button>
       </div>
     </div>
   `);
@@ -470,6 +472,12 @@ function openViewPostModal(postId) {
     const url = e.currentTarget.dataset.url;
     const filename = e.currentTarget.dataset.filename;
     downloadFile(url, filename);
+  });
+  // Publish button handler
+  document.getElementById('modal-publish-btn')?.addEventListener('click', (e) => {
+    const postId = e.currentTarget.dataset.id;
+    closeModal();
+    setTimeout(() => openPublishModal(postId), 200);
   });
 }
 

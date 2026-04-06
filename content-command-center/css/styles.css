@@ -37,5 +37,8 @@
 /* 10. Settings — Assets gallery, settings drawer, dropzone, upload, lightbox */
 @import './_settings.css';
 
-/* 11. Responsive — Media queries, reduced motion, breakpoints */
+/* 11. Publish — LinkedIn publish modal, glass cards, review screen */
+@import './_publish.css';
+
+/* 12. Responsive — Media queries, reduced motion, breakpoints */
 @import './_responsive.css';
