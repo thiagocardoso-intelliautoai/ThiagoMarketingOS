@@ -10,6 +10,8 @@ import { renderLibrary } from './render.js';
 import { supabase } from './supabase.js';
 import { CONFIG } from './config.js';
 
+const SUPABASE_FUNCTIONS_URL = `${CONFIG.SUPABASE_URL}/functions/v1`;
+
 // ─── CALENDAR HELPERS ───
 const MONTH_NAMES = [
   'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
@@ -96,14 +98,15 @@ function renderCalendar(year, month, selectedDate) {
   `;
 }
 
-// ─── TIME PICKER ───
+// ─── TIME PICKER (Custom Scroll Wheel) ───
 function renderTimePicker(hours, minutes) {
-  const hourOptions = Array.from({ length: 24 }, (_, i) =>
-    `<option value="${i}" ${i === hours ? 'selected' : ''}>${padZero(i)}</option>`
+  const hourItems = Array.from({ length: 24 }, (_, i) =>
+    `<div class="time-scroll-item ${i === hours ? 'time-scroll-item--selected' : ''}" data-value="${i}">${padZero(i)}</div>`
   ).join('');
 
-  const minuteOptions = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].map(m =>
-    `<option value="${m}" ${m === minutes ? 'selected' : ''}>${padZero(m)}</option>`
+  const minuteValues = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+  const minuteItems = minuteValues.map(m =>
+    `<div class="time-scroll-item ${m === minutes ? 'time-scroll-item--selected' : ''}" data-value="${m}">${padZero(m)}</div>`
   ).join('');
 
   return `
@@ -111,10 +114,20 @@ function renderTimePicker(hours, minutes) {
       <div class="time-picker-icon">
         <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
       </div>
-      <select class="time-select" id="schedule-hour">${hourOptions}</select>
+      <div class="time-scroll-col" id="time-scroll-hour">
+        <div class="time-scroll-highlight"></div>
+        <div class="time-scroll-list" data-type="hour">
+          ${hourItems}
+        </div>
+      </div>
       <span class="time-separator">:</span>
-      <select class="time-select" id="schedule-minute">${minuteOptions}</select>
-      <span class="time-zone-label">Brasília (GMT-3)</span>
+      <div class="time-scroll-col" id="time-scroll-minute">
+        <div class="time-scroll-highlight"></div>
+        <div class="time-scroll-list" data-type="minute">
+          ${minuteItems}
+        </div>
+      </div>
+      <span class="time-zone-label">Brasília<br>GMT-3</span>
     </div>
   `;
 }
@@ -310,7 +323,7 @@ export function openPublishModal(postId) {
           </svg>
         </div>
         <h3 class="publish-success-title" id="success-title">Publicado com sucesso!</h3>
-        <p class="publish-success-desc" id="success-desc">Seu post foi marcado como publicado e está pronto para o LinkedIn.</p>
+        <p class="publish-success-desc" id="success-desc">Seu post foi publicado no LinkedIn com sucesso!</p>
       </div>
     </div>
   `;
@@ -424,13 +437,69 @@ export function openPublishModal(postId) {
   }
 
   function attachTimeEvents() {
-    document.getElementById('schedule-hour')?.addEventListener('change', (e) => {
-      selectedHour = parseInt(e.target.value, 10);
+    // Initialize scroll wheels
+    initScrollWheel('time-scroll-hour', selectedHour, (val) => {
+      selectedHour = val;
       updateScheduleSummary();
     });
-    document.getElementById('schedule-minute')?.addEventListener('change', (e) => {
-      selectedMinute = parseInt(e.target.value, 10);
+    initScrollWheel('time-scroll-minute', selectedMinute, (val) => {
+      selectedMinute = val;
       updateScheduleSummary();
+    });
+  }
+
+  function initScrollWheel(colId, initialValue, onChange) {
+    const col = document.getElementById(colId);
+    if (!col) return;
+    const list = col.querySelector('.time-scroll-list');
+    if (!list) return;
+
+    const items = list.querySelectorAll('.time-scroll-item');
+    const itemHeight = 36;
+
+    // Scroll to initial selected value
+    const selectedIdx = Array.from(items).findIndex(el => parseInt(el.dataset.value, 10) === initialValue);
+    if (selectedIdx >= 0) {
+      requestAnimationFrame(() => {
+        list.scrollTop = selectedIdx * itemHeight;
+      });
+    }
+
+    // Click on item → select it
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const val = parseInt(item.dataset.value, 10);
+        const idx = Array.from(items).indexOf(item);
+        list.scrollTo({ top: idx * itemHeight, behavior: 'smooth' });
+        updateSelection(list, items, val);
+        onChange(val);
+      });
+    });
+
+    // On scroll stop → snap to nearest item
+    let scrollTimeout;
+    list.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const scrollTop = list.scrollTop;
+        const nearestIdx = Math.round(scrollTop / itemHeight);
+        const clampedIdx = Math.max(0, Math.min(nearestIdx, items.length - 1));
+        list.scrollTo({ top: clampedIdx * itemHeight, behavior: 'smooth' });
+        const val = parseInt(items[clampedIdx].dataset.value, 10);
+        updateSelection(list, items, val);
+        onChange(val);
+      }, 80);
+    });
+  }
+
+  function updateSelection(list, items, selectedVal) {
+    items.forEach(item => {
+      const val = parseInt(item.dataset.value, 10);
+      if (val === selectedVal) {
+        item.classList.add('time-scroll-item--selected');
+      } else {
+        item.classList.remove('time-scroll-item--selected');
+      }
     });
   }
 
@@ -522,7 +591,7 @@ export function openPublishModal(postId) {
     }
   }
 
-  // ── Publish action (immediate) ──
+  // ── Publish action (immediate) — calls Edge Function ──
   async function handlePublish(post) {
     const btn = document.getElementById('publish-btn-confirm');
     if (!btn) return;
@@ -532,10 +601,71 @@ export function openPublishModal(postId) {
       <svg class="publish-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
         <circle cx="12" cy="12" r="10" stroke-dasharray="60" stroke-dashoffset="15"/>
       </svg>
-      Publicando...
+      Verificando conexão...
     `;
 
     try {
+      // 1. Verify LinkedIn is connected
+      const statusRes = await fetch(`${SUPABASE_FUNCTIONS_URL}/linkedin-status`);
+      const linkedInStatus = statusRes.ok ? await statusRes.json() : null;
+
+      if (!linkedInStatus?.connected) {
+        throw new Error('LinkedIn não conectado. Vá em Configurações → Perfil LinkedIn para conectar sua conta.');
+      }
+
+      // 2. Update spinner text
+      btn.innerHTML = `
+        <svg class="publish-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+          <circle cx="12" cy="12" r="10" stroke-dasharray="60" stroke-dashoffset="15"/>
+        </svg>
+        Publicando no LinkedIn...
+      `;
+
+      // 3. Build FormData with text + media
+      const formData = new FormData();
+      formData.append('commentary', fullText);
+
+      const hasCoverMedia = !!(post.covers?.image_url || post.derivations?.cover?.coverPath);
+      const hasCarouselMedia = !!(post.carousels?.pdf_url || post.derivations?.carousel?.pdfPath);
+
+      if (hasCarouselMedia) {
+        formData.append('post_type', 'carousel');
+        const pdfUrl = post.carousels?.pdf_url || post.derivations?.carousel?.pdfPath;
+        if (pdfUrl) {
+          const mediaRes = await fetch(pdfUrl);
+          if (mediaRes.ok) {
+            const mediaBlob = await mediaRes.blob();
+            formData.append('media', mediaBlob, 'carousel.pdf');
+            formData.append('media_title', post.title || 'Carousel');
+          }
+        }
+      } else if (hasCoverMedia) {
+        formData.append('post_type', 'image');
+        const imageUrl = post.covers?.image_url || post.derivations?.cover?.coverPath;
+        if (imageUrl) {
+          const mediaRes = await fetch(imageUrl);
+          if (mediaRes.ok) {
+            const mediaBlob = await mediaRes.blob();
+            formData.append('media', mediaBlob, 'cover.png');
+            formData.append('media_title', post.title || 'Cover');
+          }
+        }
+      } else {
+        formData.append('post_type', 'text');
+      }
+
+      // 4. Call Edge Function
+      const publishRes = await fetch(`${SUPABASE_FUNCTIONS_URL}/linkedin-publish`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!publishRes.ok) {
+        const errData = await publishRes.json().catch(() => ({ error: 'Falha na publicação' }));
+        throw new Error(errData.error || errData.details || `Erro HTTP ${publishRes.status}`);
+      }
+
+      // 5. Only after real success, update local status
       await DataStore.updatePost(post.id, {
         status: 'publicado',
         publishedAt: new Date().toISOString(),
@@ -545,7 +675,7 @@ export function openPublishModal(postId) {
 
       setTimeout(() => {
         closeModal();
-        showToast('Post publicado com sucesso! 🚀', 'success');
+        showToast('Post publicado no LinkedIn! 🚀', 'success');
         renderLibrary();
       }, 2000);
     } catch (err) {

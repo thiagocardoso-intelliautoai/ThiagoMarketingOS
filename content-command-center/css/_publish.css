@@ -399,14 +399,17 @@
   stroke-linejoin: round;
 }
 
+/* ─── CUSTOM TIME PICKER (Scroll Wheel) ─── */
 .time-picker {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: var(--space-sm) var(--space-md);
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: var(--radius-md);
+  gap: 8px;
+  padding: var(--space-md);
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .time-picker-icon {
@@ -425,47 +428,120 @@
   stroke-linejoin: round;
 }
 
-.time-select {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-sm);
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  font-size: 0.88rem;
-  font-weight: 600;
-  padding: 6px 8px;
+/* ─── Scroll Column ─── */
+.time-scroll-col {
+  position: relative;
   width: 52px;
+  height: 120px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Gradient masks top/bottom */
+.time-scroll-col::before,
+.time-scroll-col::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 38px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.time-scroll-col::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(10, 12, 18, 0.95) 0%, transparent 100%);
+}
+
+.time-scroll-col::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(10, 12, 18, 0.95) 0%, transparent 100%);
+}
+
+/* Highlight band for selected item */
+.time-scroll-highlight {
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  right: 3px;
+  height: 36px;
+  transform: translateY(-50%);
+  background: rgba(20, 184, 166, 0.1);
+  border: 1px solid rgba(20, 184, 166, 0.25);
+  border-radius: var(--radius-sm);
+  z-index: 1;
+  pointer-events: none;
+  box-shadow: 0 0 12px rgba(20, 184, 166, 0.08);
+}
+
+/* Scrollable list */
+.time-scroll-list {
+  position: relative;
+  z-index: 1;
+  overflow-y: auto;
+  height: 100%;
+  scroll-snap-type: y mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding: 42px 0;
+}
+
+.time-scroll-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual time item */
+.time-scroll-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.25);
   cursor: pointer;
-  transition: all var(--transition-base);
-  appearance: none;
-  -webkit-appearance: none;
-  text-align: center;
+  scroll-snap-align: center;
+  transition: color 0.2s ease, font-weight 0.2s ease, transform 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.time-select:hover {
-  border-color: rgba(20, 184, 166, 0.3);
-  background: rgba(255, 255, 255, 0.06);
+.time-scroll-item:hover {
+  color: rgba(255, 255, 255, 0.5);
 }
 
-.time-select:focus {
-  outline: none;
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.15);
+.time-scroll-item--selected {
+  color: var(--accent-primary);
+  font-weight: 700;
+  font-size: 1rem;
+  text-shadow: 0 0 12px rgba(20, 184, 166, 0.4);
 }
 
+/* ─── Separator ─── */
 .time-separator {
   font-family: var(--font-mono);
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  color: var(--text-muted);
+  color: var(--accent-primary);
+  text-shadow: 0 0 8px rgba(20, 184, 166, 0.3);
+  margin: 0 2px;
+  align-self: center;
 }
 
+/* ─── Timezone ─── */
 .time-zone-label {
   font-size: 0.65rem;
   color: var(--text-muted);
   opacity: 0.6;
   white-space: nowrap;
-  margin-left: 4px;
+  margin-left: 6px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.03em;
 }
 
 /* ─── SCHEDULE SUMMARY ─── */
