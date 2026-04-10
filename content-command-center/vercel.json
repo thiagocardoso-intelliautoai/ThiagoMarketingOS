@@ -1,4 +1,5 @@
 {
+  "alias": ["thiagomarketingos.vercel.app"],
   "buildCommand": "",
   "outputDirectory": ".",
   "installCommand": "",
