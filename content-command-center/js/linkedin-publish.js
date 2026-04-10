@@ -7,6 +7,150 @@ import { showToast } from './toast.js';
 import { openModal, closeModal } from './modal.js';
 import { escapeHtml, truncate, copyToClipboard } from './utils.js';
 import { renderLibrary } from './render.js';
+import { supabase } from './supabase.js';
+import { CONFIG } from './config.js';
+
+// ─── CALENDAR HELPERS ───
+const MONTH_NAMES = [
+  'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+  'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+];
+const DAY_NAMES = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+function getDaysInMonth(year, month) {
+  return new Date(year, month + 1, 0).getDate();
+}
+
+function getFirstDayOfWeek(year, month) {
+  return new Date(year, month, 1).getDay();
+}
+
+function padZero(n) {
+  return n < 10 ? '0' + n : '' + n;
+}
+
+function formatDateBR(date) {
+  return `${padZero(date.getDate())}/${padZero(date.getMonth() + 1)}/${date.getFullYear()}`;
+}
+
+function formatTimeBR(hours, minutes) {
+  return `${padZero(hours)}:${padZero(minutes)}`;
+}
+
+function isToday(year, month, day) {
+  const now = new Date();
+  return now.getFullYear() === year && now.getMonth() === month && now.getDate() === day;
+}
+
+function isPast(year, month, day) {
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const check = new Date(year, month, day);
+  return check < now;
+}
+
+// ─── CALENDAR RENDERER ───
+function renderCalendar(year, month, selectedDate) {
+  const daysInMonth = getDaysInMonth(year, month);
+  const firstDay = getFirstDayOfWeek(year, month);
+  const now = new Date();
+
+  const dayHeaders = DAY_NAMES.map(d => `<span class="cal-day-name">${d}</span>`).join('');
+
+  let daysHtml = '';
+  // Empty slots before first day
+  for (let i = 0; i < firstDay; i++) {
+    daysHtml += '<span class="cal-day cal-day--empty"></span>';
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const past = isPast(year, month, d);
+    const today = isToday(year, month, d);
+    const selected = selectedDate &&
+      selectedDate.getFullYear() === year &&
+      selectedDate.getMonth() === month &&
+      selectedDate.getDate() === d;
+
+    const classes = [
+      'cal-day',
+      past ? 'cal-day--past' : 'cal-day--active',
+      today ? 'cal-day--today' : '',
+      selected ? 'cal-day--selected' : '',
+    ].filter(Boolean).join(' ');
+
+    daysHtml += `<button class="${classes}" ${past ? 'disabled' : ''} data-day="${d}" type="button">${d}</button>`;
+  }
+
+  return `
+    <div class="cal-header">
+      <button class="cal-nav" id="cal-prev" type="button" aria-label="Mês anterior">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <span class="cal-month-year">${MONTH_NAMES[month]} ${year}</span>
+      <button class="cal-nav" id="cal-next" type="button" aria-label="Próximo mês">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+    <div class="cal-days-header">${dayHeaders}</div>
+    <div class="cal-grid">${daysHtml}</div>
+  `;
+}
+
+// ─── TIME PICKER ───
+function renderTimePicker(hours, minutes) {
+  const hourOptions = Array.from({ length: 24 }, (_, i) =>
+    `<option value="${i}" ${i === hours ? 'selected' : ''}>${padZero(i)}</option>`
+  ).join('');
+
+  const minuteOptions = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].map(m =>
+    `<option value="${m}" ${m === minutes ? 'selected' : ''}>${padZero(m)}</option>`
+  ).join('');
+
+  return `
+    <div class="time-picker">
+      <div class="time-picker-icon">
+        <svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+      <select class="time-select" id="schedule-hour">${hourOptions}</select>
+      <span class="time-separator">:</span>
+      <select class="time-select" id="schedule-minute">${minuteOptions}</select>
+      <span class="time-zone-label">Brasília (GMT-3)</span>
+    </div>
+  `;
+}
+
+// ─── SCHEDULE PICKER PANEL ───
+function renderSchedulePicker(selectedDate, hours, minutes) {
+  const now = new Date();
+  const calYear = selectedDate ? selectedDate.getFullYear() : now.getFullYear();
+  const calMonth = selectedDate ? selectedDate.getMonth() : now.getMonth();
+
+  return `
+    <div class="schedule-picker" id="schedule-picker">
+      <div class="schedule-picker-calendar" id="schedule-calendar-mount">
+        ${renderCalendar(calYear, calMonth, selectedDate)}
+      </div>
+      <div class="schedule-picker-time">
+        <label class="schedule-time-label">
+          <svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Horário
+        </label>
+        ${renderTimePicker(hours, minutes)}
+        ${selectedDate ? `
+          <div class="schedule-summary" id="schedule-summary">
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+            <span>${formatDateBR(selectedDate)} às ${formatTimeBR(hours, minutes)}</span>
+          </div>
+        ` : `
+          <div class="schedule-summary schedule-summary--empty" id="schedule-summary">
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
+            <span>Selecione uma data no calendário</span>
+          </div>
+        `}
+      </div>
+    </div>
+  `;
+}
 
 // ─── PUBLISH MODAL (2-screen flow) ───
 export function openPublishModal(postId) {
@@ -74,7 +218,7 @@ export function openPublishModal(postId) {
         <div class="publish-radio publish-radio--on" id="publish-radio-now"></div>
       </div>
 
-      <div class="publish-option-card publish-option-card--locked" id="option-card-schedule">
+      <div class="publish-option-card" id="option-card-schedule">
         <div class="publish-option-info">
           <div class="publish-option-icon">
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
@@ -84,10 +228,12 @@ export function openPublishModal(postId) {
             <p class="publish-option-desc">Escolha data e horário</p>
           </div>
         </div>
-        <span class="publish-badge-soon">Em breve</span>
+        <div class="publish-radio" id="publish-radio-schedule"></div>
       </div>
 
-
+      <div class="schedule-picker-wrapper" id="schedule-picker-wrapper">
+        <!-- Calendar injected here when schedule is selected -->
+      </div>
     </div>
   `;
 
@@ -126,21 +272,21 @@ export function openPublishModal(postId) {
             <div class="publish-summary-divider"></div>
 
             <div class="publish-summary-row" style="--stagger: 2">
-              <div class="publish-summary-icon publish-summary-icon--accent">
+              <div class="publish-summary-icon publish-summary-icon--accent" id="review-when-icon">
                 <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
               </div>
               <div>
                 <p class="publish-summary-label">Quando</p>
-                <p class="publish-summary-value publish-summary-accent">⚡ Publicar imediatamente</p>
+                <p class="publish-summary-value publish-summary-accent" id="review-when-text">⚡ Publicar imediatamente</p>
               </div>
             </div>
           </div>
 
-          <div class="publish-confirm-notice">
+          <div class="publish-confirm-notice" id="publish-confirm-notice">
             <div class="publish-confirm-icon">
               <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
             </div>
-            <p>Ao clicar em <strong>"Publicar Agora"</strong>, seu post será publicado imediatamente no LinkedIn e o status será atualizado para <strong>publicado</strong>.</p>
+            <p id="publish-confirm-text">Ao clicar em <strong>"Publicar Agora"</strong>, seu post será publicado imediatamente no LinkedIn e o status será atualizado para <strong>publicado</strong>.</p>
           </div>
         </div>
 
@@ -157,14 +303,14 @@ export function openPublishModal(postId) {
   // ── Success Screen ──
   const successHtml = `
     <div class="publish-screen" id="publish-screen-success" style="display:none">
-      <div class="publish-success">
+      <div class="publish-success" id="publish-success-content">
         <div class="publish-success-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="20 6 9 17 4 12"/>
           </svg>
         </div>
-        <h3 class="publish-success-title">Publicado com sucesso!</h3>
-        <p class="publish-success-desc">Seu post foi marcado como publicado e está pronto para o LinkedIn.</p>
+        <h3 class="publish-success-title" id="success-title">Publicado com sucesso!</h3>
+        <p class="publish-success-desc" id="success-desc">Seu post foi marcado como publicado e está pronto para o LinkedIn.</p>
       </div>
     </div>
   `;
@@ -191,6 +337,119 @@ export function openPublishModal(postId) {
 
   // ── State ──
   let currentScreen = 1;
+  let publishMode = 'now'; // 'now' | 'schedule'
+  let selectedDate = null;
+  let selectedHour = 9;
+  let selectedMinute = 0;
+  let calViewYear = new Date().getFullYear();
+  let calViewMonth = new Date().getMonth();
+
+  // ── Option card selection ──
+  function selectOption(mode) {
+    publishMode = mode;
+    const cardNow = document.getElementById('option-card-now');
+    const cardSchedule = document.getElementById('option-card-schedule');
+    const radioNow = document.getElementById('publish-radio-now');
+    const radioSchedule = document.getElementById('publish-radio-schedule');
+    const pickerWrapper = document.getElementById('schedule-picker-wrapper');
+    const iconNow = cardNow?.querySelector('.publish-option-icon');
+    const iconSchedule = cardSchedule?.querySelector('.publish-option-icon');
+
+    if (mode === 'now') {
+      cardNow?.classList.add('publish-option-card--selected');
+      cardSchedule?.classList.remove('publish-option-card--selected');
+      radioNow?.classList.add('publish-radio--on');
+      radioSchedule?.classList.remove('publish-radio--on');
+      iconNow?.classList.add('publish-option-icon--active');
+      iconSchedule?.classList.remove('publish-option-icon--active');
+      if (pickerWrapper) pickerWrapper.innerHTML = '';
+    } else {
+      cardSchedule?.classList.add('publish-option-card--selected');
+      cardNow?.classList.remove('publish-option-card--selected');
+      radioSchedule?.classList.add('publish-radio--on');
+      radioNow?.classList.remove('publish-radio--on');
+      iconSchedule?.classList.add('publish-option-icon--active');
+      iconNow?.classList.remove('publish-option-icon--active');
+      showSchedulePicker();
+    }
+
+    updateNextButton();
+  }
+
+  function updateNextButton() {
+    const btn = document.getElementById('publish-btn-next');
+    if (!btn) return;
+    if (publishMode === 'schedule' && !selectedDate) {
+      btn.disabled = true;
+      btn.classList.add('btn-disabled');
+    } else {
+      btn.disabled = false;
+      btn.classList.remove('btn-disabled');
+    }
+  }
+
+  // ── Schedule picker ──
+  function showSchedulePicker() {
+    const wrapper = document.getElementById('schedule-picker-wrapper');
+    if (!wrapper) return;
+    wrapper.innerHTML = renderSchedulePicker(selectedDate, selectedHour, selectedMinute);
+    attachCalendarEvents();
+    attachTimeEvents();
+  }
+
+  function attachCalendarEvents() {
+    // Nav buttons
+    document.getElementById('cal-prev')?.addEventListener('click', () => {
+      calViewMonth--;
+      if (calViewMonth < 0) { calViewMonth = 11; calViewYear--; }
+      refreshCalendar();
+    });
+
+    document.getElementById('cal-next')?.addEventListener('click', () => {
+      calViewMonth++;
+      if (calViewMonth > 11) { calViewMonth = 0; calViewYear++; }
+      refreshCalendar();
+    });
+
+    // Day buttons
+    document.querySelectorAll('.cal-day--active').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const day = parseInt(btn.dataset.day, 10);
+        selectedDate = new Date(calViewYear, calViewMonth, day);
+        refreshCalendar();
+        updateScheduleSummary();
+        updateNextButton();
+      });
+    });
+  }
+
+  function attachTimeEvents() {
+    document.getElementById('schedule-hour')?.addEventListener('change', (e) => {
+      selectedHour = parseInt(e.target.value, 10);
+      updateScheduleSummary();
+    });
+    document.getElementById('schedule-minute')?.addEventListener('change', (e) => {
+      selectedMinute = parseInt(e.target.value, 10);
+      updateScheduleSummary();
+    });
+  }
+
+  function refreshCalendar() {
+    const mount = document.getElementById('schedule-calendar-mount');
+    if (!mount) return;
+    mount.innerHTML = renderCalendar(calViewYear, calViewMonth, selectedDate);
+    attachCalendarEvents();
+  }
+
+  function updateScheduleSummary() {
+    const summary = document.getElementById('schedule-summary');
+    if (!summary || !selectedDate) return;
+    summary.className = 'schedule-summary';
+    summary.innerHTML = `
+      <svg viewBox="0 0 24 24" width="14" height="14"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+      <span>${formatDateBR(selectedDate)} às ${formatTimeBR(selectedHour, selectedMinute)}</span>
+    `;
+  }
 
   // ── Screen switching with directional animation ──
   function showScreen(n) {
@@ -224,23 +483,46 @@ export function openPublishModal(postId) {
         <button class="btn-primary btn-sm" id="publish-btn-next">${Icons.arrowRight} Próximo</button>
       `;
       document.getElementById('publish-btn-next')?.addEventListener('click', () => showScreen(2));
+      updateNextButton();
     } else if (n === 2) {
+      // Update review screen with schedule info
+      const whenText = document.getElementById('review-when-text');
+      const confirmText = document.getElementById('publish-confirm-text');
+      const whenIcon = document.getElementById('review-when-icon');
+
+      if (publishMode === 'schedule' && selectedDate) {
+        const dateStr = `${formatDateBR(selectedDate)} às ${formatTimeBR(selectedHour, selectedMinute)}`;
+        if (whenText) whenText.innerHTML = `📅 Agendado para ${dateStr}`;
+        if (whenIcon) whenIcon.innerHTML = `<svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>`;
+        if (confirmText) confirmText.innerHTML = `Ao clicar em <strong>"Agendar"</strong>, seu post será salvo na fila de publicação e será publicado automaticamente em <strong>${dateStr}</strong>.`;
+      } else {
+        if (whenText) whenText.innerHTML = '⚡ Publicar imediatamente';
+        if (confirmText) confirmText.innerHTML = `Ao clicar em <strong>"Publicar Agora"</strong>, seu post será publicado imediatamente no LinkedIn e o status será atualizado para <strong>publicado</strong>.`;
+      }
+
       footer.style.display = '';
+      const isSchedule = publishMode === 'schedule' && selectedDate;
       footer.innerHTML = `
         <button class="btn-ghost btn-sm" id="publish-btn-back">${Icons.arrowLeft} Voltar</button>
-        <button class="btn-linkedin btn-sm" id="publish-btn-confirm">
-          ${Icons.send} Publicar Agora
+        <button class="${isSchedule ? 'btn-primary' : 'btn-linkedin'} btn-sm" id="publish-btn-confirm">
+          ${isSchedule ? '📅 Agendar' : `${Icons.send} Publicar Agora`}
         </button>
       `;
       document.getElementById('publish-btn-back')?.addEventListener('click', () => showScreen(1));
-      document.getElementById('publish-btn-confirm')?.addEventListener('click', () => handlePublish(post));
+      document.getElementById('publish-btn-confirm')?.addEventListener('click', () => {
+        if (isSchedule) {
+          handleSchedule(post);
+        } else {
+          handlePublish(post);
+        }
+      });
       attachLinkedInPreviewEvents();
     } else {
       footer.style.display = 'none';
     }
   }
 
-  // ── Publish action ──
+  // ── Publish action (immediate) ──
   async function handlePublish(post) {
     const btn = document.getElementById('publish-btn-confirm');
     if (!btn) return;
@@ -274,7 +556,92 @@ export function openPublishModal(postId) {
     }
   }
 
+  // ── Schedule action ──
+  async function handleSchedule(post) {
+    const btn = document.getElementById('publish-btn-confirm');
+    if (!btn || !selectedDate) return;
+
+    btn.disabled = true;
+    btn.innerHTML = `
+      <svg class="publish-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+        <circle cx="12" cy="12" r="10" stroke-dasharray="60" stroke-dashoffset="15"/>
+      </svg>
+      Agendando...
+    `;
+
+    try {
+      // Build scheduled datetime (Brazil timezone UTC-3)
+      const scheduledAt = new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        selectedDate.getDate(),
+        selectedHour,
+        selectedMinute,
+        0
+      );
+
+      // Determine post type and media
+      const hasCoverMedia = !!(post.covers?.image_url || post.derivations?.cover?.coverPath);
+      const hasCarouselMedia = !!(post.carousels?.pdf_url || post.derivations?.carousel);
+      let postType = 'text';
+      let mediaUrl = null;
+      let mediaFilename = null;
+      if (hasCarouselMedia) {
+        postType = 'carousel';
+        mediaUrl = post.carousels?.pdf_url || post.derivations?.carousel?.pdfPath || null;
+        mediaFilename = 'carousel.pdf';
+      } else if (hasCoverMedia) {
+        postType = 'image';
+        mediaUrl = post.covers?.image_url || post.derivations?.cover?.coverPath || null;
+        mediaFilename = 'cover.png';
+      }
+
+      // Insert into scheduled_posts table
+      const { error } = await supabase
+        .from('scheduled_posts')
+        .insert({
+          post_content: fullText,
+          post_type: postType,
+          media_url: mediaUrl,
+          media_filename: mediaFilename,
+          scheduled_at: scheduledAt.toISOString(),
+          status: 'pending',
+        });
+
+      if (error) throw error;
+
+      // Update post status locally
+      await DataStore.updatePost(post.id, {
+        status: 'agendado',
+        scheduledAt: scheduledAt.toISOString(),
+      });
+
+      // Show success
+      const successTitle = document.getElementById('success-title');
+      const successDesc = document.getElementById('success-desc');
+      if (successTitle) successTitle.textContent = 'Agendado com sucesso!';
+      if (successDesc) successDesc.textContent = `Seu post será publicado em ${formatDateBR(selectedDate)} às ${formatTimeBR(selectedHour, selectedMinute)}.`;
+
+      showScreen(3);
+
+      setTimeout(() => {
+        closeModal();
+        showToast(`Post agendado para ${formatDateBR(selectedDate)} às ${formatTimeBR(selectedHour, selectedMinute)} 📅`, 'success');
+        renderLibrary();
+      }, 2200);
+    } catch (err) {
+      console.error('[Schedule] Error:', err);
+      showToast('Erro ao agendar: ' + err.message, 'error');
+      btn.disabled = false;
+      btn.innerHTML = '📅 Agendar';
+    }
+  }
+
   // ── Init ──
   document.querySelector('.modal-close')?.addEventListener('click', closeModal);
   document.getElementById('publish-btn-next')?.addEventListener('click', () => showScreen(2));
+
+  // Option card click handlers
+  document.getElementById('option-card-now')?.addEventListener('click', () => selectOption('now'));
+  document.getElementById('option-card-schedule')?.addEventListener('click', () => selectOption('schedule'));
 }

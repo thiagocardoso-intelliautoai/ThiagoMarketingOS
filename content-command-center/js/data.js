@@ -105,6 +105,7 @@ export const DataStore = {
       createdAt: row.created_at,
       updatedAt: row.updated_at,
       publishedAt: row.published_at,
+      scheduledAt: row.scheduled_at || null,
       // Backward-compat derivations for render.js
       derivations: {
         cover: cover ? {
@@ -236,7 +237,7 @@ export const DataStore = {
           framework: 'framework', body: 'body', cta: 'cta',
           hashtags: 'hashtags', sources: 'sources',
           reviewScore: 'review_score', status: 'status',
-          urgency: 'urgency', publishedAt: 'published_at',
+          urgency: 'urgency', publishedAt: 'published_at', scheduledAt: 'scheduled_at',
           week: 'week', postNumber: 'post_number',
           series: 'series', seriesOrder: 'series_order'
         };
