@@ -204,7 +204,7 @@ steps:
       1. Salva em output/post-final.md
       2. Escreve o post em content-command-center/data/inbox.json
          (formato JSON com title, theme, pillar, hookText, body, cta, etc.)
-      3. O Content Command Center importa automaticamente no próximo refresh
+      3. O Thiago Marketing OS importa automaticamente no próximo refresh
       Postar entre 7h-9h BRT. Responder comentários em até 2h.
     input: output/post-final.md
     output: output/post-final.md
@@ -231,7 +231,7 @@ steps:
           }
         instruction: >
           Após aprovação do Thiago, salvar o post aprovado no arquivo
-          content-command-center/data/inbox.json. O Content Command Center
+          content-command-center/data/inbox.json. O Thiago Marketing OS
           importará automaticamente no próximo refresh.
           Dedup automática por título — posts já existentes são ignorados.
 
@@ -247,7 +247,7 @@ steps:
 # step-02: Seleção e Decisão (qual vira post, quais guardam no armazém)
 # step-02-planejamento: Revisão do planejamento mensal (12 posts)
 # step-06: Escolha do hook (qual das 3 opções)
-# step-09: Aprovação final + Salvar no Content Command Center
+# step-09: Aprovação final + Salvar no Thiago Marketing OS
 
 # ─── Mudanças v2.0 ────────────────────────────────────────
 # REMOVIDO: step-03 (Aprofundamento) — absorvido pelo Step 01 com Contexto BR

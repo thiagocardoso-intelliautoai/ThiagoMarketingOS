@@ -13,7 +13,7 @@ export const DataStore = {
     try {
       const { data, error } = await supabase
         .from('posts')
-        .select('*, covers(*), carousels(*, carousel_slides(*))')
+        .select('*, covers(*), carousels(*, carousel_slides(*)), post_analytics(*)')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -96,7 +96,7 @@ export const DataStore = {
       hashtags: row.hashtags || [],
       sources: row.sources || [],
       reviewScore: row.review_score,
-      status: row.status || 'armazem',
+      status: row.status || 'rascunho',
       urgency: row.urgency || 'relevante',
       week: row.week,
       postNumber: row.post_number,
@@ -106,6 +106,15 @@ export const DataStore = {
       updatedAt: row.updated_at,
       publishedAt: row.published_at,
       scheduledAt: row.scheduled_at || null,
+      postUrn: row.post_urn || null,
+      // Analytics from joined table
+      analytics: row.post_analytics?.[0] ? {
+        impressions: row.post_analytics[0].impressions || 0,
+        reactions: row.post_analytics[0].reactions || 0,
+        comments: row.post_analytics[0].comments || 0,
+        reshares: row.post_analytics[0].reshares || 0,
+        members_reached: row.post_analytics[0].members_reached || 0,
+      } : null,
       // Backward-compat derivations for render.js
       derivations: {
         cover: cover ? {
@@ -143,13 +152,14 @@ export const DataStore = {
       hashtags: post.hashtags || [],
       sources: post.sources || [],
       review_score: post.reviewScore || null,
-      status: post.status || 'armazem',
+      status: post.status || 'rascunho',
       urgency: post.urgency || 'relevante',
       week: post.week || null,
       post_number: post.postNumber || null,
       series: post.series || null,
       series_order: post.seriesOrder || null,
-      published_at: post.publishedAt || null
+      published_at: post.publishedAt || null,
+      post_urn: post.postUrn || null
     };
   },
 
@@ -360,9 +370,8 @@ export const DataStore = {
   },
 
   // Filter & Search (client-side on cache — unchanged API)
-  filterPosts({ pillar, status, urgency, contentType, search } = {}) {
+  filterPosts({ status, urgency, contentType, search } = {}) {
     let posts = this.getPosts();
-    if (pillar) posts = posts.filter(p => p.pillar === pillar);
     if (status) posts = posts.filter(p => p.status === status);
     if (urgency) posts = posts.filter(p => p.urgency === urgency);
     if (contentType === 'carousel') {

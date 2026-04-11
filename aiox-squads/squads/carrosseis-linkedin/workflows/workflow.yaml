@@ -121,5 +121,5 @@ steps:
       - output/carousel-pdf-report.md
     output: output/publish-report.md
     description: >
-      Publica o post no Content Command Center via Supabase.
-      O post aparece automaticamente em https://content-command-center-rose.vercel.app/
+      Publica o post no Thiago Marketing OS via Supabase.
+      O post aparece automaticamente em https://thiagomarketingos.vercel.app/

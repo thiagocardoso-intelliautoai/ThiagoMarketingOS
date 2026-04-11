@@ -70,7 +70,7 @@ O CLI deve:
 Após aprovação do post final:
 1. Executar: `node aiox-squads/shared/scripts/save-post-cli.js --title "TITULO" --file output/post-final.md`
 2. Verificar no Supabase Dashboard que o post aparece
-3. O post agora estará disponível no Content Command Center automaticamente
+3. O post agora estará disponível no Thiago Marketing OS automaticamente
 ```
 
 - [x] **6.5** Atualizar workflow `z-capas-linkedin.md` — adicionar step final:

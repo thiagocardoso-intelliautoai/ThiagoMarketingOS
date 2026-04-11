@@ -136,4 +136,4 @@ Incluir no output:
 
 ## Próximo Passo
 
-→ **step-09**: ⏸️ CHECKPOINT FINAL — Aprovação do Thiago + Salvar no Content Command Center
+→ **step-09**: ⏸️ CHECKPOINT FINAL — Aprovação do Thiago + Salvar no Thiago Marketing OS

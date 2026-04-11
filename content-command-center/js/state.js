@@ -42,9 +42,8 @@ export const PILLAR_CONFIG = {
 };
 
 export const STATUS_LABELS = {
-  armazem: 'Armazém',
-  em_producao: 'Em produção',
-  aprovado: 'Aprovado',
+  rascunho: 'Rascunho',
+  agendado: 'Agendado',
   publicado: 'Publicado',
 };
 

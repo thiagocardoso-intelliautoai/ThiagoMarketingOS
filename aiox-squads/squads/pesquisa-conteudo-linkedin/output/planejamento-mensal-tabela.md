@@ -3,7 +3,7 @@
 > Gerado em 2026-03-28
 > Direção: Mix balanceado ACRE + briefings reais de BH
 > Metodologia: DTC + ACRE
-> **Status: Todos os 9 posts escritos e enviados ao Content Command Center**
+> **Status: Todos os 9 posts escritos e enviados ao Thiago Marketing OS**
 
 ---
 
@@ -51,5 +51,5 @@
 ## Integração
 
 - ✅ 9 arquivos individuais em `output/planejamento-mensal/`
-- ✅ 9 posts enviados ao Content Command Center via `inbox.json`
+- ✅ 9 posts enviados ao Thiago Marketing OS via `inbox.json`
 - ✅ Cada post com revisão de qualidade integrada (4 blocos + score)

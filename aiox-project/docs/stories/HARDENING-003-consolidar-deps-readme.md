@@ -79,7 +79,7 @@ npx serve .
 
 ## 📋 Como criar conteúdo
 
-1. Abrir o **Content Command Center** no browser
+1. Abrir o **Thiago Marketing OS** no browser
 2. Selecionar o **modo de pesquisa** (1-5) no Dashboard
 3. **Copiar o prompt** gerado
 4. **Colar no Antigravity** (ativa o squad correspondente)

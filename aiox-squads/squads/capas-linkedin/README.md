@@ -38,7 +38,7 @@ Step 03: [AUTO] Criação da Capa (HTML → PNG)
 Step 04: [CHECKPOINT] Aprovação Visual
 Step 05: [AUTO] Revisão de Qualidade
 Step 06: [CHECKPOINT] Aprovação Final
-Step 07: [AUTO] Publicar no Content Command Center
+Step 07: [AUTO] Publicar no Thiago Marketing OS
 ```
 
 ## Como Usar
@@ -52,7 +52,7 @@ Step 07: [AUTO] Publicar no Content Command Center
 1. Fornecer o post de texto finalizado
 2. Escolher o estilo (1-5) — o designer pode recomendar
 3. Revisar e aprovar a capa
-4. Publicação automática no Content Command Center
+4. Publicação automática no Thiago Marketing OS
 
 ## Estrutura
 

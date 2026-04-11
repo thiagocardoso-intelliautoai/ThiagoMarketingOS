@@ -91,4 +91,4 @@ checkpoints:
 
 # Steps automáticos pós-aprovação
 post_approval_steps:
-  - step-07: "Publicar no Content Command Center (automático)"
+  - step-07: "Publicar no Thiago Marketing OS (automático)"

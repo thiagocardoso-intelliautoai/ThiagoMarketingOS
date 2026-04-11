@@ -3,7 +3,7 @@
 **Status:** Draft  
 **Author:** Aria (Architect Agent)  
 **Date:** 2026-03-29  
-**Scope:** Transformar o Content Command Center de frontend estático em full-stack com motor de rendering  
+**Scope:** Transformar o Thiago Marketing OS de frontend estático em full-stack com motor de rendering  
 
 ---
 
@@ -11,7 +11,7 @@
 
 ### 1.1 Problema
 
-O Content Command Center (CCC) é atualmente um frontend estático (HTML/CSS/JS servido via `npx serve`). A geração visual de capas e carrosséis depende de execução manual de scripts Puppeteer via CLI ou via agente no Antigravity. Isso cria:
+O Thiago Marketing OS (CCC) é atualmente um frontend estático (HTML/CSS/JS servido via `npx serve`). A geração visual de capas e carrosséis depende de execução manual de scripts Puppeteer via CLI ou via agente no Antigravity. Isso cria:
 
 - Fricção na produção (copiar prompts, colar no chat, esperar, rodar CLIs)
 - Dependência do Antigravity para tarefas 100% determinísticas (rendering HTML → PNG)

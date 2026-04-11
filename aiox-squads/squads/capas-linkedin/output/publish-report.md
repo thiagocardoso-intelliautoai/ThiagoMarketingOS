@@ -10,7 +10,7 @@
 - Cover: aiox-squads/squads/capas-linkedin/output/covers/acumular-nao-e-aprender/cover.png
 - Style: Pessoa + Texto
 
-## Content Command Center
+## Thiago Marketing OS
 - Arquivo: content-command-center/data/inbox.json
 - Posts no inbox: 12
 - Post existente atualizado com capa: ✅

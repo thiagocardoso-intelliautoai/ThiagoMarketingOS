@@ -1,10 +1,10 @@
-# Content Command Center
+# Thiago Marketing OS
 
 Dashboard visual para orquestrar os squads de conteúdo LinkedIn.
 
 ## Como Usar
 
-1. **Produção:** [content-command-center-rose.vercel.app](https://content-command-center-rose.vercel.app)
+1. **Produção:** [thiagomarketingos.vercel.app](https://thiagomarketingos.vercel.app)
 
 2. **Local (dev):** Precisa de um server local (ES Modules exigem HTTP, não file://)
 

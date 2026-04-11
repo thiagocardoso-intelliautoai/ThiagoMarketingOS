@@ -1,4 +1,4 @@
-﻿/* ─── LIBRARY ─── */
+/* ─── LIBRARY ─── */
 .library-section {
   min-height: 60vh;
 }
@@ -48,7 +48,7 @@
   gap: var(--space-md);
 }
 
-/* ─── POST CARD ─── */
+/* ─── POST CARD (base) ─── */
 .post-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -58,8 +58,7 @@
   box-shadow: var(--shadow-card);
   position: relative;
   cursor: pointer;
-
-  /* Staggered entrance */
+  border-left: 4px solid transparent;
   animation: cardEntrance 0.5s ease backwards;
 }
 
@@ -75,8 +74,46 @@
   box-shadow: var(--shadow-card-hover);
   transform: translateY(-3px);
 }
+.post-card:hover { border-left-color: inherit; }
+
+/* ─── STATUS VARIANTS ─── */
+
+/* Publicado — prominent, green accent */
+.post-card--publicado {
+  background: rgba(39, 41, 61, 0.65);
+  border-left-color: var(--accent-green);
+}
+.post-card--publicado:hover {
+  border-left-color: var(--accent-green);
+  box-shadow: var(--shadow-card-hover), 0 0 20px rgba(16, 185, 129, 0.08);
+}
+
+/* Rascunho — subtle, dashed gray */
+.post-card--rascunho {
+  background: rgba(39, 41, 61, 0.35);
+  border-left-color: var(--text-muted);
+  border-left-style: dashed;
+}
+.post-card--rascunho:hover {
+  border-left-color: var(--text-muted);
+  border-left-style: dashed;
+}
+
+/* Agendado — amber accent */
+.post-card--agendado {
+  background: rgba(39, 41, 61, 0.45);
+  border-left-color: var(--accent-amber);
+}
+.post-card--agendado:hover {
+  border-left-color: var(--accent-amber);
+  box-shadow: var(--shadow-card-hover), 0 0 20px rgba(245, 158, 11, 0.06);
+}
 
 .post-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-sm);
   margin-bottom: var(--space-sm);
 }
 
@@ -86,16 +123,10 @@
   font-weight: 600;
   line-height: 1.3;
   letter-spacing: -0.01em;
+  flex: 1;
 }
 
-.post-card-meta {
-  display: flex;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: var(--space-sm);
-}
-
+/* ─── STATUS BADGES ─── */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -104,34 +135,28 @@
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
-/* Pillar badge colors — Charcoal & Teal palette */
-.badge-autoridade {
-  background: rgba(20, 184, 166, 0.12);
-  color: var(--accent-primary);
-  border: 1px solid rgba(20, 184, 166, 0.2);
-}
-
-.badge-conexao {
-  background: rgba(20, 184, 166, 0.12);
-  color: var(--accent-primary);
-  border: 1px solid rgba(20, 184, 166, 0.2);
-}
-
-.badge-resultado {
-  background: rgba(16, 185, 129, 0.12);
+.badge-publicado {
+  background: rgba(16, 185, 129, 0.15);
   color: var(--accent-green);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
-.badge-engajamento {
+.badge-rascunho {
+  background: rgba(100, 116, 139, 0.12);
+  color: var(--text-muted);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+.badge-agendado {
   background: rgba(245, 158, 11, 0.12);
   color: var(--accent-amber);
   border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
-/* Status badges */
+/* Urgency/generic status */
 .badge-status {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-secondary);
@@ -139,7 +164,54 @@
   font-weight: 500;
 }
 
-/* Carousel badge */
+/* Scheduled countdown badge */
+.scheduled-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--accent-amber);
+  animation: pulseBadge 2s ease-in-out infinite;
+}
+
+@keyframes pulseBadge {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ─── METRICS BAR (published cards) ─── */
+.post-card-metrics {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-md);
+}
+
+.metrics-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.metrics-item svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--accent-green);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ─── Carousel / Cover badges ─── */
 .badge-carousel {
   background: rgba(20, 184, 166, 0.12);
   color: var(--accent-primary);
@@ -147,7 +219,7 @@
   font-weight: 600;
 }
 
-.badge-carousel svg {
+.badge-carousel svg, .badge-cover svg {
   width: 11px;
   height: 11px;
   stroke: currentColor;
@@ -157,64 +229,11 @@
   stroke-linejoin: round;
 }
 
-/* Cover badge */
 .badge-cover {
   background: rgba(245, 158, 11, 0.12);
   color: var(--accent-secondary);
   border: 1px solid rgba(245, 158, 11, 0.2);
   font-weight: 600;
-}
-
-.badge-cover svg {
-  width: 11px;
-  height: 11px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* Carousel info in view modal */
-.view-post-carousel-info {
-  background: rgba(20, 184, 166, 0.06);
-  border: 1px solid rgba(20, 184, 166, 0.15);
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
-  margin-bottom: var(--space-md);
-}
-
-.view-post-carousel-info h4 {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--accent-primary);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: var(--space-sm);
-}
-
-.view-post-carousel-info h4 svg {
-  width: 15px;
-  height: 15px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 2;
-}
-
-.carousel-info-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-}
-
-.carousel-info-grid .meta-item {
-  font-size: 0.8rem;
-}
-
-.carousel-info-grid .meta-item strong {
-  color: var(--text-primary);
-  font-weight: 500;
 }
 
 .meta-item {
@@ -236,6 +255,8 @@
 .post-card-info {
   display: flex;
   gap: var(--space-md);
+  flex-wrap: wrap;
+  align-items: center;
   margin-bottom: var(--space-md);
 }
 
@@ -266,7 +287,6 @@
   gap: var(--space-xs);
 }
 
-/* Clickable asset badges */
 .badge-clickable {
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -279,6 +299,124 @@
 
 .post-card-secondary {
   margin-left: auto;
+}
+
+/* ─── PERFORMANCE GRID (modal) ─── */
+.performance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.performance-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  text-align: center;
+  transition: all var(--transition-smooth);
+  animation: perfCardIn 0.4s ease backwards;
+  animation-delay: calc(var(--stagger, 0) * 80ms);
+}
+
+.performance-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--glass-border-hover);
+  transform: translateY(-2px);
+}
+
+@keyframes perfCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.performance-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-sm);
+}
+
+.performance-card-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.performance-icon--impressions {
+  background: rgba(6, 182, 212, 0.12);
+  color: var(--accent-cyan);
+}
+.performance-icon--reactions {
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--accent-blue);
+}
+.performance-icon--comments {
+  background: rgba(20, 184, 166, 0.12);
+  color: var(--accent-primary);
+}
+.performance-icon--reshares {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--accent-amber);
+}
+.performance-icon--reach {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--accent-green);
+}
+
+.performance-card-value {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2xs);
+}
+
+.performance-card-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.performance-published-at {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+.performance-published-at svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+/* Media badge ready/pending states */
+.badge-media-ready {
+  opacity: 1;
+}
+.badge-media-pending {
+  opacity: 0.6;
+  border-style: dashed;
 }
 
 /* ─── EMPTY STATE ─── */

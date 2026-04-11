@@ -169,18 +169,10 @@ export function renderLibrary() {
 
       <div class="library-filters">
         <div class="filter-group">
-          <select id="filter-pillar" class="filter-select" aria-label="Filtrar por pilar">
-            <option value="">Todos os Pilares</option>
-            <option value="A">Alcance (A)</option>
-            <option value="C">Credibilidade (C)</option>
-            <option value="R">Retorno (R)</option>
-            <option value="E">Engajamento (E)</option>
-          </select>
           <select id="filter-status" class="filter-select" aria-label="Filtrar por status">
             <option value="">Todos os Status</option>
-            <option value="armazem">Armazém</option>
-            <option value="em_producao">Em produção</option>
-            <option value="aprovado">Aprovado</option>
+            <option value="rascunho">Rascunho</option>
+            <option value="agendado">Agendado</option>
             <option value="publicado">Publicado</option>
           </select>
           <select id="filter-urgency" class="filter-select" aria-label="Filtrar por urgência">
@@ -212,15 +204,17 @@ export function renderLibrary() {
 }
 
 function renderPostCard(post) {
-  const pillarInfo = PILLAR_CONFIG[post.pillar] || PILLAR_CONFIG.A;
+  // Status-based card variant
+  const statusClass = post.status === 'publicado' ? 'post-card--publicado'
+    : post.status === 'agendado' ? 'post-card--agendado'
+    : 'post-card--rascunho';
 
-  // SUPABASE-005, Task 5.5: Colored media badges based on real data
+  // Media badges
   const hasCoverUrl = !!(post.covers?.image_url);
   const hasCarouselUrl = !!(post.carousels?.pdf_url);
   const hasCoverDeriv = !!(post.contentType === 'cover' || post.derivations?.cover);
   const hasCarouselDeriv = !!(post.contentType === 'carousel' || post.derivations?.carousel);
 
-  // Clickable asset badges — only render if asset exists
   let carouselBadge = '';
   if (hasCarouselUrl) {
     carouselBadge = `<span class="badge badge-carousel badge-media-ready badge-clickable" data-action="carousel" data-id="${post.id}">${Icons.layers} Carrossel</span>`;
@@ -235,14 +229,45 @@ function renderPostCard(post) {
     coverBadge = `<span class="badge badge-cover badge-media-pending badge-clickable" data-action="cover" data-id="${post.id}">${Icons.image} Capa</span>`;
   }
 
-  // Thumbnail from Supabase cover image
+  // Thumbnail
   const thumbUrl = post.covers?.image_url || post.derivations?.cover?.coverPath || null;
   const thumbHtml = thumbUrl
     ? `<img src="${thumbUrl}" alt="" class="post-card-thumb" loading="lazy" onerror="this.remove()" />`
     : '';
 
-  // Asset footer — only render if at least one asset exists
-  const hasAnyAsset = carouselBadge || coverBadge;
+  // Status badge with color
+  const statusBadgeClass = post.status === 'publicado' ? 'badge-publicado'
+    : post.status === 'agendado' ? 'badge-agendado'
+    : 'badge-rascunho';
+
+  // Scheduled date badge for agendado
+  const scheduledBadge = post.status === 'agendado' && post.scheduledAt
+    ? `<span class="scheduled-badge">⏰ ${new Date(post.scheduledAt).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} às ${new Date(post.scheduledAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</span>`
+    : '';
+
+  // Metrics bar for published posts
+  const analytics = post.analytics || {};
+  const metricsHtml = post.status === 'publicado' ? `
+    <div class="post-card-metrics">
+      <span class="metrics-item" title="Impressões">
+        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        ${formatMetric(analytics.impressions || 0)}
+      </span>
+      <span class="metrics-item" title="Reações">
+        <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+        ${formatMetric(analytics.reactions || 0)}
+      </span>
+      <span class="metrics-item" title="Comentários">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        ${formatMetric(analytics.comments || 0)}
+      </span>
+      <span class="metrics-item" title="Compartilhamentos">
+        <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        ${formatMetric(analytics.reshares || 0)}
+      </span>
+    </div>
+  ` : '';
+
   const footerHtml = `
     <div class="post-card-footer">
       <div class="post-card-assets">
@@ -256,28 +281,33 @@ function renderPostCard(post) {
   `;
 
   return `
-    <div class="post-card" data-id="${post.id}">
+    <div class="post-card ${statusClass}" data-id="${post.id}">
       ${thumbHtml}
       <div class="post-card-header">
         <h3 class="post-card-title">${escapeHtml(post.title)}</h3>
+        <span class="badge ${statusBadgeClass}">${STATUS_LABELS[post.status] || post.status}</span>
       </div>
-      <div class="post-card-meta">
-        <span class="badge ${pillarInfo.cssClass}">
-          ${pillarInfo.label}
-        </span>
-        ${post.reviewScore ? `<span class="meta-item">${Icons.barChart} ${post.reviewScore}%</span>` : ''}
-        <span class="badge badge-status">${URGENCY_LABELS[post.urgency] || post.urgency}</span>
-      </div>
+      ${post.status !== 'publicado' ? `
+        <div class="post-card-hook">
+          <p>${truncate(post.hookText, 120)}</p>
+        </div>
+      ` : ''}
+      ${metricsHtml}
       <div class="post-card-info">
         <span class="meta-item">${Icons.calendar} ${formatDate(post.createdAt)}</span>
-        <span class="meta-item">${STATUS_LABELS[post.status] || post.status}</span>
-      </div>
-      <div class="post-card-hook">
-        <p>${truncate(post.hookText, 120)}</p>
+        ${post.reviewScore ? `<span class="meta-item">${Icons.barChart} ${post.reviewScore}%</span>` : ''}
+        <span class="badge badge-status">${URGENCY_LABELS[post.urgency] || post.urgency}</span>
+        ${scheduledBadge}
       </div>
       ${footerHtml}
     </div>
   `;
+}
+
+function formatMetric(n) {
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+  return String(n);
 }
 
 function renderEmptyState() {
@@ -294,7 +324,7 @@ function renderEmptyState() {
 }
 
 function bindLibraryEvents() {
-  ['filter-pillar', 'filter-status', 'filter-urgency', 'filter-content-type'].forEach(id => {
+  ['filter-status', 'filter-urgency', 'filter-content-type'].forEach(id => {
     document.getElementById(id)?.addEventListener('change', applyFilters);
   });
   document.getElementById('search-posts')?.addEventListener('input', applyFilters);
@@ -320,12 +350,11 @@ function bindLibraryEvents() {
 }
 
 function applyFilters() {
-  const pillar = document.getElementById('filter-pillar')?.value || '';
   const status = document.getElementById('filter-status')?.value || '';
   const urgency = document.getElementById('filter-urgency')?.value || '';
   const contentType = document.getElementById('filter-content-type')?.value || '';
   const search = document.getElementById('search-posts')?.value || '';
-  const posts = DataStore.filterPosts({ pillar, status, urgency, contentType, search });
+  const posts = DataStore.filterPosts({ status, urgency, contentType, search });
   const list = document.getElementById('posts-list');
   list.innerHTML = posts.length > 0 ? posts.map(p => renderPostCard(p)).join('') : renderEmptyState();
 }
@@ -335,68 +364,92 @@ function applyFilters() {
 function openViewPostModal(postId) {
   const post = DataStore.getPostById(postId);
   if (!post) return;
-  const pillarInfo = PILLAR_CONFIG[post.pillar] || PILLAR_CONFIG.A;
-  const hasCarouselData = post.contentType === 'carousel' || post.derivations?.carousel;
+  const isPublished = post.status === 'publicado';
 
   // Generate LinkedIn preview HTML
   const linkedinPreviewHtml = renderLinkedInPreview(post);
 
-  // Generate "Dados do Post" tab content (original view)
-  const carouselInfo = hasCarouselData
-    ? `<div class="view-post-carousel-info">
-        <h4>${Icons.layers} Carrossel Gerado</h4>
-        <div class="carousel-info-grid">
-          <span class="meta-item">Estilo: <strong>${post.visualStyle || post.derivations?.carousel?.style || 'twitter-style'}</strong></span>
-          <span class="meta-item">Slides: <strong>${post.slideCount || post.derivations?.carousel?.slidesCount || '—'}</strong></span>
-          <span class="meta-item">PDF: <strong>${post.pdfPath || post.derivations?.carousel?.pdfPath || 'N/A'}</strong></span>
+  // Performance tab for published posts
+  const analytics = post.analytics || {};
+  const performanceTabHtml = isPublished ? `
+    <div class="performance-grid">
+      <div class="performance-card" style="--stagger: 0">
+        <div class="performance-card-icon performance-icon--impressions">
+          <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         </div>
-      </div>`
-    : '';
-
-  const dataTabHtml = `
-    <div class="view-post-meta-grid">
-      <div class="meta-grid-item">
-        <span class="badge ${pillarInfo.cssClass}">${pillarInfo.label}</span>
+        <div class="performance-card-value">${formatMetric(analytics.impressions || 0)}</div>
+        <div class="performance-card-label">Impressões</div>
       </div>
-      <div class="meta-grid-item">
-        ${Icons.calendar} <strong>${formatDate(post.createdAt)}</strong>
+      <div class="performance-card" style="--stagger: 1">
+        <div class="performance-card-icon performance-icon--reactions">
+          <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+        </div>
+        <div class="performance-card-value">${formatMetric(analytics.reactions || 0)}</div>
+        <div class="performance-card-label">Reações</div>
       </div>
-      ${post.framework ? `<div class="meta-grid-item">${Icons.clipboard} Framework: <strong>${post.framework}</strong></div>` : '<div class="meta-grid-item"></div>'}
-      ${post.hookStructure ? `<div class="meta-grid-item">${Icons.lightbulb} Hook: <strong>${post.hookStructure}</strong></div>` : '<div class="meta-grid-item"></div>'}
-      ${post.reviewScore ? `
-        <div class="score-bar-container">
-          <div class="score-bar-track">
-            <div class="score-bar-fill" style="width: ${post.reviewScore}%"></div>
+      <div class="performance-card" style="--stagger: 2">
+        <div class="performance-card-icon performance-icon--comments">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="performance-card-value">${formatMetric(analytics.comments || 0)}</div>
+        <div class="performance-card-label">Comentários</div>
+      </div>
+      <div class="performance-card" style="--stagger: 3">
+        <div class="performance-card-icon performance-icon--reshares">
+          <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        </div>
+        <div class="performance-card-value">${formatMetric(analytics.reshares || 0)}</div>
+        <div class="performance-card-label">Compartilhamentos</div>
+      </div>
+      ${analytics.members_reached ? `
+        <div class="performance-card" style="--stagger: 4">
+          <div class="performance-card-icon performance-icon--reach">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
-          <span class="score-bar-label">${post.reviewScore}%</span>
+          <div class="performance-card-value">${formatMetric(analytics.members_reached)}</div>
+          <div class="performance-card-label">Alcance</div>
         </div>
       ` : ''}
     </div>
-    ${carouselInfo}
-    <div class="view-post-content">
-      <pre class="post-text">${escapeHtml(post.body || post.hookText)}</pre>
-    </div>
-    ${post.cta ? `<div class="view-post-cta"><strong>CTA:</strong> ${escapeHtml(post.cta)}</div>` : ''}
-    ${post.hashtags?.length ? `<div class="view-post-hashtags">${post.hashtags.join(' ')}</div>` : ''}
-  `;
+    ${post.publishedAt ? `<p class="performance-published-at">${Icons.calendar} Publicado em ${formatDate(post.publishedAt)}</p>` : ''}
+  ` : '';
 
-  openModal(`
+  // Modal header: tabs only for published
+  const headerHtml = isPublished ? `
     <div class="modal-header">
       <h2>${Icons.eye} Ver Post</h2>
       <div class="preview-tabs">
         <button class="preview-tab preview-tab-active" data-tab="linkedin" id="tab-btn-linkedin">Preview LinkedIn</button>
-        <button class="preview-tab" data-tab="data" id="tab-btn-data">Dados do Post</button>
+        <button class="preview-tab" data-tab="performance" id="tab-btn-performance">${Icons.barChart} Performance</button>
       </div>
       <button class="btn-icon modal-close" aria-label="Fechar">${Icons.x}</button>
     </div>
+  ` : `
+    <div class="modal-header">
+      <h2>${Icons.eye} Preview LinkedIn</h2>
+      <button class="btn-icon modal-close" aria-label="Fechar">${Icons.x}</button>
+    </div>
+  `;
+
+  // Modal body: tabs for published, direct preview for drafts/scheduled
+  const bodyHtml = isPublished ? `
     <div class="modal-body">
       <div class="preview-tab-content" id="tab-linkedin">
         ${linkedinPreviewHtml}
       </div>
-      <div class="preview-tab-content" id="tab-data" style="display:none">
-        ${dataTabHtml}
+      <div class="preview-tab-content" id="tab-performance" style="display:none">
+        ${performanceTabHtml}
       </div>
     </div>
+  ` : `
+    <div class="modal-body">
+      ${linkedinPreviewHtml}
+    </div>
+  `;
+
+  openModal(`
+    ${headerHtml}
+    ${bodyHtml}
     <div class="modal-footer">
       <div class="modal-footer-left">
         <button class="btn-outline-primary btn-sm" id="modal-copy-post">${Icons.copy} Copiar Post</button>
@@ -410,29 +463,30 @@ function openViewPostModal(postId) {
           ? `<button class="btn-download btn-sm" id="modal-download-pdf" data-url="${post.carousels.pdf_url}" data-filename="carrossel-${(post.title || 'post').replace(/[^a-zA-Z0-9]/g, '-').slice(0, 40)}.pdf">${Icons.download} Baixar PDF</button>`
           : `<button class="btn-primary btn-sm" id="modal-gen-carousel" data-id="${post.id}">${Icons.layers} Gerar Carrossel</button>`
         }
-        <button class="btn-linkedin btn-sm" id="modal-publish-btn" data-id="${post.id}">${Icons.send} Publicar</button>
+        ${!isPublished ? `<button class="btn-linkedin btn-sm" id="modal-publish-btn" data-id="${post.id}">${Icons.send} Publicar</button>` : ''}
       </div>
     </div>
   `);
 
-  // Tab switching with micro-fade animation (Design Expert enhancement)
-  const switchTab = (showId, hideId, activeBtn, inactiveBtn) => {
-    const showEl = document.getElementById(showId);
-    const hideEl = document.getElementById(hideId);
-    hideEl.style.display = 'none';
-    showEl.style.display = '';
-    // Re-trigger animation by removing and re-adding
-    showEl.style.animation = 'none';
-    showEl.offsetHeight; // force reflow
-    showEl.style.animation = '';
-    activeBtn.classList.add('preview-tab-active');
-    inactiveBtn.classList.remove('preview-tab-active');
-  };
+  // Tab switching for published posts
+  if (isPublished) {
+    const switchTab = (showId, hideId, activeBtn, inactiveBtn) => {
+      const showEl = document.getElementById(showId);
+      const hideEl = document.getElementById(hideId);
+      hideEl.style.display = 'none';
+      showEl.style.display = '';
+      showEl.style.animation = 'none';
+      showEl.offsetHeight;
+      showEl.style.animation = '';
+      activeBtn.classList.add('preview-tab-active');
+      inactiveBtn.classList.remove('preview-tab-active');
+    };
 
-  const tabLi = document.getElementById('tab-btn-linkedin');
-  const tabData = document.getElementById('tab-btn-data');
-  tabLi?.addEventListener('click', () => switchTab('tab-linkedin', 'tab-data', tabLi, tabData));
-  tabData?.addEventListener('click', () => switchTab('tab-data', 'tab-linkedin', tabData, tabLi));
+    const tabLi = document.getElementById('tab-btn-linkedin');
+    const tabPerf = document.getElementById('tab-btn-performance');
+    tabLi?.addEventListener('click', () => switchTab('tab-linkedin', 'tab-performance', tabLi, tabPerf));
+    tabPerf?.addEventListener('click', () => switchTab('tab-performance', 'tab-linkedin', tabPerf, tabLi));
+  }
 
   // LinkedIn preview events (expand/collapse text)
   attachLinkedInPreviewEvents();
@@ -670,9 +724,8 @@ function openAddPostModal() {
           <div class="form-group">
             <label for="post-status">Status</label>
             <select id="post-status" class="filter-select">
-              <option value="armazem">Armazém</option>
-              <option value="em_producao">Em produção</option>
-              <option value="aprovado">Aprovado</option>
+              <option value="rascunho">Rascunho</option>
+              <option value="agendado">Agendado</option>
               <option value="publicado">Publicado</option>
             </select>
           </div>

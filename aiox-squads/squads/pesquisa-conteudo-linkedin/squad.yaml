@@ -30,7 +30,7 @@ agents:
 # ─── Workflow ──────────────────────────────────────────────
 workflow:
   file: workflows/workflow.yaml
-  description: Pipeline otimizado com 5 modos de operação e 4 checkpoints humanos — da seleção de modo à aprovação final com integração Content Command Center
+  description: Pipeline otimizado com 5 modos de operação e 4 checkpoints humanos — da seleção de modo à aprovação final com integração Thiago Marketing OS
 
 # ─── Dados de Referência ──────────────────────────────────
 data:

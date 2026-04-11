@@ -665,10 +665,15 @@ export function openPublishModal(postId) {
         throw new Error(errData.error || errData.details || `Erro HTTP ${publishRes.status}`);
       }
 
-      // 5. Only after real success, update local status
+      // 5. Capture post_urn from response for future analytics
+      const publishData = await publishRes.json().catch(() => ({}));
+      const postUrn = publishData.post_urn || publishData.id || null;
+
+      // 6. Update local status + post_urn
       await DataStore.updatePost(post.id, {
         status: 'publicado',
         publishedAt: new Date().toISOString(),
+        ...(postUrn ? { postUrn } : {}),
       });
 
       showScreen(3);

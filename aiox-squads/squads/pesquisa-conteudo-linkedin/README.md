@@ -40,7 +40,7 @@ FASE 3: APROVAÇÃO
 ```
 
 **4 checkpoints humanos** garantem que nada é publicado sem aprovação do Thiago.
-**Integração CCC:** Post aprovado é salvo automaticamente no Content Command Center.
+**Integração CCC:** Post aprovado é salvo automaticamente no Thiago Marketing OS.
 
 ---
 
@@ -94,7 +94,7 @@ pesquisa-conteudo-linkedin/
 2. Escolher modo de operação (1-5)
 3. Seguir o workflow, pausando em cada **⏸️ CHECKPOINT**
 4. Aprovar/ajustar em cada checkpoint antes de prosseguir
-5. Post final em `output/post-final.md` → salvo automaticamente no Content Command Center
+5. Post final em `output/post-final.md` → salvo automaticamente no Thiago Marketing OS
 
 ---
 
@@ -111,6 +111,6 @@ pesquisa-conteudo-linkedin/
 
 ## 📝 Changelog
 
-- **v2.0** — Pipeline otimizado: 10→7 steps. Removido Aprofundamento (absorvido pelo Step 01), fundido Seleção+Armazém, integrado revisão no Redator. Adicionada integração Content Command Center.
+- **v2.0** — Pipeline otimizado: 10→7 steps. Removido Aprofundamento (absorvido pelo Step 01), fundido Seleção+Armazém, integrado revisão no Redator. Adicionada integração Thiago Marketing OS.
 - **v1.1** — Adicionado Modo 5 (Planejamento Mensal de 12 posts).
 - **v1.0** — Pipeline original com 10 steps.

@@ -17,7 +17,7 @@
 
 ## Checklist de Testes
 
-### Frontend — Content Command Center
+### Frontend — Thiago Marketing OS
 
 - [ ] **7.1** Abrir `localhost:5500/#biblioteca` → posts carregam do Supabase
 - [ ] **7.2** Filtrar por pilar (Alcance) → só posts com pilar A aparecem

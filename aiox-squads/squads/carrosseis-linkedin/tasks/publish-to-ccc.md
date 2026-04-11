@@ -1,4 +1,4 @@
-# Task: Publicar no Content Command Center
+# Task: Publicar no Thiago Marketing OS
 
 ## Metadata
 - **Step:** step-11-publish-to-ccc
@@ -30,7 +30,7 @@ Carregar antes de executar:
    - **Slug** do carrossel
    - **Path do PDF**
    - **Número de slides**
-3. Montar objeto de post no formato do Content Command Center
+3. Montar objeto de post no formato do Thiago Marketing OS
 4. Ler o arquivo `content-command-center/data/inbox.json`
 5. Adicionar o novo post ao array `posts` (sem remover os existentes)
 6. Salvar o `inbox.json` atualizado
@@ -66,7 +66,7 @@ Carregar antes de executar:
 ### Importante
 - **Dedup:** Verificar se já existe um post com o mesmo título antes de adicionar
 - **Preservar:** Não remover posts existentes no inbox.json
-- O post aparecerá automaticamente no Content Command Center (`https://content-command-center-rose.vercel.app/`) na próxima vez que a página for carregada
+- O post aparecerá automaticamente no Thiago Marketing OS (`https://thiagomarketingos.vercel.app/`) na próxima vez que a página for carregada
 
 ---
 
@@ -85,7 +85,7 @@ Carregar antes de executar:
 - PDF: [path]
 - Slides: [N]
 
-## Content Command Center
+## Thiago Marketing OS
 - Arquivo: content-command-center/data/inbox.json
 - Posts no inbox: [total]
 - Novo post adicionado: ✅
