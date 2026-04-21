@@ -11,11 +11,22 @@ export const DataStore = {
   // ─── 3.3: init() with Supabase JOINs + localStorage fallback ───
   async init() {
     try {
-      const { data, error } = await supabase
+      // Try full query with post_analytics
+      let result = await supabase
         .from('posts')
         .select('*, covers(*), carousels(*, carousel_slides(*)), post_analytics(*)')
         .order('created_at', { ascending: false });
 
+      // Fallback: if post_analytics JOIN fails (RLS or missing table), retry without it
+      if (result.error) {
+        console.warn('[DataStore] Full query failed, retrying without post_analytics:', result.error.message);
+        result = await supabase
+          .from('posts')
+          .select('*, covers(*), carousels(*, carousel_slides(*))')
+          .order('created_at', { ascending: false });
+      }
+
+      const { data, error } = result;
       if (error) throw error;
 
       this._isOnline = true;
