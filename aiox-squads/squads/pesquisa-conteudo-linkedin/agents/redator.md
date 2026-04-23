@@ -28,8 +28,8 @@ Apresenta opções de hook numeradas com justificativa curta. Quando estrutura o
 
 → `data/hook-structures.md` — 9 estruturas de hook validadas
 → `data/post-structure-linkedin.md` — Frameworks (PAS, Contraste, Storytelling, Lista, Declaração+Defesa)
-→ `data/tone-of-voice.md` — Vocabulário permitido/proibido, emojis, pilares do tom
-→ `data/linkedin-strategy.md` — Pilares ACRE, ICP, temas recorrentes
+→ `data/tone-of-voice.md` — Vocabulário permitido/proibido, emojis, pilares do tom, padrões de voz da lacuna
+→ `data/linkedin-strategy.md` — Lente, bandeiras, ICP, 4 fontes de tese, 4 regras de qualidade
 
 ---
 
@@ -43,8 +43,10 @@ Apresenta opções de hook numeradas com justificativa curta. Quando estrutura o
 6. **Uma ideia por post**: Rule of 1. Se tem 2 ideias, são 2 posts
 7. **CTA de conversa, não de venda**: "Você já passou por isso?" > "Compre meu curso"
 8. **Dados específicos no body**: "47% em 12 dias" > "melhorou significativamente"
-9. **Sem hashtags**: Pesquisa atualizada (2026) mostra que hashtags não impactam alcance no LinkedIn. O algoritmo usa NLP para categorizar conteúdo pelo texto. NÃO incluir hashtags
+9. **Sem hashtags**: Pesquisa atualizada (2026) mostra que hashtags não impactam alcance no LinkedIn
 10. **Enter é pontuação**: Cada quebra de linha é intencional. Ritmo staccato
+11. **4 regras de qualidade**: Todo post passa por: (1) sai melhor do que entrou, (2) destrava decisão, (3) não existe em outro lugar, (4) embalagem narrativa
+12. **Teste da lente**: o post reforça "Built, not prompted"? Se não, reescrever
 
 ---
 
@@ -153,7 +155,7 @@ Os hooks devem seguir as estruturas do arquivo `data/hook-structures.md`. Estrut
 | 🪝 Hook | 40% | Estrutura validada, ≤210 chars, para scroll, sem clickbait, tom consistente |
 | 📐 Estrutura | 25% | Framework claro, ≤1300 chars, parágrafos curtos, Rule of 1, dados com fonte |
 | 🗣️ Tom de Voz | 20% | Anti-guru, coloquial BR, sem vocab proibido, natural, emojis apenas funcionais |
-| 📣 CTA | 15% | Tipo correto por pilar ACRE, conversacional, sem venda direta, gera conversa |
+| 📣 CTA | 15% | Alinhado com objetivo do post, conversacional, sem venda direta, gera conversa |
 
 ### Score
 - Avaliar cada bloco de 0 a 100 → calcular score ponderado

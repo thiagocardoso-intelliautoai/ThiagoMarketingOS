@@ -1,81 +1,93 @@
-# Concorrentes Gringos — Benchmark de Conteúdo
+# Concorrentes e Referências — Benchmark de Conteúdo
 
-> Top influenciadores e executivos de vendas B2B, IA aplicada e GTM.
+> Dois grupos: concorrentes de **posicionamento** (BR) e referências de **formato** (gringos).
+> Monitorar para entender o terreno e extrair frameworks — NUNCA copiar copy.
+
+---
+
+## 🇧🇷 Concorrentes de Posicionamento (Brasil)
+
+Três polos dominam o mercado de conteúdo de IA no LinkedIn brasileiro. Nenhum ocupa o centro — a lacuna do Thiago.
+
+### Polo 1 — Construtores Técnicos (de fora)
+
+| Nome | Perfil | O que fazem bem | Onde não competem comigo |
+|------|--------|----------------|--------------------------|
+| Victor Baggio | Agência de IA (média/grande) | Lastro técnico real, cases com números | Vendem consultoria **de fora**, falam mais pra técnicos, não traduzem pra empresário |
+| Fernando Tedesco / Playbook Lab | Consultoria de IA | Metodologia estruturada, presença forte | Mesma limitação — perspectiva de quem vende de fora, não opera por dentro |
+
+### Polo 2 — Gurus de Vendas (tocam IA por cima)
+
+Consultores B2B brasileiros consolidados que dominam vocabulário de processo comercial mas tratam IA como complemento, sem construir. Falam "use IA no seu CRM" sem ter construído o sistema.
+
+### Polo 3 — Influencers de IA Generalista + Agências
+
+Lista de ferramentas, case visual brilhante, tese inexistente. "10 IAs que vão mudar sua vida" — falha na regra 3 imediatamente (não existe em outro lugar = qualquer um faz).
+
+### Minha diferenciação
+
+- **Contra construtores técnicos:** eu não vendo consultoria. Eu opero IA como funcionário de uma consultoria de vendas. Meu lastro é "eu mesmo construí isso rodando dentro de uma operação comercial B2B viva"
+- **Contra gurus de vendas:** eu também tenho vocabulário de processo comercial, mas chego no outro polo — construo o sistema que automatiza o processo
+- **Contra influencers:** minha régua das 4 regras exclui conteúdo genérico por construção
+- **Contra agências:** agência vende. Eu documento. O sujeito do post é a construção, não o serviço
+
+---
+
+## 🌎 Referências de Formato (Gringos)
+
 > Monitorar para extrair frameworks, ângulos e formatos — NUNCA copiar copy.
+> Filtrar para contexto BR: o que funciona nos EUA nem sempre cola no Brasil B2B.
 
----
+### Tier 1 — Monitorar Semanalmente
 
-## 🏆 Tier 1 — Obrigatório Monitorar (Weekly)
-
-| Nome | LinkedIn | Nicho Principal | Por que monitorar |
-|------|----------|-----------------|-------------------|
-| John Barrows | /in/johnbarrows | Sales Training, Outbound | Template de "táticas práticas que funcionam". Posts curtos, dados reais. 500K+ seguidores |
-| Kyle Coleman | /in/kyletcoleman | AI em vendas, GTM | Copy Google/HubSpot, early adopter de IA em sales. Posts com dados e frameworks |
+| Nome | LinkedIn | Nicho | Por que monitorar |
+|------|----------|-------|-------------------|
+| John Barrows | /in/johnbarrows | Sales Training, Outbound | Template de "táticas práticas". Posts curtos, dados reais. 500K+ |
+| Kyle Coleman | /in/kyletcoleman | AI em vendas, GTM | Early adopter de IA em sales. Posts com dados e frameworks |
 | Scott Barker | /in/ssbarker | GTM, Revenue, SaaS | GTMfund newsletter. Conecta tendências macro com vendas operacionais |
-| Morgan J Ingram | /in/morganjingram | Outbound, Content | Em todo lugar. Formato de vídeo + texto. Hooks agressivos que param o scroll |
-| Kevin "KD" Dorsey | /in/kevindorsey | Sales Management, Coaching | Ex-VP Sales. Fala de gestão de time com profundidade que poucos têm |
-| Samantha McKenna | /in/samanthamckenna | Enterprise Sales, LinkedIn | #samsales. Especialista em social selling e LinkedIn orgânico |
+| Morgan J Ingram | /in/morganjingram | Outbound, Content | Formato vídeo + texto. Hooks agressivos que param o scroll |
+| Kevin "KD" Dorsey | /in/kevindorsey | Sales Management | Ex-VP Sales. Gestão de time com profundidade |
+| Samantha McKenna | /in/samanthamckenna | Enterprise Sales | #samsales. Social selling e LinkedIn orgânico |
+
+### Tier 2 — Monitorar Quinzenalmente
+
+| Nome | LinkedIn | Nicho | Por que monitorar |
+|------|----------|-------|-------------------|
+| Chris Walker | /in/chriswalker171 | Demand Gen | "Revenue Vitals". Provocador. Desafia inbound tradicional |
+| Jed Mahrle | /in/jedmahrle | Outbound, Cold Email | Frameworks de email que convertem |
+| Jason Lemkin | /in/jasonlemkin | SaaS, Funding | SaaStr founder. Visão macro + métricas de crescimento |
+| Becc Holland | /in/beccholland | Outbound, SDR | Flip the Script. Cold calling com metodologia |
+| Will Allred | /in/willallred | AI Sales Tools | Lavender.ai. IA aplicada a email + sales enablement |
 
 ---
 
-## 🥈 Tier 2 — Monitorar Quinzenalmente
-
-| Nome | LinkedIn | Nicho Principal | Por que monitorar |
-|------|----------|-----------------|-------------------|
-| Chris Walker | /in/chriswalker171 | Demand Gen, Dark Social | "Revenue Vitals". Provocador. Desafia o inbound tradicional |
-| Jed Mahrle | /in/jedmahrle | Outbound, Cold Email | Practical Prospecting newsletter. Frameworks de email que convertem |
-| Jason Lemkin | /in/jasonlemkin | SaaS, Funding, Scale | SaaStr founder. Visão macro de SaaS + métricas de crescimento |
-| Becc Holland | /in/beccholland | Outbound, SDR Strategy | Flip the Script. Cold calling e prospecting com metodologia |
-| Collin Mitchell | /in/collinmitchell | Sales, Podcasts | Salesy podcast. Entrevista top sellers — bom para identificar tendências |
-| Will Allred | /in/willallred | AI Sales Tools, Writing | Lavender.ai co-founder. IA aplicada a email + sales enablement |
-
----
-
-## 🥉 Tier 3 — Monitorar Mensalmente
-
-| Nome | LinkedIn | Nicho Principal | Por que monitorar |
-|------|----------|-----------------|-------------------|
-| Sahil Mansuri | /in/sahilmansuri | Revenue Intelligence | Bravado CEO. Dados de comp e performance de vendedores |
-| Mark Kosoglow | /in/markkosoglow | VP Sales, Outbound | Catalyst Software. Operação de vendas enterprise com transparência |
-| Devin Reed | /in/devinreed | Content Marketing B2B | Ex-Gong. Especialista em conteúdo B2B que gera pipeline |
-| Gabrielle "GB" Blackwell | /in/gabrielleblackwell | SDR Leadership | Gestão de SDRs, coaching, diversidade em vendas |
-| Amy Volas | /in/amyvolas | Hiring VP Sales | Avenue Talent Partners. Como contratar e escalar líderes de vendas |
-
----
-
-## 📌 O Que Extrair de Cada Concorrente
-
-### Análise por Post (quando monitorando)
+## 📌 O Que Extrair de Cada Referência
 
 ```
-## [Nome do Concorrente] — [Data]
+## [Nome] — [Data]
 
-**Post analisado:** [Link ou resumo do post]
-
-### Métricas (quando visíveis)
-- Likes: ___
-- Comentários: ___
-- Reposts: ___
+**Post analisado:** [Link ou resumo]
 
 ### Framework do Hook
-- Tipo de hook usado: [Número+Resultado / Contraste / Pergunta / etc.]
+- Tipo usado: [Número+Resultado / Contraste / Pergunta / etc.]
 - Por que funcionou: [1 frase]
 
 ### Ângulo Identificado
-- Tema: [qual tema central]
-- Ângulo: [qual perspectiva/corte usou]
+- Tema central: [qual]
+- Perspectiva: [qual corte usou]
 - Transferível pro Thiago? [Sim/Não + por quê]
+- Passa na lente "Built, not prompted"? [Sim/Não]
 
 ### Ideia para Armazém
-- [ ] Gera ideia para o armazém? Se sim, registrar no formato padrão
+- [ ] Gera ideia? Se sim, registrar no formato padrão
 ```
 
 ---
 
 ## ⚠️ Regras de Benchmark
 
-1. **Extrair framework, NUNCA copiar copy**: O objetivo é entender *como* estruturam, não *o que* escrevem
-2. **Filtrar para contexto BR**: O que funciona nos EUA nem sempre cola no Brasil B2B
-3. **Priorizar posts de alta performance**: Likes/comentários acima da média = algo funcionou
-4. **Identificar padrões semanais**: Frequência, horários, formatos que repetem
-5. **Benchmark ≠ Imitação**: O Thiago tem voz própria. Benchmark é inspiração técnica
+1. **Extrair framework, NUNCA copiar copy**
+2. **Filtrar para contexto BR**: dado gringo sem tradução pra realidade brasileira é meio-insight
+3. **Priorizar posts de alta performance**: engajamento acima da média = algo funcionou
+4. **Testar pela lente**: o ângulo extraído passa no teste "Built, not prompted"?
+5. **Benchmark ≠ Imitação**: Thiago tem voz própria. Benchmark é inspiração técnica

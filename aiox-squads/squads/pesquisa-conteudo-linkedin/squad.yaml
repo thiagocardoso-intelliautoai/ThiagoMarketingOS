@@ -36,7 +36,7 @@ workflow:
 data:
   - id: linkedin-strategy
     file: data/linkedin-strategy.md
-    description: Estratégia LinkedIn, pilares ACRE, ICP, frequência e métricas
+    description: Estratégia LinkedIn, lente, bandeiras, ICP, fontes de tese, regras de qualidade
 
   - id: tone-of-voice
     file: data/tone-of-voice.md
@@ -114,7 +114,7 @@ tasks:
 
   - id: planejamento-mensal
     file: tasks/05-planejamento-mensal.md
-    description: Modo 5 — Planejamento mensal de 12 posts (4 semanas) com metodologia DTC + ACRE
+    description: Modo 5 — Planejamento mensal de 12 posts (4 semanas) com metodologia DTC + fontes de tese
 
 # ─── Output ───────────────────────────────────────────────
 output:

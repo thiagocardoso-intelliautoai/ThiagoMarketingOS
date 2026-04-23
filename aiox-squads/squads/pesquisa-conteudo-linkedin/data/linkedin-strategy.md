@@ -1,100 +1,111 @@
-# Estratégia LinkedIn — Thiago C.Lima / Winning Sales
+# Estratégia LinkedIn — Thiago C.Lima
 
 > Diretrizes estratégicas de conteúdo para o perfil LinkedIn do Thiago.
-> Define pilares, frequência, métricas e calendário editorial.
+> Fonte de verdade: átomos estratégicos em `copilot/atomos/atoms.yaml`.
+> Última atualização: abril/2026 — v2.
 
 ---
 
-## Objetivo do LinkedIn
+## Posicionamento
 
-> Posicionar o Thiago como referência em IA aplicada a vendas B2B no Brasil.
-> Gerar autoridade → confiança → pipeline → negócios para a Winning Sales.
+> **Lacuna encontrada:** O operador construtor que mostra IA rodando por dentro
+> de uma operação B2B real, não de fora vendendo consultoria.
 
----
-
-## ICP (Persona Central)
-
-**Carlos Oliveira** — Gerente, Diretor ou VP de Vendas B2B
-
-| Atributo | Detalhe |
-|----------|---------|
-| Cargo | Gerente, Diretor ou VP de Vendas |
-| Empresa | Tech, SaaS, serviços B2B, startups e scale-ups |
-| Time | 5-50 vendedores |
-| Dor principal | Imprevisibilidade de pipeline, time manual, escalar sem crescer headcount |
-| Dor secundária | Experimentou IA/automação e não deu resultado |
-| Medo | Ficar pra trás enquanto concorrentes automatizam |
-| Desejo | Sistema previsível que funcione sem depender de herói |
+Não sou guru de prompt, não sou acadêmico, não sou agência vendendo IA.
+Sou o raro cara que constrói e roda IA dentro de uma empresa comercial viva
+e traduz, em tempo real, o que funciona e o que falha pra empresário tomar decisão.
 
 ---
 
-## Pilares de Conteúdo (ACRE)
+## Lente Proprietária — "Built, not prompted"
 
-| Pilar | Objetivo | % do mix | Tipo de CTA |
-|-------|----------|----------|-------------|
-| **A** — Alcance | Expandir audiência, viralizar | 25% | Soft (salve, compartilhe) |
-| **C** — Credibilidade | Provar expertise, dados e cases | 30% | Medium (link, convite) |
-| **R** — Retorno | Gerar leads, pipeline, vendas | 20% | Hard (DM, link, formulário) |
-| **E** — Engajamento | Gerar conversa, construir comunidade | 25% | Soft (perguntas, debates) |
+O construtor-tradutor: construo IA em operação comercial real, e traduzo
+o que funciona pra quem toma decisão de negócio.
 
----
+**Contra quem me defino:**
+- "Especialista" que nunca rodou nada em produção
+- Lista de "10 ferramentas de IA que vão mudar sua vida"
+- Jargão técnico sem tradução pra empresário
 
-## Temas Recorrentes
-
-### Primários (70% do conteúdo)
-1. **IA aplicada a vendas B2B** — ferramentas, automações, workflows reais
-2. **Gestão de operação comercial** — processos, CRM, pipeline management
-3. **Automação sem hype** — o que funciona de verdade vs. o que é marketing
-
-### Secundários (20% do conteúdo)
-4. **Cultura de vendas e liderança** — gestão de time, coaching, performance
-5. **Dados e métricas de vendas** — KPIs que importam, dashboards, previsibilidade
-
-### Eventuais (10% do conteúdo)
-6. **Reflexões pessoais** — aprendizados, erros, vulnerabilidade estratégica
-7. **Tendências e curadoria** — o que está acontecendo no mercado gringo e BR
+**Portabilidade:** se eu for Head hoje, Founder amanhã, Consultor depois — a lente vive.
 
 ---
 
-## Frequência e Calendário
+## Bandeiras
 
-| Dia | Conteúdo | Pilar |
-|-----|----------|-------|
-| Segunda | Post texto — insight da semana (pesquisa) | C ou A |
-| Terça | — | — |
-| Quarta | Post texto — tática/sistema aplicável | R ou C |
-| Quinta | — | — |
-| Sexta | Post texto — reflexão ou debate | E ou A |
+### Âncora: "Anti-prompt, pro-sistema"
 
-**Meta:** 3 posts de texto por semana (mínimo 2)
-**Carrosséis:** 1-2 por semana (produzidos pelo squad carrosseis-linkedin)
+- **Inimigo:** a cultura de "um prompt mágico resolve" e o marketing de guru de IA
+- **Convocação:** empresário que quer resultado operacional de IA, não show de mágica
+- **Lastro:** Skills e Agents rodando em produção comercial na Winning Sales
+- **Teste por post:** "Isso reforça que IA em operação é sistema construído, não truque pontual?"
+
+### Sub-bandeira: "Processo antes de ferramenta"
+
+- **Inimigo:** a pressa de "botar um agente de IA aqui" sem mapear o processo
+- **Convocação:** empresário que já tentou colocar IA e não deu resultado
+- **Lastro:** skill process-diagnosis-form, diagnósticos de HubSpot, Active Campaign
+- **Tese-raiz:** "Automação sem redesenho é bagunça mais rápida."
+
+**Costura:** primeiro o processo, depois o sistema, nunca o truque.
 
 ---
 
-## Métricas de Sucesso
+## ICP (hipótese de trabalho)
 
-### North Star
-- **Pipeline gerado via LinkedIn** (DMs, inbound, indicações)
+**Empresário ou operador de negócio com time comercial/marketing que quer usar IA de forma correta, não com hype.**
 
-### Leading Indicators
-| Métrica | Meta mensal |
-|---------|------------|
-| Impressões | 50K+ |
-| Engajamento rate | > 3% |
-| Novos seguidores | 300+/mês |
-| DMs recebidas | 10+/mês |
-| Salvamentos | Track trend (crescendo) |
+ICP amplo de propósito — a especificidade mora na lente e nas bandeiras, não em filtros demográficos. Quem não se encaixa se auto-exclui.
 
-### Qualitative
-- Comentários com substância (não só emojis)
-- DMs de ICPs (não de vendedores de curso)
-- Convites para podcasts/palestras
+**Audiência vs Serviço:**
+- **Conteúdo** fala pra esse ICP amplo. Volume, autoridade, descoberta de nicho via dados
+- **Serviço** atende caso a caso — qualquer empresário que precisa de processo redesenhado + IA implementada
+
+**A descobrir em 3-6 meses com dados reais:**
+- Qual porte mais engaja?
+- Qual função mais comenta? (CEO, COO, Head de Marketing, Head de Vendas)
+- Quem vira lead qualificado vs quem só curte?
+- Existe sub-nicho emergente?
+
+**Princípio:** ICP é descoberto, não prescrito. *Niche finds you* quando a tese é afiada.
+
+---
+
+## 4 Fontes Recorrentes de Tese
+
+| Fonte | Template de tese | Matéria-prima |
+|-------|------------------|---------------|
+| **Skills em Produção** | "Descobri que [X] não funciona em [Y] porque [Z]. Aqui está o que funciona." | weekly-report, winning-sales-pptx, process-diagnosis-form, dba-generator |
+| **Benchmark Real** | "Rodei [A] vs [B] em [caso real]. Resultado: [número]. Aqui está quando cada um ganha." | n8n vs Claude Code Routines vs Managed Agents; EasyPanel; Antigravity |
+| **Process Diagnostic Anônimo** | "Mapeei o processo comercial de [tipo de empresa]. O gargalo parece [óbvio], mas é [tua lente]." | Diagnósticos internos (HubSpot, Active Campaign, centralização multi-fonte) |
+| **Falha Documentada** | "Tentei [X] por [tempo]. Não funcionou. Aqui está o porquê, e o que eu faria diferente." | Tudo que travou no caminho até agora |
+
+---
+
+## 4 Regras de Qualidade
+
+Cada post precisa passar nas 4:
+
+1. **Sai melhor do que entrou** — algo novo na cabeça, não repetição do feed
+2. **Destrava decisão, não execução** — muda o que o leitor decide na próxima reunião, não precisa virar tutorial
+3. **Não existe em outro lugar** — tese ou ângulo que só eu tenho por vivência proprietária
+4. **Embalagem narrativa** — tem história, arco, abertura que fisga. Não é bullet point seco
+
+> **Nota:** regra 2 foi adaptada do Crasto. Original era "aplicável hoje" (faz sentido pra curso). No contexto Thiago que vende tradução + construção, o filtro é destravar decisão.
+
+---
+
+## Frequência
+
+- **1 tese nova por semana, mínimo**
+- As 4 fontes rodam em ciclo — nunca fica mais de 2 semanas sem publicar Falha Documentada
+- Nada de gimmick sem substância. Embalagem alimentada por tese
 
 ---
 
 ## Regras Editoriais
 
-1. **Nunca publicar sem revisão** (step-08 do pipeline)
+1. **Nunca publicar sem revisão** (step-07 do pipeline com checklist integrado)
 2. **Dados sempre com fonte** — sem dado solto
 3. **Tom consistente** — consultar `tone-of-voice.md` sempre
 4. **Um post, uma ideia** — Rule of 1 inegociável

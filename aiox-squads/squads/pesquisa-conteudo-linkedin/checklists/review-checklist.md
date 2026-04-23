@@ -39,12 +39,11 @@
 
 ## 📣 CTA — Peso: 15%
 
-- [ ] Tipo de CTA correto para o pilar ACRE:
-  - **A (Alcance):** Soft → salve, compartilhe
-  - **C (Credibilidade):** Medium → link, convite
-  - **R (Retorno):** Hard → DM, link, formulário
-  - **E (Engajamento):** Soft → perguntas, debates
 - [ ] CTA é pergunta ou ação específica (não genérico)
+- [ ] CTA alinhado com o objetivo do post:
+  - **Gerar debate:** pergunta aberta ou polarizadora
+  - **Gerar salvamentos:** promessa de valor ("salva pra usar depois")
+  - **Gerar conversa:** pedido específico ("me conta: qual é o maior gargalo?")
 - [ ] Sem venda direta / "compre agora" / "saiba mais"
 - [ ] Gera conversa e comentários
 

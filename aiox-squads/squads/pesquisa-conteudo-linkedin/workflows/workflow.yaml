@@ -106,7 +106,7 @@ steps:
     output: output/planejamento-mensal-tabela.md
     description: >
       Redator gera tabela completa de 12 posts distribuídos em 4 semanas
-      usando metodologia DTC + ACRE. Cada post com hook real, tipo de
+      usando metodologia DTC + fontes de tese. Cada post com hook real, tipo de
       conteúdo e direcionamento de escrita.
     next: step-02-planejamento
 

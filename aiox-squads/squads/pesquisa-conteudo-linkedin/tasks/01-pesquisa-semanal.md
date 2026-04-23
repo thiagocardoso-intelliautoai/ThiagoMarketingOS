@@ -7,7 +7,7 @@
 ## Objetivo
 
 Pesquisar fontes Tier 1/2/3 e concorrentes para identificar 5-10 insights
-relevantes para o ICP (Carlos Oliveira — Gerente/Diretor de Vendas B2B).
+relevantes para o ICP (empresário/operador que quer usar IA de forma correta).
 
 ---
 
@@ -32,7 +32,7 @@ Para cada insight identificado, preencher:
 - **Dado-chave:** [número, estatística ou informação principal]
 - **Por que importa pro ICP:** [1 frase]
 - **Ângulo para post:** [1-2 frases]
-- **Pilar ACRE sugerido:** [A/C/R/E + justificativa]
+- **Fonte de tese sugerida:** [Skills em Produção / Benchmark Real / Process Diagnostic / Falha Documentada + justificativa]
 - **Contexto BR:** [como isso se aplica no mercado brasileiro B2B]
 - **Contra-argumento:** [visão oposta, se houver — 1 frase]
 - **Urgência:** 🔴 Urgente | 🟡 Relevante | 🟢 Pode esperar

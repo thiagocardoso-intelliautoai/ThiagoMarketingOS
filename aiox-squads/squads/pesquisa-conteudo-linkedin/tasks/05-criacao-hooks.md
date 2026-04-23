@@ -19,7 +19,7 @@ Max 210 caracteres cada. Recomendar o mais forte.
 ### 2. Consultar Referências
 - `data/hook-structures.md` — 9 estruturas validadas
 - `data/tone-of-voice.md` — Tom e vocabulário
-- `data/linkedin-strategy.md` — Pilar ACRE da ideia
+- `data/linkedin-strategy.md` — Lente e fontes de tese da ideia
 
 ### 3. Criar 3 Hooks (Estruturas DIFERENTES)
 

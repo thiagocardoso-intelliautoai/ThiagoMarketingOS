@@ -7,20 +7,20 @@
 
 ## Contexto
 
-O Redator recebe uma **direção temática** do usuário (ex: "foco em automação de prospecção com IA este mês") e gera 12 posts distribuídos em 4 semanas usando a metodologia integrada DTC + ACRE.
+O Redator recebe uma **direção temática** do usuário (ex: "foco em automação de prospecção com IA este mês") e gera 12 posts distribuídos em 4 semanas usando a metodologia integrada DTC + fontes de tese.
 
 ---
 
 ## Referências Obrigatórias
 
-→ `data/linkedin-strategy.md` — Pilares ACRE, ICP, temas, métricas
+→ `data/linkedin-strategy.md` — Lente, bandeiras, ICP, fontes de tese, regras de qualidade
 → `data/tone-of-voice.md` — Tom de voz, vocabulário permitido/proibido
 → `data/hook-structures.md` — 9 estruturas de hook validadas
 → `data/post-structure-linkedin.md` — Frameworks (PAS, Contraste, Storytelling, etc.)
 
 ---
 
-## Arquitetura Lógica: DTC + ACRE
+## Arquitetura Lógica: DTC + Fontes de Tese
 
 Distribuir os 12 posts seguindo esta lógica de funil adaptada para 4 semanas.
 
@@ -29,7 +29,7 @@ Para cada post, escolher um **Tipo de Conteúdo** específico para diversificar 
 ### FASE 1: DISRUPÇÃO & ALCANCE (Posts 1 a 4)
 
 **Objetivo:** Criar reconhecimento e despertar curiosidade.
-**Pilar ACRE predominante:** Alcance (A) e Engajamento (E)
+**Fonte de tese predominante:** Falha Documentada, Benchmark Real
 
 **Tipos de Conteúdo (escolher variado):**
 1. *Histórias de Conexão:* Bastidores/Origem que aproximam
@@ -40,7 +40,7 @@ Para cada post, escolher um **Tipo de Conteúdo** específico para diversificar 
 ### FASE 2: EDUCAÇÃO & CREDIBILIDADE (Posts 5 a 9)
 
 **Objetivo:** Aprofundar interesse, educar e criar confiança técnica.
-**Pilar ACRE predominante:** Credibilidade (C) e Engajamento (E)
+**Fonte de tese predominante:** Skills em Produção, Process Diagnostic
 
 **Tipos de Conteúdo (escolher variado):**
 1. *Estudos de Caso:* Problema > Solução > Resultado
@@ -51,7 +51,7 @@ Para cada post, escolher um **Tipo de Conteúdo** específico para diversificar 
 ### FASE 3: CONVERSÃO & RETORNO (Posts 10 a 12)
 
 **Objetivo:** Gerar MQL e oportunidades de venda.
-**Pilar ACRE predominante:** Retorno (R) e Credibilidade (C)
+**Fonte de tese predominante:** Skills em Produção, Benchmark Real
 
 **Tipos de Conteúdo (escolher variado):**
 1. *Urgência (FOMO):* Risco de não agir agora
@@ -78,7 +78,7 @@ Ir direto para a tabela. Sem introduções longas.
 
 ### Tabela de Planejamento (12 Linhas)
 
-| **Sem** | **Post** | **Fase ACRE** | **Tipo de Conteúdo** | **Ideia Central (Hook Real)** | **Direcionamento de Escrita** |
+| **Sem** | **Post** | **Fonte de Tese** | **Tipo de Conteúdo** | **Ideia Central (Hook Real)** | **Direcionamento de Escrita** |
 | --- | --- | --- | --- | --- | --- |
 | 1 | 1 | Alcance | Desafie o Comum | [Hook real — headline + subheadline] | [Estrutura do copy] |
 

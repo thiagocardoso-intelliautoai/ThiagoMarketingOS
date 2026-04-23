@@ -5,10 +5,10 @@
 ---
 
 ```
-## Post LinkedIn — [Pilar ACRE] — [Data]
+## Post LinkedIn — [Fonte de Tese] — [Data]
 
 ### Metadata
-- **Pilar ACRE:** [A/C/R/E]
+- **Fonte de tese:** [Skills em Produção / Benchmark Real / Process Diagnostic / Falha Documentada]
 - **Tema:** [tema central]
 - **Framework:** [PAS/Contraste/Storytelling/Lista/Declaração+Defesa]
 - **Fonte(s):** [fontes usadas]

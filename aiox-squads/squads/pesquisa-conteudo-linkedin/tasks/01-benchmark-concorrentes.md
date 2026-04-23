@@ -50,9 +50,9 @@ Para cada insight transferível, formatar como entrada de Armazém:
 ### Insight #[N] — "[Título curto]"
 - **Fonte:** Benchmark [nome do concorrente] — [data]
 - **Dado-chave:** [métrica ou informação principal do post original]
-- **Por que importa pro ICP:** [1 frase conectando com Carlos Oliveira]
+- **Por que importa pro ICP:** [1 frase conectando com a dor de quem quer usar IA corretamente]
 - **Ângulo para post:** [como adaptar para o Thiago — framework, não copy]
-- **Pilar ACRE sugerido:** [A/C/R/E + justificativa]
+- **Fonte de tese sugerida:** [Skills em Produção / Benchmark Real / Process Diagnostic / Falha Documentada + justificativa]
 - **Contexto BR:** [como isso se aplica no mercado brasileiro B2B]
 - **Contra-argumento:** [visão oposta, se houver — 1 frase]
 - **Urgência:** 🔴 Urgente | 🟡 Relevante | 🟢 Pode esperar

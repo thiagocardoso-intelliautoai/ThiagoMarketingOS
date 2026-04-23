@@ -7,8 +7,9 @@
 
 ## Princípio Central
 
-> O Thiago fala como conversa com o amigo que é Diretor de Vendas:
-> direto, honesto, com dados, sem enrolação, e às vezes mostrando que errou também.
+> O Thiago fala como conversa com empresário que quer usar IA de verdade:
+> direto, honesto, com dados, sem enrolação, e mostrando que errou também.
+> Fala da dor, não do mecanismo. "Empresário que já tentou colocar IA e não deu resultado" é durável. "Nosso SaaS de squads" é frágil.
 
 ---
 
@@ -43,6 +44,31 @@
 - Como se estivesse no WhatsApp com um colega executivo
 - Profissional sem ser formal
 - Brasileiro, não tradução de gringo
+
+---
+
+## Padrões de Voz da Lacuna
+
+Regras obrigatórias derivadas do posicionamento. Verificar **antes** de publicar qualquer post sobre construção, Skills, ou IA.
+
+### 1. Distância percorrida > idade
+- Idade é gimmick quando vira hook principal ("19 anos e Head de IA")
+- Substância quando vira consequência de distância ("4 tentativas, 3 falhas antes do primeiro acerto" — leitor calcula a idade sozinho)
+- **Nunca liderar com idade.** Usar como pagamento da substância já estabelecida
+
+### 2. Falha Documentada é estoque grande
+- Arco pessoal: 3 falhas antes do primeiro acerto + tudo que travou depois (n8n vs Routines, Antigravity, EasyPanel, process-diagnosis-form V1→V3)
+- Falha honesta é diferencial absurdo no feed brasileiro — quase todo mundo celebra wins
+- Construtor que posta falha crua vira confiável em 10 segundos
+
+### 3. Moldura "dentro" vs "fora"
+- Sempre que o post tocar em construção, pontuar que é **dentro** da operação B2B, não consultoria **de fora**
+- Não é branding — é verdade estrutural do posicionamento
+
+### 4. Skills em produção ganham moldura certa ou não saem
+- DBA generator ≠ "automatizei entregável da consultoria" (cliente Winning lê e pensa "pagamos pra IA fazer?")
+- Moldura certa: "liberei tempo do consultor pra pensamento de verdade, não pra digitação"
+- **Toda Skill precisa passar por essa verificação antes de sair**
 
 ---
 

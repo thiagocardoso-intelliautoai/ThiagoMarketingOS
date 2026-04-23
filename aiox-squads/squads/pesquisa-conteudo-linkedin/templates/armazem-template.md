@@ -8,7 +8,7 @@
 ## 💡 [Título da Ideia] — [Data de Registro]
 
 - **Tema:** [tema central]
-- **Pilar ACRE:** [A/C/R/E]
+- **Fonte de tese:** [Skills em Produção / Benchmark Real / Process Diagnostic / Falha Documentada]
 - **Insight central:** [a ideia em 1-2 frases]
 - **Dados de suporte:**
   - [Dado 1 — fonte + data]

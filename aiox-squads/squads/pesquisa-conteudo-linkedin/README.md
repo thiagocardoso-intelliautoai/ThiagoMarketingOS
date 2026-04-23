@@ -9,7 +9,7 @@
 
 Posicionar o Thiago como referência em IA aplicada a vendas B2B no Brasil
 através de posts de texto LinkedIn de alta qualidade, baseados em pesquisa
-e alinhados com a estratégia ACRE.
+e alinhados com a estratégia "Built, not prompted".
 
 ---
 
@@ -67,7 +67,7 @@ pesquisa-conteudo-linkedin/
 │   ├── 07-estruturacao-post.md # Post final + revisão integrada
 │   └── 08-revisao-qualidade.md # ⚠️ DEPRECIADO (absorvido pelo 07)
 ├── data/
-│   ├── linkedin-strategy.md     # Estratégia, ICP, pilares ACRE
+│   ├── linkedin-strategy.md     # Estratégia, ICP, lente, bandeiras, fontes de tese
 │   ├── tone-of-voice.md         # Tom de voz e vocabulário
 │   ├── hook-structures.md       # 9 estruturas de hook validadas
 │   ├── post-structure-linkedin.md # Frameworks de post

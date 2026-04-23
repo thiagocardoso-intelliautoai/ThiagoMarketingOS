@@ -39,9 +39,9 @@ Para cada insight encontrado, usar formato padrão:
 ### Insight #[N] — "[Título curto]"
 - **Fonte:** [nome da fonte + data]
 - **Dado-chave:** [o número, estatística ou informação principal]
-- **Por que importa pro ICP:** [1 frase — conectar com dor/desejo do Carlos Oliveira]
+- **Por que importa pro ICP:** [1 frase — conectar com a dor de quem quer usar IA de forma correta]
 - **Ângulo para post:** [como transformar em post LinkedIn — 1-2 frases]
-- **Pilar ACRE sugerido:** [A/C/R/E + justificativa em 1 frase]
+- **Fonte de tese sugerida:** [Skills em Produção / Benchmark Real / Process Diagnostic / Falha Documentada + justificativa]
 - **Contexto BR:** [como isso se aplica no mercado brasileiro B2B]
 - **Contra-argumento:** [visão oposta, se houver — 1 frase]
 - **Urgência:** 🔴 Urgente | 🟡 Relevante | 🟢 Pode esperar
