@@ -4,6 +4,9 @@ version: "alpha"
 description: "Charcoal & Teal. Anti-hype, técnico acessível, resultado > teoria."
 
 colors:
+  # ── Cor Primária (spec DESIGN.md) ──
+  primary: "#14B8A6"              # Teal — cor primária de accent do sistema
+
   # ── Cores Estruturais (Fundos) ──
   bg-dark: "#1A1A2E"             # Charcoal — fundo dark principal
   bg-light: "#F4F4F5"            # Cloud — fundo Editorial Clean
@@ -117,7 +120,7 @@ components:
 
   # ── DECORATORS ──
   quote-decorator:
-    textColor: "{colors.accent-primary}"
+    textColor: "{colors.primary}"
     size: 120px
   editorial-separator:
     backgroundColor: "{colors.accent-primary}"
@@ -131,6 +134,32 @@ components:
   notebook-margin:
     backgroundColor: "{colors.accent-notebook-red}"
     width: 1px
+  notebook-tag:
+    backgroundColor: "{colors.accent-notebook-blue}"
+    textColor: "#FFFFFF"
+    typography: "{typography.caption}"
+    rounded: "{rounded.data-bar}"
+    padding: 4px
+
+  # ── PAGES (fundos por estilo) ──
+  page-dark:
+    backgroundColor: "{colors.bg-dark}"
+    textColor: "{colors.text-primary-dark}"
+  page-light:
+    backgroundColor: "{colors.bg-light}"
+    textColor: "{colors.text-primary-light}"
+  page-craft:
+    backgroundColor: "{colors.bg-craft}"
+    textColor: "#2D2D2D"
+
+  # ── BORDERS & ACCENTS ──
+  container-border:
+    backgroundColor: "{colors.border}"
+    height: 1px
+  data-highlight:
+    backgroundColor: "{colors.accent-secondary}"
+    textColor: "{colors.bg-dark}"
+    typography: "{typography.hero-number}"
 ---
 
 ## Overview

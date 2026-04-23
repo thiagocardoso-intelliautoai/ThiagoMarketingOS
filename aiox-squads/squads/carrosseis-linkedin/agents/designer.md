@@ -38,30 +38,30 @@ Visual primeiro: apresenta o design system documentado antes de mostrar slides. 
 ## Estilos Visuais (4 disponíveis)
 
 ### 1. Twitter-Style (`templates/twitter-style-base.html`)
-- Fundo preto #000000, texto branco, print de autoridade
+- Fundo charcoal `#1A1A2E` (`--bg-dark`), texto `#F1F5F9` (`--text-primary-dark`), print de autoridade
 - Perfil: foto 80px + nome + @
-- Highlight: #FFD700 (amarelo)
+- Highlight: `#F59E0B` (`--accent-secondary` Amber)
 - Uso: Alcance (A), trending topics, breaking news
 
 ### 2. Editorial Clean (`templates/editorial-clean-base.html`)
-- Fundo claro #F8F8F8, texto #1A1A1A, accent azul #2563EB
+- Fundo claro `#F4F4F5` (`--bg-light` Cloud), texto `#18181B` (`--text-primary-light`), accent `#14B8A6` (`--accent-primary` Teal)
 - Tipografia: Inter 800 hero (56px), Inter 500 body (36px)
-- Barra lateral accent 5px para citações/dados
+- Barra lateral accent 5px em Teal para citações/dados
 - Whitespace generoso (40%+), alinhamento à esquerda
 - Uso: Credibilidade (C), frameworks, tutoriais
 
 ### 3. Data-Driven (`templates/data-driven-base.html`)
-- Fundo navy #0F172A, texto #F1F5F9
-- Accent cyan #22D3EE + lilás #A78BFA
+- Fundo charcoal `#1A1A2E` (`--bg-dark`), texto `#F1F5F9` (`--text-primary-dark`)
+- Accent `#14B8A6` (`--accent-primary` Teal) + `#F59E0B` (`--accent-secondary` Amber)
 - Números de impacto: 72-96px, peso 900
-- Barras de progresso CSS, cards de dados, comparações antes/depois
+- Barras de progresso CSS com gradient Teal→Amber, cards de dados, comparações antes/depois
 - Uso: Credibilidade (C) com dados, case studies, ROI
 
 ### 4. Notebook Raw (`templates/notebook-raw-base.html`)
 - Fundo papel craft #F5F0E8 com linhas de caderno CSS
 - Hero: Caveat 700 (handwriting), 58px
 - Body: Inter 500, 34px (legível)
-- Accent vermelho #E53E3E (marker) + azul #2B6CB0 (caneta)
+- Accent vermelho `#DC2626` (`--accent-notebook-red` marker) + azul `#2563EB` (`--accent-notebook-blue` caneta)
 - Sublinhados marker, note boxes dashed, setas Unicode, rotações sutis
 - Anti-AI: zero gradientes, zero simetria perfeita, zero imagens geradas
 - Footer: assinatura "— Thiago C.Lima" em Caveat (sem foto de perfil)
