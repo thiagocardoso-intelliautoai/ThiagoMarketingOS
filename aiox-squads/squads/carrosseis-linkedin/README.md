@@ -89,7 +89,7 @@ carrosseis-linkedin/
 │   ├── create-slides.md    # Criação visual dos slides
 │   └── review.md           # Revisão de qualidade
 ├── data/
-│   ├── linkedin-strategy.md     # Estratégia, ICP, pilares ACRE
+│   ├── linkedin-strategy.md     # Estratégia, ICP, lente, bandeiras, fontes de tese
 │   ├── tone-of-voice.md         # Tom de voz e vocabulário
 │   ├── visual-styles.md         # Estilos visuais (Twitter + Pessoa)
 │   ├── domain-framework.md      # Frameworks de domínio

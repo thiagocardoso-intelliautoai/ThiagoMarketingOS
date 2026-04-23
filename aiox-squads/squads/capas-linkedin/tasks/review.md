@@ -14,7 +14,7 @@ Carregar antes de executar:
 - `output/cover-report.md` — Relatório da capa criada (design system + screenshot)
 - `output/covers/{slug}/cover.png` — Screenshot renderizado para avaliação visual
 - `data/quality-criteria.md` — Critérios de qualidade
-- `data/linkedin-strategy.md` — Estratégia LinkedIn para validar aderência ACRE
+- `data/linkedin-strategy.md` — Estratégia LinkedIn para validar aderência à lente
 - `agents/reviewer.md` — Persona do Rui Revisão
 
 ---
@@ -35,7 +35,7 @@ Carregar antes de executar:
 | 1 | **Impacto Visual** | Para o scroll em 1 segundo? Hierarquia visual clara? |
 | 2 | **Legibilidade Mobile** | Texto legível em 375px de largura real? Fontes grandes o suficiente? |
 | 3 | **Alinhamento Tom de Voz** | Combina com o post? Anti-guru, direto, sem hype? |
-| 4 | **Aderência ACRE** | Serve ao pilar correto (A/C/R/E)? |
+| 4 | **Aderência à Lente** | Reforça "Built, not prompted"? Alinhado com a fonte de tese? |
 | 5 | **Consistência Visual** | Segue design system? Identidade reconhecível? |
 
 ### Veredicto
@@ -56,7 +56,7 @@ Carregar antes de executar:
 | Impacto Visual | X/10 | ... |
 | Legibilidade Mobile | X/10 | ... |
 | Alinhamento Tom de Voz | X/10 | ... |
-| Aderência ACRE | X/10 | ... |
+| Aderência à Lente | X/10 | ... |
 | Consistência Visual | X/10 | ... |
 | **MÉDIA** | **X/10** | |
 

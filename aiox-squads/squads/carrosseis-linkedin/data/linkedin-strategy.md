@@ -2,29 +2,40 @@
 
 **Head de Automação e IA | Winning Sales**
 
-## Proposta de Valor
+## Lente Proprietária — "Built, not prompted"
 
-Sou o profissional que traduz IA e automação em resultado real para operações B2B complexas — sem hype, sem teoria de palco, sem "prompt mágico". Entrego perspectiva prática de quem aplica sistemas de automação dentro de uma consultoria de vendas que já escalou operações de 8M para 150M+ ARR.
+O construtor-tradutor: construo IA em operação comercial real, e traduzo
+o que funciona pra quem toma decisão de negócio.
 
-## Pilares de Posicionamento
+- Não sou guru de prompt mágico
+- Não sou acadêmico que fala de IA em tese
+- Sou o raro operador que sente a dor do processo E sabe construir a solução
 
-1. **IA Aplicada ao Campo** — Só falo do que já implementei em operações B2B reais
-2. **Automação como Infraestrutura** — Automação não é atalho, é estrutura para escalar sem escalar headcount
-3. **Ponte Técnico-Estratégica** — Traduzo o "técnico" para quem toma decisão
-4. **Early Adopter com Contexto B2B** — 3 anos de prática com IA/automação em vendas B2B
+## Bandeiras
 
-## Metodologia ACRE
+- **Âncora: "Anti-prompt, pro-sistema"** — IA é sistema construído, não truque pontual
+- **Sub-bandeira: "Processo antes de ferramenta"** — Automação sem redesenho é bagunça mais rápida
 
-- **A (Alcance 30%)** — Expandir audiência com conteúdo que gera identificação com a dor
-- **C (Credibilidade 35%)** — Bastidores técnicos, casos práticos, resultados mensuráveis
-- **R (Retorno 15%)** — Converter atenção em conversas estratégicas
-- **E (Engajamento 20%)** — Humanizar, validar frustrações, criar comunidade
+## ICP (hipótese de trabalho)
 
-## Público-Alvo (Herói: Carlos Oliveira)
+Empresário ou operador de negócio com time comercial/marketing que quer usar IA de forma correta, não com hype. ICP amplo de propósito — a especificidade mora na lente e nas bandeiras.
 
-- Gerente/Diretor de Vendas B2B, 35 anos
-- Empresas de tecnologia, SaaS, serviços B2B, startups e scale-ups no Brasil
-- Dores: time manual, imprevisibilidade, tentativas frustradas com IA
+## 4 Fontes de Tese
+
+| Fonte | Uso visual |
+|-------|-----------|
+| **Skills em Produção** | Bastidores, prints, fluxos reais |
+| **Benchmark Real** | Comparações com dados, tabelas |
+| **Process Diagnostic Anônimo** | Padrões, gargalos, diagnósticos |
+| **Falha Documentada** | Arco de erro → aprendizado |
+
+## Signature Visual
+
+- **Capa default:** Rascunho no Papel (caderno)
+- **Carrossel default:** Notebook Raw (caderno)
+- **Exceções:** Data-Driven (benchmarks com números), Quote Card (frase afiada), Editorial Clean (matéria-colab)
+- **Proporção:** ~70% caderno, ~20% data-driven, ~10% quote/editorial
+- **Regra:** caderno só sai quando conteúdo for estruturalmente incompatível
 
 ## Tom de Voz
 
@@ -36,11 +47,10 @@ Sou o profissional que traduz IA e automação em resultado real para operaçõe
 
 ## Regras de Escrita
 
-- **Rule of 1:** cada post tem UMA ideia central, UM leitor, UMA promessa
+- **Rule of 1:** cada post tem UMA ideia central
 - **Seja Falsificável:** "Reduzimos qualificação de 4h para 15min" — não "nossa automação é rápida"
 - **Seja Visualizável:** mostre o workflow, o print, o número
-- **Ritmo Staccato:** frases curtas, uma ideia por linha, Enter é pontuação
-- **Diálogo Simulado:** antecipe objeções com aspas
+- **Fala da dor, não do mecanismo:** "Empresário que tentou colocar IA e não deu resultado" > "Nosso SaaS de squads"
 
 ## Vocabulário
 

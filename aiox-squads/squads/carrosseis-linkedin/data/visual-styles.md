@@ -17,7 +17,7 @@
 Formato inspirado em tweets/posts do X (Twitter) — fundo charcoal, identidade minimalista, texto branco de alto impacto com print de autoridade como hook visual.
 
 ### Quando Usar
-- **Pilar ACRE:** Alcance (A)
+- **Fonte de tese:** Falha Documentada, Benchmark Real
 - **Tipo de conteúdo:** Trending topics, breaking news, lançamentos de ferramentas, opiniões rápidas
 - **Gatilho:** Quando existe um print/screenshot de autoridade que contextualiza o tema
 
@@ -48,7 +48,7 @@ O print na primeira imagem funciona como "gatilho de autoridade" — usar posts 
 Formato premium/editorial — fundo claro, tipografia bold sans-serif, cor de destaque única (Teal), whitespace generoso. Sério, profissional, altamente legível. Inspirado em publicações como Bloomberg e The Economist.
 
 ### Quando Usar
-- **Pilar ACRE:** Credibilidade (C)
+- **Fonte de tese:** Skills em Produção, Process Diagnostic
 - **Tipo de conteúdo:** Frameworks, step-by-step, conteúdo educacional, processos, listas estruturadas
 - **Gatilho:** Quando o conteúdo é denso e precisa de máxima clareza e legibilidade
 
@@ -78,7 +78,7 @@ Formato premium/editorial — fundo claro, tipografia bold sans-serif, cor de de
 Formato focado em dados e resultados — fundo charcoal profundo, números gigantes de impacto, barras de progresso, cards de comparação. Cada slide tem UM dado central que conta a história. Inspirado em relatórios de BI e dashboards.
 
 ### Quando Usar
-- **Pilar ACRE:** Credibilidade (C) com dados
+- **Fonte de tese:** Benchmark Real (com dados)
 - **Tipo de conteúdo:** Case studies, resultados mensuráveis, ROI, antes/depois, benchmarks
 - **Gatilho:** Quando existem números concretos que sustentam a narrativa
 
@@ -111,7 +111,7 @@ Formato anti-template, anti-AI — estética de caderno de anotações com tipog
 > **NOTA:** Este estilo usa paleta EXCLUSIVA (não a paleta master), conforme definido no Design System global.
 
 ### Quando Usar
-- **Pilar ACRE:** Engajamento (E)
+- **Fonte de tese:** Falha Documentada
 - **Tipo de conteúdo:** Conteúdo provocativo, mitos/desmistificação, opinião forte, bastidores, reflexões pessoais
 - **Gatilho:** Quando o tom é pessoal, controverso ou anti-corporativo
 

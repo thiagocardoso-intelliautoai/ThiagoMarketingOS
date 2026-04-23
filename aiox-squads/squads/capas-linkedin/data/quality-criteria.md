@@ -55,7 +55,7 @@
 | Impacto Visual | Alto | >= 7/10 |
 | Legibilidade Mobile | Alto | >= 7/10 |
 | Alinhamento Tom de Voz | Médio | >= 6/10 |
-| Aderência ACRE | Médio | >= 6/10 |
+| Aderência à Lente | Médio | >= 6/10 |
 | Consistência Visual | Alto | >= 7/10 |
 
 **APPROVE:** Média >= 7/10 e nenhum critério abaixo de 5/10

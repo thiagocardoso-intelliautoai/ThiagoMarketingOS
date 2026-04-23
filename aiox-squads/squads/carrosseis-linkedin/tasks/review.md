@@ -24,7 +24,7 @@ Carregar antes de executar:
 ### Process
 1. Ler o copy completo do carrossel (caption + slides)
 2. Visualizar screenshots renderizados de todos os slides
-3. Scoring dos 5 critérios (1-10 cada): tom de voz, legibilidade visual, CTA funcional, aderência ACRE, consistência entre slides
+3. Scoring dos 5 critérios (1-10 cada): tom de voz, legibilidade visual, CTA funcional, aderência à lente, consistência entre slides
 4. Compilar veredicto: APPROVE (média >= 7, nenhum < 5) ou REJECT (média < 7 OU algum < 5)
 5. Listar strengths, required changes (se REJECT) e suggestions (sempre)
 
@@ -45,7 +45,7 @@ Carregar antes de executar:
 | Tom de voz | X/10 | ... |
 | Legibilidade visual | X/10 | ... |
 | CTA funcional | X/10 | ... |
-| Aderência ACRE | X/10 | ... |
+| Aderência à Lente | X/10 | ... |
 | Consistência entre slides | X/10 | ... |
 
 ## Strengths
@@ -75,7 +75,7 @@ Carregar antes de executar:
 | Tom de voz | 9/10 | Direto, coloquial BR, anti-guru. Hook provocador. |
 | Legibilidade visual | 8/10 | Texto 38px legível em 1080x1350. Contraste 21:1. |
 | CTA funcional | 7/10 | Claro mas poderia especificar o que recebe |
-| Aderência ACRE | 8/10 | Alcance com hook provocador, estrutura alinhada |
+| Aderência à Lente | 8/10 | "Built, not prompted" com hook provocador, estrutura alinhada |
 | Consistência slides | 9/10 | Design system uniforme, progressão lógica |
 
 ## Strengths

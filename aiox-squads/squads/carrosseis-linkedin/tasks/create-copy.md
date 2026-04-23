@@ -40,7 +40,7 @@ Carregar antes de executar:
 ```
 # Carrossel — [TEMA]
 
-**Pilar ACRE:** [classificação]
+**Fonte de tese:** [classificação]
 **Ângulo:** [driver selecionado]
 **Tom:** [tom aplicado]
 **Total slides:** [N]
@@ -77,7 +77,7 @@ Carregar antes de executar:
 ```
 # Carrossel — IA substituindo SDRs
 
-**Pilar ACRE:** Alcance
+**Fonte de tese:** Benchmark Real
 **Ângulo:** ↔️ Contrário
 **Tom:** Direto e Provocador
 **Total slides:** 5

@@ -4,7 +4,7 @@
 
 ### Copy Completo
 
-**Pilar ACRE:** Alcance (A)
+**Fonte de tese:** Benchmark Real
 **Tom:** Direto e Provocador
 **Estilo Visual:** Twitter-Style
 
@@ -75,7 +75,7 @@ Se você lidera um time de vendas B2B e quer entender como IA pode economizar ho
 
 ### Copy Completo
 
-**Pilar ACRE:** Credibilidade (C)
+**Fonte de tese:** Skills em Produção
 **Tom:** Técnico Acessível
 **Estilo Visual:** Editorial Clean
 
@@ -151,7 +151,7 @@ Body: Comenta o número e eu mando um diagnóstico personalizado.
 
 ### Copy Completo
 
-**Pilar ACRE:** Credibilidade (C)
+**Fonte de tese:** Benchmark Real
 **Tom:** Bastidor Técnico
 **Estilo Visual:** Data-Driven
 
@@ -226,7 +226,7 @@ Subtítulo: "Que eu analiso a sua operação."
 
 ### Copy Completo
 
-**Pilar ACRE:** Engajamento (E)
+**Fonte de tese:** Falha Documentada
 **Tom:** Opinião Forte, Anti-Guru
 **Estilo Visual:** Notebook Raw
 

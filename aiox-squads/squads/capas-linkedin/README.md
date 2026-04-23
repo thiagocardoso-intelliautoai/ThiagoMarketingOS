@@ -27,7 +27,7 @@ Squad Pesquisa → Post de texto finalizado
 ## Agentes
 
 - **🎨 Dani Design** — Designer visual especialista nos 5 estilos. Cria HTML self-contained, define design system, auto-renderiza PNG.
-- **✅ Rui Revisão** — Revisor de qualidade com 5 critérios de scoring (impacto, legibilidade, tom, ACRE, consistência).
+- **✅ Rui Revisão** — Revisor de qualidade com 5 critérios de scoring (impacto, legibilidade, tom, aderência à lente, consistência).
 
 ## Pipeline (7 Steps)
 

@@ -40,7 +40,7 @@
 | Alinhamento com tom de voz | Alto | >= 7/10 |
 | Legibilidade visual | Alto | >= 7/10 |
 | CTA funcional | Médio | >= 6/10 |
-| Aderência ACRE | Médio | >= 6/10 |
+| Aderência à Lente | Médio | >= 6/10 |
 | Consistência entre slides | Alto | >= 7/10 |
 
 **APPROVE:** Média >= 7/10 e nenhum critério abaixo de 5/10

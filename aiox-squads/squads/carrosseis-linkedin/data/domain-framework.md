@@ -3,7 +3,7 @@
 ## Metodologia Operacional
 
 ### 1. Receber Tema
-Entender o tema fornecido pelo usuário. Classificar no pilar ACRE (Alcance, Credibilidade, Retorno, Engajamento).
+Entender o tema fornecido pelo usuário. Classificar pela fonte de tese (Skills em Produção, Benchmark Real, Process Diagnostic, Falha Documentada).
 
 ### 2. Gerar Ângulos
 A partir do MESMO tema, criar 5 ângulos distintos usando drivers psicológicos diferentes:
@@ -24,7 +24,7 @@ Com o ângulo selecionado:
 4. Adicionar 3-5 hashtags na última linha do post
 
 ### 5. Selecionar Tom de Voz
-Ler `tone-of-voice.md`, recomendar o tom mais adequado ao ângulo e pilar ACRE, apresentar as 6 opções ao usuário.
+Ler `tone-of-voice.md`, recomendar o tom mais adequado ao ângulo e à lente "Built, not prompted", apresentar as 6 opções ao usuário.
 
 ### 6. Escolher Estilo Visual
 Com base no tema e ângulo:
@@ -38,4 +38,4 @@ Seguir o estilo selecionado (ver `visual-styles.md`):
 - Renderizar e verificar
 
 ### 8. Revisar
-Checklist rápido focado em: tom, visual, CTA, aderência ACRE, consistência.
+Checklist rápido focado em: tom, visual, CTA, aderência à lente, consistência.

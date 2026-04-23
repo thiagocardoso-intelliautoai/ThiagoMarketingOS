@@ -12,7 +12,7 @@
 | Alinhamento com tom de voz | Alto | >= 7/10 |
 | Legibilidade visual | Alto | >= 7/10 |
 | CTA funcional | Médio | >= 6/10 |
-| Aderência ACRE | Médio | >= 6/10 |
+| Aderência à Lente | Médio | >= 6/10 |
 | Consistência entre slides | Alto | >= 7/10 |
 
 **✅ APPROVE:** Média >= 7/10 **E** nenhum critério abaixo de 5/10
@@ -75,8 +75,8 @@
 
 ## 4. Aderência Estratégica (Peso: 15%)
 
-- [ ] Pilar ACRE identificado e coerente com o conteúdo
-- [ ] Relevante para o ICP (Carlos Oliveira — Gerente/Diretor de Vendas B2B)
+- [ ] Fonte de tese identificada e coerente com o conteúdo
+- [ ] Relevante para o ICP (empresário/operador que quer usar IA de forma correta)
 - [ ] Alinhado com a estratégia LinkedIn definida em `data/linkedin-strategy.md`
 - [ ] Complementa (não repete) posts de texto recentes
 
@@ -95,7 +95,7 @@
 | Alinhamento tom de voz | [X]/10 |
 | Legibilidade visual | [X]/10 |
 | CTA funcional | [X]/10 |
-| Aderência ACRE | [X]/10 |
+| Aderência à Lente | [X]/10 |
 | Consistência entre slides | [X]/10 |
 | **Média** | **[X]/10** |
 

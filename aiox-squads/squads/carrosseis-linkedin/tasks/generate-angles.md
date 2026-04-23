@@ -22,8 +22,8 @@ Carregar antes de executar:
 ## Instructions
 
 ### Process
-1. Ler o tema fornecido no checkpoint e classificar no pilar ACRE
-2. Executar Pre-Writing Diagnosis: awareness level do Carlos Oliveira, market sophistication, Big Idea, driver psicológico
+1. Ler o tema fornecido no checkpoint e classificar pela fonte de tese
+2. Executar Pre-Writing Diagnosis: awareness level do ICP, market sophistication, Big Idea, driver psicológico
 3. Gerar 5 ângulos distintos — cada um usa driver diferente: Medo, Oportunidade, Educacional, Contrário, Inspiracional
 4. Para cada ângulo: criar hook preview (max 210 chars) + rationale de 1 linha
 5. Recomendar o tom de voz mais adequado (de tone-of-voice.md)
@@ -35,7 +35,7 @@ Carregar antes de executar:
 ```
 # Ângulos — [TEMA]
 
-**Pilar ACRE:** [classificação]
+**Fonte de tese:** [classificação]
 
 ## Ângulo 1 — 🔴 Medo/Perda
 **Hook:** [max 210 chars]
@@ -68,7 +68,7 @@ Carregar antes de executar:
 ```
 # Ângulos — IA substituindo SDRs
 
-**Pilar ACRE:** Alcance
+**Fonte de tese:** Benchmark Real
 
 ## Ângulo 1 — 🔴 Medo/Perda
 **Hook:** Em 12 meses, SDRs que não usam IA vão custar 3x mais do que produzem. A conta já começou.
@@ -109,4 +109,4 @@ Rejeitar e refazer se:
 - [ ] 5 ângulos com 5 drivers diferentes
 - [ ] Todos sobre o MESMO tema
 - [ ] Hooks cabem em ~210 chars
-- [ ] Tom recomendado alinhado com pilar ACRE
+- [ ] Tom recomendado alinhado com a lente "Built, not prompted"

@@ -22,7 +22,7 @@
 - **PAS** (Problema-Agitação-Solução) — Para dor do dia-a-dia
 - **BAB** (Before-After-Bridge) — Para transformação/resultado
 - **Star-Story-Solution** — Para personal brand
-- **ACRE** (Alcance-Credibilidade-Retorno-Engajamento) — Metodologia do Thiago
+- **Fontes de tese** (Skills em Produção, Benchmark Real, Process Diagnostic, Falha Documentada) — Metodologia do Thiago
 
 ## Trending Angles para B2B+IA
 

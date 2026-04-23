@@ -20,7 +20,7 @@
 - [ ] Texto falsificável ou opinativo (não genérico)
 
 ### Aderência Estratégica
-- [ ] Serve ao pilar ACRE correto do post
+- [ ] Reforça a lente "Built, not prompted" e alinha com a fonte de tese do post
 - [ ] Formato adequado à plataforma (LinkedIn + Instagram)
 - [ ] Viewport correto: 1080 x 1350
 
@@ -40,7 +40,7 @@
 | Impacto Visual | | |
 | Legibilidade Mobile | | |
 | Alinhamento Tom de Voz | | |
-| Aderência ACRE | | |
+| Aderência à Lente | | |
 | Consistência Visual | | |
 | **MÉDIA** | | |
 
