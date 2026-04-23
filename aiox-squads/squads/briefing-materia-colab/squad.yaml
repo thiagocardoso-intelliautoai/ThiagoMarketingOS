@@ -1,0 +1,67 @@
+# Squad: Briefing Matéria-Colab
+# Pipeline de pesquisa de perfil e geração de briefing completo para matéria-colab
+# Modo único: recebe alvo + título, entrega briefing pronto
+
+name: "Briefing Matéria-Colab"
+code: briefing-materia-colab
+icon: 📰
+version: "1.0"
+format: aiox-v1
+
+description: >
+  Squad para gerar briefing completo de matéria-colab. Recebe nome do
+  alvo e título-com-lente (do seed-lista ou do Thiago), pesquisa
+  publicamente a pessoa, e monta briefing jornalístico com estrutura
+  de matéria, citações, headlines e gancho de DM. NÃO é colab
+  tradicional — sem entrevista, sem reunião, sem pauta combinada.
+
+owner: thiago-clima
+platform: linkedin
+content_type: briefing
+
+# Agentes da squad
+agents:
+  - id: pesquisador-perfil
+    name: "Petra Perfil"
+    file: agents/pesquisador-perfil.md
+    description: Pesquisadora de perfil — levanta bio, posts, cases e citações públicas da pessoa
+    skills: [web_search, web_fetch]
+
+  - id: redator-briefing
+    name: "Bruno Briefing"
+    file: agents/redator-briefing.md
+    description: Redator de briefing — monta estrutura de matéria, headlines, gancho de DM
+
+# Workflow principal
+workflow:
+  entry: workflows/workflow.yaml
+
+# Dados de referência
+data:
+  - data/linkedin-strategy.md
+  - data/formato-materia-colab.md
+
+# Templates de output
+templates:
+  - id: briefing-template
+    file: templates/briefing-template.md
+    description: Template de briefing completo com todas as seções obrigatórias
+
+# Tasks
+tasks:
+  - id: pesquisar-perfil
+    file: tasks/01-pesquisar-perfil.md
+    description: Pesquisar a pessoa — bio, posts, cases, citações públicas
+
+  - id: montar-briefing
+    file: tasks/02-montar-briefing.md
+    description: Montar briefing completo com estrutura de matéria, headlines, DM
+
+  - id: review-briefing
+    file: tasks/03-review-briefing.md
+    description: Review do briefing — completude, qualidade, aderência à lente
+
+# Checkpoints humanos
+checkpoints:
+  - step-00: "Receber alvo + título/ângulo"
+  - step-04: "Aprovação do briefing final"

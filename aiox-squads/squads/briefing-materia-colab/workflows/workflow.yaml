@@ -1,0 +1,97 @@
+# Workflow: Briefing Matéria-Colab
+# Pipeline de pesquisa de perfil → montagem de briefing → review → aprovação
+# v1.0
+
+name: briefing-materia-colab
+version: "1.0"
+description: >
+  Pipeline para gerar briefing completo de matéria-colab.
+  Recebe alvo + título-com-lente, pesquisa perfil publicamente,
+  monta briefing jornalístico e entrega para aprovação.
+  NÃO é colab tradicional — sem entrevista, sem reunião.
+
+# ─── Steps ─────────────────────────────────────────────────
+
+steps:
+
+  # ─── INPUT ───────────────────────────────────────────────
+  - id: step-00-input
+    name: "⏸️ CHECKPOINT — Receber Alvo + Título"
+    type: human-checkpoint
+    description: >
+      Thiago informa:
+      1. Nome do alvo (pessoa da lista de distribuição)
+      2. Título-com-lente (já formulado pelo gate)
+      Pode vir do seed-lista-distribuicao ou ser fornecido diretamente.
+    output:
+      - nome-alvo
+      - titulo-com-lente
+    next: step-01-pesquisar
+
+  # ─── PESQUISA DE PERFIL ──────────────────────────────────
+  - id: step-01-pesquisar
+    name: "Pesquisar Perfil"
+    agent: pesquisador-perfil
+    task: tasks/01-pesquisar-perfil.md
+    data:
+      - data/linkedin-strategy.md
+      - data/formato-materia-colab.md
+    input:
+      - nome-alvo
+      - titulo-com-lente
+    output: output/perfil-{slug}.md
+    description: >
+      Petra pesquisa publicamente a pessoa: bio, posts recentes,
+      cases públicos, posicionamento, rede e audiência.
+    next: step-02-briefing
+
+  # ─── MONTAGEM DO BRIEFING ───────────────────────────────
+  - id: step-02-briefing
+    name: "Montar Briefing"
+    agent: redator-briefing
+    task: tasks/02-montar-briefing.md
+    data:
+      - data/linkedin-strategy.md
+      - data/formato-materia-colab.md
+    input:
+      - output/perfil-{slug}.md
+      - titulo-com-lente
+    output: output/briefing-{slug}.md
+    description: >
+      Bruno transforma dossiê em briefing completo: estrutura de matéria,
+      headlines alternativas, citações como lastro, ganchos de DM.
+    next: step-03-review
+
+  # ─── REVIEW ─────────────────────────────────────────────
+  - id: step-03-review
+    name: "Review do Briefing"
+    agent: redator-briefing
+    task: tasks/03-review-briefing.md
+    input: output/briefing-{slug}.md
+    output: output/briefing-{slug}.md
+    description: >
+      Bruno auto-revisa: veto conditions, completude, aderência à lente,
+      score ponderado. Score ≥ 7/10 segue pra aprovação.
+    on_failure:
+      max_retries: 1
+      fallback: "Reescrever seções fracas do briefing"
+    next: step-04-aprovacao
+
+  # ─── APROVAÇÃO ──────────────────────────────────────────
+  - id: step-04-aprovacao
+    name: "⏸️ CHECKPOINT FINAL — Aprovação do Briefing"
+    type: human-checkpoint
+    description: >
+      Thiago revisa o briefing completo. Pode:
+      - ✅ Aprovar (briefing vai pra produção da matéria)
+      - 📝 Editar (ajustar seções, headlines, ganchos)
+      - ❌ Descartar (encerrar sem produzir)
+    input: output/briefing-{slug}.md
+    output: briefing-aprovado
+
+# ─── Resumo do Pipeline ───────────────────────────────────
+# step-00 (input) → step-01 (pesquisar) → step-02 (briefing) → step-03 (review) → step-04 (aprovação)
+
+# ─── Checkpoints ──────────────────────────────────────────
+# step-00: Receber alvo + título
+# step-04: Aprovação final do briefing

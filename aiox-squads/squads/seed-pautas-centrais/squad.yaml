@@ -1,0 +1,65 @@
+# Squad: Seed Pautas Centrais e Subpautas
+# Pipeline de geração e manutenção de pautas estratégicas para conteúdo LinkedIn
+# 2 modos: Inicialização (primeira vez) e Geração de Subpautas (subsequente)
+
+name: "Seed Pautas Centrais"
+code: seed-pautas-centrais
+icon: 🌱
+version: "1.0"
+format: aiox-v1
+
+description: >
+  Squad para gerar e manter Pautas Centrais (temas macro estruturais) e
+  Subpautas (ângulos táticos semanais). As 4 Pautas Centrais nascem das
+  fontes recorrentes de tese (content_sources). Subpautas são geradas
+  semanalmente dentro das pautas já estabelecidas. Pauta Central nova
+  só nasce por decisão do Thiago.
+
+owner: thiago-clima
+platform: linkedin
+content_type: strategy-seed
+
+# Agente da squad
+agents:
+  - id: estrategista
+    name: "Eva Estratégia"
+    file: agents/estrategista.md
+    description: Estrategista de pautas — gera e classifica pautas centrais e subpautas a partir dos átomos estratégicos
+
+# Workflow principal
+workflow:
+  entry: workflows/workflow.yaml
+
+# Dados de referência
+data:
+  - data/linkedin-strategy.md
+
+# Templates de output
+templates:
+  - id: pauta-central-template
+    file: templates/pauta-central-template.md
+    description: Template de Pauta Central com campos estruturados
+
+  - id: subpauta-template
+    file: templates/subpauta-template.md
+    description: Template de Subpauta com ângulo, hook embrionário e classificação
+
+# Tasks
+tasks:
+  - id: selecao-modo
+    file: tasks/00-selecao-modo.md
+    description: Checkpoint — seleção do modo de operação (Inicialização ou Geração de Subpautas)
+
+  - id: inicializacao
+    file: tasks/01-inicializacao.md
+    description: Modo 1 — Primeira execução. Confirma 4 Pautas Centrais e gera Subpautas embrionárias
+
+  - id: gerar-subpautas
+    file: tasks/02-gerar-subpautas.md
+    description: Modo 2 — Execuções subsequentes. Gera Subpautas novas dentro das Pautas existentes
+
+# Checkpoints humanos
+checkpoints:
+  - step-00: "Seleção do modo (Inicialização ou Subpautas)"
+  - step-02: "Aprovação das Pautas Centrais (só no modo 1)"
+  - step-04: "Aprovação das Subpautas geradas"

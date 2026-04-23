@@ -1,0 +1,92 @@
+# Workflow: Seed Pautas Centrais
+# Pipeline com 2 modos — inicialização (primeira vez) e geração de subpautas (semanal)
+# v1.0
+
+name: seed-pautas-centrais
+version: "1.0"
+description: >
+  Pipeline para geração e manutenção de pautas centrais e subpautas.
+  2 modos de operação + checkpoints humanos obrigatórios.
+  Modo 1 (Inicialização): confirma pautas centrais + gera subpautas embrionárias.
+  Modo 2 (Semanal): gera subpautas novas dentro das pautas existentes.
+
+# ─── Steps ─────────────────────────────────────────────────
+
+steps:
+
+  # ─── STEP 00: SELEÇÃO DE MODO ────────────────────────────
+  - id: step-00
+    name: "⏸️ CHECKPOINT — Seleção de Modo"
+    type: human-checkpoint
+    task: tasks/00-selecao-modo.md
+    description: >
+      Thiago escolhe o modo de operação:
+      1 = Inicialização (primeira vez — confirmar Pautas Centrais + gerar Subpautas embrionárias)
+      2 = Gerar Subpautas (semanal — novas subpautas dentro das pautas existentes)
+    output: modo-selecionado
+    branching:
+      - condition: "modo == 1"
+        goto: step-01-inicializacao
+      - condition: "modo == 2"
+        goto: step-03-gerar-subpautas
+
+  # ─── MODO 1: INICIALIZAÇÃO ──────────────────────────────
+  - id: step-01-inicializacao
+    name: "Inicialização — Pautas Centrais + Subpautas"
+    agent: estrategista
+    task: tasks/01-inicializacao.md
+    data:
+      - data/linkedin-strategy.md
+    output:
+      - output/pautas-centrais.md
+      - output/subpautas/seed-inicial.md
+    description: >
+      Eva confirma as 4 Pautas Centrais (derivadas das fontes de tese)
+      e gera 3 Subpautas embrionárias para cada. Total: 12 subpautas iniciais.
+    next: step-02-aprovacao-pautas
+
+  - id: step-02-aprovacao-pautas
+    name: "⏸️ CHECKPOINT — Aprovação das Pautas Centrais"
+    type: human-checkpoint
+    description: >
+      Thiago revisa as 4 Pautas Centrais e as 12 Subpautas embrionárias.
+      Pode: renomear pautas, ajustar descrições, editar/excluir/adicionar subpautas.
+      Após aprovação, as pautas são salvas como referência permanente.
+    input:
+      - output/pautas-centrais.md
+      - output/subpautas/seed-inicial.md
+    output: pautas-aprovadas
+
+  # ─── MODO 2: GERAÇÃO DE SUBPAUTAS ──────────────────────
+  - id: step-03-gerar-subpautas
+    name: "Gerar Subpautas Novas"
+    agent: estrategista
+    task: tasks/02-gerar-subpautas.md
+    data:
+      - data/linkedin-strategy.md
+    input:
+      - output/pautas-centrais.md
+      - output/subpautas/
+    output: output/subpautas/subpautas-{data}.md
+    description: >
+      Eva analisa o estoque atual de subpautas, identifica gaps,
+      e gera 2-4 subpautas novas balanceadas entre as 4 pautas centrais.
+    next: step-04-aprovacao-subpautas
+
+  - id: step-04-aprovacao-subpautas
+    name: "⏸️ CHECKPOINT — Aprovação das Subpautas"
+    type: human-checkpoint
+    description: >
+      Thiago revisa as novas subpautas geradas. Pode aprovar, editar ou descartar.
+      Subpautas aprovadas são adicionadas ao estoque permanente.
+    input: output/subpautas/subpautas-{data}.md
+    output: subpautas-aprovadas
+
+# ─── Resumo dos Modos ─────────────────────────────────────
+# Modo 1: step-00 → step-01-inicializacao → step-02-aprovacao-pautas
+# Modo 2: step-00 → step-03-gerar-subpautas → step-04-aprovacao-subpautas
+
+# ─── Resumo dos Checkpoints ──────────────────────────────
+# step-00: Seleção de modo (1 ou 2)
+# step-02: Aprovação de Pautas Centrais + Subpautas iniciais (só modo 1)
+# step-04: Aprovação de Subpautas novas (modo 2)

@@ -1,0 +1,58 @@
+# Squad: Seed Lista de Distribuição
+# Pipeline de pesquisa e manutenção de alvos para matéria-colab
+# 2 modos: Pesquisar Alvos e Atualizar Lista
+
+name: "Seed Lista de Distribuição"
+code: seed-lista-distribuicao
+icon: 🎯
+version: "1.0"
+format: aiox-v1
+
+description: >
+  Squad para pesquisar, sugerir e manter a lista de alvos para matéria-colab.
+  Pesquisa LinkedIn/web por candidatos cuja rede inclui o ICP, aplica o gate
+  da lente ("consigo formular título pela minha lente?") e filtra por
+  arquétipos de exclusão. Lista inicial com 4 nomes reais.
+
+owner: thiago-clima
+platform: linkedin
+content_type: strategy-seed
+
+# Agente da squad
+agents:
+  - id: pesquisador-alvos
+    name: "Paulo Prospector"
+    file: agents/pesquisador-alvos.md
+    description: Pesquisador de alvos para matéria-colab — pesquisa, aplica gate da lente, filtra exclusões
+    skills: [web_search, web_fetch]
+
+# Workflow principal
+workflow:
+  entry: workflows/workflow.yaml
+
+# Dados de referência
+data:
+  - data/linkedin-strategy.md
+  - data/exclusions.md
+  - data/gate-rules.md
+
+# Templates de output
+templates:
+  - id: candidato-template
+    file: templates/candidato-template.md
+    description: Template de candidato pesquisado com contexto, gate test e expectativa
+
+# Tasks
+tasks:
+  - id: pesquisar-alvos
+    file: tasks/01-pesquisar-alvos.md
+    description: Pesquisar candidatos para matéria-colab, aplicar gate e exclusões
+
+  - id: atualizar-lista
+    file: tasks/02-atualizar-lista.md
+    description: Adicionar candidatos aprovados à lista ativa
+
+# Checkpoints humanos
+checkpoints:
+  - step-02: "Aprovação dos candidatos pesquisados"
+  - step-04: "Confirmação da lista atualizada"
