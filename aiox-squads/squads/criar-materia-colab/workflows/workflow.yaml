@@ -1,0 +1,147 @@
+# Workflow: Criar Matéria-Colab
+# Pipeline: ângulo aprovado → matéria-colab completa pronta pra publicar
+# v1.0
+
+name: criar-materia-colab
+version: "1.0"
+description: >
+  Pipeline linear para criar matéria-colab completa a partir de ângulo aprovado.
+  Recebe ângulo do seed-lista-distribuicao, pesquisa em profundidade, estrutura
+  narrativa, redige matéria finalizada com marcações de slide, gera ganchos de DM
+  e headlines. Auto-review com veto check e score ponderado.
+
+# ─── PIPELINE LINEAR ──────────────────────────────────────
+#
+# step-00 (input) → step-01 (pesquisar) → step-02 (estruturar)
+# → step-03 (redigir) → step-04 (DM+headlines) → step-05 (review)
+# → step-06 (aprovação)
+#
+# 2 checkpoints humanos: step-00 (input) e step-06 (aprovação final)
+# ────────────────────────────────────────────────────────────
+
+steps:
+
+  # ─── INPUT ────────────────────────────────────────────────
+  - id: step-00-input
+    name: "⏸️ CHECKPOINT — Receber Input"
+    type: human-checkpoint
+    description: >
+      Thiago fornece:
+      1. Nome da pessoa (sujeito da matéria)
+      2. Ângulo específico aprovado (arquétipo + título pela lente + evidências + risco)
+      3. Input livre (opcional — ex: "foca no case X", "tom mais duro")
+    output: input-completo
+    next: step-01-pesquisar
+
+  # ─── PESQUISAR PROFUNDIDADE ──────────────────────────────
+  - id: step-01-pesquisar
+    name: "Pesquisar Pessoa em Profundidade"
+    agent: investigador-materia
+    task: tasks/01-pesquisar-profundidade.md
+    data:
+      - data/linkedin-strategy.md
+      - data/formato-materia-colab.md
+      - data/atomos-estrategicos.md
+    input: input-completo
+    output: output/dossie-{slug}.md
+    description: >
+      Ivan Investigador pesquisa a pessoa além do que o seed entregou.
+      Posts recentes (30 dias), cases documentados, citações literais
+      verificáveis, contexto de mercado, contradições. Entrega dossiê
+      auto-suficiente com fontes.
+    next: step-02-estruturar
+
+  # ─── ESTRUTURAR NARRATIVA ────────────────────────────────
+  - id: step-02-estruturar
+    name: "Estruturar Narrativa"
+    agent: redator-materia
+    task: tasks/02-estruturar-narrativa.md
+    data:
+      - data/linkedin-strategy.md
+      - data/formato-materia-colab.md
+      - data/atomos-estrategicos.md
+      - data/veto-conditions.md
+    input:
+      - output/dossie-{slug}.md
+      - input-completo
+    output: estrutura-narrativa
+    description: >
+      Rita Redatora define 3-5 seções com frases-chave e evidência
+      ancorada por seção. Valida arco narrativo, risco declarado
+      e input livre do Thiago.
+    next: step-03-redigir
+
+  # ─── REDIGIR MATÉRIA ─────────────────────────────────────
+  - id: step-03-redigir
+    name: "Redigir Matéria Completa"
+    agent: redator-materia
+    task: tasks/03-redigir-materia.md
+    data:
+      - data/atomos-estrategicos.md
+      - data/veto-conditions.md
+    templates:
+      - templates/materia-template.md
+    input:
+      - estrutura-narrativa
+      - output/dossie-{slug}.md
+    output: output/materia-{slug}-{angulo}.md
+    description: >
+      Rita escreve cada seção com frases completas (não bullets).
+      Tom jornalístico + opinionated. Tese do Thiago como fio condutor.
+      Marcações de slide entre seções. Risco endereçado se declarado.
+    next: step-04-dm-headlines
+
+  # ─── DM + HEADLINES ──────────────────────────────────────
+  - id: step-04-dm-headlines
+    name: "Gerar DM e Headlines"
+    agent: redator-materia
+    task: tasks/04-gerar-dm-headlines.md
+    data:
+      - data/linkedin-strategy.md
+    input: output/materia-{slug}-{angulo}.md
+    output: output/materia-{slug}-{angulo}.md
+    description: >
+      Rita gera 2-3 headlines alternativas (≤ 210 chars, passam no gate)
+      e 2-3 ganchos de DM em 3 tons (direto, aspiracional, provocativo,
+      ≤ 280 chars). Adiciona ao final da matéria.
+    next: step-05-review
+
+  # ─── REVIEW ──────────────────────────────────────────────
+  - id: step-05-review
+    name: "Auto-Review + Veto Check"
+    agent: redator-materia
+    task: tasks/05-review-materia.md
+    data:
+      - data/veto-conditions.md
+      - data/atomos-estrategicos.md
+      - data/formato-materia-colab.md
+    input: output/materia-{slug}-{angulo}.md
+    output: output/materia-{slug}-{angulo}.md
+    description: >
+      Rita faz auto-review: (1) veto check (6 condições), (2) completude,
+      (3) aderência à lente, (4) risco respeitado, (5) score ponderado.
+      Score ≥ 7/10 → segue pra aprovação. Score < 7/10 → refaz.
+    next: step-06-aprovacao
+
+  # ─── APROVAÇÃO FINAL ─────────────────────────────────────
+  - id: step-06-aprovacao
+    name: "⏸️ CHECKPOINT — Aprovação Final"
+    type: human-checkpoint
+    description: >
+      Thiago revisa matéria completa com headlines e ganchos de DM.
+      Decide: ✅ Aprovar (seguir pra carrosséis) ou 🔄 Ajustes
+      (com indicações específicas).
+    input: output/materia-{slug}-{angulo}.md
+    output: materia-aprovada
+
+# ─── Resumo do Pipeline ───────────────────────────────────
+# step-00 (input) → step-01 (pesquisar) → step-02 (estruturar)
+# → step-03 (redigir) → step-04 (DM+headlines) → step-05 (review)
+# → step-06 (aprovação)
+
+# ─── Checkpoints ──────────────────────────────────────────
+# step-00: Receber ângulo aprovado + input livre do Thiago
+# step-06: Aprovação final da matéria completa
+
+# ─── Downstream ──────────────────────────────────────────
+# Matéria aprovada alimenta: carrosseis-linkedin (Editorial Clean)

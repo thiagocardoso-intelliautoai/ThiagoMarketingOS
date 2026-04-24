@@ -1,4 +1,4 @@
-// prompts.js — Prompt templates for Antigravity (v2 — ACRE purged, new squads added)
+// prompts.js — Prompt templates for Antigravity (v3 — Pessoa 1:N Ângulos)
 
 export const Prompts = {
   // ─── TAB CREATE (modos que ficam) ───
@@ -35,10 +35,35 @@ Modo: Geração de novas pautas e subpautas`;
 Modo: Gerar sugestões de novas pessoas para matéria-colab${blacklistStr}`;
   },
 
-  briefingMateria(nome, tituloComLente) {
-    return `/briefing-materia-colab
-Pessoa: "${nome}"
-${tituloComLente ? `Título pela lente: "${tituloComLente}"` : 'Título pela lente: (a definir pelo squad)'}`;
+  // ─── v3: Ângulos — novos prompts ───
+
+  aprofundarPessoa(nome, angulosExistentes = [], inputLivre = '') {
+    const angulosStr = angulosExistentes.length > 0
+      ? `\nÂngulos já existentes (NÃO repetir):\n${angulosExistentes.map(a => `- [${a.arquetipo}] ${a.titulo_pela_lente}`).join('\n')}`
+      : '\nNenhum ângulo existente — gerar ângulos iniciais.';
+    const inputStr = inputLivre
+      ? `\nDireção livre do operador: "${inputLivre}"`
+      : '';
+    return `/z-seed-lista-distribuicao
+Modo: Aprofundar ângulos de pessoa existente
+Pessoa: "${nome}"${angulosStr}${inputStr}`;
+  },
+
+  criarMateriaColab(angulo, pessoa) {
+    const evidenciasStr = Array.isArray(angulo.evidencias) && angulo.evidencias.length > 0
+      ? `\nEvidências:\n${angulo.evidencias.map(e => `- ${e}`).join('\n')}`
+      : '';
+    return `/z-criar-materia-colab
+Pessoa: "${pessoa.nome}"
+Função: ${pessoa.funcao || '(não informada)'}
+Rede relevante: ${pessoa.rede_relevante || '(não informada)'}
+
+Ângulo selecionado:
+Arquétipo: ${angulo.arquetipo}
+Título pela lente: "${angulo.titulo_pela_lente}"${evidenciasStr}
+${angulo.risco ? `Risco editorial: ${angulo.risco}` : ''}
+
+Ângulo ID: ${angulo.id}`;
   },
 
   postDiretoFromSubpauta(subpauta) {
@@ -49,14 +74,6 @@ Subpauta: "${subpauta.titulo}"
 Hook embrionário: ${subpauta.hook_embrionario || subpauta.hookEmbrionario || '(livre)'}
 Matéria-prima: ${subpauta.materia_prima || subpauta.materiaPrima || '(livre)'}
 Pauta Central ID: ${subpauta.pauta_central_id || subpauta.pautaCentralId || ''}`;
-  },
-
-  postDiretoFromPessoa(pessoa) {
-    return `/z-pesquisa-conteudo-linkedin
-Modo: 4 — Escrever Post Direto
-Contexto: Matéria-colab sobre ${pessoa.nome}
-Título pela lente: "${pessoa.titulo_com_lente || pessoa.tituloComLente || '(a definir)'}"
-Função: ${pessoa.funcao || ''}`;
   },
 
   // ─── VISUAIS (sem mudança) ───

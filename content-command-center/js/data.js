@@ -448,15 +448,19 @@ export const DataStore = {
     return data;
   },
 
-  // ─── Lista de Distribuição ───
+  // ─── Lista de Distribuição (1:N Ângulos) ───
   async getDistribuicao() {
     if (!this._isOnline) return [];
     const { data, error } = await supabase
       .from('lista_distribuicao')
-      .select('*')
+      .select('*, angulos_distribuicao(*)')
       .order('created_at', { ascending: false });
     if (error) { console.error('[DataStore] getDistribuicao:', error.message); return []; }
-    return data || [];
+    // Normalize: ensure angulos array exists on each pessoa
+    return (data || []).map(p => ({
+      ...p,
+      angulos_distribuicao: p.angulos_distribuicao || []
+    }));
   },
 
   async addDistribuicao(pessoa) {
@@ -464,10 +468,10 @@ export const DataStore = {
     const { data, error } = await supabase
       .from('lista_distribuicao')
       .insert(pessoa)
-      .select()
+      .select('*, angulos_distribuicao(*)')
       .single();
     if (error) { console.error('[DataStore] addDistribuicao:', error.message); return null; }
-    return data;
+    return { ...data, angulos_distribuicao: data.angulos_distribuicao || [] };
   },
 
   async updateDistribuicao(id, updates) {
@@ -476,10 +480,54 @@ export const DataStore = {
       .from('lista_distribuicao')
       .update(updates)
       .eq('id', id)
-      .select()
+      .select('*, angulos_distribuicao(*)')
       .single();
     if (error) { console.error('[DataStore] updateDistribuicao:', error.message); return null; }
     return data;
+  },
+
+  async deleteDistribuicao(id) {
+    if (!this._isOnline) return false;
+    const { error } = await supabase
+      .from('lista_distribuicao')
+      .delete()
+      .eq('id', id);
+    if (error) { console.error('[DataStore] deleteDistribuicao:', error.message); return false; }
+    return true;
+  },
+
+  // ─── Ângulos de Distribuição ───
+  async addAngulo(angulo) {
+    if (!this._isOnline) return null;
+    const { data, error } = await supabase
+      .from('angulos_distribuicao')
+      .insert(angulo)
+      .select()
+      .single();
+    if (error) { console.error('[DataStore] addAngulo:', error.message); return null; }
+    return data;
+  },
+
+  async updateAngulo(id, updates) {
+    if (!this._isOnline) return null;
+    const { data, error } = await supabase
+      .from('angulos_distribuicao')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) { console.error('[DataStore] updateAngulo:', error.message); return null; }
+    return data;
+  },
+
+  async deleteAngulo(id) {
+    if (!this._isOnline) return false;
+    const { error } = await supabase
+      .from('angulos_distribuicao')
+      .delete()
+      .eq('id', id);
+    if (error) { console.error('[DataStore] deleteAngulo:', error.message); return false; }
+    return true;
   },
 
   // ─── Exclusões ───

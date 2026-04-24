@@ -1,4 +1,4 @@
-// pautas.js — Tab Pautas: Distribuição + Pautas Centrais (Etapa 3)
+// pautas.js — Tab Pautas: Distribuição (1:N Ângulos) + Pautas Centrais
 import { DataStore } from './data.js';
 import { Prompts } from './prompts.js';
 import { Icons } from './icons.js';
@@ -62,7 +62,47 @@ function bindPromptCopy() {
   });
 }
 
-// ─── DISTRIBUIÇÃO ───
+// ─── Helpers ───
+const ARQUETIPO_EMOJI = {
+  contra_o_consenso: '🔥',
+  tradutor_de_bastidor: '🔬',
+  pioneiro_silencioso: '🌱',
+  benchmark_vivo: '📊',
+  misto: '🔀',
+  outro: '💡',
+};
+
+const ARQUETIPO_LABEL = {
+  contra_o_consenso: 'Contra o Consenso',
+  tradutor_de_bastidor: 'Tradutor de Bastidor',
+  pioneiro_silencioso: 'Pioneiro Silencioso',
+  benchmark_vivo: 'Benchmark Vivo',
+  misto: 'Misto',
+  outro: 'Outro',
+};
+
+const STATUS_ANGULO_LABEL = {
+  novo: 'Novo',
+  briefing_gerado: 'Briefing Gerado',
+  materia_em_producao: 'Em Produção',
+  publicada: 'Publicada',
+  descartado: 'Descartado',
+};
+
+const ORIGEM_LABEL = {
+  pesquisa_inicial: 'Pesquisa Inicial',
+  aprofundamento_com_input: 'Aprofundamento c/ Input',
+  aprofundamento_por_movimento_recente: 'Movimento Recente',
+  manual: 'Manual',
+};
+
+const EXPECTATIVA_LABEL = {
+  provavel: 'Provável',
+  possivel: 'Possível',
+  incerto: 'Incerto',
+};
+
+// ─── DISTRIBUIÇÃO (1:N Ângulos) ───
 async function renderDistribuicao() {
   const container = document.getElementById('pautas-content');
   const pessoas = await DataStore.getDistribuicao();
@@ -78,18 +118,7 @@ async function renderDistribuicao() {
     <div id="dist-prompt-area"></div>
 
     <div class="dist-list">
-      ${pessoas.length > 0 ? pessoas.map(p => `
-        <div class="dist-card" data-id="${p.id}">
-          <div class="dist-card-header">
-            <h4 class="dist-card-nome" data-action="briefing" data-id="${p.id}">${escapeHtml(p.nome)}</h4>
-            ${p.expande_bolha ? '<span class="badge badge-bolha">🌐 Expande bolha</span>' : ''}
-            <span class="badge badge-status-dist badge-${p.status}">${p.status}</span>
-          </div>
-          <p class="dist-card-funcao">${escapeHtml(p.funcao || '')}</p>
-          ${p.titulo_com_lente ? `<p class="dist-card-titulo">"${escapeHtml(p.titulo_com_lente)}"</p>` : '<p class="dist-card-titulo dist-card-titulo-empty">Sem título pela lente ainda</p>'}
-          ${p.expectativa ? `<p class="dist-card-expectativa">${escapeHtml(p.expectativa)}</p>` : ''}
-        </div>
-      `).join('') : '<div class="empty-state"><p>Nenhuma pessoa na lista ainda. Gere sugestões com o squad.</p></div>'}
+      ${pessoas.length > 0 ? pessoas.map(p => renderPessoaCard(p)).join('') : '<div class="empty-state"><p>Nenhuma pessoa na lista ainda. Gere sugestões com o squad.</p></div>'}
     </div>
   `;
 
@@ -104,15 +133,308 @@ async function renderDistribuicao() {
     document.getElementById('pautas-prompt-block')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
 
-  // Clicar no nome → mostrar prompt briefing matéria-colab
-  container.querySelectorAll('[data-action="briefing"]').forEach(el => {
-    el.addEventListener('click', () => {
-      const pessoa = pessoas.find(p => p.id === el.dataset.id);
+  // Bind all interactive elements
+  bindDistribuicaoEvents(container, pessoas);
+}
+
+function renderPessoaCard(p) {
+  const angulos = p.angulos_distribuicao || [];
+  const anguloCount = angulos.filter(a => a.status !== 'descartado').length;
+  const badgeText = anguloCount > 0 ? `${anguloCount} ângulo${anguloCount > 1 ? 's' : ''}` : 'Sem ângulos';
+  const badgeClass = anguloCount > 0 ? 'angulo-badge-count' : 'angulo-badge-zero';
+
+  return `
+    <details class="dist-card" data-pessoa-id="${p.id}">
+      <summary class="dist-card-summary">
+        <div class="dist-card-info">
+          <h4 class="dist-card-nome">${escapeHtml(p.nome)}</h4>
+          <span class="dist-card-funcao-badge">${escapeHtml(p.funcao || '—')}</span>
+          ${p.expande_bolha ? '<span class="badge badge-bolha">🌐 Expande bolha</span>' : ''}
+        </div>
+        <div class="dist-card-meta">
+          ${p.status_relacao ? `<span class="dist-relacao-tag">${escapeHtml(p.status_relacao)}</span>` : ''}
+          <span class="badge ${badgeClass}">${badgeText}</span>
+          ${anguloCount === 0 ? `<button class="dist-btn-gerar-angulos" data-action="gerar-angulos" data-pessoa-id="${p.id}">Gerar ângulos →</button>` : ''}
+        </div>
+      </summary>
+      <div class="dist-card-expanded">
+        <!-- Campos editáveis da pessoa -->
+        <div class="dist-pessoa-fields">
+          <div class="dist-inline-group">
+            <label>Nome</label>
+            <input type="text" class="dist-inline-edit" data-field="nome" data-pessoa-id="${p.id}" value="${escapeHtml(p.nome)}" />
+          </div>
+          <div class="dist-inline-group">
+            <label>Função</label>
+            <input type="text" class="dist-inline-edit" data-field="funcao" data-pessoa-id="${p.id}" value="${escapeHtml(p.funcao || '')}" placeholder="Ex: Head de Marketing" />
+          </div>
+          <div class="dist-inline-group">
+            <label>Rede relevante</label>
+            <input type="text" class="dist-inline-edit" data-field="rede_relevante" data-pessoa-id="${p.id}" value="${escapeHtml(p.rede_relevante || '')}" placeholder="Pra quem a rede dela alcança" />
+          </div>
+          <div class="dist-inline-group">
+            <label>Observação</label>
+            <input type="text" class="dist-inline-edit" data-field="observacao" data-pessoa-id="${p.id}" value="${escapeHtml(p.observacao || '')}" placeholder="Notas, contexto, interações passadas" />
+          </div>
+          <div class="dist-inline-group">
+            <label>Relação</label>
+            <input type="text" class="dist-inline-edit" data-field="status_relacao" data-pessoa-id="${p.id}" value="${escapeHtml(p.status_relacao || '')}" placeholder="Ex: contato direto, rede distante" />
+          </div>
+          <div class="dist-inline-group">
+            <label>Expande bolha</label>
+            <select class="dist-inline-select" data-field="expande_bolha" data-pessoa-id="${p.id}">
+              <option value="true" ${p.expande_bolha ? 'selected' : ''}>Sim 🌐</option>
+              <option value="false" ${!p.expande_bolha ? 'selected' : ''}>Não</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Ângulos -->
+        <div class="dist-angulos-section">
+          <div class="dist-angulos-header">
+            <span class="dist-angulos-title">Ângulos</span>
+            <button class="dist-btn-add-angulo" data-action="add-angulo" data-pessoa-id="${p.id}" data-pessoa-nome="${escapeHtml(p.nome)}">
+              ${Icons.plus} Adicionar ângulo
+            </button>
+          </div>
+          <div class="dist-angulos-list">
+            ${angulos.length > 0 ? angulos.map(a => renderAnguloRow(a, p)).join('') : `
+              <div class="dist-zero-state">
+                <p>Sem ângulos — nenhuma matéria possível ainda.</p>
+                <button class="dist-btn-gerar-inline" data-action="gerar-angulos" data-pessoa-id="${p.id}">
+                  Gerar ângulos com squad →
+                </button>
+              </div>
+            `}
+          </div>
+        </div>
+
+        <!-- Ações da pessoa -->
+        <div class="dist-pessoa-actions">
+          <button class="btn-danger btn-sm" data-action="delete-pessoa" data-pessoa-id="${p.id}" data-pessoa-nome="${escapeHtml(p.nome)}">
+            ${Icons.trash} Remover pessoa
+          </button>
+        </div>
+      </div>
+    </details>
+  `;
+}
+
+function renderAnguloRow(a, pessoa) {
+  const emoji = ARQUETIPO_EMOJI[a.arquetipo] || '💡';
+  const statusLabel = STATUS_ANGULO_LABEL[a.status] || a.status;
+  const statusClass = `angulo-status-${a.status}`;
+  const evidenciasArr = Array.isArray(a.evidencias) ? a.evidencias : [];
+
+  return `
+    <div class="angulo-row ${a.status === 'descartado' ? 'angulo-row-descartado' : ''}" data-angulo-id="${a.id}">
+      <div class="angulo-row-header">
+        <div class="angulo-row-left">
+          <span class="angulo-arquetipo-badge">${emoji} ${ARQUETIPO_LABEL[a.arquetipo] || a.arquetipo}</span>
+          <span class="badge angulo-status-badge ${statusClass}">${statusLabel}</span>
+        </div>
+        <div class="angulo-row-actions">
+          <button class="btn-ghost btn-sm" data-action="copy-materia" data-angulo-id="${a.id}" data-pessoa-id="${pessoa.id}" title="Copiar prompt de matéria">
+            ${Icons.copy} Matéria
+          </button>
+          <button class="btn-icon-sm angulo-delete-btn" data-action="delete-angulo" data-angulo-id="${a.id}" title="Remover ângulo">
+            ${Icons.trash}
+          </button>
+        </div>
+      </div>
+      <div class="angulo-row-body">
+        <div class="angulo-titulo-lente">
+          <input type="text" class="angulo-inline-edit angulo-titulo-input" data-angulo-field="titulo_pela_lente" data-angulo-id="${a.id}" value="${escapeHtml(a.titulo_pela_lente)}" placeholder="Título pela lente..." />
+        </div>
+        ${evidenciasArr.length > 0 ? `
+          <div class="angulo-evidencias">
+            ${evidenciasArr.map((ev, i) => `<span class="angulo-evidencia-tag">${escapeHtml(String(ev))}</span>`).join('')}
+          </div>
+        ` : ''}
+        ${a.risco ? `<p class="angulo-risco">⚠️ ${escapeHtml(a.risco)}</p>` : ''}
+        <div class="angulo-meta-row">
+          <div class="angulo-meta-item">
+            <label>Arquétipo</label>
+            <select class="angulo-inline-select" data-angulo-field="arquetipo" data-angulo-id="${a.id}">
+              ${Object.entries(ARQUETIPO_LABEL).map(([k, v]) =>
+                `<option value="${k}" ${a.arquetipo === k ? 'selected' : ''}>${v}</option>`
+              ).join('')}
+            </select>
+          </div>
+          <div class="angulo-meta-item">
+            <label>Status</label>
+            <select class="angulo-inline-select" data-angulo-field="status" data-angulo-id="${a.id}">
+              ${Object.entries(STATUS_ANGULO_LABEL).map(([k, v]) =>
+                `<option value="${k}" ${a.status === k ? 'selected' : ''}>${v}</option>`
+              ).join('')}
+            </select>
+          </div>
+          <div class="angulo-meta-item">
+            <label>Origem</label>
+            <select class="angulo-inline-select" data-angulo-field="origem" data-angulo-id="${a.id}">
+              ${Object.entries(ORIGEM_LABEL).map(([k, v]) =>
+                `<option value="${k}" ${a.origem === k ? 'selected' : ''}>${v}</option>`
+              ).join('')}
+            </select>
+          </div>
+          <div class="angulo-meta-item">
+            <label>💬 Comentário</label>
+            <select class="angulo-inline-select" data-angulo-field="expectativa_comentario" data-angulo-id="${a.id}">
+              <option value="" ${!a.expectativa_comentario ? 'selected' : ''}>—</option>
+              ${Object.entries(EXPECTATIVA_LABEL).map(([k, v]) =>
+                `<option value="${k}" ${a.expectativa_comentario === k ? 'selected' : ''}>${v}</option>`
+              ).join('')}
+            </select>
+          </div>
+          <div class="angulo-meta-item">
+            <label>🔄 Repost</label>
+            <select class="angulo-inline-select" data-angulo-field="expectativa_repost" data-angulo-id="${a.id}">
+              <option value="" ${!a.expectativa_repost ? 'selected' : ''}>—</option>
+              ${Object.entries(EXPECTATIVA_LABEL).map(([k, v]) =>
+                `<option value="${k}" ${a.expectativa_repost === k ? 'selected' : ''}>${v}</option>`
+              ).join('')}
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function bindDistribuicaoEvents(container, pessoas) {
+  // Inline edit pessoa fields (blur → save)
+  container.querySelectorAll('.dist-inline-edit').forEach(input => {
+    input.addEventListener('blur', async () => {
+      const pessoaId = input.dataset.pessoaId;
+      const field = input.dataset.field;
+      const value = input.value.trim();
+      await DataStore.updateDistribuicao(pessoaId, { [field]: value });
+      showToast('Salvo', 'success');
+    });
+  });
+
+  // Inline select pessoa fields
+  container.querySelectorAll('.dist-inline-select').forEach(select => {
+    select.addEventListener('change', async () => {
+      const pessoaId = select.dataset.pessoaId;
+      const field = select.dataset.field;
+      let value = select.value;
+      if (field === 'expande_bolha') value = value === 'true';
+      await DataStore.updateDistribuicao(pessoaId, { [field]: value });
+      showToast('Salvo', 'success');
+    });
+  });
+
+  // Inline edit ângulo fields (blur → save)
+  container.querySelectorAll('.angulo-inline-edit').forEach(input => {
+    input.addEventListener('blur', async () => {
+      const anguloId = input.dataset.anguloId;
+      const field = input.dataset.anguloField;
+      const value = input.value.trim();
+      await DataStore.updateAngulo(anguloId, { [field]: value });
+      showToast('Salvo', 'success');
+    });
+  });
+
+  // Inline select ângulo fields
+  container.querySelectorAll('.angulo-inline-select').forEach(select => {
+    select.addEventListener('change', async () => {
+      const anguloId = select.dataset.anguloId;
+      const field = select.dataset.anguloField;
+      const value = select.value || null;
+      await DataStore.updateAngulo(anguloId, { [field]: value });
+      showToast('Salvo', 'success');
+    });
+  });
+
+  // Gerar ângulos → prompt
+  container.querySelectorAll('[data-action="gerar-angulos"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Don't toggle <details>
+      const pessoaId = btn.dataset.pessoaId;
+      const pessoa = pessoas.find(p => p.id === pessoaId);
       if (!pessoa) return;
-      const prompt = Prompts.briefingMateria(pessoa.nome, pessoa.titulo_com_lente);
+      const angulos = pessoa.angulos_distribuicao || [];
+      const prompt = Prompts.aprofundarPessoa(pessoa.nome, angulos);
       document.getElementById('dist-prompt-area').innerHTML = renderPromptBlock(prompt);
       bindPromptCopy();
       document.getElementById('pautas-prompt-block')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+
+  // Adicionar ângulo → prompt com input opcional
+  container.querySelectorAll('[data-action="add-angulo"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pessoaId = btn.dataset.pessoaId;
+      const pessoaNome = btn.dataset.pessoaNome;
+      const pessoa = pessoas.find(p => p.id === pessoaId);
+      if (!pessoa) return;
+      const angulos = pessoa.angulos_distribuicao || [];
+
+      // Show inline input for optional direction
+      const angulosSection = btn.closest('.dist-angulos-section');
+      let inputArea = angulosSection.querySelector('.dist-input-direcao');
+      if (inputArea) { inputArea.remove(); return; } // toggle
+
+      const div = document.createElement('div');
+      div.className = 'dist-input-direcao';
+      div.innerHTML = `
+        <input type="text" class="dist-inline-edit" placeholder="Direção livre (opcional) — ex: foco em processo comercial" id="direcao-${pessoaId}" />
+        <button class="btn-primary btn-sm" id="direcao-go-${pessoaId}">${Icons.arrowRight} Gerar prompt</button>
+      `;
+      angulosSection.insertBefore(div, angulosSection.querySelector('.dist-angulos-list'));
+
+      document.getElementById(`direcao-go-${pessoaId}`)?.addEventListener('click', () => {
+        const inputLivre = document.getElementById(`direcao-${pessoaId}`)?.value || '';
+        const prompt = Prompts.aprofundarPessoa(pessoaNome, angulos, inputLivre);
+        document.getElementById('dist-prompt-area').innerHTML = renderPromptBlock(prompt);
+        bindPromptCopy();
+        div.remove();
+        document.getElementById('pautas-prompt-block')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    });
+  });
+
+  // Copiar prompt matéria
+  container.querySelectorAll('[data-action="copy-materia"]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const anguloId = btn.dataset.anguloId;
+      const pessoaId = btn.dataset.pessoaId;
+      const pessoa = pessoas.find(p => p.id === pessoaId);
+      if (!pessoa) return;
+      const angulo = (pessoa.angulos_distribuicao || []).find(a => a.id === anguloId);
+      if (!angulo) return;
+      const prompt = Prompts.criarMateriaColab(angulo, pessoa);
+      document.getElementById('dist-prompt-area').innerHTML = renderPromptBlock(prompt);
+      bindPromptCopy();
+      document.getElementById('pautas-prompt-block')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+
+  // Delete ângulo
+  container.querySelectorAll('[data-action="delete-angulo"]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('Remover este ângulo?')) return;
+      const anguloId = btn.dataset.anguloId;
+      const ok = await DataStore.deleteAngulo(anguloId);
+      if (ok) {
+        showToast('Ângulo removido', 'success');
+        await renderDistribuicao();
+      }
+    });
+  });
+
+  // Delete pessoa
+  container.querySelectorAll('[data-action="delete-pessoa"]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const nome = btn.dataset.pessoaNome;
+      if (!confirm(`Remover "${nome}" e todos os seus ângulos?`)) return;
+      const pessoaId = btn.dataset.pessoaId;
+      const ok = await DataStore.deleteDistribuicao(pessoaId);
+      if (ok) {
+        showToast(`"${nome}" removido`, 'success');
+        await renderDistribuicao();
+      }
     });
   });
 }

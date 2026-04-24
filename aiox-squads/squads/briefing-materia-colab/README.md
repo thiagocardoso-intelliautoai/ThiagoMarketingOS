@@ -1,8 +1,22 @@
-# 📰 Briefing Matéria-Colab
+# ⚠️ DEPRECATED — Briefing Matéria-Colab
 
-## Propósito
+> [!CAUTION]
+> **Este squad foi SUBSTITUÍDO por `criar-materia-colab`.**
+>
+> O squad `criar-materia-colab` vai além do briefing — entrega matéria FINALIZADA
+> com frases completas, arco narrativo, marcações de slide e review com score.
+>
+> **Use:** `/z-criar-materia-colab`
+> **Localização:** `aiox-squads/squads/criar-materia-colab/`
+>
+> Este squad permanece no repositório apenas como referência histórica.
+> NÃO execute este squad para novas matérias.
 
-Gerar briefing completo para matéria-colab no LinkedIn. Recebe nome do alvo + título-com-lente, pesquisa publicamente a pessoa, e monta briefing jornalístico com estrutura de matéria, citações, headlines e gancho de DM.
+---
+
+## ~~Propósito~~ (deprecated)
+
+~~Gerar briefing completo para matéria-colab no LinkedIn. Recebe nome do alvo + título-com-lente, pesquisa publicamente a pessoa, e monta briefing jornalístico com estrutura de matéria, citações, headlines e gancho de DM.~~
 
 **NÃO é colab tradicional.** Sem entrevista, sem reunião, sem pauta combinada. Jornalismo com formato de colab.
 
