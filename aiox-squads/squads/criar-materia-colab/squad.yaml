@@ -1,0 +1,80 @@
+# Squad: Criar Matéria-Colab
+# Pipeline: ângulo aprovado → matéria-colab completa pronta pra publicar
+# Próximo step do funil de distribuição (após seed-lista-distribuicao)
+
+name: "Criar Matéria-Colab"
+code: criar-materia-colab
+icon: 📝
+version: "1.0"
+format: aiox-v1
+
+description: >
+  Squad para criar matéria-colab completa a partir de ângulo aprovado.
+  Recebe nome da pessoa + ângulo completo (arquétipo + título pela lente +
+  evidências + risco) + input livre opcional do Thiago, pesquisa em profundidade,
+  estrutura narrativa, redige matéria finalizada com marcações de slide,
+  gera ganchos de DM e headlines. Output pronto pra alimentar squad de carrosséis.
+  NÃO é briefing — é matéria finalizada.
+
+owner: thiago-clima
+platform: linkedin
+content_type: materia-colab
+upstream_squad: seed-lista-distribuicao
+downstream_squad: carrosseis-linkedin
+
+# Agentes da squad
+agents:
+  - id: investigador-materia
+    name: "Ivan Investigador"
+    file: agents/investigador-materia.md
+    description: Pesquisador de profundidade — vai além do que o seed entregou, levanta citações verificáveis e contexto público
+    skills: [web_search, web_fetch]
+
+  - id: redator-materia
+    name: "Rita Redatora"
+    file: agents/redator-materia.md
+    description: Redatora de matéria-colab — escreve matéria completa com arco narrativo, tese do Thiago e marcações de slide
+
+# Workflow principal
+workflow:
+  entry: workflows/workflow.yaml
+
+# Dados de referência
+data:
+  - data/linkedin-strategy.md
+  - data/formato-materia-colab.md
+  - data/atomos-estrategicos.md
+  - data/veto-conditions.md
+
+# Templates de output
+templates:
+  - id: materia-template
+    file: templates/materia-template.md
+    description: Template da matéria completa com marcações de slide, headlines, ganchos de DM
+
+# Tasks
+tasks:
+  - id: pesquisar-profundidade
+    file: tasks/01-pesquisar-profundidade.md
+    description: Pesquisar a pessoa em profundidade além do seed — posts, cases, citações verificáveis
+
+  - id: estruturar-narrativa
+    file: tasks/02-estruturar-narrativa.md
+    description: Definir 3-5 seções com frases-chave e evidência ancorada por seção
+
+  - id: redigir-materia
+    file: tasks/03-redigir-materia.md
+    description: Redigir matéria completa com frases escritas, não bullets — tese do Thiago como fio condutor
+
+  - id: gerar-dm-headlines
+    file: tasks/04-gerar-dm-headlines.md
+    description: Gerar 2-3 headlines alternativas e 2-3 ganchos de DM em tons diferentes
+
+  - id: review-materia
+    file: tasks/05-review-materia.md
+    description: Auto-review — veto check, completude, aderência à lente, score ponderado
+
+# Checkpoints humanos
+checkpoints:
+  - step-00: "Receber ângulo aprovado + input livre do Thiago"
+  - step-06: "Aprovação final da matéria completa"

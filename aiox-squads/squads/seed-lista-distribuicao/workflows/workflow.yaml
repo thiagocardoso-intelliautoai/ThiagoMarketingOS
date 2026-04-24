@@ -1,16 +1,30 @@
 # Workflow: Seed Lista de Distribuição
 # Pipeline de pesquisa e manutenção de alvos para matéria-colab
-# v1.0
+# v1.1 — Adicionado modelo de ângulos e fluxo de aprofundamento
 
 name: seed-lista-distribuicao
-version: "1.0"
+version: "1.1"
 description: >
   Pipeline para pesquisar candidatos para matéria-colab,
-  aplicar gate da lente, filtrar exclusões e manter lista ativa.
+  aplicar gate da lente com ângulos distintos, filtrar exclusões,
+  manter lista ativa e aprofundar pessoas já aprovadas.
 
-# ─── Steps ─────────────────────────────────────────────────
+# ─── 2 MODOS DE USO ────────────────────────────────────────
+#
+# MODO 1 — Pesquisar Candidatos Novos:  steps 01 → 02 → 03 → 04
+# MODO 2 — Aprofundar Pessoa Existente: steps A1 → A2 → 03 → 04
+#
+# Os modos são independentes. Steps com prefixo numérico (01-04) são
+# o pipeline principal. Steps com prefixo A (A1-A2) são o fluxo de
+# aprofundamento. Task 03 (atualizar lista) e step 04 (confirmação)
+# são compartilhados entre os dois modos.
+# ────────────────────────────────────────────────────────────
 
 steps:
+
+  # ═══════════════════════════════════════════════════════════
+  # MODO 1 — PESQUISAR CANDIDATOS NOVOS
+  # ═══════════════════════════════════════════════════════════
 
   # ─── PESQUISA ────────────────────────────────────────────
   - id: step-01-pesquisar
@@ -25,7 +39,8 @@ steps:
     output: output/candidatos-pesquisados.md
     description: >
       Paulo pesquisa candidatos para matéria-colab. Aplica gate da lente
-      (título formulável?) e filtra exclusões (arquétipos vetados, duplicatas).
+      com ângulos distintos (arquétipo + título + evidências + risco)
+      e filtra exclusões (arquétipos vetados, duplicatas).
     next: step-02-aprovacao
 
   # ─── APROVAÇÃO ───────────────────────────────────────────
@@ -33,12 +48,52 @@ steps:
     name: "⏸️ CHECKPOINT — Aprovação dos Candidatos"
     type: human-checkpoint
     description: >
-      Thiago revisa os candidatos pesquisados. Para cada:
-      ✅ Aprovar (entra na lista)
+      Thiago revisa os candidatos pesquisados e seus ângulos. Para cada:
+      ✅ Aprovar (entra na lista com ângulos selecionados)
       ❌ Descartar (vai pra exclusões com motivo)
     input: output/candidatos-pesquisados.md
     output: candidatos-aprovados
     next: step-03-atualizar
+
+  # ═══════════════════════════════════════════════════════════
+  # MODO 2 — APROFUNDAR PESSOA EXISTENTE
+  # ═══════════════════════════════════════════════════════════
+
+  # ─── APROFUNDAMENTO ─────────────────────────────────────
+  - id: step-A1-aprofundar-pessoa
+    name: "Aprofundar Pessoa"
+    agent: pesquisador-alvos
+    task: tasks/03-aprofundar-pessoa.md
+    data:
+      - data/linkedin-strategy.md
+      - data/gate-rules.md
+    input:
+      - nome-da-pessoa
+      - input-livre-thiago (opcional)
+    output: output/angulos-aprofundados.md
+    description: >
+      Paulo pesquisa ângulos novos sobre pessoa que já está na lista.
+      Se Thiago deu direção, ancora no input. Se não, pesquisa
+      movimento público recente (30-60 dias). Valida não-duplicata
+      contra ângulos existentes.
+    next: step-A2-aprovacao-angulos-novos
+
+  # ─── APROVAÇÃO DE ÂNGULOS NOVOS ─────────────────────────
+  - id: step-A2-aprovacao-angulos-novos
+    name: "⏸️ CHECKPOINT — Aprovação de Ângulos Novos"
+    type: human-checkpoint
+    description: >
+      Thiago revisa ângulos novos propostos para pessoa existente.
+      Para cada ângulo:
+      ✅ Aprovar (será adicionado à ficha da pessoa na lista)
+      ❌ Descartar (ignorado — exclusão é nível pessoa, não ângulo)
+    input: output/angulos-aprofundados.md
+    output: angulos-aprovados
+    next: step-03-atualizar
+
+  # ═══════════════════════════════════════════════════════════
+  # STEPS COMPARTILHADOS (ambos os modos convergem aqui)
+  # ═══════════════════════════════════════════════════════════
 
   # ─── ATUALIZAÇÃO ─────────────────────────────────────────
   - id: step-03-atualizar
@@ -47,11 +102,14 @@ steps:
     task: tasks/02-atualizar-lista.md
     input:
       - output/candidatos-pesquisados.md
+      - output/angulos-aprofundados.md
       - candidatos-aprovados
+      - angulos-aprovados
     output: output/lista-distribuicao.md
     description: >
-      Paulo adiciona candidatos aprovados à lista ativa e registra
-      descartados nas exclusões com motivo.
+      Paulo atualiza a lista ativa. Modo A (pesquisa): adiciona candidatos
+      aprovados com seus ângulos. Modo B (aprofundamento): adiciona ângulos
+      novos à ficha de pessoa existente. Registra descartados nas exclusões.
     next: step-04-confirmacao
 
   # ─── CONFIRMAÇÃO ─────────────────────────────────────────
@@ -60,13 +118,15 @@ steps:
     type: human-checkpoint
     description: >
       Thiago confirma que a lista atualizada está correta.
-      Vê resumo: total, novos, % fora da bolha.
+      Vê resumo: total de pessoas, ângulos, novos, % fora da bolha.
     input: output/lista-distribuicao.md
     output: lista-confirmada
 
 # ─── Resumo do Pipeline ───────────────────────────────────
-# step-01 → step-02 (aprovação) → step-03 (atualizar) → step-04 (confirmação)
+# MODO 1: step-01 → step-02 (aprovação) → step-03 (atualizar) → step-04 (confirmação)
+# MODO 2: step-A1 → step-A2 (aprovação) → step-03 (atualizar) → step-04 (confirmação)
 
 # ─── Checkpoints ──────────────────────────────────────────
-# step-02: Aprovação/descarte de candidatos
-# step-04: Confirmação da lista atualizada
+# step-02: Aprovação/descarte de candidatos e ângulos (Modo 1)
+# step-A2: Aprovação/descarte de ângulos novos (Modo 2)
+# step-04: Confirmação da lista atualizada (ambos os modos)
