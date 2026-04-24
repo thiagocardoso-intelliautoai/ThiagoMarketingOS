@@ -56,7 +56,7 @@ body::after {
   left: 0;
   right: 0;
   height: 2px;
-  background: #14B8A6;
+  background: var(--accent-primary);
   z-index: 999;
   pointer-events: none;
 }

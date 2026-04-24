@@ -23,22 +23,16 @@ export const MODE_LABELS = {
     icon: svgIcon('<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/>'),
     desc: 'Já tem a ideia — pula pesquisa, vai direto pro Redator'
   },
-  5: {
-    name: 'Planejamento Mensal',
-    icon: svgIcon('<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/>'),
-    desc: '12 posts de uma vez — plano tático de 4 semanas (DTC + ACRE)',
-    featured: true,
-    badge: '12 posts'
-  },
 };
 
-// ─── PILLAR CONFIG ───
-// Extracted from render.js [HARDENING-002]
-export const PILLAR_CONFIG = {
-  A: { label: 'Alcance', cssClass: 'badge-autoridade' },
-  C: { label: 'Credibilidade', cssClass: 'badge-conexao' },
-  R: { label: 'Retorno', cssClass: 'badge-resultado' },
-  E: { label: 'Engajamento', cssClass: 'badge-engajamento' },
+
+// ─── FONTE DE TESE CONFIG ───
+// Substitui PILLAR_CONFIG (ACRE eliminado na v2)
+export const FONTE_TESE_CONFIG = {
+  skills_producao: { label: 'Skills em Produção', cssClass: 'badge-skills' },
+  benchmark_real: { label: 'Benchmark Real', cssClass: 'badge-benchmark' },
+  process_diagnostic: { label: 'Process Diagnostic', cssClass: 'badge-diagnostic' },
+  falha_documentada: { label: 'Falha Documentada', cssClass: 'badge-falha' },
 };
 
 export const STATUS_LABELS = {

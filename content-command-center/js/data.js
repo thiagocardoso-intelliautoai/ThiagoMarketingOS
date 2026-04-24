@@ -1,5 +1,5 @@
 // data.js — CRUD Supabase + localStorage fallback + Import/Export JSON
-// Story SUPABASE-003: Refactored Data Layer
+// Etapa 3: ACRE purged, fonte_tese + pauta_central_id added, new table CRUDs
 import { supabase } from './supabase.js';
 
 const STORAGE_KEY = 'content-command-center';
@@ -85,7 +85,7 @@ export const DataStore = {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(this._data));
   },
 
-  // ─── 3.4: Map DB row (snake_case) → JS object (camelCase) ───
+  // ─── Map DB row (snake_case) → JS object (camelCase) ───
   _mapPostFromDB(row) {
     // Extract the first cover/carousel (one-to-one via UNIQUE constraint)
     const cover = Array.isArray(row.covers) ? row.covers[0] : row.covers;
@@ -97,8 +97,9 @@ export const DataStore = {
       slug: row.slug || '',
       contentType: row.content_type || 'text',
       theme: row.theme || '',
-      pillar: row.pillar || 'A',
-      pillarLabel: this._pillarLabel(row.pillar),
+      // v2: fonte_tese replaces pillar in UI, pillar kept as legacy
+      fonteTese: row.fonte_tese || null,
+      pautaCentralId: row.pauta_central_id || null,
       hookText: row.hook_text || '',
       hookStructure: row.hook_structure || '',
       framework: row.framework || '',
@@ -145,7 +146,7 @@ export const DataStore = {
     };
   },
 
-  // ─── 3.5: Map JS object (camelCase) → DB insert (snake_case) ───
+  // ─── Map JS object (camelCase) → DB insert (snake_case) ───
   _mapPostToDB(post) {
     const slug = post.slug || this._slugify(post.title);
     return {
@@ -153,8 +154,8 @@ export const DataStore = {
       slug,
       content_type: post.contentType || 'text',
       theme: post.theme || '',
-      pillar: post.pillar || 'A',
-      pillar_label: this._pillarLabel(post.pillar),
+      fonte_tese: post.fonteTese || null,
+      pauta_central_id: post.pautaCentralId || null,
       hook_text: post.hookText || '',
       hook_structure: post.hookStructure || '',
       framework: post.framework || '',
@@ -184,7 +185,7 @@ export const DataStore = {
     return this._data.posts.find(p => p.id === id) || null;
   },
 
-  // ─── 3.6: addPost() — Supabase insert + cache update ───
+  // ─── addPost() — Supabase insert + cache update ───
   async addPost(post) {
     const dbPost = this._mapPostToDB(post);
 
@@ -218,8 +219,8 @@ export const DataStore = {
       title: post.title || '',
       contentType: post.contentType || 'text',
       theme: post.theme || '',
-      pillar: post.pillar || 'A',
-      pillarLabel: this._pillarLabel(post.pillar),
+      fonteTese: post.fonteTese || null,
+      pautaCentralId: post.pautaCentralId || null,
       hookText: post.hookText || '',
       hookStructure: post.hookStructure || '',
       framework: post.framework || '',
@@ -228,7 +229,7 @@ export const DataStore = {
       hashtags: post.hashtags || [],
       sources: post.sources || [],
       reviewScore: post.reviewScore || null,
-      status: post.status || 'armazem',
+      status: post.status || 'rascunho',
       urgency: post.urgency || 'relevante',
       createdAt: new Date().toISOString(),
       publishedAt: null,
@@ -242,7 +243,7 @@ export const DataStore = {
     return newPost;
   },
 
-  // ─── 3.7: updatePost() — Supabase update + cache update ───
+  // ─── updatePost() — Supabase update + cache update ───
   async updatePost(id, updates) {
     const idx = this._data.posts.findIndex(p => p.id === id);
     if (idx === -1) return null;
@@ -253,7 +254,7 @@ export const DataStore = {
         const dbUpdates = {};
         const fieldMap = {
           title: 'title', contentType: 'content_type', theme: 'theme',
-          pillar: 'pillar', pillarLabel: 'pillar_label',
+          fonteTese: 'fonte_tese', pautaCentralId: 'pauta_central_id',
           hookText: 'hook_text', hookStructure: 'hook_structure',
           framework: 'framework', body: 'body', cta: 'cta',
           hashtags: 'hashtags', sources: 'sources',
@@ -283,14 +284,11 @@ export const DataStore = {
 
     // Update local cache regardless
     Object.assign(this._data.posts[idx], updates);
-    if (updates.pillar) {
-      this._data.posts[idx].pillarLabel = this._pillarLabel(updates.pillar);
-    }
     this._saveLocal();
     return this._data.posts[idx];
   },
 
-  // ─── 3.8: deletePost() — Supabase delete + cache update ───
+  // ─── deletePost() — Supabase delete + cache update ───
   async deletePost(id) {
     const idx = this._data.posts.findIndex(p => p.id === id);
     if (idx === -1) return false;
@@ -374,17 +372,18 @@ export const DataStore = {
     });
   },
 
-  // ─── 3.9: processInbox() → no-op ───
+  // ─── processInbox() → no-op ───
   async processInbox() {
     // Inbox pipeline eliminated — Supabase is the single source of truth
     return { imported: 0, updated: 0 };
   },
 
   // Filter & Search (client-side on cache — unchanged API)
-  filterPosts({ status, urgency, contentType, search } = {}) {
+  filterPosts({ status, urgency, contentType, search, pautaCentralId } = {}) {
     let posts = this.getPosts();
     if (status) posts = posts.filter(p => p.status === status);
     if (urgency) posts = posts.filter(p => p.urgency === urgency);
+    if (pautaCentralId) posts = posts.filter(p => p.pautaCentralId === pautaCentralId);
     if (contentType === 'carousel') {
       posts = posts.filter(p => p.contentType === 'carousel' || p.derivations?.carousel);
     } else if (contentType === 'cover') {
@@ -401,12 +400,134 @@ export const DataStore = {
     return posts;
   },
 
-  // ─── Helpers ───
-  _pillarLabel(code) {
-    const map = { A: 'Alcance', C: 'Credibilidade', R: 'Retorno', E: 'Engajamento' };
-    return map[code] || code;
+  // ═══════════════════════════════════════════════════════════
+  // NEW TABLES — CRUDs (Etapa 3)
+  // ═══════════════════════════════════════════════════════════
+
+  // ─── Pautas Centrais ───
+  async getPautas() {
+    if (!this._isOnline) return [];
+    const { data, error } = await supabase
+      .from('pautas_centrais')
+      .select('*')
+      .order('ordem', { ascending: true });
+    if (error) { console.error('[DataStore] getPautas:', error.message); return []; }
+    return data || [];
   },
 
+  // ─── Subpautas ───
+  async getSubpautas(pautaCentralId) {
+    if (!this._isOnline) return [];
+    let query = supabase.from('subpautas').select('*').order('created_at', { ascending: false });
+    if (pautaCentralId) query = query.eq('pauta_central_id', pautaCentralId);
+    const { data, error } = await query;
+    if (error) { console.error('[DataStore] getSubpautas:', error.message); return []; }
+    return data || [];
+  },
+
+  async addSubpauta(subpauta) {
+    if (!this._isOnline) return null;
+    const { data, error } = await supabase
+      .from('subpautas')
+      .insert(subpauta)
+      .select()
+      .single();
+    if (error) { console.error('[DataStore] addSubpauta:', error.message); return null; }
+    return data;
+  },
+
+  async updateSubpauta(id, updates) {
+    if (!this._isOnline) return null;
+    const { data, error } = await supabase
+      .from('subpautas')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) { console.error('[DataStore] updateSubpauta:', error.message); return null; }
+    return data;
+  },
+
+  // ─── Lista de Distribuição ───
+  async getDistribuicao() {
+    if (!this._isOnline) return [];
+    const { data, error } = await supabase
+      .from('lista_distribuicao')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) { console.error('[DataStore] getDistribuicao:', error.message); return []; }
+    return data || [];
+  },
+
+  async addDistribuicao(pessoa) {
+    if (!this._isOnline) return null;
+    const { data, error } = await supabase
+      .from('lista_distribuicao')
+      .insert(pessoa)
+      .select()
+      .single();
+    if (error) { console.error('[DataStore] addDistribuicao:', error.message); return null; }
+    return data;
+  },
+
+  async updateDistribuicao(id, updates) {
+    if (!this._isOnline) return null;
+    const { data, error } = await supabase
+      .from('lista_distribuicao')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) { console.error('[DataStore] updateDistribuicao:', error.message); return null; }
+    return data;
+  },
+
+  // ─── Exclusões ───
+  async getExclusoes() {
+    if (!this._isOnline) return [];
+    const { data, error } = await supabase
+      .from('exclusoes_distribuicao')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) { console.error('[DataStore] getExclusoes:', error.message); return []; }
+    return data || [];
+  },
+
+  // ─── Átomos Estratégicos ───
+  async getAtomos() {
+    if (!this._isOnline) return [];
+    const { data, error } = await supabase
+      .from('atomos_estrategicos')
+      .select('*')
+      .order('chave', { ascending: true });
+    if (error) { console.error('[DataStore] getAtomos:', error.message); return []; }
+    return data || [];
+  },
+
+  async getAtomo(chave) {
+    if (!this._isOnline) return null;
+    const { data, error } = await supabase
+      .from('atomos_estrategicos')
+      .select('*')
+      .eq('chave', chave)
+      .single();
+    if (error) { console.error('[DataStore] getAtomo:', error.message); return null; }
+    return data;
+  },
+
+  async updateAtomo(chave, valor) {
+    if (!this._isOnline) return null;
+    const { data, error } = await supabase
+      .from('atomos_estrategicos')
+      .update({ valor })
+      .eq('chave', chave)
+      .select()
+      .single();
+    if (error) { console.error('[DataStore] updateAtomo:', error.message); return null; }
+    return data;
+  },
+
+  // ─── Helpers ───
   _slugify(text) {
     return (text || 'post')
       .toLowerCase()

@@ -1,7 +1,9 @@
-// app.js — Entry Point & Hash Router
+// app.js — Entry Point & Hash Router (Etapa 3: +pautas, +estrategia)
 import { DataStore } from './data.js';
 import { renderDashboard, renderLibrary } from './render.js';
 import { renderSettings, setPreviousRoute, cleanupSettings } from './settings.js';
+import { renderPautas } from './pautas.js';
+import { renderEstrategia } from './estrategia.js';
 
 // ─── ROUTE HISTORY ───
 let lastNonSettingsRoute = '#dashboard';
@@ -41,6 +43,12 @@ async function route() {
   switch (hash) {
     case '#settings':
       renderSettings();
+      break;
+    case '#pautas':
+      renderPautas();
+      break;
+    case '#estrategia':
+      renderEstrategia();
       break;
     case '#conteudos':
       renderLibrary();

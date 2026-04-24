@@ -1,6 +1,6 @@
 // render.js — DOM Rendering Engine v2.0 (Lucide Icons Edition)
 import { DataStore } from './data.js';
-import { MODE_LABELS, PILLAR_CONFIG, STATUS_LABELS, URGENCY_LABELS } from './state.js';
+import { MODE_LABELS, FONTE_TESE_CONFIG, STATUS_LABELS, URGENCY_LABELS } from './state.js';
 import { Prompts } from './prompts.js';
 import { renderLinkedInPreview, attachLinkedInPreviewEvents } from './linkedin-preview.js';
 import { Icons } from './icons.js';
@@ -21,7 +21,7 @@ export function renderDashboard() {
     </section>
 
     <section class="mode-grid">
-      ${[1, 2, 3, 4, 5].map(m => renderModeCard(m)).join('')}
+      ${[3, 4].map(m => renderModeCard(m)).join('')}
     </section>
 
     <div id="mode-expand-panel" class="mode-expand-panel"></div>
@@ -83,19 +83,7 @@ function expandModePanel(mode) {
       </div>
     `;
   }
-  if (mode === 5) {
-    extraInput = `
-      <div class="expand-field">
-        <label for="plan-direction">${Icons.calendar} Direção temática do mês</label>
-        <textarea id="plan-direction" class="input-field textarea-field" rows="3" placeholder='Ex: "Foco em automação de prospecção com IA" ou "Mês de autoridade em gestão de pipeline"'></textarea>
-      </div>
-      <div class="expand-info">
-        <span class="expand-info-badge">${Icons.layers} 12 posts</span>
-        <span class="expand-info-badge">${Icons.calendar} 4 semanas</span>
-        <span class="expand-info-badge">${Icons.barChart} DTC + ACRE</span>
-      </div>
-    `;
-  }
+
 
   panel.innerHTML = `
     <div class="expand-content">
@@ -136,22 +124,15 @@ function expandModePanel(mode) {
       document.getElementById('prompt-output').textContent = Prompts.postDireto(e.target.value);
     });
   }
-  if (mode === 5) {
-    document.getElementById('plan-direction').addEventListener('input', (e) => {
-      document.getElementById('prompt-output').textContent = Prompts.planejamentoMensal(e.target.value);
-    });
-  }
+
 
   panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function generatePromptForMode(mode) {
   switch (mode) {
-    case 1: return Prompts.pesquisaSemanal();
-    case 2: return Prompts.benchmark();
     case 3: return Prompts.briefing('');
     case 4: return Prompts.postDireto('');
-    case 5: return Prompts.planejamentoMensal('');
     default: return '';
   }
 }
@@ -185,6 +166,9 @@ export function renderLibrary() {
             <option value="">Todos os Tipos</option>
             <option value="carousel">🎠 Carrossel</option>
             <option value="cover">🖼️ Capa</option>
+          </select>
+          <select id="filter-pauta-central" class="filter-select" aria-label="Filtrar por pauta central">
+            <option value="">Todas as Pautas</option>
           </select>
         </div>
         <div class="search-group">
@@ -324,10 +308,23 @@ function renderEmptyState() {
 }
 
 function bindLibraryEvents() {
-  ['filter-status', 'filter-urgency', 'filter-content-type'].forEach(id => {
+  ['filter-status', 'filter-urgency', 'filter-content-type', 'filter-pauta-central'].forEach(id => {
     document.getElementById(id)?.addEventListener('change', applyFilters);
   });
   document.getElementById('search-posts')?.addEventListener('input', applyFilters);
+
+  // Populate pauta central dropdown async
+  (async () => {
+    const pautas = await DataStore.getPautas();
+    const sel = document.getElementById('filter-pauta-central');
+    if (sel && pautas.length > 0) {
+      pautas.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id; opt.textContent = p.nome;
+        sel.appendChild(opt);
+      });
+    }
+  })();
 
   document.getElementById('posts-list')?.addEventListener('click', (e) => {
     // Check for specific action buttons/badges first
@@ -353,8 +350,9 @@ function applyFilters() {
   const status = document.getElementById('filter-status')?.value || '';
   const urgency = document.getElementById('filter-urgency')?.value || '';
   const contentType = document.getElementById('filter-content-type')?.value || '';
+  const pautaCentralId = document.getElementById('filter-pauta-central')?.value || '';
   const search = document.getElementById('search-posts')?.value || '';
-  const posts = DataStore.filterPosts({ status, urgency, contentType, search });
+  const posts = DataStore.filterPosts({ status, urgency, contentType, search, pautaCentralId });
   const list = document.getElementById('posts-list');
   list.innerHTML = posts.length > 0 ? posts.map(p => renderPostCard(p)).join('') : renderEmptyState();
 }
@@ -713,12 +711,13 @@ function openAddPostModal() {
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label for="post-pillar">Pilar ACRE *</label>
-            <select id="post-pillar" class="filter-select" required>
-              <option value="A">Alcance (A)</option>
-              <option value="C">Credibilidade (C)</option>
-              <option value="R">Retorno (R)</option>
-              <option value="E">Engajamento (E)</option>
+            <label for="post-fonte-tese">Fonte de Tese</label>
+            <select id="post-fonte-tese" class="filter-select">
+              <option value="">Nenhuma</option>
+              <option value="skills_producao">Skills em Produção</option>
+              <option value="benchmark_real">Benchmark Real</option>
+              <option value="process_diagnostic">Process Diagnostic</option>
+              <option value="falha_documentada">Falha Documentada</option>
             </select>
           </div>
           <div class="form-group">
@@ -785,7 +784,7 @@ function openAddPostModal() {
     await DataStore.addPost({
       title,
       theme,
-      pillar: document.getElementById('post-pillar').value,
+      fonteTese: document.getElementById('post-fonte-tese').value || null,
       hookText,
       body,
       cta: document.getElementById('post-cta').value.trim(),

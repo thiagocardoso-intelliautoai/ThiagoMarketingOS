@@ -1,4 +1,4 @@
-﻿/* ─── INPUTS ─── */
+/* ─── INPUTS ─── */
 .input-field {
   width: 100%;
   padding: 10px var(--space-md);
@@ -343,7 +343,7 @@
   flex-shrink: 0;
 }
 
-.modal-close:hover {
+.btn-icon.modal-close:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.18) !important;
   transform: rotate(90deg) scale(1.05);

@@ -1,0 +1,111 @@
+/* _estrategia.css — Sessão Estratégia (Etapa 3) */
+
+.estrategia-section { padding: var(--space-lg) 0; }
+.estrategia-header { margin-bottom: var(--space-xl); }
+
+.estrategia-groups { display: flex; flex-direction: column; gap: var(--space-xl); }
+
+/* ─── Grupo de átomos ─── */
+.atom-group-title {
+  font-size: 1.1rem; font-weight: 600;
+  margin: 0 0 var(--space-md);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--border);
+}
+
+.atom-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+/* ─── Atom Card ─── */
+.atom-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-md);
+  display: flex; flex-direction: column; gap: 6px;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.atom-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(20, 184, 166, 0.1);
+  transform: translateY(-1px);
+}
+.atom-card-empty { opacity: 0.5; }
+
+.atom-card-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.atom-card-title {
+  font-size: 0.95rem; font-weight: 600; margin: 0;
+  color: var(--text-primary);
+}
+.atom-card-subtitle {
+  font-size: 0.8rem; color: var(--accent); margin: 0;
+  font-weight: 500;
+}
+.atom-card-preview {
+  font-size: 0.82rem; color: var(--text-secondary);
+  line-height: 1.4; margin: 0;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.atom-card-updated {
+  font-size: 0.7rem; color: var(--text-tertiary);
+  align-self: flex-end; margin-top: auto;
+}
+
+/* ─── Edit button ─── */
+.btn-icon-sm {
+  width: 28px; height: 28px; border-radius: var(--radius-md);
+  background: none; border: 1px solid var(--border);
+  color: var(--text-secondary); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.btn-icon-sm:hover {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}
+.btn-icon-sm svg { width: 14px; height: 14px; }
+
+/* ─── Atom Editor Modal ─── */
+/* Wider modal for JSON editing */
+.modal-overlay:has(.atom-editor-field) .modal-container {
+  max-width: 780px;
+}
+
+.atom-editor-field {
+  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.82rem; line-height: 1.5;
+  min-height: 350px; resize: vertical;
+  width: 100%; box-sizing: border-box;
+  background: var(--bg); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+.atom-editor-hint {
+  font-size: 0.75rem; color: var(--text-tertiary);
+  margin: var(--space-xs) 0 0;
+}
+
+/* Fix modal footer buttons for atom editor */
+.modal-overlay:has(.atom-editor-field) .modal-footer {
+  display: flex; justify-content: flex-end; gap: var(--space-md);
+}
+.modal-overlay:has(.atom-editor-field) .modal-footer .btn-ghost {
+  min-width: 100px; white-space: nowrap;
+}
+.modal-overlay:has(.atom-editor-field) .modal-footer .btn-primary {
+  min-width: 140px; white-space: nowrap;
+}
+
+/* ─── Badge Fonte de Tese (reused from _pautas.css via styles.css) ─── */
+.badge-skills { background: rgba(20, 184, 166, 0.12); color: var(--accent); }
+.badge-benchmark { background: var(--badge-blue-bg); color: var(--badge-blue); }
+.badge-diagnostic { background: var(--badge-purple-bg); color: var(--badge-purple); }
+.badge-falha { background: var(--badge-yellow-bg); color: var(--badge-yellow); }
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+  .atom-grid { grid-template-columns: 1fr; }
+}

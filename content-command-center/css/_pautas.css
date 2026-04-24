@@ -1,0 +1,145 @@
+/* _pautas.css — Tab Pautas (Etapa 3) */
+
+.pautas-section { padding: var(--space-lg) 0; }
+.pautas-header { margin-bottom: var(--space-xl); }
+
+/* ─── Prompt output block (matches Create panel) ─── */
+.pautas-prompt-block {
+  background: var(--surface); border: 1px solid var(--accent);
+  border-radius: var(--radius-lg); padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.pautas-prompt-block .prompt-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: var(--space-sm);
+  color: var(--text-secondary); font-size: 0.85rem;
+}
+.pautas-prompt-block .prompt-header span { display: flex; align-items: center; gap: 6px; }
+.pautas-prompt-block .prompt-header svg { width: 16px; height: 16px; }
+.pautas-prompt-block .prompt-output {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: var(--space-md);
+  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.82rem; line-height: 1.5;
+  white-space: pre-wrap; word-break: break-word;
+  color: var(--text-primary); max-height: 300px; overflow-y: auto;
+}
+
+/* ─── Tabs internas ─── */
+.pautas-tabs {
+  display: flex; gap: var(--space-xs);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-lg);
+}
+.pautas-tab {
+  display: flex; align-items: center; gap: 6px;
+  padding: var(--space-sm) var(--space-md);
+  background: none; border: none; border-bottom: 2px solid transparent;
+  color: var(--text-secondary); cursor: pointer;
+  font-size: 0.9rem; font-weight: 500;
+  transition: all 0.2s ease;
+}
+.pautas-tab:hover { color: var(--text-primary); }
+.pautas-tab-active {
+  color: var(--accent); border-bottom-color: var(--accent);
+}
+.pautas-tab svg { width: 16px; height: 16px; }
+
+/* ─── Distribuição ─── */
+.dist-actions { margin-bottom: var(--space-lg); }
+.dist-list { display: flex; flex-direction: column; gap: var(--space-sm); }
+.dist-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-md);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.dist-card:hover {
+  border-color: var(--accent); box-shadow: 0 2px 12px rgba(20, 184, 166, 0.08);
+}
+.dist-card-header {
+  display: flex; align-items: center; gap: var(--space-sm);
+  flex-wrap: wrap; margin-bottom: var(--space-xs);
+}
+.dist-card-nome {
+  font-size: 1rem; font-weight: 600; color: var(--accent);
+  cursor: pointer; margin: 0;
+}
+.dist-card-nome:hover { text-decoration: underline; }
+.dist-card-funcao { color: var(--text-secondary); font-size: 0.85rem; margin: 0 0 4px; }
+.dist-card-titulo { font-style: italic; color: var(--text-primary); font-size: 0.9rem; margin: 4px 0; }
+.dist-card-titulo-empty { color: var(--text-tertiary); }
+.dist-card-expectativa { color: var(--text-secondary); font-size: 0.8rem; margin: 4px 0 0; }
+
+.badge-bolha {
+  background: rgba(20, 184, 166, 0.12); color: var(--accent);
+  font-size: 0.75rem; padding: 2px 8px; border-radius: 99px;
+}
+.badge-ativa { background: var(--badge-green-bg); color: var(--badge-green); }
+.badge-em_andamento { background: var(--badge-yellow-bg); color: var(--badge-yellow); }
+.badge-publicada { background: var(--badge-blue-bg); color: var(--badge-blue); }
+.badge-descartada { background: var(--badge-gray-bg); color: var(--badge-gray); }
+.badge-status-dist { font-size: 0.7rem; padding: 2px 6px; border-radius: 99px; }
+
+/* ─── Exclusões ─── */
+.exclusoes-section {
+  margin-top: var(--space-xl); border-top: 1px solid var(--border);
+  padding-top: var(--space-md);
+}
+.exclusoes-section summary {
+  cursor: pointer; color: var(--text-secondary); font-size: 0.9rem;
+  display: flex; align-items: center; gap: 6px;
+}
+.exclusoes-list { margin-top: var(--space-sm); padding-left: var(--space-lg); }
+.exclusoes-list li { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 4px; }
+
+/* ─── Pautas Centrais ─── */
+.pautas-actions { margin-bottom: var(--space-lg); }
+.pautas-list { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+.pauta-accordion {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); overflow: hidden;
+}
+.pauta-accordion[open] { border-color: var(--accent); }
+.pauta-summary {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: var(--space-md); cursor: pointer;
+  list-style: none;
+}
+.pauta-summary::-webkit-details-marker { display: none; }
+.pauta-info { display: flex; align-items: center; gap: var(--space-sm); }
+.pauta-info h4 { margin: 0; font-size: 1rem; }
+.pauta-meta { display: flex; gap: var(--space-md); font-size: 0.8rem; color: var(--text-secondary); }
+.meta-item-muted { color: var(--text-tertiary); font-style: italic; }
+
+.pauta-subs { padding: 0 var(--space-md) var(--space-md); }
+.pauta-descricao { color: var(--text-secondary); font-size: 0.85rem; margin: 0 0 var(--space-sm); }
+
+.sub-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-xs); transition: border-color 0.2s;
+}
+.sub-card:hover { border-color: var(--accent); }
+.sub-card-usada { opacity: 0.6; }
+.sub-card-header { display: flex; justify-content: space-between; align-items: center; }
+.sub-card-titulo {
+  font-weight: 500; color: var(--accent); cursor: pointer; font-size: 0.9rem;
+}
+.sub-card-titulo:hover { text-decoration: underline; }
+.sub-card-angulo { color: var(--text-secondary); font-size: 0.8rem; margin: 2px 0 0; }
+.sub-card-hook { color: var(--text-tertiary); font-size: 0.8rem; font-style: italic; margin: 2px 0 0; }
+
+.badge-sub-ativa { background: var(--badge-green-bg); color: var(--badge-green); font-size: 0.7rem; padding: 2px 6px; border-radius: 99px; }
+.badge-sub-usada { background: var(--badge-blue-bg); color: var(--badge-blue); font-size: 0.7rem; padding: 2px 6px; border-radius: 99px; }
+.badge-sub-descartada { background: var(--badge-gray-bg); color: var(--badge-gray); font-size: 0.7rem; padding: 2px 6px; border-radius: 99px; }
+
+.empty-subs { color: var(--text-tertiary); font-size: 0.85rem; font-style: italic; }
+
+/* Fonte de tese badges */
+.badge-fonte-skills_producao { background: rgba(20, 184, 166, 0.12); color: var(--accent); font-size: 0.7rem; padding: 2px 8px; border-radius: 99px; }
+.badge-fonte-benchmark_real { background: var(--badge-blue-bg); color: var(--badge-blue); font-size: 0.7rem; padding: 2px 8px; border-radius: 99px; }
+.badge-fonte-process_diagnostic { background: var(--badge-purple-bg); color: var(--badge-purple); font-size: 0.7rem; padding: 2px 8px; border-radius: 99px; }
+.badge-fonte-falha_documentada { background: var(--badge-yellow-bg); color: var(--badge-yellow); font-size: 0.7rem; padding: 2px 8px; border-radius: 99px; }

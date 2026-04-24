@@ -40,5 +40,11 @@
 /* 11. Publish — LinkedIn publish modal, glass cards, review screen */
 @import './_publish.css';
 
-/* 12. Responsive — Media queries, reduced motion, breakpoints */
+/* 12. Pautas — Tab Pautas: Distribuição + Pautas Centrais */
+@import './_pautas.css';
+
+/* 13. Estratégia — Sessão Estratégia: 18 átomos editáveis */
+@import './_estrategia.css';
+
+/* 14. Responsive — Media queries, reduced motion, breakpoints */
 @import './_responsive.css';
