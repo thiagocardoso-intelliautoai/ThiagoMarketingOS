@@ -1,100 +1,107 @@
-# Matéria-Colab — [NOME DA PESSOA]
+# Briefing Editorial — [NOME DA PESSOA] / [ARQUÉTIPO]
 
-## Contexto
+> Briefing estratégico-editorial. Output do squad `criar-materia-colab`.
+> Alimenta `carrosseis-linkedin` (estilo Editorial Clean, fluxo matéria-colab).
+
+---
+
+## 1. Tese do Thiago
+
+> **[Frase única que enuncia a tese — esqueleto narrativo do post.]**
+
+Exemplo: "Roadmap é ferramenta de quem ainda não entregou."
+
+---
+
+## 2. Ângulo aprovado
+
+- **Arquétipo:** [Como faz o que prega / Contra o consenso / O que aprendi estudando ele / Padrão que vi no trabalho dele]
+- **Título pela lente (âncora):** "[título do ângulo, ≤ 210 chars]"
+- **Risco declarado:** [reproduzir do seed — ou "Nenhum"]
+
+---
+
+## 3. Personagem como evidência
+
 - **Pessoa:** [nome completo — cargo — empresa]
-- **Ângulo:** [arquétipo] — "[título pela lente]"
-- **Risco declarado:** [reproduzir do input — ou "Nenhum"]
-- **Formato visual:** Editorial Clean
-- **Input do Thiago:** [reproduzir input livre — ou "Nenhum"]
+- **Comportamento que confirma a tese:** [1-2 frases descrevendo o que ela faz/fez que vira lastro]
+- **Fato/citação ancorada (lastro):**
+  - "[citação literal pública]" — [URL + data]
+  - [dado público com fonte] — [URL + data]
+  - [post recente relevante] — [URL + data]
+- **Notas:** [contradições, contexto adicional que `carrosseis-linkedin` deve saber]
+
+> Lembrar: a pessoa é evidência viva da tese. Não é protagonista homenageado.
 
 ---
 
-## Seção 1: [título da seção — hook/abertura]
+## 4. Lacuna ancorada (quando aplicável)
 
-[2-4 frases completas escritas como matéria jornalística.
-Cada frase justifica sua existência. Tom: jornalístico + opinionated.
-Tese do Thiago como fio condutor. Lente "Built, not prompted" presente.]
+- **Diferencial Thiago:** [como o que ele faz se conecta — frame "dentro vs fora", se aplicável]
+- **Frase-chave da lacuna:** "[ex: 'Ele faz de fora, eu de dentro — os dois caminhos confirmam a mesma tese']"
 
-"[citação literal da pessoa]" — [fonte: URL ou data]
-
-<!-- slide -->
-
-## Seção 2: [título da seção — case/processo]
-
-[2-4 frases completas. Case ou processo que conecta com a lente.
-Evidência ancorada em dados públicos verificáveis.]
-
-"[citação ou dado público]" — [fonte: URL ou data]
-
-<!-- slide -->
-
-## Seção 3: [título da seção — dados/resultado]
-
-[2-4 frases completas. Prova tangível: números, métricas, resultados.
-Se dado público, citar fonte. Se inferência, marcar como tal.]
-
-"[trecho relevante com fonte]" — [fonte: URL ou data]
-
-<!-- slide -->
-
-## Seção 4: [título da seção — lente do Thiago]
-
-[2-4 frases completas. Conexão explícita com "Built, not prompted".
-Aqui a tese do Thiago é declarada. A pessoa é evidência, não protagonista.]
-
-<!-- slide -->
-
-## Seção 5: [título da seção — fechamento]
-
-[2-4 frases completas. Insight/takeaway + ponte pro engajamento.
-Fechamento que conecta com a lente e convida reflexão.]
+Se não aplicável neste ângulo, declarar "Não aplicável neste ângulo" e justificar.
 
 ---
 
-## Citações e Dados Usados como Lastro
+## 5. Risco e endereçamento
 
-1. "[citação 1]" — [fonte]
-2. "[citação 2]" — [fonte]
-3. "[dado/trecho 3]" — [fonte]
-4. [adicionar conforme necessário]
+Se o ângulo declarou risco:
+- **Risco:** [reproduzir]
+- **Como o briefing endereça:** [tese desafiadora real — não neutralização, não puxa-saco]
 
----
-
-## Headlines Alternativas
-
-> Título pela lente (âncora): "[título original do ângulo]"
-
-1. "[headline alternativa 1 — ≤ 210 chars]"
-2. "[headline alternativa 2 — ≤ 210 chars]"
-3. "[headline alternativa 3 — ≤ 210 chars]"
+Se o ângulo não tem risco: declarar "Sem risco declarado".
 
 ---
 
-## Ganchos de DM (pós-publicação)
+## 6. Lente "Built, not prompted"
 
-### Tom Direto
-"[gancho direto — factual, sem floreio — ≤ 280 chars]"
-
-### Tom Aspiracional
-"[gancho aspiracional — reconhece trabalho, conecta com lente — ≤ 280 chars]"
-
-### Tom Provocativo
-"[gancho provocativo — desafia ou surpreende — ≤ 280 chars]"
+- **Como atravessa este briefing especificamente:** [1-2 frases conectando a tese com a lente — não genérico]
 
 ---
 
-## Review
+## 7. Esqueleto narrativo obrigatório (instrução pro `carrosseis-linkedin`)
 
-- **Score:** ___/10
-- **Status:** ⏳ Pendente
-- **Vetos verificados:** [ ] Sim / [ ] Não
-- **Pontos fortes:** [a preencher no step-05]
-- **Pontos a melhorar:** [a preencher no step-05]
-- **Risco endereçado:** [sim / não / n.a.]
-- **Marcações de slide:** [ok / faltam]
-- **Formato visual:** Editorial Clean
+> Sequência obrigatória. `carrosseis-linkedin` traduz em N slides como achar melhor. **A ordem não é negociável.**
+
+1. **Abertura — Tese do Thiago.** Sem personagem. (Slide 1 / capa)
+2. **Tese desenvolvida.** Por que essa tese, contra o que ela vai.
+3. **Personagem entra como evidência.** Nome aparece aqui pela primeira vez. Inclui fato/citação ancorada.
+4. **Lacuna ancorada (quando aplicável).** Frame "dentro vs fora".
+5. **Fechamento volta à tese.** Não termina elogiando a pessoa.
+
+> **Regra inegociável:** A tese é o esqueleto. O personagem é evidência viva. Se você inverteu, refaz.
 
 ---
 
-_Gerado pelo squad `criar-materia-colab` v1.0_
-_Pipeline: seed-lista-distribuicao → **criar-materia-colab** → carrosseis-linkedin_
+## 8. Estilo visual obrigatório
+
+- **Estilo:** Editorial Clean (assinatura da série matéria-colab — não negociável)
+
+---
+
+## 9. Auto-Review Editorial
+
+### Veto 1 — Teste de remoção do nome ⚠️ PRIMEIRO CHECK
+
+> Substituir mentalmente toda menção a "[nome da pessoa]" e "[empresa dele]" por "[Fulano]" e "[empresa dele]". Ler o briefing inteiro com [Fulano].
+> - Se a tese sustenta sozinha (personagem é evidência intercambiável) → ✅ passa
+> - Se desmonta / só faz sentido com aquela pessoa específica → ❌ veta, refaz Etapa 02
+
+- [ ] Briefing passa no teste de remoção do nome
+
+### Outros vetos
+- [ ] Veto 2 — Citações com fonte verificável (URL + data)
+- [ ] Veto 3 — Sem menção a entrevista, reunião, pauta combinada, permissão
+- [ ] Veto 4 — Sem tom de parceria, agradecimento, celebração
+- [ ] Veto 5 — Estilo visual declarado: Editorial Clean
+- [ ] Veto 6 — Risco declarado endereçado com tese desafiadora real (se aplicável)
+
+### Status
+- **Status:** ✅ Pronto pra carrosseis-linkedin / 🔄 Refazer (qual etapa: ___)
+- **Notas pra carrosseis-linkedin:** [observações específicas que ajudem o downstream]
+
+---
+
+_Gerado pelo squad `criar-materia-colab` v2.0_
+_Pipeline: seed-lista-distribuicao → **criar-materia-colab** → carrosseis-linkedin (Editorial Clean)_

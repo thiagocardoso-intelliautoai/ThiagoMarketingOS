@@ -181,4 +181,4 @@ Rejeitar e refazer se:
 
 ## Próximo Passo
 
-→ **step-02**: Rita Redatora estrutura a narrativa com base neste dossiê
+→ **step-02**: Rita Estratégista-Editorial formula a tese e monta o esqueleto narrativo (tese-primeiro) com base neste dossiê

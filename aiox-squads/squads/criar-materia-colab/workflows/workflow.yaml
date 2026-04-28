@@ -1,22 +1,24 @@
-# Workflow: Criar Matéria-Colab
-# Pipeline: ângulo aprovado → matéria-colab completa pronta pra publicar
-# v1.0
+# Workflow: Criar Matéria-Colab (Briefing Editorial)
+# Pipeline: ângulo aprovado → briefing-editorial.md pronto pra carrosseis-linkedin
+# v2.0 — squad reposicionado como estratégico-editorial
 
 name: criar-materia-colab
-version: "1.0"
+version: "2.0"
 description: >
-  Pipeline linear para criar matéria-colab completa a partir de ângulo aprovado.
-  Recebe ângulo do seed-lista-distribuicao, pesquisa em profundidade, estrutura
-  narrativa, redige matéria finalizada com marcações de slide, gera ganchos de DM
-  e headlines. Auto-review com veto check e score ponderado.
+  Pipeline linear para produzir briefing editorial estratégico a partir de ângulo
+  aprovado. Squad é puramente estratégico-editorial: formula tese, define esqueleto
+  narrativo (tese-primeiro, personagem-evidência, fechamento-tese), aprova evidências
+  com lastro, aplica vetos editoriais (com destaque pro teste de remoção do nome).
+  Output alimenta `carrosseis-linkedin` no fluxo "matéria-colab" (estilo Editorial
+  Clean), pulando generate-angles e adaptando create-copy. NÃO escreve copy de slide,
+  caption, hashtags, hook formatado, contagem de slides, nem DM.
 
 # ─── PIPELINE LINEAR ──────────────────────────────────────
 #
 # step-00 (input) → step-01 (pesquisar) → step-02 (estruturar)
-# → step-03 (redigir) → step-04 (DM+headlines) → step-05 (review)
-# → step-06 (aprovação)
+# → step-03 (finalizar-briefing) → step-04 (review) → step-05 (aprovação)
 #
-# 2 checkpoints humanos: step-00 (input) e step-06 (aprovação final)
+# 2 checkpoints humanos: step-00 (input) e step-05 (aprovação final)
 # ────────────────────────────────────────────────────────────
 
 steps:
@@ -27,7 +29,7 @@ steps:
     type: human-checkpoint
     description: >
       Thiago fornece:
-      1. Nome da pessoa (sujeito da matéria)
+      1. Nome da pessoa (sujeito do briefing — evidência viva da tese)
       2. Ângulo específico aprovado (arquétipo + título pela lente + evidências + risco)
       3. Input livre (opcional — ex: "foca no case X", "tom mais duro")
     output: input-completo
@@ -53,7 +55,7 @@ steps:
 
   # ─── ESTRUTURAR NARRATIVA ────────────────────────────────
   - id: step-02-estruturar
-    name: "Estruturar Narrativa"
+    name: "Estruturar Narrativa (Tese-primeiro)"
     agent: redator-materia
     task: tasks/02-estruturar-narrativa.md
     data:
@@ -66,82 +68,75 @@ steps:
       - input-completo
     output: estrutura-narrativa
     description: >
-      Rita Redatora define 3-5 seções com frases-chave e evidência
-      ancorada por seção. Valida arco narrativo, risco declarado
-      e input livre do Thiago.
-    next: step-03-redigir
+      Rita formula a tese (frase única) e monta esqueleto narrativo de 5 blocos
+      na ordem inegociável: (1) abertura = tese, (2) tese desenvolvida, (3) personagem
+      como evidência, (4) lacuna ancorada, (5) fechamento volta à tese.
+      Auto-check do Veto 1 (teste de remoção do nome) ao final.
+    next: step-03-finalizar-briefing
 
-  # ─── REDIGIR MATÉRIA ─────────────────────────────────────
-  - id: step-03-redigir
-    name: "Redigir Matéria Completa"
+  # ─── FINALIZAR BRIEFING ──────────────────────────────────
+  - id: step-03-finalizar-briefing
+    name: "Finalizar Briefing Editorial"
     agent: redator-materia
-    task: tasks/03-redigir-materia.md
+    task: tasks/03-finalizar-briefing.md
     data:
       - data/atomos-estrategicos.md
       - data/veto-conditions.md
+      - data/formato-materia-colab.md
     templates:
       - templates/materia-template.md
     input:
       - estrutura-narrativa
       - output/dossie-{slug}.md
-    output: output/materia-{slug}-{angulo}.md
+    output: output/briefing-editorial-{slug}-{angulo}.md
     description: >
-      Rita escreve cada seção com frases completas (não bullets).
-      Tom jornalístico + opinionated. Tese do Thiago como fio condutor.
-      Marcações de slide entre seções. Risco endereçado se declarado.
-    next: step-04-dm-headlines
-
-  # ─── DM + HEADLINES ──────────────────────────────────────
-  - id: step-04-dm-headlines
-    name: "Gerar DM e Headlines"
-    agent: redator-materia
-    task: tasks/04-gerar-dm-headlines.md
-    data:
-      - data/linkedin-strategy.md
-    input: output/materia-{slug}-{angulo}.md
-    output: output/materia-{slug}-{angulo}.md
-    description: >
-      Rita gera 2-3 headlines alternativas (≤ 210 chars, passam no gate)
-      e 2-3 ganchos de DM em 3 tons (direto, aspiracional, provocativo,
-      ≤ 280 chars). Adiciona ao final da matéria.
-    next: step-05-review
+      Rita consolida tese + ângulo + evidências + esqueleto + lente + risco
+      + estilo no briefing-editorial.md final. NÃO escreve copy de slide,
+      caption, hashtags, hook formatado, contagem de slides, DM, nem headlines
+      alternativas — fronteira clara com `carrosseis-linkedin`.
+    next: step-04-review
 
   # ─── REVIEW ──────────────────────────────────────────────
-  - id: step-05-review
-    name: "Auto-Review + Veto Check"
+  - id: step-04-review
+    name: "Auto-Review Editorial (Veto 1 primeiro)"
     agent: redator-materia
-    task: tasks/05-review-materia.md
+    task: tasks/04-review-briefing.md
     data:
       - data/veto-conditions.md
       - data/atomos-estrategicos.md
       - data/formato-materia-colab.md
-    input: output/materia-{slug}-{angulo}.md
-    output: output/materia-{slug}-{angulo}.md
+    input: output/briefing-editorial-{slug}-{angulo}.md
+    output: output/briefing-editorial-{slug}-{angulo}.md
     description: >
-      Rita faz auto-review: (1) veto check (6 condições), (2) completude,
-      (3) aderência à lente, (4) risco respeitado, (5) score ponderado.
-      Score ≥ 7/10 → segue pra aprovação. Score < 7/10 → refaz.
-    next: step-06-aprovacao
+      Rita roda auto-review. PRIMEIRO check: Veto 1 (teste de remoção do nome).
+      Se disparar → volta pra Etapa 02. Depois verifica vetos 2-6 (citações com
+      fonte, sem entrevista, sem tom de parceria, Editorial Clean declarado, risco
+      endereçado). Verifica fronteira (anti-invasão de carrosseis-linkedin).
+    next: step-05-aprovacao
 
   # ─── APROVAÇÃO FINAL ─────────────────────────────────────
-  - id: step-06-aprovacao
-    name: "⏸️ CHECKPOINT — Aprovação Final"
+  - id: step-05-aprovacao
+    name: "⏸️ CHECKPOINT — Aprovação do Briefing"
     type: human-checkpoint
     description: >
-      Thiago revisa matéria completa com headlines e ganchos de DM.
-      Decide: ✅ Aprovar (seguir pra carrosséis) ou 🔄 Ajustes
-      (com indicações específicas).
-    input: output/materia-{slug}-{angulo}.md
-    output: materia-aprovada
+      Thiago revisa briefing-editorial.md. Decide:
+      ✅ Aprovar (alimenta `carrosseis-linkedin` no fluxo matéria-colab)
+      🔄 Ajustes (com indicações específicas — Etapa 02 ou 03)
+    input: output/briefing-editorial-{slug}-{angulo}.md
+    output: briefing-aprovado
 
 # ─── Resumo do Pipeline ───────────────────────────────────
 # step-00 (input) → step-01 (pesquisar) → step-02 (estruturar)
-# → step-03 (redigir) → step-04 (DM+headlines) → step-05 (review)
-# → step-06 (aprovação)
+# → step-03 (finalizar-briefing) → step-04 (review) → step-05 (aprovação)
 
 # ─── Checkpoints ──────────────────────────────────────────
 # step-00: Receber ângulo aprovado + input livre do Thiago
-# step-06: Aprovação final da matéria completa
+# step-05: Aprovação final do briefing editorial
 
-# ─── Downstream ──────────────────────────────────────────
-# Matéria aprovada alimenta: carrosseis-linkedin (Editorial Clean)
+# ─── Handoff downstream ──────────────────────────────────
+# Briefing aprovado alimenta `carrosseis-linkedin` no fluxo "matéria-colab":
+#   - Pula step-02-generate-angles (ângulo já aprovado upstream)
+#   - Adapta step-04-create-copy pra ler briefing-editorial.md e respeitar
+#     o esqueleto narrativo obrigatório (tese-primeiro, personagem-evidência,
+#     fechamento-tese)
+#   - Trava estilo visual em Editorial Clean (assinatura da série)

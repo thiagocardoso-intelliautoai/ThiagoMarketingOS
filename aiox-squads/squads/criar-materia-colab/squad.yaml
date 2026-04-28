@@ -1,24 +1,26 @@
-# Squad: Criar Matéria-Colab
-# Pipeline: ângulo aprovado → matéria-colab completa pronta pra publicar
-# Próximo step do funil de distribuição (após seed-lista-distribuicao)
+# Squad: Criar Matéria-Colab (Briefing Editorial)
+# Pipeline: ângulo aprovado → briefing-editorial.md → carrosseis-linkedin (Editorial Clean)
+# v2.0 — squad reposicionado como puramente estratégico-editorial
 
 name: "Criar Matéria-Colab"
 code: criar-materia-colab
 icon: 📝
-version: "1.0"
+version: "2.0"
 format: aiox-v1
 
 description: >
-  Squad para criar matéria-colab completa a partir de ângulo aprovado.
-  Recebe nome da pessoa + ângulo completo (arquétipo + título pela lente +
-  evidências + risco) + input livre opcional do Thiago, pesquisa em profundidade,
-  estrutura narrativa, redige matéria finalizada com marcações de slide,
-  gera ganchos de DM e headlines. Output pronto pra alimentar squad de carrosséis.
-  NÃO é briefing — é matéria finalizada.
+  Squad estratégico-editorial. Recebe ângulo aprovado de seed-lista-distribuicao
+  + nome da pessoa + input livre opcional do Thiago. Pesquisa em profundidade,
+  formula a tese, monta esqueleto narrativo (tese-primeiro, personagem-evidência,
+  fechamento-tese), aplica vetos editoriais (com destaque pro teste de remoção do
+  nome). Output é briefing-editorial.md que alimenta `carrosseis-linkedin` no fluxo
+  matéria-colab (estilo Editorial Clean). NÃO escreve copy de slide, caption,
+  hashtags, hook formatado, contagem de slides, DM, nem headlines alternativas —
+  isso é trabalho de `carrosseis-linkedin`.
 
 owner: thiago-clima
 platform: linkedin
-content_type: materia-colab
+content_type: briefing-editorial
 upstream_squad: seed-lista-distribuicao
 downstream_squad: carrosseis-linkedin
 
@@ -31,9 +33,9 @@ agents:
     skills: [web_search, web_fetch]
 
   - id: redator-materia
-    name: "Rita Redatora"
+    name: "Rita Estratégista-Editorial"
     file: agents/redator-materia.md
-    description: Redatora de matéria-colab — escreve matéria completa com arco narrativo, tese do Thiago e marcações de slide
+    description: Estratégista-editorial — formula tese, monta esqueleto narrativo, ancora evidências, aplica vetos editoriais (especialmente teste de remoção do nome)
 
 # Workflow principal
 workflow:
@@ -48,9 +50,9 @@ data:
 
 # Templates de output
 templates:
-  - id: materia-template
+  - id: briefing-template
     file: templates/materia-template.md
-    description: Template da matéria completa com marcações de slide, headlines, ganchos de DM
+    description: Template do briefing editorial estruturado em 9 seções
 
 # Tasks
 tasks:
@@ -60,21 +62,17 @@ tasks:
 
   - id: estruturar-narrativa
     file: tasks/02-estruturar-narrativa.md
-    description: Definir 3-5 seções com frases-chave e evidência ancorada por seção
+    description: Formular tese (frase única) e montar esqueleto narrativo de 5 blocos na ordem inegociável (tese-primeiro, personagem-evidência, fechamento-tese)
 
-  - id: redigir-materia
-    file: tasks/03-redigir-materia.md
-    description: Redigir matéria completa com frases escritas, não bullets — tese do Thiago como fio condutor
+  - id: finalizar-briefing
+    file: tasks/03-finalizar-briefing.md
+    description: Consolidar tese + ângulo + evidências + esqueleto + lente + risco + estilo no briefing-editorial.md final
 
-  - id: gerar-dm-headlines
-    file: tasks/04-gerar-dm-headlines.md
-    description: Gerar 2-3 headlines alternativas e 2-3 ganchos de DM em tons diferentes
-
-  - id: review-materia
-    file: tasks/05-review-materia.md
-    description: Auto-review — veto check, completude, aderência à lente, score ponderado
+  - id: review-briefing
+    file: tasks/04-review-briefing.md
+    description: Auto-review com Veto 1 (teste de remoção do nome) primeiro, depois vetos 2-6, depois fronteira anti-invasão
 
 # Checkpoints humanos
 checkpoints:
   - step-00: "Receber ângulo aprovado + input livre do Thiago"
-  - step-06: "Aprovação final da matéria completa"
+  - step-05: "Aprovação final do briefing editorial"

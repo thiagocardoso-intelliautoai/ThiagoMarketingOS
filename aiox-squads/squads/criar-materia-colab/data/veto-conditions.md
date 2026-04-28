@@ -1,20 +1,35 @@
-# Condições de Veto — Criar Matéria-Colab
+# Condições de Veto — Briefing Editorial
 
-> 6 condições de veto. Se QUALQUER uma disparar, a matéria é REJEITADA.
+> 6 condições de veto. Se QUALQUER uma disparar, o briefing é REJEITADO.
 > Veto não é sugestão de melhoria — é bloqueio. Refazer antes de entregar.
 
 ---
 
-## Veto 1 — ❌ Matéria sem tese minha (vira elogio)
+## Veto 1 — ⚠️ Teste de remoção do nome (PRIMEIRO E MAIS IMPORTANTE)
 
-**O que é:** Matéria que celebra a pessoa sem tese do Thiago como fio condutor. Se parece homenagem, falhou.
+**O que é:** Régua operacional que detecta inversão de arquitetura — quando o personagem virou sujeito da história e a tese do Thiago virou cameo.
 
-**Teste:** Remova o nome da pessoa — a tese do Thiago ainda existe? Se sim, está certo. Se a matéria só faz sentido como elogio à pessoa, é veto.
+**Como aplicar:**
 
-**Exemplos de veto:**
-- "Fulano é referência em X porque Y e Z" (elogio puro)
-- Matéria que lista conquistas sem conectar com lente
-- Tom celebratório sem posição editorial
+> Substituir mentalmente toda menção a "[nome da pessoa]" e "[empresa dele]" por "[Fulano]" e "[empresa dele]". Ler o briefing inteiro com [Fulano].
+>
+> - **Se a tese sustenta sozinha** (personagem é evidência intercambiável; outro [Fulano] com comportamento parecido serviria) → ✅ **passa**.
+> - **Se desmonta / vira buraco / só faz sentido com aquela pessoa específica** → ❌ **veta**. Personagem virou sujeito da história. Voltar pra Etapa 02 (estruturar narrativa).
+
+**Exemplo de "passa" ✅:**
+- Tese: "Roadmap é ferramenta de quem ainda não entregou."
+- Briefing usa [Fulano] como exemplo de quem opera fazendo (200 projetos sem começar pelo roadmap).
+- Substituindo nome: tese segue válida. [Fulano] segue sendo evidência viva. Outro nome com mesmo comportamento serviria.
+
+**Exemplo de "veta" ❌:**
+- Briefing abre falando da trajetória de [Pessoa X] na [Empresa Y] e termina celebrando o método dela.
+- Substituindo "[Pessoa X]" por "[Fulano]": vira reportagem genérica sobre uma agência qualquer.
+- A tese era a [Empresa Y], não uma tese do Thiago. Inverteu.
+
+**Por que esse veto é especial:**
+Score formal e os 6 vetos clássicos (citação com fonte, ausência de tom de parceria, etc.) são checks de conteúdo — não pegam inversão de arquitetura. O teste de remoção do nome é a única régua afiada o suficiente pra detectar exatamente esse erro.
+
+**Hard rejection:** se Veto 1 dispara, voltar pra Etapa 02 (estruturar narrativa). Não tentar consertar redigindo melhor — o problema é de esqueleto.
 
 ---
 
@@ -31,11 +46,11 @@
 
 ---
 
-## Veto 3 — ❌ Matéria que sugere reunião/entrevista com a pessoa
+## Veto 3 — ❌ Sugestão de reunião/entrevista com a pessoa
 
 **O que é:** Qualquer menção a contato prévio, entrevista, perguntas, pauta combinada, permissão.
 
-**Regra:** Matéria-colab é jornalismo unilateral. A pessoa descobre quando recebe a DM com o link.
+**Regra:** Briefing alimenta jornalismo unilateral. A pessoa descobre quando vê o post publicado.
 
 **Exemplos de veto:**
 - "Preparar perguntas para entrevista"
@@ -45,11 +60,11 @@
 
 ---
 
-## Veto 4 — ❌ Tom que parece colab tradicional (agradecimento, celebração)
+## Veto 4 — ❌ Tom de parceria/agradecimento/celebração
 
-**O que é:** Tom de parceria, agradecimento, reconhecimento mútuo. Matéria-colab NÃO é colab — é jornalismo com formato de colab.
+**O que é:** Tom de colab tradicional, agradecimento, reconhecimento mútuo.
 
-**Teste:** Se a pessoa lesse, sentiria que é uma matéria jornalística sobre ela, OU sentiria que é uma homenagem/parceria?
+**Teste:** Se a pessoa lesse o briefing, sentiria que é instrução pra uma matéria jornalística sobre ela, OU sentiria que é uma homenagem/parceria?
 
 **Exemplos de veto:**
 - "Agradecemos ao fulano pela contribuição"
@@ -59,42 +74,58 @@
 
 ---
 
-## Veto 5 — ❌ Formato visual diferente de Editorial Clean
+## Veto 5 — ❌ Estilo visual diferente de Editorial Clean
 
-**O que é:** Qualquer indicação de formato visual que não seja Editorial Clean. Matéria-colab NUNCA usa Caderno (Notebook Raw / Rascunho no Papel).
+**O que é:** Briefing não declara explicitamente "Editorial Clean" como estilo visual obrigatório, ou declara estilo diferente.
 
-**Regra:** Formato visual SEMPRE indicado como `Editorial Clean` no output.
+**Regra:** Editorial Clean é a assinatura da série matéria-colab. Não negociável. `carrosseis-linkedin` lê o §8 do briefing e respeita.
 
 **Exemplos de veto:**
-- "Formato: Caderno"
-- "Formato: Notebook Raw"
-- Ausência de indicação de formato visual
-- Output sem marcações de slide (`<!-- slide -->`)
+- "Estilo: Twitter-style"
+- "Estilo: Notebook Raw"
+- §8 ausente ou em branco
 
 ---
 
-## Veto 6 — ❌ Ignorar o risco declarado no ângulo
+## Veto 6 — ❌ Risco declarado ignorado
 
-**O que é:** Se o ângulo (do seed) tem risco declarado, a matéria PRECISA endereçar esse risco com tese desafiadora real. Ignorar o risco é veto.
+**O que é:** Se o ângulo (do seed) tem risco declarado, briefing PRECISA endereçar com tese desafiadora real. Ignorar = veto.
 
-**Regra:** Se é sensível, a matéria tem posição — não neutraliza, não ignora, não vira puxa-saco.
+**Regra:** Se é sensível, briefing tem posição — não neutraliza, não ignora, não vira puxa-saco.
 
 **Exemplos de veto:**
-- Ângulo declara risco "sócio sensível" mas matéria vira elogio sem tensão
-- Ângulo declara risco "empresa controversa" mas matéria ignora a controvérsia
-- Risco declarado mas matéria não tem tese desafiadora sobre o tema
+- Ângulo declara risco "sócio sensível" mas briefing vira elogio sem tensão
+- Ângulo declara risco "empresa controversa" mas briefing ignora a controvérsia
+- Risco declarado mas §5 do briefing diz "sem necessidade de endereçar"
 
 ---
 
 ## Aplicação
 
 ### Quando verificar
-- **Step 03** (redigir matéria) — Rita verifica durante a escrita
-- **Step 05** (review) — Rita verifica formalmente como primeiro passo
+- **Step 02** (estruturar narrativa) — auto-check do Veto 1 ao final, antes de seguir
+- **Step 03** (finalizar briefing) — Rita verifica durante a redação
+- **Step 04** (review-briefing) — Rita verifica formalmente, **Veto 1 primeiro**
 
 ### Se veto disparar
-1. Identificar qual veto disparou
-2. Identificar qual seção/trecho causou o veto
-3. Refazer a seção/trecho
-4. Re-verificar todos os 6 vetos após refazer
-5. Só entregar quando ZERO vetos estiverem ativos
+
+| Veto | Pra onde volta |
+|---|---|
+| **Veto 1** (remoção do nome) | Etapa 02 — problema de esqueleto |
+| Vetos 2-6 | Etapa 03 — problema de redação/checks |
+
+Re-verificar todos os 6 vetos após refazer. Só seguir pro checkpoint quando ZERO vetos estiverem ativos.
+
+### Fronteira (anti-invasão de `carrosseis-linkedin`)
+
+Briefing **não pode** conter:
+- Copy de slide formatado (Slide 1, Slide 2, …)
+- Hook pronto pra capa
+- Caption do post
+- Hashtags
+- Nota visual por slide
+- Contagem de slides ditada
+- DM
+- Headlines alternativas
+
+Se aparecer: cortar. Não é veto formal mas é falha de fronteira — squad não dita formato físico.

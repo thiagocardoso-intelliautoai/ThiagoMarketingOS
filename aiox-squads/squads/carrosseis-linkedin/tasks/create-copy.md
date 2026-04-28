@@ -3,7 +3,7 @@
 ## Metadata
 - **Step:** step-04-create-copy
 - **Agent:** copywriter (Caio Carrossel)
-- **Input:** `output/angles.md`
+- **Input:** `output/angles.md` (fluxo padrão) **ou** `briefing-editorial-{slug}-{angulo}.md` (fluxo matéria-colab vindo de `criar-materia-colab`)
 - **Output:** `output/carousel-copy.md`
 
 ---
@@ -11,8 +11,8 @@
 ## Context Loading
 
 Carregar antes de executar:
-- `output/angles.md` — Ângulos gerados (step 02)
-- `data/theme-input.md` — Tema e estilo do usuário
+- `output/angles.md` — Ângulos gerados (step 02) **OU** briefing-editorial.md (fluxo matéria-colab)
+- `data/theme-input.md` — Tema e estilo do usuário (não aplicável no fluxo matéria-colab)
 - `data/linkedin-strategy.md` — Estratégia completa
 - `data/tone-of-voice.md` — Tom selecionado
 - `data/output-examples.md` — Exemplos de referência
@@ -21,9 +21,41 @@ Carregar antes de executar:
 
 ---
 
+## Quando input é briefing-editorial.md (fluxo matéria-colab)
+
+Quando o input vem de `criar-materia-colab`, ele é um **briefing editorial estruturado em 9 seções**, não um arquivo de ângulos. Comportamento muda:
+
+### Regras especiais
+
+1. **Estilo travado em "Editorial Clean"** — o briefing declara isso na §8 (assinatura da série matéria-colab). Não escolher outro estilo.
+2. **Tese já formulada** — usar a frase única da §1 do briefing como base do hook do slide 1 (capa). **Não inventar tese nova.**
+3. **Ângulo já aprovado** — usar §2 do briefing (arquétipo + título pela lente). Não gerar 5 ângulos divergentes.
+4. **Esqueleto narrativo é INEGOCIÁVEL** — o briefing declara na §7 a sequência obrigatória dos 5 blocos:
+   - **Bloco 1 (Abertura) = Tese.** Sem personagem na capa.
+   - **Bloco 2 = Tese desenvolvida.** Por que essa tese, contra o que ela vai. Sem personagem ainda.
+   - **Bloco 3 = Personagem como evidência.** Nome aparece pela primeira vez aqui, com fato/citação ancorada.
+   - **Bloco 4 = Lacuna ancorada (quando aplicável).** Frame "dentro vs fora".
+   - **Bloco 5 = Fechamento volta à tese.** Não termina elogiando a pessoa.
+5. **Você decide quantos slides traduzem cada bloco** (3-8 total) e como distribuir, mas a **ordem dos blocos é inegociável**.
+6. **Evidências ancoradas (§3 do briefing) com URL + data** — usar como conteúdo dos slides, sem inventar.
+7. **Risco endereçado (§5 do briefing)** — se o briefing declarou risco, o copy deve carregar a tese desafiadora real, sem virar puxa-saco.
+8. **Notas pra carrosseis-linkedin (final do briefing)** — ler e respeitar.
+
+### Veto adicional no fluxo matéria-colab
+
+❌ **Personagem aparece na capa (slide 1)** → veto. Slide 1 é tese, sem personagem.
+❌ **Fechamento elogia a pessoa em vez de retomar a tese** → veto.
+❌ **Estilo ≠ Editorial Clean** → veto.
+
+### Pulando o "Process" abaixo
+
+No fluxo matéria-colab você **pula** os passos 1-2 da seção `Process` (não precisa "ler ângulo selecionado" nem "absorver voz" — o briefing já entregou tudo) e vai direto pra escrever copy a partir do briefing.
+
+---
+
 ## Instructions
 
-### Process
+### Process (fluxo padrão)
 1. Ler o ângulo selecionado e o tom de voz escolhido pelo usuário
 2. Absorver a voz do Thiago de linkedin-strategy.md
 3. Escrever hook do slide 1 (max ~210 chars, scroll-stop test obrigatório)

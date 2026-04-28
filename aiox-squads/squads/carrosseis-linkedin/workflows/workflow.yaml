@@ -1,5 +1,13 @@
 # Carrosséis LinkedIn — Workflow
 # Pipeline de 11 steps com 5 checkpoints humanos + 2 automações
+#
+# Este workflow tem DUAS variantes de entrada:
+#   (A) Fluxo padrão: usuário informa tema livre → step-01..03 (gerar/escolher ângulos)
+#   (B) Fluxo matéria-colab: input vem de `criar-materia-colab` como briefing-editorial.md
+#       → PULA step-02-generate-angles e step-03-select-angle (ângulo já aprovado upstream)
+#       → Vai direto pra step-04-create-copy (que lê o briefing e respeita esqueleto narrativo)
+#       → Trava estilo em "Editorial Clean"
+#       Veja `tasks/create-copy.md` seção "Quando input é briefing-editorial.md"
 
 name: "Carrosséis LinkedIn Pipeline"
 squad: carrosseis-linkedin
@@ -17,17 +25,21 @@ steps:
       2 = Editorial Clean (fundo claro, tipografia bold, premium)
       3 = Data-Driven (fundo navy, números gigantes, dados)
       4 = Notebook Raw (papel craft, escrita manual, anti-AI)
-      
+
       Guia rápido de seleção:
       - Tem print/screenshot? → Twitter-style
       - É framework/tutorial? → Editorial Clean
       - Tem dados/números? → Data-Driven
       - Opinião/provocação? → Notebook Raw
       - Não sabe? → Editorial Clean (mais versátil)
+
+      No fluxo matéria-colab este step é PULADO: o briefing-editorial.md já
+      declara estilo "Editorial Clean" (assinatura da série matéria-colab) e
+      o ângulo já vem aprovado do upstream `criar-materia-colab`.
     output: data/theme-input.md
 
   # ──────────────────────────────────────────
-  # FASE 2: Geração de ângulos
+  # FASE 2: Geração de ângulos (PULADO no fluxo matéria-colab)
   # ──────────────────────────────────────────
   - id: step-02-generate-angles
     type: agent
@@ -35,6 +47,7 @@ steps:
     task: tasks/generate-angles.md
     input: data/theme-input.md
     output: output/angles.md
+    skip_when: "input is briefing-editorial.md (fluxo matéria-colab — ângulo já aprovado upstream)"
 
   - id: step-03-select-angle
     type: checkpoint
@@ -42,7 +55,9 @@ steps:
     description: >
       Usuário escolhe 1 dos 5 ângulos gerados (Medo, Oportunidade,
       Educacional, Contrário, Inspiracional) e confirma o tom de voz.
+      PULADO no fluxo matéria-colab.
     input: output/angles.md
+    skip_when: "input is briefing-editorial.md (fluxo matéria-colab)"
 
   # ──────────────────────────────────────────
   # FASE 3: Criação do copy

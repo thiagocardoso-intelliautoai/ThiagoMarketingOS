@@ -1,71 +1,115 @@
-# 📝 Criar Matéria-Colab
+# 📝 Criar Matéria-Colab — Briefing Editorial
 
 ## Propósito
 
-Receber ângulo aprovado de pessoa da lista de distribuição e produzir a matéria-colab completa, pronta pra virar carrossel no formato Editorial Clean.
+Squad **puramente estratégico-editorial**. Recebe ângulo aprovado + nome da pessoa e produz um **briefing-editorial.md** que alimenta `carrosseis-linkedin` no fluxo matéria-colab (estilo Editorial Clean).
 
-**Este é o próximo step do funil de distribuição.** O squad `seed-lista-distribuicao` pesquisa pessoas e gera ângulos. Este squad pega um ângulo específico já aprovado e constrói a matéria ao redor dele.
+A palavra "matéria" no nome do squad refere-se a **estilo editorial** (jornalístico, opinativo, denso) — **não** ao formato físico do post. Quem produz o formato físico é `carrosseis-linkedin`.
 
-> **Substitui:** `briefing-materia-colab` (deprecated). Este squad vai além do briefing — entrega matéria finalizada, não plano de matéria.
+> **Substitui:** `briefing-materia-colab` (deprecated) e a versão v1.0 deste squad (que escrevia matéria longa de 2.500 palavras).
+
+---
+
+## Fronteira clara — o que este squad faz e o que não faz
+
+| Faz aqui | Fica pro `carrosseis-linkedin` |
+|---|---|
+| Formula a tese (frase única) | Define copy do hook (≤ 210 chars) |
+| Aprova ângulo + arquétipo | Define quantidade de slides (3-8) |
+| Levanta evidências do personagem com lastro | Escreve copy de cada slide (≤ 30 palavras) |
+| Define esqueleto narrativo obrigatório | Traduz esqueleto em sequência de slides |
+| Aplica vetos editoriais (Veto 1 primeiro) | Aplica regras de design (anti-IA, viewport, contraste) |
+| Declara estilo: Editorial Clean | Renderiza HTML + PNG via Puppeteer |
+| | Faz quality scoring final |
+
+**Briefing NÃO contém:** copy de slide, hook formatado, caption, hashtags, nota visual por slide, contagem de slides, DM, headlines alternativas.
 
 ---
 
 ## Input
 
-1. **Nome da pessoa** (sujeito da matéria)
-2. **Ângulo específico:** arquétipo + título pela lente + evidências + risco + dados da pessoa
+1. **Nome da pessoa** (sujeito do briefing — evidência viva da tese)
+2. **Ângulo específico aprovado** (do `seed-lista-distribuicao`):
+   - Arquétipo (Como faz o que prega / Contra o consenso / O que aprendi estudando ele / Padrão que vi no trabalho dele)
+   - Título pela lente (≤ 210 chars)
+   - Evidências (posts, cases, citações)
+   - Risco declarado (se houver)
 3. **Input livre do Thiago** (opcional) — ex: "foca no case X", "tom mais duro", "rime com minha última falha documentada"
 
 ## Output
 
-Matéria completa com marcações de slide (`<!-- slide -->`), pronta pra alimentar o squad `carrosseis-linkedin`:
-- Estrutura de matéria (3-5 seções) com título, frases-chave e evidência ancorada
-- Citações e dados públicos com fontes verificáveis
-- Ganchos de DM (2-3 variações: direto / aspiracional / provocativo)
-- Headlines alternativas (2-3 variações, diferentes do título pela lente)
+**`output/briefing-editorial-{slug}-{angulo}.md`** — briefing estruturado em 9 seções:
+
+1. Tese do Thiago (frase única, sem nome do personagem)
+2. Ângulo aprovado
+3. Personagem como evidência (com lastro: URLs + datas)
+4. Lacuna ancorada (frame "dentro vs fora", quando aplicável)
+5. Risco e endereçamento
+6. Lente "Built, not prompted" (específica deste briefing)
+7. **Esqueleto narrativo obrigatório** (instrução pro `carrosseis-linkedin`)
+8. Estilo visual: Editorial Clean
+9. Auto-review (vetos verificados, status final)
+
+---
+
+## Esqueleto narrativo obrigatório
+
+Ordem **inegociável** que `carrosseis-linkedin` deve respeitar quando criar copy:
+
+1. **Abertura — Tese do Thiago.** Sem personagem.
+2. **Tese desenvolvida.** Por que essa tese, contra o que ela vai.
+3. **Personagem entra como evidência.** Nome aparece aqui pela primeira vez.
+4. **Lacuna ancorada (quando aplicável).** Frame "dentro vs fora".
+5. **Fechamento volta à tese.** Não termina elogiando a pessoa.
+
+> **Regra inegociável:** A tese é o esqueleto. O personagem é evidência viva. Se você inverteu, refaz.
 
 ---
 
 ## Princípios Críticos
 
-1. **Jornalismo com formato de colab, NÃO colab tradicional.** Não entrevisto a pessoa. Pesquiso publicamente e monto sozinho. Se o squad sugerir "perguntas pra entrevista", entendeu errado.
-2. **A pessoa é sujeito, minha lente é o ângulo.** A tese da matéria é MINHA. A pessoa é evidência viva da minha tese, não protagonista homenageada. Se sair como elogio sem tese, falhou.
-3. **Built, not prompted / Processo antes de ferramenta.** Toda matéria reforça essa lente.
-4. **Risco declarado respeitado.** Se o ângulo tem risco, a matéria responde a ele com tese desafiadora real — não ignora nem vira puxa-saco.
-5. **Formato visual: Editorial Clean.** Matéria-colab nunca usa Caderno (Rascunho no Papel / Notebook Raw). Caderno é pensamento construtor próprio.
-6. **Citação verificável ou não entra.** Nunca inventar citação.
+1. **Briefing estratégico, não copy.** Output orienta decisões downstream — não escreve hook, slide, caption.
+2. **Tese minha, pessoa como evidência.** Tese é do Thiago. Personagem é evidência viva, intercambiável (outro [Fulano] com mesmo comportamento serviria).
+3. **Veto 1 é a régua mais afiada.** Teste de remoção do nome detecta inversão de arquitetura — o que score formal não pega.
+4. **Risco respeitado.** Se o ângulo declarou risco, briefing tem tese desafiadora real — não neutraliza, não vira puxa-saco.
+5. **Editorial Clean = assinatura da série.** Pessoa bate o olho no feed e identifica.
+6. **Citação verificável ou nada.** Sem fonte → marcar `[sem fonte pública]` ou cortar.
 
 ---
 
 ## Agentes
 
 - **🔬 Ivan Investigador** — Pesquisador de profundidade. Vai além do seed — posts recentes, cases, citações verificáveis, contexto público.
-- **✍️ Rita Redatora** — Redatora de matéria-colab. Escreve matéria completa com arco narrativo e tese do Thiago como fio condutor.
+- **✍️ Rita Estratégista-Editorial** — Formula tese, monta esqueleto narrativo, ancora evidências, aplica vetos editoriais.
 
 ## Pipeline
 
 ```
-step-00 (input) → step-01 (pesquisar) → step-02 (estruturar) → step-03 (redigir) → step-04 (DM+headlines) → step-05 (review) → step-06 (aprovação)
+step-00 (input) → step-01 (pesquisar) → step-02 (estruturar tese-primeiro)
+→ step-03 (finalizar briefing) → step-04 (review com Veto 1) → step-05 (aprovação)
 ```
 
 | Step | Tipo | Descrição |
 |------|------|-----------|
 | 00 | ⏸️ Checkpoint | Receber ângulo aprovado + input livre |
 | 01 | 🤖 Ivan | Pesquisar pessoa em profundidade |
-| 02 | 🤖 Rita | Estruturar narrativa (3-5 seções) |
-| 03 | 🤖 Rita | Redigir matéria completa |
-| 04 | 🤖 Rita | Gerar ganchos de DM + headlines |
-| 05 | 🤖 Rita | Auto-review + veto check + score |
-| 06 | ⏸️ Checkpoint | Aprovação final do Thiago |
+| 02 | 🤖 Rita | Formular tese + montar esqueleto narrativo (tese-primeiro) |
+| 03 | 🤖 Rita | Finalizar briefing-editorial.md (9 seções) |
+| 04 | 🤖 Rita | Auto-review (Veto 1 primeiro) |
+| 05 | ⏸️ Checkpoint | Aprovação final do briefing |
 
 ## Veto Conditions
 
-1. ❌ Matéria sem tese minha (vira elogio)
-2. ❌ Citação inventada ou atribuída sem fonte
-3. ❌ Matéria que sugere reunião/entrevista com a pessoa
-4. ❌ Tom que parece colab tradicional (agradecimento, celebração)
-5. ❌ Formato visual diferente de Editorial Clean
-6. ❌ Ignorar o risco declarado no ângulo
+1. ⚠️ **Teste de remoção do nome** (PRIMEIRO check — detecta inversão de arquitetura)
+2. ❌ Citação inventada ou sem fonte
+3. ❌ Sugestão de reunião/entrevista
+4. ❌ Tom de parceria/agradecimento/celebração
+5. ❌ Estilo visual ≠ Editorial Clean
+6. ❌ Risco declarado ignorado
+
+**Política de retomada:**
+- Veto 1 dispara → volta pra Etapa 02 (problema de esqueleto)
+- Vetos 2-6 → volta pra Etapa 03
 
 ## Estrutura
 
@@ -75,22 +119,28 @@ squads/criar-materia-colab/
 ├── README.md
 ├── agents/
 │   ├── investigador-materia.md    # Ivan Investigador
-│   └── redator-materia.md         # Rita Redatora
+│   └── redator-materia.md         # Rita Estratégista-Editorial
 ├── tasks/
 │   ├── 01-pesquisar-profundidade.md
-│   ├── 02-estruturar-narrativa.md
-│   ├── 03-redigir-materia.md
-│   ├── 04-gerar-dm-headlines.md
-│   └── 05-review-materia.md
+│   ├── 02-estruturar-narrativa.md     # Tese-primeiro + Veto 1 auto-check
+│   ├── 03-finalizar-briefing.md       # Consolida nos 9 campos
+│   └── 04-review-briefing.md          # Veto 1 PRIMEIRO + vetos 2-6 + fronteira
 ├── workflows/
 │   └── workflow.yaml
 ├── data/
-│   ├── linkedin-strategy.md       # Lente, gate, mecânica
-│   ├── formato-materia-colab.md   # O que é e o que NÃO é
-│   ├── atomos-estrategicos.md     # 6 átomos carregados
-│   └── veto-conditions.md         # Condições de veto consolidadas
+│   ├── linkedin-strategy.md
+│   ├── formato-materia-colab.md       # Papel do squad e fronteira com carrosseis-linkedin
+│   ├── atomos-estrategicos.md
+│   └── veto-conditions.md             # Veto 1 sharpened (régua operacional)
 ├── templates/
-│   └── materia-template.md        # Template da matéria completa
+│   └── materia-template.md            # Template do briefing (9 seções)
 └── output/
-    └── materia-{slug}-{angulo}.md # Output por pessoa/ângulo
+    └── briefing-editorial-{slug}-{angulo}.md
 ```
+
+## Downstream
+
+Briefing aprovado alimenta `carrosseis-linkedin` no **fluxo matéria-colab**:
+- Pula `step-02-generate-angles` (ângulo já aprovado upstream)
+- Adapta `step-04-create-copy` pra ler `briefing-editorial.md` e respeitar o esqueleto narrativo
+- Trava estilo em Editorial Clean

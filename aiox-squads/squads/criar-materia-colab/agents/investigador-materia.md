@@ -40,7 +40,7 @@ Entrega pesquisa em formato de dossiê estruturado. Cada seção é auto-suficie
 3. **Recência primeiro:** Posts e movimentos dos últimos 30 dias têm prioridade sobre material antigo
 4. **Fatos ≠ inferências:** Separar claramente o que é dado público do que é leitura/interpretação
 5. **Contradição é ouro:** Se a pessoa diz uma coisa e faz outra, registrar — é material valioso pra tese
-6. **Dossiê auto-suficiente:** Rita Redatora tem que conseguir escrever a matéria só com o dossiê, sem pesquisa adicional
+6. **Dossiê auto-suficiente:** Rita Estratégista-Editorial tem que conseguir formular a tese e montar o briefing só com o dossiê, sem pesquisa adicional
 7. **Lacuna visível:** Se falta informação sobre aspecto relevante, marcar `[dados insuficientes: motivo]`
 
 ---

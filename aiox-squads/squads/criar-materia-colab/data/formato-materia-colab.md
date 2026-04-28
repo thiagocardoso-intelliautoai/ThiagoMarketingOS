@@ -1,56 +1,67 @@
-# Formato Matéria-Colab
+# Formato Matéria-Colab — Briefing Editorial
+
+## Papel deste squad
+
+`criar-materia-colab` é **squad estratégico-editorial**. Não escreve copy de slide, não dita formato físico, não gera DM. Output dele é um **briefing-editorial.md** que entra em `carrosseis-linkedin` como matéria-prima estratégica.
+
+A palavra "matéria" no nome do squad refere-se a **estilo editorial** (jornalístico, opinativo, denso) — não ao formato físico do post. O formato físico final é carrossel LinkedIn, e quem o produz é `carrosseis-linkedin`.
 
 ## O que É
 
-Matéria-colab estilo G4 adaptada pro LinkedIn. Carrossel jornalístico sobre pessoa
-relevante pro ICP. Formato: Editorial Clean. Pessoa é marcada como colaboradora.
-Matéria é enviada pronta — sem reunião prévia, sem pauta combinada.
-
-**Neste squad:** Output é matéria COMPLETA com frases escritas, arco narrativo e
-marcações de slide (`<!-- slide -->`). NÃO é briefing — é matéria finalizada
-pronta pra alimentar o squad de carrosséis.
+Briefing editorial denso sobre pessoa relevante pro ICP, com:
+- Tese do Thiago já formulada
+- Ângulo aprovado + arquétipo
+- Personagem como evidência viva da tese (não protagonista homenageado)
+- Lacuna ancorada (dentro vs fora, quando aplicável)
+- Risco declarado + como endereçar
+- Lente "Built, not prompted" presente
+- Esqueleto narrativo obrigatório (instrução pro `carrosseis-linkedin` respeitar)
+- Estilo visual obrigatório: Editorial Clean (assinatura da série)
+- Auto-review com vetos editoriais
 
 ## O que NÃO É
 
 - ❌ **NÃO é entrevista.** Não faço perguntas pra pessoa. Pesquiso publicamente.
-- ❌ **NÃO é colab tradicional.** Não tem reunião, não tem pauta combinada.
-- ❌ **NÃO tem contrapartida.** Não peço nada em troca. A matéria é unilateral.
-- ❌ **NÃO precisa de permissão.** A matéria é baseada em dados públicos.
-- ❌ **NÃO é briefing.** Não é plano de matéria, é matéria finalizada com frases completas.
+- ❌ **NÃO é colab tradicional.** Não tem reunião, não tem pauta combinada, não tem contrapartida.
+- ❌ **NÃO é matéria escrita longa.** Não escrevo seções de 2-4 frases jornalísticas. O briefing é instrução estratégica, não copy.
+- ❌ **NÃO é copy de carrossel.** Não escrevo hook formatado, slide 1, slide 2, caption, hashtags, contagem de slides, nota visual por slide. Isso é trabalho do `carrosseis-linkedin`.
+- ❌ **NÃO gera DM.** Não envio matéria pra DM. Removido.
+- ❌ **NÃO gera headlines alternativas.** Variação redundante. A capa do carrossel é o headline.
 
-## Por que Funciona no LinkedIn
+## Fronteira clara
 
-Carrossel jornalístico denso sobre pessoas é gap real no LinkedIn.
-Padrão é blueprint visual brilhante ou texto longo sem visual.
-Tag sozinha não põe no feed da pessoa. Mas comentário da pessoa distribui
-pra rede dela via notificação. Repost é efeito premium.
+| O que o squad faz | O que fica pro `carrosseis-linkedin` |
+|---|---|
+| Formula a tese | Define copy do hook (≤210 chars) |
+| Aprova ângulo | Define quantidade de slides (3-8) |
+| Levanta evidências do personagem com lastro | Escreve copy de cada slide (≤30 palavras) |
+| Define esqueleto narrativo (tese-primeiro, personagem-evidência, fechamento-tese) | Traduz esqueleto em sequência de slides |
+| Aplica vetos editoriais (especialmente teste de remoção do nome) | Aplica regras de design (anti-IA, viewport, contraste) |
+| Declara estilo visual = Editorial Clean | Renderiza HTML + PNG |
+| | Faz quality-scoring final |
 
-## Régua de Qualidade
+## Esqueleto narrativo obrigatório
 
-Tem que ser bom a ponto da pessoa querer comentar ou repostar.
-Se a pessoa ler e pensar "legal mas não vou comentar", a matéria falhou.
+O briefing **declara** uma sequência narrativa que `carrosseis-linkedin` deve respeitar quando criar copy:
 
-## Estrutura Típica da Matéria
+1. **Abertura = Tese do Thiago.** Sem personagem na capa.
+2. **Desenvolvimento = Tese sustentada.** Por que essa tese, contra o que ela vai.
+3. **Personagem entra como evidência.** Aqui aparece o nome com fato/citação ancorada.
+4. **Lacuna ancorada (quando aplicável).** Diferencial Thiago — dentro vs fora.
+5. **Fechamento volta à tese.** Não termina elogiando a pessoa.
 
-1. **Abertura (hook)** — Contexto + por que essa pessoa importa agora
-2. **Case/Processo** — O que ela faz/fez que conecta com a lente
-3. **Dados/Resultado** — Números, métricas, prova tangível
-4. **Lente do Thiago** — Conexão explícita com "Built, not prompted"
-5. **Fechamento** — Insight/takeaway + bridge pro engajamento
+Importante: esses blocos **não são slides 1:1**. São instrução narrativa. `carrosseis-linkedin` traduz em quantos slides achar melhor.
 
-## Marcações de Slide
+## Régua de qualidade — Teste de remoção do nome
 
-Cada seção é separada por `<!-- slide -->` no output.
-Isso permite que o squad de carrosséis transforme direto em slides sem tradução manual.
+> Apague mentalmente toda menção a "[nome da pessoa]" no briefing e leia. Se a tese sustenta sozinha, o briefing está certo. Se desmonta, o personagem virou sujeito da história e a arquitetura está invertida → vetar e refazer.
 
-## Gancho de DM (pós-publicação)
+Esse teste é a régua mais afiada do squad. Score formal não pega isso — só esse teste pega.
 
-- Tom: direto, sem bajulação
-- Objetivo: provocar comentário ou repost
-- Max: 280 chars
-- NÃO pedir permissão — informar que a matéria existe
-- NÃO bajular — mostrar respeito pelo trabalho, não pela pessoa
+## Estilo visual da série
 
-## Formato Visual
+**Editorial Clean** sempre. Assinatura da série matéria-colab. Pessoa bate o olho no feed e identifica. Caderno NUNCA.
 
-**Editorial Clean** — sempre. Caderno NUNCA.
+## Por que funciona no LinkedIn
+
+Carrossel jornalístico denso sobre pessoas é gap real no LinkedIn. Padrão é blueprint visual brilhante ou texto longo sem visual. A combinação tese-do-Thiago + evidência-do-personagem + estilo Editorial Clean cria uma série reconhecível com ângulo editorial próprio.
