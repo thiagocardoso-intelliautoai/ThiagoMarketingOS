@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(git add *)",
-      "Bash(git commit -m 'Implementar integração automática uniforme para todos os squads *)"
+      "Bash(git commit -m 'Implementar integração automática uniforme para todos os squads *)",
+      "Bash(git push *)",
+      "Bash(git commit -m 'Atualizar settings.local.json *)"
     ]
   }
 }
