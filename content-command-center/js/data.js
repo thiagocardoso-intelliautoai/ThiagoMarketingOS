@@ -530,6 +530,108 @@ export const DataStore = {
     return true;
   },
 
+  // ─── Import do inbox.json (gerado pelos squads pesquisa/capas/carrosseis) ───
+  async importFromInbox() {
+    if (!this._isOnline) return { importados: 0 };
+
+    let inbox;
+    try {
+      const res = await fetch('./data/inbox.json?t=' + Date.now());
+      inbox = await res.json();
+    } catch {
+      return { importados: 0 }; // arquivo ausente ou vazio — normal
+    }
+
+    const posts = inbox.posts || [];
+    if (posts.length === 0) return { importados: 0 };
+
+    let importados = 0;
+    for (const post of posts) {
+      try {
+        const result = await this.addPost(post);
+        if (result) importados++;
+        // erro de slug duplicado = post já existe → ignorar silenciosamente
+      } catch { /* ignorar */ }
+    }
+
+    return { importados };
+  },
+
+  // ─── Import do inbox-distribuicao.json (gerado pelo squad publish-angulos) ───
+  async importFromInboxDistribuicao() {
+    if (!this._isOnline) return { pessoas: 0, angulos: 0, erros: [] };
+
+    let inbox;
+    try {
+      const res = await fetch('./data/inbox-distribuicao.json?t=' + Date.now());
+      inbox = await res.json();
+    } catch (err) {
+      console.error('[DataStore] importFromInboxDistribuicao: failed to fetch inbox:', err.message);
+      return { pessoas: 0, angulos: 0, erros: ['Não foi possível ler inbox-distribuicao.json'] };
+    }
+
+    const pessoasInbox   = inbox.pessoas        || [];
+    const angulosInbox   = inbox.angulos         || [];
+    const statusUpdates  = inbox.status_updates  || [];
+
+    if (pessoasInbox.length === 0 && angulosInbox.length === 0 && statusUpdates.length === 0) {
+      return { pessoas: 0, angulos: 0, statusAtualizados: 0, erros: [] };
+    }
+
+    const erros = [];
+    let pessoasImportadas  = 0;
+    let angulosImportados  = 0;
+    let statusAtualizados  = 0;
+
+    // 1. Importar pessoas novas (dedup por nome via ON CONFLICT na query)
+    for (const p of pessoasInbox) {
+      const result = await this.addDistribuicao({
+        nome: p.nome,
+        funcao: p.funcao || null,
+        rede_relevante: p.rede_relevante || null,
+        expande_bolha: p.expande_bolha || false,
+        observacao: p.observacao || null,
+      });
+      if (result) pessoasImportadas++;
+      // falha silenciosa = pessoa já existe, ok
+    }
+
+    // 2. Recarregar lista para ter UUIDs corretos
+    const pessoasDB = await this.getDistribuicao();
+
+    // 3. Importar ângulos novos (dedup por titulo_pela_lente dentro da pessoa)
+    for (const a of angulosInbox) {
+      const pessoa = pessoasDB.find(p => p.nome === a.pessoa_nome);
+      if (!pessoa) {
+        erros.push(`Ângulo "${a.titulo_pela_lente}" ignorado — pessoa "${a.pessoa_nome}" não encontrada`);
+        continue;
+      }
+      const jaExiste = (pessoa.angulos_distribuicao || [])
+        .some(ex => ex.titulo_pela_lente === a.titulo_pela_lente);
+      if (jaExiste) continue; // dedup silencioso
+      const result = await this.addAngulo({
+        pessoa_id: pessoa.id,
+        arquetipo: a.arquetipo,
+        titulo_pela_lente: a.titulo_pela_lente,
+        evidencias: a.evidencias || [],
+        risco: a.risco || null,
+        origem: a.origem || 'pesquisa_inicial',
+        expectativa_comentario: a.expectativa_comentario || null,
+        expectativa_repost: a.expectativa_repost || null,
+      });
+      if (result) angulosImportados++;
+    }
+
+    // 4. Aplicar status_updates (ex: materia_em_producao após criar-materia-colab)
+    for (const upd of statusUpdates) {
+      if (!upd.angulo_id || !upd.status) continue;
+      const ok = await this.updateAngulo(upd.angulo_id, { status: upd.status });
+      if (ok) statusAtualizados++;
+    }
+
+    return { pessoas: pessoasImportadas, angulos: angulosImportados, statusAtualizados, erros };
+  },
+
   // ─── Exclusões ───
   async getExclusoes() {
     if (!this._isOnline) return [];

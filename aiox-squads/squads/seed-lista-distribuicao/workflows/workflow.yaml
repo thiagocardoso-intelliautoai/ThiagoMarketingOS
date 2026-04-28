@@ -121,12 +121,31 @@ steps:
       Vê resumo: total de pessoas, ângulos, novos, % fora da bolha.
     input: output/lista-distribuicao.md
     output: lista-confirmada
+    next: step-05-publish-angulos
+
+  # ─── PUBLICAR NO BANCO ───────────────────────────────────
+  - id: step-05-publish-angulos
+    name: "Publicar Ângulos no Thiago Marketing OS"
+    agent: pesquisador-alvos
+    task: tasks/publish-angulos.md
+    input: output/lista-distribuicao.md
+    output: content-command-center/data/inbox-distribuicao.json
+    description: >
+      Paulo lê a lista confirmada, formata pessoas novas e ângulos novos
+      como JSON e atualiza inbox-distribuicao.json. Após isso, Thiago
+      abre a plataforma e clica "Importar ângulos aprovados" para
+      persistir no Supabase.
 
 # ─── Resumo do Pipeline ───────────────────────────────────
-# MODO 1: step-01 → step-02 (aprovação) → step-03 (atualizar) → step-04 (confirmação)
-# MODO 2: step-A1 → step-A2 (aprovação) → step-03 (atualizar) → step-04 (confirmação)
+# MODO 1: step-01 → step-02 (aprovação) → step-03 (atualizar) → step-04 (confirmação) → step-05 (publicar)
+# MODO 2: step-A1 → step-A2 (aprovação) → step-03 (atualizar) → step-04 (confirmação) → step-05 (publicar)
 
 # ─── Checkpoints ──────────────────────────────────────────
 # step-02: Aprovação/descarte de candidatos e ângulos (Modo 1)
 # step-A2: Aprovação/descarte de ângulos novos (Modo 2)
 # step-04: Confirmação da lista atualizada (ambos os modos)
+
+# ─── Integração com a plataforma ─────────────────────────
+# step-05 escreve em content-command-center/data/inbox-distribuicao.json
+# O botão "Importar ângulos aprovados" na plataforma consome esse arquivo
+# e chama DataStore.importFromInboxDistribuicao() → Supabase

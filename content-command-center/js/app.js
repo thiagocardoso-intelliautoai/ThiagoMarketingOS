@@ -71,6 +71,24 @@ settingsTrigger?.addEventListener('click', (e) => {
 async function init() {
   await DataStore.init();
 
+  // Auto-import de todos os inboxes de squad (silencioso — dedup por slug/titulo)
+  const [inboxResult, distribResult] = await Promise.all([
+    DataStore.importFromInbox(),
+    DataStore.importFromInboxDistribuicao(),
+  ]);
+  if (inboxResult.importados > 0) {
+    const { showToast } = await import('./toast.js');
+    showToast(`${inboxResult.importados} post(s) importado(s) do squad`, 'success');
+  }
+  if (distribResult.angulos > 0 || distribResult.pessoas > 0 || distribResult.statusAtualizados > 0) {
+    const { showToast } = await import('./toast.js');
+    const parts = [];
+    if (distribResult.pessoas  > 0) parts.push(`${distribResult.pessoas} pessoa(s)`);
+    if (distribResult.angulos  > 0) parts.push(`${distribResult.angulos} ângulo(s)`);
+    if (distribResult.statusAtualizados > 0) parts.push(`${distribResult.statusAtualizados} status atualizado(s)`);
+    showToast(parts.join(' + ') + ' importado(s)', 'success');
+  }
+
   // Update badge
   const badge = document.getElementById('library-badge');
   if (badge) badge.textContent = DataStore.getPosts().length;

@@ -200,46 +200,30 @@ steps:
     type: human-checkpoint
     description: >
       Thiago lê o post final, pode aprovar ou pedir ajustes.
-      Se aprovado:
-      1. Salva em output/post-final.md
-      2. Escreve o post em content-command-center/data/inbox.json
-         (formato JSON com title, theme, pillar, hookText, body, cta, etc.)
-      3. O Thiago Marketing OS importa automaticamente no próximo refresh
+      Se aprovado, seguir para step-09-publish (publicar no Thiago Marketing OS).
       Postar entre 7h-9h BRT. Responder comentários em até 2h.
     input: output/post-final.md
     output: output/post-final.md
-    post_approval_actions:
-      - type: file-write
-        target: "content-command-center/data/inbox.json"
-        format: json
-        schema: |
-          {
-            "posts": [{
-              "title": "<título do post>",
-              "theme": "<tema central>",
-              "pillar": "<A|C|R|E>",
-              "hookText": "<texto do hook aprovado>",
-              "hookStructure": "<estrutura de hook usada>",
-              "framework": "<framework usado>",
-              "body": "<corpo completo do post>",
-              "cta": "<call to action>",
-              "sources": ["<fonte1>", "<fonte2>"],
-              "reviewScore": "<score 0-100>",
-              "status": "aprovado",
-              "urgency": "<urgente|relevante|pode_esperar>"
-            }]
-          }
-        instruction: >
-          Após aprovação do Thiago, salvar o post aprovado no arquivo
-          content-command-center/data/inbox.json. O Thiago Marketing OS
-          importará automaticamente no próximo refresh.
-          Dedup automática por título — posts já existentes são ignorados.
+    next: step-09-publish
+
+  # ─── PUBLICAR NO THIAGO MARKETING OS ─────────────────────
+  - id: step-09-publish
+    name: "Publicar no Thiago Marketing OS"
+    agent: redator
+    task: tasks/09-publish-to-ccc.md
+    input: output/post-final.md
+    output: content-command-center/data/inbox.json
+    description: >
+      Redator lê post-final.md, extrai todos os campos (title, theme, pillar,
+      hookText, hookStructure, framework, body, cta, reviewScore) e salva como
+      entrada JSON em inbox.json. Dedup automática por título.
+      A plataforma importa automaticamente no próximo refresh.
 
 # ─── Resumo dos Modos ─────────────────────────────────────
-# Modo 1: step-00 → step-01-pesquisa  → step-02 → step-05 → step-06 → step-07 → step-09
-# Modo 2: step-00 → step-01-benchmark → step-02 → step-05 → step-06 → step-07 → step-09
-# Modo 3: step-00 → step-01-briefing  → step-02 → step-05 → step-06 → step-07 → step-09
-# Modo 4: step-00 → step-02 (pula pesquisa) → step-05 → step-06 → step-07 → step-09
+# Modo 1: step-00 → step-01-pesquisa  → step-02 → step-05 → step-06 → step-07 → step-09 → step-09-publish
+# Modo 2: step-00 → step-01-benchmark → step-02 → step-05 → step-06 → step-07 → step-09 → step-09-publish
+# Modo 3: step-00 → step-01-briefing  → step-02 → step-05 → step-06 → step-07 → step-09 → step-09-publish
+# Modo 4: step-00 → step-02 (pula pesquisa) → step-05 → step-06 → step-07 → step-09 → step-09-publish
 # Modo 5: step-00 → step-01-planejamento-mensal → step-02-planejamento (12 posts individuais)
 
 # ─── Resumo dos Checkpoints ───────────────────────────────
@@ -247,7 +231,8 @@ steps:
 # step-02: Seleção e Decisão (qual vira post, quais guardam no armazém)
 # step-02-planejamento: Revisão do planejamento mensal (12 posts)
 # step-06: Escolha do hook (qual das 3 opções)
-# step-09: Aprovação final + Salvar no Thiago Marketing OS
+# step-09: Aprovação final do Thiago
+# step-09-publish: Publicar no Thiago Marketing OS (inbox.json → Supabase automático)
 
 # ─── Mudanças v2.0 ────────────────────────────────────────
 # REMOVIDO: step-03 (Aprofundamento) — absorvido pelo Step 01 com Contexto BR

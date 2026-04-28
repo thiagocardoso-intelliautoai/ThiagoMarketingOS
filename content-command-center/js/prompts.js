@@ -50,18 +50,29 @@ Pessoa: "${nome}"${angulosStr}${inputStr}`;
   },
 
   criarMateriaColab(angulo, pessoa) {
+    const ARQUETIPO_LABEL = {
+      contra_o_consenso: 'Contra o Consenso',
+      tradutor_de_bastidor: 'Tradutor de Bastidor',
+      pioneiro_silencioso: 'Pioneiro Silencioso',
+      benchmark_vivo: 'Benchmark Vivo',
+      misto: 'Misto',
+      outro: 'Outro',
+    };
+    const arquetipo = ARQUETIPO_LABEL[angulo.arquetipo] || angulo.arquetipo;
     const evidenciasStr = Array.isArray(angulo.evidencias) && angulo.evidencias.length > 0
       ? `\nEvidências:\n${angulo.evidencias.map(e => `- ${e}`).join('\n')}`
       : '';
+    const riscoStr = angulo.risco ? `\nRisco editorial: ${angulo.risco}` : '';
+    const observacaoStr = pessoa.observacao ? `\nObservação: ${pessoa.observacao}` : '';
+    const expande = pessoa.expande_bolha ? '\nExpande bolha: sim (rede externa ao ICP direto)' : '';
     return `/z-criar-materia-colab
 Pessoa: "${pessoa.nome}"
 Função: ${pessoa.funcao || '(não informada)'}
-Rede relevante: ${pessoa.rede_relevante || '(não informada)'}
+Rede relevante: ${pessoa.rede_relevante || '(não informada)'}${observacaoStr}${expande}
 
 Ângulo selecionado:
-Arquétipo: ${angulo.arquetipo}
-Título pela lente: "${angulo.titulo_pela_lente}"${evidenciasStr}
-${angulo.risco ? `Risco editorial: ${angulo.risco}` : ''}
+Arquétipo: ${arquetipo}
+Título pela lente: "${angulo.titulo_pela_lente}"${evidenciasStr}${riscoStr}
 
 Ângulo ID: ${angulo.id}`;
   },

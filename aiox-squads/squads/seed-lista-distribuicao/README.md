@@ -49,6 +49,29 @@ Steps 03 e 04 são compartilhados entre os dois modos.
 6. **Direção do Thiago:** Tem precedência sobre defaults do squad
 7. **Expectativa de engajamento:** Atributo da pessoa, não do ângulo
 
+## Integração com a Plataforma
+
+**O step-05 (publish-angulos) é obrigatório ao final de cada rodada.** Sem ele, ângulos aprovados ficam só no markdown local e nunca chegam ao Supabase.
+
+```
+step-04 (confirmação)
+        ↓
+step-05 (publish-angulos) — task: tasks/publish-angulos.md
+  Paulo lê output/lista-distribuicao.md
+  Formata pessoas e ângulos novos como JSON
+  Escreve em content-command-center/data/inbox-distribuicao.json
+        ↓
+Abrir plataforma → aba Pautas → Distribuição
+Clicar "Importar ângulos aprovados"
+  DataStore.importFromInboxDistribuicao() → Supabase
+```
+
+**Por que precisa do passo manual na plataforma?** A plataforma roda no browser e os squads rodam no terminal — não há chamada direta ao Supabase do terminal. O `inbox-distribuicao.json` é o arquivo de handoff entre os dois.
+
+**Padrão idêntico** ao usado pelos squads de capas (`publish-to-ccc.md` → `inbox.json`) e carrosséis.
+
+---
+
 ## Estrutura
 
 ```
@@ -60,7 +83,8 @@ squads/seed-lista-distribuicao/
 ├── tasks/
 │   ├── 01-pesquisar-alvos.md      # Pesquisa + ângulos + gate + exclusões
 │   ├── 02-atualizar-lista.md      # Adicionar/descartar (Modo A e B)
-│   └── 03-aprofundar-pessoa.md    # Ângulos novos pra pessoa existente
+│   ├── 03-aprofundar-pessoa.md    # Ângulos novos pra pessoa existente
+│   └── publish-angulos.md         # Formata JSON → inbox-distribuicao.json
 ├── workflows/
 │   └── workflow.yaml
 ├── data/

@@ -129,19 +129,40 @@ steps:
     type: human-checkpoint
     description: >
       Thiago revisa matéria completa com headlines e ganchos de DM.
-      Decide: ✅ Aprovar (seguir pra carrosséis) ou 🔄 Ajustes
+      Decide: ✅ Aprovar (seguir pra publicação) ou 🔄 Ajustes
       (com indicações específicas).
     input: output/materia-{slug}-{angulo}.md
     output: materia-aprovada
+    next: step-07-publish-to-ccc
+
+  # ─── PUBLICAR NO THIAGO MARKETING OS ─────────────────────
+  - id: step-07-publish-to-ccc
+    name: "Publicar no Thiago Marketing OS"
+    agent: redator-materia
+    task: tasks/06-publish-to-ccc.md
+    input:
+      - output/materia-{slug}-{angulo}.md
+      - Ângulo ID (do input original)
+    output:
+      - content-command-center/data/inbox.json
+      - content-command-center/data/inbox-distribuicao.json
+    description: >
+      Rita lê a matéria aprovada, extrai título pela lente, body completo
+      (com marcações <!-- slide -->) e gancho de DM. Salva como post JSON
+      em inbox.json e atualiza status do ângulo para materia_em_producao
+      em inbox-distribuicao.json. A plataforma importa no próximo refresh.
 
 # ─── Resumo do Pipeline ───────────────────────────────────
 # step-00 (input) → step-01 (pesquisar) → step-02 (estruturar)
 # → step-03 (redigir) → step-04 (DM+headlines) → step-05 (review)
-# → step-06 (aprovação)
+# → step-06 (aprovação) → step-07 (publicar)
 
 # ─── Checkpoints ──────────────────────────────────────────
 # step-00: Receber ângulo aprovado + input livre do Thiago
 # step-06: Aprovação final da matéria completa
+# step-07: Publicar no Thiago Marketing OS (inbox.json + status do ângulo)
 
 # ─── Downstream ──────────────────────────────────────────
-# Matéria aprovada alimenta: carrosseis-linkedin (Editorial Clean)
+# Matéria aprovada → inbox.json (plataforma importa automaticamente → Supabase)
+# Status do ângulo → inbox-distribuicao.json (atualizado para materia_em_producao)
+# Squad carrosseis-linkedin usa a matéria para criar slides (Editorial Clean)

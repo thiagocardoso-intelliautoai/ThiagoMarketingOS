@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m 'Implementar integração automática uniforme para todos os squads *)"
+    ]
+  }
+}
