@@ -24,11 +24,12 @@ Pesquisa LinkedIn/web por candidatos cuja rede inclui o ICP, aplica gate da lent
    - `01-pesquisar-alvos.md` — Pesquisa com ângulos
    - `02-atualizar-lista.md` — Atualizar lista (Modo A: candidatos novos / Modo B: ângulos novos)
    - `03-aprofundar-pessoa.md` — Gerar ângulos novos para pessoa existente
+   - `04-persistir-supabase.md` — Salvar no banco de dados
 7. **Identifique qual modo o Thiago quer usar e siga o pipeline correspondente:**
 
 ## 2 Modos de Uso
 
-### Modo 1 — Pesquisar Candidatos Novos (6 Steps)
+### Modo 1 — Pesquisar Candidatos Novos (5 Steps)
 
 | Step | Tipo | Descrição |
 |------|------|-----------|
@@ -36,8 +37,9 @@ Pesquisa LinkedIn/web por candidatos cuja rede inclui o ICP, aplica gate da lent
 | 02 | ⏸️ Checkpoint | **Aprovação dos Candidatos** — Thiago revisa cada candidato e ângulos: ✅ Aprovar ou ❌ Descartar (exclusões com motivo) |
 | 03 | 🤖 Pesquisador | Adiciona candidatos aprovados à lista ativa com ângulos e registra descartados nas exclusões |
 | 04 | ⏸️ Checkpoint | **Confirmação da Lista** — Thiago confirma lista atualizada. Resumo: total de pessoas, ângulos, % fora da bolha |
+| 05 | 🤖 Pesquisador | **Persistir no Supabase** — Salva pessoa + ângulos aprovados no banco de dados |
 
-### Modo 2 — Aprofundar Pessoa Existente (4 Steps)
+### Modo 2 — Aprofundar Pessoa Existente (5 Steps)
 
 | Step | Tipo | Descrição |
 |------|------|-----------|
@@ -45,6 +47,7 @@ Pesquisa LinkedIn/web por candidatos cuja rede inclui o ICP, aplica gate da lent
 | A2 | ⏸️ Checkpoint | **Aprovação de Ângulos Novos** — Thiago revisa ângulos propostos: ✅ Aprovar ou ❌ Descartar |
 | 03 | 🤖 Pesquisador | Adiciona ângulos aprovados à ficha da pessoa na lista ativa |
 | 04 | ⏸️ Checkpoint | **Confirmação da Lista** — Thiago confirma lista atualizada |
+| 05 | 🤖 Pesquisador | **Persistir no Supabase** — Salva ângulos novos aprovados no banco de dados |
 
 ## Input Necessário
 
@@ -68,3 +71,17 @@ Pesquisa LinkedIn/web por candidatos cuja rede inclui o ICP, aplica gate da lent
 - Candidatos pesquisados em `output/candidatos-pesquisados.md`
 - Ângulos aprofundados em `output/angulos-aprofundados.md`
 - Lista ativa atualizada em `output/lista-distribuicao.md`
+
+## Step Final — Persistir no Banco de Dados
+
+Após confirmação da lista (Step 04):
+
+1. Executar o CLI para persistir no Supabase:
+   ```bash
+   node aiox-squads/shared/scripts/save-distribuicao-cli.js --nome "NOME" --file output/angulos-aprofundados.md --mode aprofundamento --expectativa-comentario "provavel" --expectativa-repost "possivel"
+   ```
+2. Verificar output: `✅ NOME — N ângulo(s) salvo(s) no Supabase`
+3. Verificar na plataforma que a pessoa e ângulos aparecem na aba Distribuição
+
+> **Nota:** O CLI busca automaticamente a pessoa pelo nome no Supabase.
+> É idempotente — pode rodar múltiplas vezes sem duplicar (verifica por titulo_pela_lente).

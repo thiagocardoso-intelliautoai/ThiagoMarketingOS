@@ -73,6 +73,13 @@ Inserir `<!-- slide -->` entre cada seção. Isso permite que o squad de carross
 - A tese é do Thiago. A pessoa é evidência. Toda frase reflete isso
 - Direto. Sem floreio. Se a frase não avança a tese, deletar
 
+#### ICP como leitor (OBRIGATÓRIO)
+- O leitor é: empresário ou operador com time comercial/marketing que quer usar IA corretamente
+- Toda frase é escrita PRA ELE — não pro "mercado", não pra "comunidade de agências"
+- Ele já foi vendido roadmap e não viu resultado → a matéria precisa falar sobre o problema DELE
+- Se a matéria soa como "análise de mercado" em vez de "isso é sobre o meu problema" → reescrever
+- O sujeito da matéria é evidência de como resolver o problema do ICP, não caso isolado
+
 #### Lente
 - Toda seção conecta com "Built, not prompted"
 - O gap "dentro vs fora" aparece quando relevante

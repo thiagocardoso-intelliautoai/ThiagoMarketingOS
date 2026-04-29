@@ -5,6 +5,24 @@
 Construtor-tradutor: construo IA em operação comercial real, e traduzo
 o que funciona pra quem toma decisão de negócio.
 
+## ICP — Leitor-Alvo da Matéria
+
+**Definição:** Empresário ou operador de negócio com time comercial/marketing
+que quer usar IA de forma correta, não com hype.
+
+**Na prática:** Toda frase da matéria é escrita PRA ESSE LEITOR.
+- Ele já foi vendido roadmap por agência e não viu resultado
+- Ele quer IA que rode, não slide que impressiona
+- Ele decide orçamento e precisa justificar investimento com resultado
+- Ele desconfia de hype e respeita quem mostra o que construiu
+
+**Teste do ICP:** Se o empresário que compra IA lê a matéria e pensa
+"isso é sobre o MEU problema", a matéria está certa. Se ele pensa
+"isso é uma análise de mercado", a matéria está genérica e FALHOU.
+
+**VETO:** Matéria que fala sobre "o mercado de agências" em vez de falar
+COM o operador que usa IA → reescrever com enquadramento do ICP.
+
 ## Mecânica de Distribuição
 
 Matéria-colab estilo G4 adaptada pro LinkedIn. Carrossel jornalístico sobre pessoa

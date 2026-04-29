@@ -29,9 +29,10 @@ Recebe ângulo específico aprovado do seed-lista-distribuicao, pesquisa em prof
    - `03-redigir-materia.md` — Matéria completa com frases (não bullets)
    - `04-gerar-dm-headlines.md` — Ganchos de DM + headlines alternativas
    - `05-review-materia.md` — Auto-review + veto check + score
+   - `06-persistir-supabase.md` — Salvar no banco de dados
 7. **Siga o pipeline linear abaixo:**
 
-## Pipeline (7 Steps)
+## Pipeline (8 Steps)
 
 | Step | Tipo | Agent | Descrição |
 |------|------|-------|-----------|
@@ -42,6 +43,7 @@ Recebe ângulo específico aprovado do seed-lista-distribuicao, pesquisa em prof
 | 04 | 🤖 Agente | ✍️ Rita | Gerar ganchos de DM (3 tons) + headlines alternativas |
 | 05 | 🤖 Agente | ✍️ Rita | Auto-review: veto check + completude + score (≥ 7/10) |
 | 06 | ⏸️ Checkpoint | — | Aprovação final do Thiago |
+| 07 | 🤖 Agente | ✍️ Rita | **Persistir no Supabase** — Atualiza status do ângulo |
 
 ## Input Necessário
 
@@ -83,3 +85,17 @@ Recebe ângulo específico aprovado do seed-lista-distribuicao, pesquisa em prof
 ## Downstream
 
 Matéria aprovada alimenta o squad `carrosseis-linkedin` (formato Editorial Clean).
+
+## Step Final — Persistir no Banco de Dados
+
+Após aprovação da matéria (Step 06):
+
+1. Executar o CLI para atualizar status do ângulo no Supabase:
+   ```bash
+   node aiox-squads/shared/scripts/save-distribuicao-cli.js --update-status --pessoa "NOME" --angulo-titulo "TITULO" --status materia_em_producao
+   ```
+2. Verificar output: `✅ Status atualizado: materia_em_producao`
+3. O ângulo agora aparece com status atualizado na aba Distribuição da plataforma
+
+> **Nota:** O CLI busca automaticamente a pessoa e o ângulo pelo nome/título.
+> Quando o carrossel for publicado, atualizar para `publicada`.

@@ -121,10 +121,26 @@ steps:
       Vê resumo: total de pessoas, ângulos, novos, % fora da bolha.
     input: output/lista-distribuicao.md
     output: lista-confirmada
+    next: step-05-persistir
+
+  # ─── PERSISTÊNCIA NO SUPABASE ───────────────────────────
+  - id: step-05-persistir
+    name: "Persistir no Supabase"
+    agent: pesquisador-alvos
+    task: tasks/04-persistir-supabase.md
+    input:
+      - output/lista-distribuicao.md
+      - output/candidatos-pesquisados.md
+      - output/angulos-aprofundados.md
+    output: output/persistencia-report.md
+    description: >
+      Paulo executa o CLI save-distribuicao-cli.js para salvar
+      pessoa + ângulos aprovados no Supabase. Dados ficam disponíveis
+      na plataforma Thiago Marketing OS (aba Distribuição).
 
 # ─── Resumo do Pipeline ───────────────────────────────────
-# MODO 1: step-01 → step-02 (aprovação) → step-03 (atualizar) → step-04 (confirmação)
-# MODO 2: step-A1 → step-A2 (aprovação) → step-03 (atualizar) → step-04 (confirmação)
+# MODO 1: step-01 → step-02 (aprovação) → step-03 (atualizar) → step-04 (confirmação) → step-05 (persistir)
+# MODO 2: step-A1 → step-A2 (aprovação) → step-03 (atualizar) → step-04 (confirmação) → step-05 (persistir)
 
 # ─── Checkpoints ──────────────────────────────────────────
 # step-02: Aprovação/descarte de candidatos e ângulos (Modo 1)

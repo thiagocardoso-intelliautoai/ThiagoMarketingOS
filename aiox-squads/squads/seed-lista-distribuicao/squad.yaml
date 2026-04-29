@@ -61,8 +61,13 @@ tasks:
     file: tasks/03-aprofundar-pessoa.md
     description: Gerar ângulos novos para pessoa que já está na lista ativa
 
+  - id: persistir-supabase
+    file: tasks/04-persistir-supabase.md
+    description: Salvar pessoa + ângulos aprovados no Supabase (CLI save-distribuicao-cli.js)
+
 # Checkpoints humanos
 checkpoints:
   - step-02: "Aprovação dos candidatos pesquisados e ângulos (Modo 1)"
   - step-A2: "Aprovação de ângulos novos para pessoa existente (Modo 2)"
   - step-04: "Confirmação da lista atualizada (ambos os modos)"
+  - step-05: "Persistência no Supabase (ambos os modos)"

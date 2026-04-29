@@ -277,6 +277,119 @@ async function uploadCarousel(slug, slidePngs, pdfPath, style, postId) {
   return { pdfUrl, carouselId, slideCount: slidePngs.length };
 }
 
+// ── savePessoa ────────────────────────────────────────────────
+
+/**
+ * Upsert de uma pessoa na tabela `lista_distribuicao` por nome.
+ * Se a pessoa já existe (match por nome), retorna o registro existente.
+ * Retorna o registro inserido/encontrado (com id).
+ */
+async function savePessoa(pessoaData) {
+  // Primeiro verificar se já existe
+  const { data: existing } = await supabase
+    .from('lista_distribuicao')
+    .select('*')
+    .ilike('nome', pessoaData.nome)
+    .maybeSingle();
+
+  if (existing) {
+    // Atualizar campos se fornecidos
+    const updates = {};
+    if (pessoaData.funcao) updates.funcao = pessoaData.funcao;
+    if (pessoaData.rede_relevante) updates.rede_relevante = pessoaData.rede_relevante;
+    if (pessoaData.expande_bolha !== undefined) updates.expande_bolha = pessoaData.expande_bolha;
+    if (pessoaData.observacao) updates.observacao = pessoaData.observacao;
+    if (pessoaData.status_relacao) updates.status_relacao = pessoaData.status_relacao;
+
+    if (Object.keys(updates).length > 0) {
+      const { error: updateErr } = await supabase
+        .from('lista_distribuicao')
+        .update(updates)
+        .eq('id', existing.id);
+      if (updateErr) throw new Error(`savePessoa update ("${pessoaData.nome}"): ${updateErr.message}`);
+    }
+    return existing;
+  }
+
+  // Inserir nova pessoa
+  const row = {
+    nome: pessoaData.nome,
+    funcao: pessoaData.funcao || null,
+    rede_relevante: pessoaData.rede_relevante || null,
+    expande_bolha: pessoaData.expande_bolha || false,
+    observacao: pessoaData.observacao || null,
+    status_relacao: pessoaData.status_relacao || null,
+  };
+
+  const { data, error } = await supabase
+    .from('lista_distribuicao')
+    .insert(row)
+    .select()
+    .single();
+
+  if (error) throw new Error(`savePessoa insert ("${pessoaData.nome}"): ${error.message}`);
+  return data;
+}
+
+// ── saveAngulo ────────────────────────────────────────────────
+
+/**
+ * Insere um ângulo na tabela `angulos_distribuicao`.
+ * Verifica duplicata por titulo_pela_lente + pessoa_id antes de inserir.
+ * Retorna o registro inserido ou existente.
+ */
+async function saveAngulo(anguloData) {
+  // Verificar duplicata
+  const { data: existing } = await supabase
+    .from('angulos_distribuicao')
+    .select('*')
+    .eq('pessoa_id', anguloData.pessoa_id)
+    .eq('titulo_pela_lente', anguloData.titulo_pela_lente)
+    .maybeSingle();
+
+  if (existing) {
+    return existing;
+  }
+
+  const row = {
+    pessoa_id: anguloData.pessoa_id,
+    arquetipo: anguloData.arquetipo,
+    titulo_pela_lente: anguloData.titulo_pela_lente,
+    evidencias: anguloData.evidencias || [],
+    risco: anguloData.risco || null,
+    expectativa_comentario: anguloData.expectativa_comentario || null,
+    expectativa_repost: anguloData.expectativa_repost || null,
+    origem: anguloData.origem || 'manual',
+    status: anguloData.status || 'novo',
+  };
+
+  const { data, error } = await supabase
+    .from('angulos_distribuicao')
+    .insert(row)
+    .select()
+    .single();
+
+  if (error) throw new Error(`saveAngulo ("${anguloData.titulo_pela_lente}"): ${error.message}`);
+  return data;
+}
+
+// ── updateAnguloStatus ────────────────────────────────────────
+
+/**
+ * Atualiza o status de um ângulo na tabela `angulos_distribuicao`.
+ */
+async function updateAnguloStatus(anguloId, newStatus) {
+  const { data, error } = await supabase
+    .from('angulos_distribuicao')
+    .update({ status: newStatus })
+    .eq('id', anguloId)
+    .select()
+    .single();
+
+  if (error) throw new Error(`updateAnguloStatus ("${anguloId}"): ${error.message}`);
+  return data;
+}
+
 // ── Exports ───────────────────────────────────────────────────
 
 module.exports = {
@@ -285,5 +398,8 @@ module.exports = {
   savePost,
   uploadCover,
   uploadCarousel,
+  savePessoa,
+  saveAngulo,
+  updateAnguloStatus,
   BUCKET
 };

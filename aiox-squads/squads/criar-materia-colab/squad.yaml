@@ -74,7 +74,12 @@ tasks:
     file: tasks/05-review-materia.md
     description: Auto-review — veto check, completude, aderência à lente, score ponderado
 
+  - id: persistir-supabase
+    file: tasks/06-persistir-supabase.md
+    description: Atualizar status do ângulo no Supabase (CLI save-distribuicao-cli.js --update-status)
+
 # Checkpoints humanos
 checkpoints:
   - step-00: "Receber ângulo aprovado + input livre do Thiago"
   - step-06: "Aprovação final da matéria completa"
+  - step-07: "Persistência no Supabase (status do ângulo atualizado)"

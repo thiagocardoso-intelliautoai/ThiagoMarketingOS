@@ -133,11 +133,24 @@ steps:
       (com indicações específicas).
     input: output/materia-{slug}-{angulo}.md
     output: materia-aprovada
+    next: step-07-persistir
+
+  # ─── PERSISTÊNCIA NO SUPABASE ─────────────────────────────
+  - id: step-07-persistir
+    name: "Persistir no Supabase"
+    agent: redator-materia
+    task: tasks/06-persistir-supabase.md
+    input: output/materia-{slug}-{angulo}.md
+    output: output/persistencia-report.md
+    description: >
+      Rita executa o CLI save-distribuicao-cli.js --update-status para
+      atualizar o status do ângulo para materia_em_producao no Supabase.
+      Dados ficam visíveis na plataforma Thiago Marketing OS.
 
 # ─── Resumo do Pipeline ───────────────────────────────────
 # step-00 (input) → step-01 (pesquisar) → step-02 (estruturar)
 # → step-03 (redigir) → step-04 (DM+headlines) → step-05 (review)
-# → step-06 (aprovação)
+# → step-06 (aprovação) → step-07 (persistir)
 
 # ─── Checkpoints ──────────────────────────────────────────
 # step-00: Receber ângulo aprovado + input livre do Thiago
