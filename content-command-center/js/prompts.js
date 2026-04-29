@@ -1,4 +1,4 @@
-// prompts.js — Prompt templates for Antigravity (v3 — Pessoa 1:N Ângulos)
+// prompts.js — Prompt templates para Claude Code / Antigravity (v3 — Pessoa 1:N Ângulos)
 
 export const Prompts = {
   // ─── TAB CREATE (modos que ficam) ───

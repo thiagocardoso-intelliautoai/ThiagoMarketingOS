@@ -489,6 +489,76 @@ function openViewPostModal(postId) {
   // LinkedIn preview events (expand/collapse text)
   attachLinkedInPreviewEvents();
 
+  // Edit/Save logic
+  let isEditing = false;
+  const editBtn = document.getElementById('modal-edit-post');
+  
+  editBtn?.addEventListener('click', async () => {
+    const textContainer = document.getElementById('li-text-content');
+    if (!textContainer) return;
+
+    if (!isEditing) {
+      // Switch to Edit Mode
+      isEditing = true;
+      editBtn.innerHTML = Icons.check;
+      editBtn.title = "Salvar alterações";
+      editBtn.classList.add('btn-edit-active');
+
+      const hookText = post.hookText || '';
+      const bodyText = post.body || '';
+      const ctaText = post.cta || '';
+      
+      textContainer.innerHTML = `
+        <div class="edit-fields-container">
+          <label class="edit-label">Hook (Gancho)</label>
+          <textarea id="edit-post-hook" class="edit-mode-textarea-sm" placeholder="Hook do post...">${hookText}</textarea>
+          
+          <label class="edit-label">Corpo do Post</label>
+          <textarea id="edit-post-body" class="edit-mode-textarea" placeholder="Texto principal...">${bodyText}</textarea>
+          
+          <label class="edit-label">CTA (Chamada para ação)</label>
+          <textarea id="edit-post-cta" class="edit-mode-textarea-sm" placeholder="CTA final...">${ctaText}</textarea>
+        </div>
+      `;
+      
+      // Auto-focus on body
+      document.getElementById('edit-post-body').focus();
+    } else {
+      // Save and Switch to View Mode
+      const newHook = document.getElementById('edit-post-hook').value;
+      const newBody = document.getElementById('edit-post-body').value;
+      const newCta = document.getElementById('edit-post-cta').value;
+      
+      try {
+        editBtn.innerHTML = '<span class="spinner-sm"></span>';
+        editBtn.disabled = true;
+
+        await DataStore.updatePost(post.id, { 
+          hookText: newHook,
+          body: newBody,
+          cta: newCta
+        });
+        
+        showToast('Post atualizado!', 'success');
+        
+        // Update local object
+        post.hookText = newHook;
+        post.body = newBody;
+        post.cta = newCta;
+        
+        // Re-render
+        closeModal();
+        openViewPostModal(post.id);
+        renderLibrary();
+      } catch (err) {
+        console.error('Erro ao salvar post:', err);
+        showToast('Erro ao salvar', 'error');
+        editBtn.innerHTML = Icons.check;
+        editBtn.disabled = false;
+      }
+    }
+  });
+
   // Original modal events (unchanged)
   document.querySelector('.modal-close')?.addEventListener('click', closeModal);
   document.getElementById('modal-copy-post')?.addEventListener('click', () => {

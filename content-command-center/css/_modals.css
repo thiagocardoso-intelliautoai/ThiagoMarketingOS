@@ -44,6 +44,66 @@
   padding: var(--space-xl) var(--space-xl) var(--space-md);
 }
 
+.modal-header-actions {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+.btn-edit-active svg {
+  stroke: var(--accent-green) !important;
+}
+
+.edit-mode-textarea {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid var(--accent-primary) !important;
+  color: var(--text-primary) !important;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  outline: none;
+  resize: vertical;
+  min-height: 200px;
+  line-height: 1.6;
+  width: 100%;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.edit-mode-textarea-sm {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: var(--text-primary) !important;
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  outline: none;
+  resize: none;
+  min-height: 60px;
+  line-height: 1.4;
+  width: 100%;
+  font-family: inherit;
+  font-size: 13px;
+  margin-bottom: var(--space-md);
+}
+
+.edit-mode-textarea-sm:focus {
+  border-color: var(--accent-primary) !important;
+}
+
+.edit-fields-container {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-sm) 0;
+}
+
+.edit-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
 .modal-header h2 {
   font-family: var(--font-display);
   font-size: 1.2rem;
