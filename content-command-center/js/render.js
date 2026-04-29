@@ -420,12 +420,18 @@ function openViewPostModal(postId) {
         <button class="preview-tab preview-tab-active" data-tab="linkedin" id="tab-btn-linkedin">Preview LinkedIn</button>
         <button class="preview-tab" data-tab="performance" id="tab-btn-performance">${Icons.barChart} Performance</button>
       </div>
-      <button class="btn-icon modal-close" aria-label="Fechar">${Icons.x}</button>
+      <div class="modal-header-actions">
+        <button class="btn-icon" id="modal-edit-post" title="Editar conteúdo">${Icons.edit}</button>
+        <button class="btn-icon modal-close" aria-label="Fechar">${Icons.x}</button>
+      </div>
     </div>
   ` : `
     <div class="modal-header">
       <h2>${Icons.eye} Preview LinkedIn</h2>
-      <button class="btn-icon modal-close" aria-label="Fechar">${Icons.x}</button>
+      <div class="modal-header-actions">
+        <button class="btn-icon" id="modal-edit-post" title="Editar conteúdo">${Icons.edit}</button>
+        <button class="btn-icon modal-close" aria-label="Fechar">${Icons.x}</button>
+      </div>
     </div>
   `;
 
