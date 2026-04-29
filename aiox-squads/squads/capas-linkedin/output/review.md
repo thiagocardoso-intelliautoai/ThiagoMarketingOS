@@ -1,31 +1,28 @@
-# Review — Rui Revisão
+# Review — Capa [ia-virou-cultura-no-nosso-time]
 
-## Capa: "Acumular não é aprender."
-**Estilo:** 2 — Pessoa + Texto
-**Slug:** acumular-nao-e-aprender
+## Scores
 
----
+| Critério | Score | Justificativa |
+|----------|:-----:|---------------|
+| Impacto Visual | 8/10 | Foto com equipe real num cenário informal + frase curta e assertiva. O Teal em "cultura" puxa o olho sem gritar. O overlay bottom-heavy deixa o rosto das pessoas visíveis no topo — para o scroll. |
+| Legibilidade Mobile | 8/10 | Hero 54px rende ~20px em 375px — legível. Contraste texto branco sobre overlay 92% é excelente. Text-shadow reforça. Brand name 22px (~8px mobile) é tight mas funcional. |
+| Alinhamento Tom de Voz | 9/10 | "IA virou cultura no nosso time." é direto, zero hype, zero buzzword. Anti-guru por definição — afirma um fato sobre a equipe dele, não uma promessa genérica. Coerente com o tom "bastidor técnico" do post. |
+| Aderência ACRE | 8/10 | Post é Engajamento (E) — mostra bastidor e convida reação. A capa com foto real da equipe reforça esse pilar. Formato 4:5 correto para LinkedIn+Instagram. |
+| Consistência Visual | 8/10 | Accent Teal (#14B8A6), Inter, assinatura padrão, alinhamento esquerda — tudo conforme Design System global. Sem desvios. Identidade reconhecível para quem acompanha o feed. |
+| **MÉDIA** | **8.2/10** | |
 
-## Scoring
+## Strengths
+- **Foto autêntica com equipe real** — impossível parecer IA ou stock photo. O crachá da Winning Sales na camiseta é detalhe que poucos vão perceber conscientemente, mas adiciona credibilidade
+- **Frase cirúrgica** — 6 palavras que sintetizam um post de 200+ palavras sem repetir o hook
+- **Zero efeitos AI** — limpo, editorial, contenção. Parece slide de relatório interno, não template Canva
+- **Uma cor de destaque usada com propósito** — "cultura" em Teal é semântico, não decorativo
 
-| Critério | Score (1-10) | Justificativa |
-|----------|:------------:|---------------|
-| Impacto Visual | 9 | 83% em Teal é stop-scroller imediato. Foto real + expressão séria criam conexão humana. Hierarquia clara: número → frase → assinatura. |
-| Legibilidade Mobile | 8 | Hero 56px, stat 88px — legíveis em 375px. Overlay 82-94% na zona de texto garante contraste. Text-shadow reforça. |
-| Alinhamento Tom de Voz | 9 | "Acumular não é aprender" é direto, provocativo, falsificável. Zero hype, zero guru. Subtítulo "Profundidade > informação" é conciso e opinativo. |
-| Aderência ACRE | 8 | Post de Alcance (A) e Engajamento (E). Capa complementa sem repetir — dado do post como hook visual, frase como síntese. |
-| Consistência Visual | 9 | Design System Charcoal & Teal respeitado. Inter como fonte. Teal como único accent. Noise texture. Assinatura no padrão. |
-| **MÉDIA** | **8.6** | |
+## Required Changes
+- Nenhuma.
 
-## Veredicto: ✅ APPROVE
+## Suggestions
+- A assinatura dupla (brand no topo + "Thiago C.Lima" no rodapé) poderia ser simplificada — o brand já comunica autoria. Opcionalmente remover o footer-sig para ganhar mais espaço negativo. Mas é menor.
 
-**Destaques positivos:**
-- Dado numérico (83%) como elemento visual primário — excelente para stop-scroll
-- Foto original sem adaptação por IA — máxima autenticidade
-- Contenção exemplar: apenas accent line + noise como decoração
-- Subtítulo "Profundidade > informação" destila o post inteiro em 3 palavras
+## Verdict: ✅ APPROVE
 
-**Observações menores (não bloqueantes):**
-- Foto é selfie no espelho — funciona para este post (introspectivo), mas variar em próximas capas
-
-## Aprovação Final: ✅ APROVADO pelo usuário
+Média 8.2/10, nenhum critério abaixo de 5. Capa pronta para publicação.

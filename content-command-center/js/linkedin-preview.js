@@ -127,10 +127,10 @@ export function renderLinkedInPreview(post) {
             <span class="carousel-counter" id="carousel-counter">1/${slides.length}</span>
           </div>
         </div>
-        ${pdfPath || post.carousels?.pdf_url ? `
+        ${pdfPath ? `
           <div class="li-media-actions">
             <button class="li-media-download-btn" id="li-download-pdf"
-              data-url="${post.carousels?.pdf_url || pdfPath}"
+              data-url="${pdfPath}"
               data-filename="carrossel-${esc((post.title || 'post').replace(/[^a-zA-Z0-9]/g, '-').slice(0, 40))}.pdf">
               ${LiIcons.download} Baixar PDF Completo
             </button>

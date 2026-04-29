@@ -195,7 +195,7 @@ function renderPostCard(post) {
 
   // Media badges
   const hasCoverUrl = !!(post.covers?.image_url);
-  const hasCarouselUrl = !!(post.carousels?.pdf_url);
+  const hasCarouselUrl = !!post.derivations?.carousel?.pdfPath;
   const hasCoverDeriv = !!(post.contentType === 'cover' || post.derivations?.cover);
   const hasCarouselDeriv = !!(post.contentType === 'carousel' || post.derivations?.carousel);
 
@@ -457,8 +457,8 @@ function openViewPostModal(postId) {
           ? `<button class="btn-download btn-sm" id="modal-download-cover" data-url="${post.covers.image_url}" data-filename="capa-${(post.title || 'post').replace(/[^a-zA-Z0-9]/g, '-').slice(0, 40)}.png">${Icons.download} Baixar Capa</button>`
           : `<button class="btn-ghost btn-sm" id="modal-gen-cover">${Icons.image} Gerar Capa</button>`
         }
-        ${post.carousels?.pdf_url
-          ? `<button class="btn-download btn-sm" id="modal-download-pdf" data-url="${post.carousels.pdf_url}" data-filename="carrossel-${(post.title || 'post').replace(/[^a-zA-Z0-9]/g, '-').slice(0, 40)}.pdf">${Icons.download} Baixar PDF</button>`
+        ${post.derivations?.carousel?.pdfPath
+          ? `<button class="btn-download btn-sm" id="modal-download-pdf" data-url="${post.derivations.carousel.pdfPath}" data-filename="carrossel-${(post.title || 'post').replace(/[^a-zA-Z0-9]/g, '-').slice(0, 40)}.pdf">${Icons.download} Baixar PDF</button>`
           : `<button class="btn-primary btn-sm" id="modal-gen-carousel" data-id="${post.id}">${Icons.layers} Gerar Carrossel</button>`
         }
         ${!isPublished ? `<button class="btn-linkedin btn-sm" id="modal-publish-btn" data-id="${post.id}">${Icons.send} Publicar</button>` : ''}

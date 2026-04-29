@@ -128,11 +128,34 @@ CTA: [Concorda ou discorda?]
 
 ---
 
-## ⚠️ Anti-Padrões de Formatação
+---
 
-1. ❌ Bloco de texto com 4+ linhas sem quebra
-2. ❌ Usar hashtags (sem impacto no alcance, polui o post visualmente)
-3. ❌ Emojis no início de cada linha (parece newsletter de 2019)
-4. ❌ CAPS LOCK para enfatizar (parece gritando)
-5. ❌ Tagging de pessoas sem contexto (engagement bait)
-6. ❌ "Siga-me para mais dicas" no CTA (guru-speak)
+## 🛠️ Formato Técnico Obrigatório (Integração)
+
+> **CRÍTICO:** Para que o post seja salvo corretamente no banco de dados (Content Command Center), o arquivo `post-final.md` DEVE seguir rigorosamente esta estrutura de headers:
+
+```markdown
+# [TÍTULO DO POST]
+
+## Metadata
+- **Pilar ACRE:** [A, C, R ou E] ([Nome do Pilar])
+- **Tema:** [Tema Curto]
+- **Framework:** [Nome do Framework]
+- **Hook:** [Tipo do Hook]
+
+### Post
+
+[O TEXTO DO POST COMEÇA AQUI]
+[HOOK...]
+
+[BODY...]
+
+[CTA...]
+
+### Revisão
+**TOTAL** **[Score]%**
+```
+
+**Por que isso é obrigatório?**
+O script de salvamento (`save-post-cli.js`) usa esses headers (`## Metadata`, `### Post`, `### Revisão`) como delimitadores. Sem eles, o corpo do post e o score não são extraídos para a plataforma.
+

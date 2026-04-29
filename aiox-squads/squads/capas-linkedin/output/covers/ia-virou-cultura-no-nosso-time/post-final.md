@@ -1,6 +1,13 @@
-# Cover Input
+## Metadata
 
-## Post
+- **Pilar ACRE:** E (Engajamento)
+- **Tema:** 3 ações que fazem a equipe da Winning Sales performar 10x mais com IA
+- **Framework:** Storytelling + Lista
+- **Hook:** Provocação (Contraste automação vs cultura)
+- **Fontes:** Experiência pessoal
+
+### Post
+
 A maioria das empresas pensa assim:
 "Vou criar uma automação de follow-up, rodar 30 dias e ver o resultado."
 
@@ -25,12 +32,3 @@ Um processo de +6 horas por cliente rodando em minutos.
 
 Isso é construir cultura.
 É o que chamam por aí de "AI First" — só que na prática.
-
-## Estilo Visual
-**Estilo 2: Pessoa + Texto** — Foto real com overlay de texto
-
-## Foto Selecionada
-`IMG_20260225_201815722.jpg` — Selfie com equipe (contexto: bastidor, equipe, Winning Sales)
-
-## Frase da Capa
-"IA virou cultura no nosso time." (5 palavras — síntese do post)

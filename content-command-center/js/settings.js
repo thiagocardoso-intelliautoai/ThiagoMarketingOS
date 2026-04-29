@@ -277,7 +277,7 @@ function renderDisconnectedState(mount) {
         </svg>
       </div>
       <h3>Conectar ao LinkedIn</h3>
-      <p>Vincule sua conta para publicar posts, agendar conteúdo e acompanhar métricas diretamente do Command Center.</p>
+      <p>Vincule sua conta para publicar posts, agendar conteúdo e acompanhar métricas diretamente do Thiago Marketing OS.</p>
       <button class="linkedin-connect-btn" id="btn-linkedin-connect">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/>

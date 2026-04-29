@@ -186,7 +186,7 @@ export function openPublishModal(postId) {
   const fullText = parts.filter(s => s !== undefined && s !== null).join('\n').trim();
   const charCount = fullText.length;
   const hasCover = !!(post.covers?.image_url || post.derivations?.cover?.coverPath);
-  const hasCarousel = !!(post.carousels?.pdf_url || post.derivations?.carousel);
+  const hasCarousel = !!post.derivations?.carousel;
 
   // Media label
   let mediaLabel = 'Nenhuma';
@@ -626,11 +626,11 @@ export function openPublishModal(postId) {
       formData.append('commentary', fullText);
 
       const hasCoverMedia = !!(post.covers?.image_url || post.derivations?.cover?.coverPath);
-      const hasCarouselMedia = !!(post.carousels?.pdf_url || post.derivations?.carousel?.pdfPath);
+      const hasCarouselMedia = !!post.derivations?.carousel?.pdfPath;
 
       if (hasCarouselMedia) {
         formData.append('post_type', 'carousel');
-        const pdfUrl = post.carousels?.pdf_url || post.derivations?.carousel?.pdfPath;
+        const pdfUrl = post.derivations?.carousel?.pdfPath;
         if (pdfUrl) {
           const mediaRes = await fetch(pdfUrl);
           if (mediaRes.ok) {
@@ -717,13 +717,13 @@ export function openPublishModal(postId) {
 
       // Determine post type and media
       const hasCoverMedia = !!(post.covers?.image_url || post.derivations?.cover?.coverPath);
-      const hasCarouselMedia = !!(post.carousels?.pdf_url || post.derivations?.carousel);
+      const hasCarouselMedia = !!post.derivations?.carousel?.pdfPath;
       let postType = 'text';
       let mediaUrl = null;
       let mediaFilename = null;
       if (hasCarouselMedia) {
         postType = 'carousel';
-        mediaUrl = post.carousels?.pdf_url || post.derivations?.carousel?.pdfPath || null;
+        mediaUrl = post.derivations?.carousel?.pdfPath;
         mediaFilename = 'carousel.pdf';
       } else if (hasCoverMedia) {
         postType = 'image';

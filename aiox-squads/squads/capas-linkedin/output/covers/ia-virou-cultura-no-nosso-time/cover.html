@@ -1,0 +1,193 @@
+<!--
+  Capa: IA virou cultura no nosso time
+  Estilo: 2 — Pessoa + Texto
+  Viewport: 1080 x 1350 (4:5)
+  Foto: IMG_20260225_201815722.jpg (selfie equipe Winning Sales)
+  
+  Design System:
+  - Fundo: Foto real (selfie equipe bar)
+  - Overlay: Gradient escuro bottom-heavy (88% base)
+  - Texto: Inter 800, #FFFFFF, 54px
+  - Accent: #14B8A6 (Teal — --accent-primary)
+  - Assinatura: Inter 500, 20px, #64748B
+  - Hierarquia: tipografia + peso, zero efeitos
+  
+  Anti-AI Compliance:
+  ✅ Zero gradient text fill
+  ✅ Zero radial glow
+  ✅ Zero ícones literais
+  ✅ Assimetria intencional (texto alinhado à esquerda, terço inferior)
+  ✅ Max 2 elementos decorativos (accent-line + brand)
+  ✅ Accent flat (Teal sólido)
+  ✅ 30%+ espaço negativo (foto respira na parte superior)
+  ✅ Paleta não-óbvia
+  ✅ Cores do Design System global
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      position: relative;
+    }
+
+    /* ── Background: Foto equipe ── */
+    .bg-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    /* ── Overlay de contraste (bottom-heavy) ── */
+    .overlay {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.10) 0%,
+        rgba(0, 0, 0, 0.20) 25%,
+        rgba(0, 0, 0, 0.55) 55%,
+        rgba(0, 0, 0, 0.82) 75%,
+        rgba(0, 0, 0, 0.92) 100%
+      );
+    }
+
+    /* ── Conteúdo sobre a foto ── */
+    .content-wrapper {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      padding: 64px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    /* ── Marca (brand) ── */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .brand-photo {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-size: 22px;
+      font-weight: 600;
+      color: #FFFFFF;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand-handle {
+      font-size: 17px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    /* ── Linha de acento ── */
+    .accent-line {
+      width: 56px;
+      height: 4px;
+      background: #14B8A6;
+      margin-bottom: 28px;
+    }
+
+    /* ── Texto principal ── */
+    .hero-text {
+      font-size: 54px;
+      font-weight: 700;
+      line-height: 1.18;
+      color: #FFFFFF;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.7);
+      margin-bottom: 40px;
+      letter-spacing: -0.02em;
+      max-width: 780px;
+    }
+
+    .highlight {
+      color: #14B8A6;
+      font-weight: 800;
+    }
+
+    /* ── Assinatura rodapé ── */
+    .footer-sig {
+      font-size: 20px;
+      font-weight: 500;
+      color: #64748B;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <!-- Foto de fundo: selfie equipe Winning Sales -->
+    <img class="bg-photo" src="photos/IMG_20260225_201815722.jpg" alt="Equipe Winning Sales">
+    
+    <!-- Overlay de contraste -->
+    <div class="overlay"></div>
+
+    <!-- Conteúdo sobre a foto -->
+    <div class="content-wrapper">
+      <div class="brand">
+        <img class="brand-photo" src="profile-photo.png" alt="Thiago C.Lima">
+        <div class="brand-info">
+          <span class="brand-name">Thiago C.Lima</span>
+          <span class="brand-handle">@othiago-clima</span>
+        </div>
+      </div>
+
+      <div class="accent-line"></div>
+
+      <h1 class="hero-text">
+        IA virou <span class="highlight">cultura</span> no nosso time.
+      </h1>
+
+      <span class="footer-sig">Thiago C.Lima</span>
+    </div>
+  </div>
+</body>
+</html>

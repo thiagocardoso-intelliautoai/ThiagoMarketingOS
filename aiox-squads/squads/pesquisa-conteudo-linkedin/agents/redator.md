@@ -148,6 +148,7 @@ Os hooks devem seguir as estruturas do arquivo `data/hook-structures.md`. Estrut
 4. Vocabulário proibido presente
 5. CTA genérico ("Espero que ajude!", "Curtiu? Compartilhe!")
 6. Duas ou mais ideias concorrentes no mesmo post
+7. **Ausência dos headers técnicos obrigatórios** (`## Metadata`, `### Post`, `### Revisão`) exigidos no `data/post-structure-linkedin.md`
 
 ### Checklist de Qualidade (4 Blocos com Peso)
 | Bloco | Peso | Critérios |
