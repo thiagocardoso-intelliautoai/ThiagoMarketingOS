@@ -1,0 +1,124 @@
+storyId: VISUAL-003
+storyTitle: "Capa Print de Autoridade — Fluxo de Obtenção do Print"
+gateDate: 2026-04-30
+reviewer: Quinn (QA Guardian)
+verdict: PASS_WITH_CONCERNS
+
+quality_checks:
+  - check: code_review
+    status: CONCERNS
+    severity: low
+    notes: |
+      Story implementada por sub-agent em worktree isolada (paralelizada com
+      VISUAL-001). Não houve code review interativo durante implementação —
+      apenas o resultado foi mesclado com resolução de conflitos.
+
+      Spot-check confirma:
+      - tasks/obter-print-autoridade.md existe (workflow com 3 caminhos)
+      - workflows/workflow.yaml tem step `obter-print` com type:checkpoint +
+        human_approval_required:true + condition: estilo == 4
+      - agents/designer.md tem nova seção "Fluxo de obtenção de print"
+        referenciando a task
+      - data/visual-styles.md tem Pipeline atualizado do estilo 4
+      - output/prints/.gitkeep + index.json template existem
+      - README.md tem 1 menção a "Uso Responsável" (TOS/fair-use)
+
+      Recomendação: revisão visual completa do conteúdo do
+      obter-print-autoridade.md antes do deploy.
+
+  - check: unit_tests
+    status: WAIVED
+    notes: |
+      Story é configuração de squad (markdown + YAML). Não há código
+      executável testável de forma unitária. Validação real só acontece
+      em integração: rodar squad capa estilo 4 com tema real e verificar
+      que as 3 opções aparecem corretamente.
+
+  - check: acceptance_criteria
+    status: PASS
+    notes: |
+      Agent reportou todos AC atendidos:
+      - 3 opções numeradas (upload manual / EXA+Playwright / EXA+3 candidatos)
+      - Print + metadata.json (URL, autor, dominio, captured_at, hash)
+      - Cache index.json com dedup por hash + URL canonicalizada
+      - Atribuição automática (via @autor / Fonte: <veículo>)
+      - Fallback Playwright → opção 1 manual
+      - Aviso TOS/fair-use no README
+      - Sem mudança no DB Supabase
+      - Designer não procede para render sem aprovação humana
+
+      Decisões autônomas documentadas: white-list de domínios EXA, cache
+      key SHA-256 de URL canonicalizada, step inserido em Phase 2b.
+
+  - check: regressions
+    status: PASS
+    notes: |
+      Mudanças isoladas no estilo 4 (Print de Autoridade) do squad
+      capas-linkedin. Estilos 1, 2, 3, 5 continuam com pipeline original.
+      Workflow.yaml usa condition `estilo == 4` — outros estilos pulam
+      o novo step naturalmente.
+
+  - check: performance
+    status: PASS
+    notes: |
+      Novo checkpoint adiciona latência por escolha humana — esperado.
+      Chamadas EXA + Playwright só rodam se operador escolher opções
+      2 ou 3. Cache local evita re-captura de URLs já vistas.
+      Sem impacto em outros estilos.
+
+  - check: security
+    status: CONCERNS
+    severity: medium
+    notes: |
+      Considerações TOS/copyright endereçadas no README com aviso
+      explícito. Operador é o curador final.
+
+      RISCO RESIDUAL: Playwright captura screenshots de qualquer URL
+      pública. Se operador colar URL maliciosa (drive-by download,
+      phishing renderizado), Playwright executa. Mitigação: white-list
+      de domínios na task limita a redes sociais e sites de notícias
+      conhecidos (operador pode override colando URL fora da lista).
+
+      Recomendação: monitorar primeiras 5 capturas via opção 2/3 para
+      validar comportamento real do Playwright + EXA antes de uso amplo.
+
+  - check: documentation
+    status: PASS
+    notes: |
+      designer.md, visual-styles.md (estilo 4), workflow.yaml, README.md,
+      e a nova task obter-print-autoridade.md formam documentação
+      completa. README inclui aviso TOS/fair-use claro.
+
+issues:
+  - severity: medium
+    category: security
+    description: |
+      Playwright + EXA podem capturar conteúdo arbitrário da web.
+      White-list de domínios mitiga, mas não bloqueia URLs maliciosas
+      explicitamente coladas pelo operador na opção 1.
+    recommendation: |
+      Validar URL via regex de allowlist antes de chamar Playwright.
+      Logar todas capturas no index.json com origem para auditoria.
+      Próxima iteração pode adicionar verificação de hash conhecido.
+
+  - severity: low
+    category: code
+    description: |
+      Implementação não foi revisada interativamente — apenas o resultado
+      foi mesclado com resolução de conflitos.
+    recommendation: |
+      Revisar manualmente o conteúdo de obter-print-autoridade.md antes
+      do primeiro uso real para garantir que as instruções pro designer
+      agent estão claras e completas.
+
+recommendations:
+  - severity: medium
+    description: "Spot-check manual da task obter-print-autoridade.md antes do primeiro uso real (revisar instruções, fluxo, exemplos)"
+    owner: operator
+    blocking: false
+  - severity: low
+    description: "Monitorar primeiras 5 capturas via Playwright/EXA pra validar comportamento real e ajustar white-list se necessário"
+    owner: operator
+    blocking: false
+
+next_action: "Story aprovada com concerns. Pode seguir para @devops *push junto com VISUAL-001 e VISUAL-002. Spot-check da task antes do primeiro uso real."

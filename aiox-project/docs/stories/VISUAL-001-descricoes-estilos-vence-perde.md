@@ -142,6 +142,17 @@ const estiloLabels = {
 
 ---
 
+## QA Results
+
+**Verdict:** PASS ✅
+**Date:** 2026-04-30
+**Reviewer:** Quinn (QA Guardian)
+**Gate file:** [docs/qa/gates/VISUAL-001-gate.yml](../qa/gates/VISUAL-001-gate.yml)
+
+7 checks: 5 PASS · 1 WAIVED (sem testes unitários — story é cosmética) · 1 CONCERNS (regressão potencial — refactor de render.js precisa de spot-check manual no browser).
+
+**Recomendação não-bloqueante:** abrir CCC → modal "Gerar Carrossel"/"Gerar Capa" pra validar que a seleção visual e o prompt continuam funcionando após o refactor.
+
 ## Change Log
 
 - 2026-04-30 — Story criada por @sm (River) com base no plano arquitetural [VISUAL-RECOMMENDER-PLAN.md §2](../architecture/VISUAL-RECOMMENDER-PLAN.md)

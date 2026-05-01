@@ -1,0 +1,72 @@
+storyId: VISUAL-001
+storyTitle: "Descrições Vence/Perde Quando nos Estilos Visuais"
+gateDate: 2026-04-30
+reviewer: Quinn (QA Guardian)
+verdict: PASS
+
+quality_checks:
+  - check: code_review
+    status: PASS
+    notes: |
+      Refactor limpo do render.js — eliminou HTML hardcoded duplicado e
+      consolidou metadata em prompts.js como single source of truth.
+      escapeHtml() aplicado em todos os campos vindos de user data.
+      Helper renderStyleCards() bem isolado e reutilizável.
+
+  - check: unit_tests
+    status: WAIVED
+    notes: |
+      Story é cosmética (markdown + UI hints). Não há lógica testável de
+      forma unitária. Sintaxe JS validada via `node --check` em todos os
+      arquivos modificados (prompts.js, render.js).
+
+  - check: acceptance_criteria
+    status: PASS
+    notes: |
+      9/9 estilos receberam "Perde Quando" nos visual-styles.md
+      (5 capa + 4 carrossel). prompts.js exporta CarouselStyles e CoverStyles
+      com estrutura {label, short, vence_quando, perde_quando}.
+      Retrocompat preservada — funções carrossel()/capa() ainda recebem
+      número e renderizam .label no prompt. Cards no CCC mostram ✅/❌
+      abaixo do label técnico.
+
+  - check: regressions
+    status: CONCERNS
+    severity: low
+    notes: |
+      Refactor de render.js trocou HTML hardcoded de 2 modais por chamada
+      a renderStyleCards(). Lógica de seleção (style-card-selected) preservada
+      mas não foi testada em browser. Recomendação: spot-check manual no
+      CCC abrindo um post → "Gerar Carrossel" e "Gerar Capa" pra confirmar
+      que a seleção visual funciona e o prompt atualiza.
+
+  - check: performance
+    status: PASS
+    notes: |
+      Mais 2 strings curtas por card (vence/perde) — overhead negligível.
+      DOM tem 18 elementos extras (9 cards x 2 spans). Sem JS adicional na
+      renderização.
+
+  - check: security
+    status: PASS
+    notes: |
+      Todo conteúdo vindo de prompts.js (controlado pelo dev) ou de
+      visual-styles.md (controlado pelo squad). escapeHtml() aplicado em
+      data-vence, data-perde, label, short, hint-vence, hint-perde.
+      Zero novo vetor de XSS.
+
+  - check: documentation
+    status: PASS
+    notes: |
+      visual-styles.md de ambos os squads atualizados com "Perde Quando".
+      Story file com File List completa e Change Log atualizado.
+
+issues: []
+
+recommendations:
+  - severity: low
+    description: "Spot-check manual no CCC abrir os modais Gerar Carrossel e Gerar Capa para confirmar seleção visual funciona após o refactor"
+    owner: operator
+    blocking: false
+
+next_action: "Story pode seguir para @devops *push junto com VISUAL-002 e VISUAL-003"

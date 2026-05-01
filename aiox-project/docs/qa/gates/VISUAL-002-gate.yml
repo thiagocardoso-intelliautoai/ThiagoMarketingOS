@@ -1,0 +1,108 @@
+storyId: VISUAL-002
+storyTitle: "Recomendador Automático de Visual (recommendVisual)"
+gateDate: 2026-04-30
+reviewer: Quinn (QA Guardian)
+verdict: PASS
+
+quality_checks:
+  - check: code_review
+    status: PASS
+    notes: |
+      recommend-visual.js bem estruturado: função pura, helpers separados
+      (extractSignals, calcConfidence, parseRecommendedVisual,
+      stringifyRecommendation, getRecommendation). Regex constants no topo
+      para manutenibilidade. Comentários explicam decisões. Imports/exports
+      ES module corretos.
+
+      Integração com render.js elegante: renderStyleCards() recebe parâmetro
+      opcional `recommendation` — não quebra VISUAL-001 (default null).
+
+  - check: unit_tests
+    status: PASS
+    notes: |
+      10/10 testes passando, cobrindo:
+      - 7 cenários da árvore de decisão (Lista densa, Benchmark, Quote,
+        Pessoa+Texto, Micro-Info, Print, Default Rascunho)
+      - 3 helpers (extractSignals com regex, parseRecommendedVisual,
+        stringifyRecommendation)
+      Use de node:assert builtin (sem dependência de framework).
+      Tests rodam standalone via `node tests/recommend-visual.test.js`.
+
+  - check: acceptance_criteria
+    status: CONCERNS
+    severity: low
+    notes: |
+      AC met: 14 de 16 sub-tarefas. 2 pendências documentadas:
+      - 2.2.3 (squad criar-materia-colab equivalente) — estrutura diferente,
+        próxima iteração. NÃO BLOQUEIA — CCC faz fallback client-side.
+      - 2.3.1 RESOLVIDO via @data-engineer — migration criada.
+        OPERADOR DEVE RODAR `20260430_add_recommended_visual.sql` no
+        Supabase SQL Editor antes do deploy. Sem isso, save-post-cli vai
+        falhar no insert (coluna não existe).
+
+  - check: regressions
+    status: PASS
+    notes: |
+      VISUAL-001 functionality preservada — renderStyleCards() agora recebe
+      4º parâmetro opcional sem quebrar chamadas antigas. Cards sem
+      recomendação renderizam exatamente como antes.
+
+  - check: performance
+    status: PASS
+    notes: |
+      extractSignals() é O(n) sobre body.length (regex linear). Roda 1x
+      ao abrir modal e 1x por toggle de checkbox. Body típico < 1500
+      chars → tempo negligível (<1ms). Sem chamadas externas, sem await.
+
+  - check: security
+    status: PASS
+    notes: |
+      Recommendation params (formato, estilo, motivo) escapados via
+      escapeHtml() antes de irem ao DOM. Campo recommended_visual no DB
+      usa upsert parametrizado do Supabase — sem SQL injection.
+      parseRecommendedVisual() valida regex antes de retornar — entrada
+      malformada vira null silenciosamente.
+
+  - check: documentation
+    status: PASS
+    notes: |
+      Story Change Log detalhado com 5 decisões autônomas documentadas.
+      post-structure-linkedin.md tem nova seção "Campo Sugestão Visual"
+      com formato, valores válidos, exemplos e árvore de decisão simplificada.
+      07-estruturacao-post.md tem novo step 7 obrigatório com instruções
+      claras pro redator emitir a sugestão.
+      Migration SQL tem COMMENT na coluna documentando uso e formato.
+
+issues:
+  - severity: medium
+    category: requirements
+    description: |
+      Sub-tarefa 2.3.1 (DDL) requer ação manual do operador no Supabase
+      SQL Editor antes do deploy. Sem isso, save-post-cli falha.
+    recommendation: |
+      Operador roda manualmente o SQL fornecido pelo Dara. Idempotente
+      via ADD COLUMN IF NOT EXISTS — pode rodar várias vezes sem dano.
+
+  - severity: low
+    category: requirements
+    description: |
+      Sub-tarefa 2.2.3 (squad criar-materia-colab) deferida para próxima
+      iteração. Posts gerados pela matéria-colab ficarão sem
+      recommended_visual no DB.
+    recommendation: |
+      CCC faz fallback automático via recommendVisual() client-side —
+      sem impacto pro usuário final. Resolver em sprint futura.
+
+recommendations:
+  - severity: critical
+    description: "Operador DEVE rodar o SQL no Supabase SQL Editor ANTES de qualquer deploy do código novo. Sem isso, save-post-cli quebra ao tentar insert."
+    owner: operator
+    blocking: true
+  - severity: low
+    description: "Spot-check manual no CCC: abrir modal Gerar Carrossel/Capa, verificar estrelinha + borda + linha de motivo no card sugerido"
+    owner: operator
+    blocking: false
+
+next_action: |
+  1. Operador roda migration no Supabase
+  2. Story pode seguir para @devops *push junto com VISUAL-001 e VISUAL-003
