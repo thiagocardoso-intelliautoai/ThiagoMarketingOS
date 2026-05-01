@@ -15,9 +15,13 @@ Entregar post final pronto para aprovação.
 
 ## Instruções
 
-### 1. Receber Hook Escolhido
+### 1. Receber Hook Escolhido e a História (se houver)
 - Hook selecionado pelo Thiago no step-06 (checkpoint)
 - Manter o hook exatamente como aprovado
+- Ler `output/historia-relevante.md` (gerado no step-04-historia):
+  - Verificar `status` (encontrada/adjacente/nenhuma_encontrada/skip)
+  - Se houver história disponível: extrair `fala_literal`, `contexto` e `tags`
+  - Verificar se o hook escolhido já usa fala da história (campo "Origem" do hook)
 
 ### 2. Selecionar Framework
 Consultar `data/post-structure-linkedin.md` e escolher:
@@ -28,6 +32,24 @@ Consultar `data/post-structure-linkedin.md` e escolher:
 - **Declaração+Defesa** — para posicionamento e opinião
 
 Informar framework escolhido e motivo em 1 linha.
+
+### 2.5 Decidir Uso da História no Body
+
+Se `output/historia-relevante.md` tem `status: encontrada` ou `adjacente`, aplicar a matriz **Framework × Uso da história**:
+
+| Framework do post | Como usar a fala literal |
+|-------------------|--------------------------|
+| **Storytelling** | Fala literal abre o post — história É o corpo principal |
+| **PAS** (Problema-Agitação-Solução) | Fala literal na seção "Agitate" — âncora emocional do problema |
+| **Contraste** (Antes vs Depois) | Fala literal no "Depois" — prova da transformação |
+| **Lista** (Pontos numerados) | Fala literal como item de abertura ou fechamento |
+| **Declaração+Defesa** | Fala literal como evidência da defesa — "porque eu mesmo..." |
+| **Factual** | Sem história obrigatória — se `status: skip`, omitir completamente |
+
+**Regra de preservação da voz:**
+- Citações em aspas duplas `"..."` ou blockquote `>`
+- NUNCA parafrasear a fala literal — preservar gírias, "brother", "leque", "caralho"
+- Atribuir contexto (cena/data) antes ou depois da fala para dar âncora
 
 ### 3. Estruturar o Post
 
@@ -57,6 +79,7 @@ Se QUALQUER condição abaixo for verdadeira, **REFAZER o post antes de prossegu
 4. ❌ Vocabulário proibido presente (game changer, sinergia, hack, fórmula mágica, segredo, disruptivo, mindset)
 5. ❌ CTA genérico ("Espero que ajude!", "Curtiu? Compartilhe!")
 6. ❌ Duas ou mais ideias concorrentes no mesmo post (violação Rule of 1)
+7. ❌ `historia-relevante.md` recebida com `status: encontrada` ou `adjacente` mas post final SEM nenhuma fala literal entre aspas/blockquote — a história disponível DEVE ser usada (paráfrase é veto, citação literal é obrigatória)
 
 > Se qualquer veto for acionado, corrigir imediatamente antes de continuar.
 

@@ -7,7 +7,7 @@
 **🔗 Bloqueia:** HISTORIA-004
 **👤 Executor:** @dev (Dex)
 **🛡️ Quality Gate:** @po (Pax)
-**📊 Status:** `InReview`
+**📊 Status:** `Done`
 
 > ✅ **Desbloqueada:** HISTORIA-001 e HISTORIA-002 Done (2026-05-01).
 
