@@ -68,6 +68,10 @@ Visual primeiro: apresenta o design system documentado antes de mostrar o result
 - Texto do Thiago em 38-48px
 - Screenshot centralizado com borda arredondada + shadow
 - Atribuição da fonte
+- **Obtenção do print:** SEMPRE consultar `tasks/obter-print-autoridade.md` ANTES de renderizar.
+  Esta task oferece 3 caminhos (upload manual / EXA + Playwright / EXA curado com 3 candidatos)
+  e é checkpoint humano obrigatório — designer NÃO procede para o render sem aprovação do operador.
+  Renderer lê `output/prints/<slug>/metadata.json` para popular automaticamente a atribuição.
 
 ### 5. Quote Card
 - Gradiente escuro premium ou textura sutil
@@ -75,6 +79,24 @@ Visual primeiro: apresenta o design system documentado antes de mostrar o result
 - Citação em 36-48px, light italic ou medium
 - Atribuição ("— Thiago C.Lima")
 - Elemento gráfico de separação
+
+---
+
+## Fluxo de Obtenção de Print (Estilo 4 — Print de Autoridade)
+
+Quando o operador escolhe o estilo 4, o designer **NÃO** assume que o print já existe localmente. Em vez disso:
+
+1. **Antes de qualquer render**, executar `tasks/obter-print-autoridade.md`.
+2. A task oferece 3 caminhos ao operador:
+   1. **Upload manual** — path local OU URL pública
+   2. **Busca automática** — EXA descobre 1 candidato + Playwright captura
+   3. **Sugestão curada** — EXA retorna top 3 + operador escolhe
+3. **Checkpoint humano obrigatório** — operador aprova o print antes do render.
+4. Print salvo em `output/prints/<slug>/print.png` + `metadata.json` (URL origem, autor, domínio, hash).
+5. Cache `output/prints/index.json` evita re-captura de URLs já vistas.
+6. Renderer (template `print-autoridade.html`) lê `metadata.json` e popula a **atribuição automática** (`via @autor` ou `Fonte: <veículo>`).
+
+> 📌 **Designer nunca pula esta task.** Se o operador já tem o print, ele usa Opção 1 (upload manual). Se não tem, usa Opção 2 ou 3. Em todos os casos há checkpoint humano antes do render.
 
 ---
 

@@ -71,6 +71,8 @@ async function savePost(postData) {
     cta:            postData.cta || null,
     hashtags:       postData.hashtags || [],
     sources:        postData.sources || [],
+    // VISUAL-002: sugestao visual emitida pelo squad (string livre, ex: "carrossel/Notebook Raw (motivo)")
+    recommended_visual: postData.recommendedVisual || null,
     review_score:   postData.reviewScore ? parseInt(postData.reviewScore, 10) : null,
     status:         postData.status || 'armazem',
     urgency:        postData.urgency || 'relevante',

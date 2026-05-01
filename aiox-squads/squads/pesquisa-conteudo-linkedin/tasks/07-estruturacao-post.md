@@ -109,12 +109,43 @@ Avaliar o post nos 4 blocos abaixo (referência: `checklists/review-checklist.md
 - **Score ≥ 80%** → ✅ Entregar post final
 - **Score < 80%** → 🔄 Refazer post (max 1 tentativa, depois reescrever do zero com nova abordagem)
 
-### 7. Montar Output Final
+### 7. Emitir Sugestão Visual (VISUAL-002)
+
+Decidir e emitir uma sugestão de visual no `## Metadata` do post-final.md, no formato:
+
+```
+- **Sugestão Visual:** <formato>/<Estilo> (<motivo curto>)
+```
+
+**Decisão (árvore simplificada):**
+
+1. **Formato:**
+   - `carrossel` se: ≥3 etapas/itens numerados, ≥2 dados comparativos (ex: "de X para Y", "A vs B"), framework `Lista` ou `Declaração+Defesa` com >1100 chars, ou Storytelling >1000 chars
+   - `capa` se: mensagem unitária (frase forte, 1 dado central, reação curta, cena única) ou char_count ≤ 800
+   - Empate → `capa` (CTR maior na thumbnail)
+
+2. **Estilo:** seguir os "Vence Quando" documentados em `aiox-squads/squads/{capas,carrosseis}-linkedin/data/visual-styles.md`:
+   - Carrossel `Data-Driven` → benchmark com ≥2 dados
+   - Carrossel `Twitter-Style` → tem print real + reação ≥3 etapas
+   - Carrossel `Editorial Clean` → matéria-colab, premium-neutro
+   - Carrossel `Notebook Raw` → opinião pessoal/cru, mito, framework pessoal (default carrossel)
+   - Capa `Quote Card` → frase falsificável forte
+   - Capa `Micro-Infografico` → 1 dado-hero
+   - Capa `Print de Autoridade` → reação curta com print
+   - Capa `Pessoa + Texto` → storytelling com foto contextual disponível
+   - Capa `Rascunho no Papel` → default humanizado (visualizável em 3-5 blocos)
+
+3. **Motivo curto** (máx 60 chars): por que esse formato/estilo encaixa nesse post.
+
+**Se incerto:** omitir a linha. CCC fará fallback automático via `recommendVisual()`.
+
+### 8. Montar Output Final
 
 Incluir no output:
 - Post completo (hook + body + CTA)
 - Framework utilizado
 - Estrutura de hook usada
+- **Sugestão Visual** (linha do Metadata)
 - Score de qualidade calculado
 - Fontes utilizadas
 

@@ -38,6 +38,11 @@ Foto real de papel/caderno em cenário contextual + infográfico desenhado à l�
 - Quando o post tem dados, frameworks, listas ou fluxos que ficam melhores visualizados
 - Quando quer gerar "saves" (infográfico = salvamento)
 
+### Perde Quando
+- Conteúdo é puramente verbal (frase isolada) — vai melhor como Quote Card
+- Conteúdo é puramente numérico (1 dado central) — vai melhor como Micro-Infográfico
+- O tom exige formalidade premium (matéria-colab) — vai melhor como Editorial Clean carrossel
+
 ### Pipeline de Criação
 1. **Analisar o post** — identificar os dados/conceitos-chave que serão visualizados
 2. **Selecionar foto do banco Supabase** via `node shared/scripts/list-source-photos-cli.js --category papers` — escolher cenário adequado ao tom _(fallback: `assets/papers/`)_
@@ -112,6 +117,11 @@ Foto real do Thiago ou do contexto com overlay de texto protegido por gradient. 
 - Bastidor, palestra, visita a cliente, storytelling pessoal
 - Quando há foto contextual disponível no banco
 
+### Perde Quando
+- Tema é abstrato/conceitual sem cena real para ancorar
+- Não há foto contextual adequada no banco
+- O conteúdo é puramente teórico (framework, dado, opinião sem cena) — vai melhor como Caderno Rascunhado ou Editorial
+
 ### Pipeline de Seleção de Imagem
 1. **Analisar banco de fotos** via `node shared/scripts/list-source-photos-cli.js --category photos` — selecionar a mais adequada ao tema/emoção _(fallback: `assets/photos/`)_
 2. **Decidir se usa original ou adapta** — avaliar se precisa de alteração por IA
@@ -148,6 +158,11 @@ UM dado, UMA métrica, UM insight — visualizado de forma limpa e impactante. "
 - Quando o post contém um número/dado impactante
 - Quando quer gerar "saves" (métrica mais valiosa do algoritmo)
 
+### Perde Quando
+- Tem ≥2 dados centrais comparativos (vai melhor como Data-Driven carrossel)
+- Não há nenhum dado quantitativo central no post
+- O dado não tem fonte verificável (sem fonte = sem credibilidade)
+
 ### Especificações
 | Elemento | Valor |
 |----------|-------|
@@ -178,6 +193,20 @@ Screenshot estilizado de uma fonte de autoridade (tweet, notícia, comentário) 
 - Quando o post comenta uma notícia/declaração de terceiro
 - Quando quer "bridge" — conectar ao que o público já conhece
 
+### Perde Quando
+- Não há print real disponível (e não há tema público para buscar)
+- A reação precisa de desenvolvimento longo em ≥3 etapas (vai melhor como carrossel Twitter-Style)
+- O tema é abstrato e não responde a nada público específico
+
+### Pipeline de Criação (Print de Autoridade)
+1. Operador escolhe estilo 4 no checkpoint inicial (step-01)
+2. Designer chama task `tasks/obter-print-autoridade.md` (3 caminhos: upload manual / EXA + Playwright / EXA curado com 3 candidatos)
+3. **Checkpoint humano obrigatório** — operador valida o print escolhido antes do render
+4. Print salvo em `output/prints/<slug>/print.png` + `metadata.json` (URL origem, autor, domínio, hash, atribuição)
+5. Designer renderiza HTML 1080×1350 com print + texto da opinião do Thiago + atribuição automática lida do metadata
+6. Puppeteer headless → PNG (`scripts/render-cover.js`)
+7. Upload Supabase via `node ../../shared/scripts/upload-cover-cli.js`
+
 ### Especificações
 | Elemento | Valor |
 |----------|-------|
@@ -207,6 +236,11 @@ Frase/citação com design editorial premium. Não é "quote Canva" genérico �
 - Quando a frase é forte o suficiente para ser compartilhada como screenshot
 - Frase do Thiago ou de uma referência relevante
 - Quando precisa de cadência rápida (produção rápida)
+
+### Perde Quando
+- A força do post está no desenvolvimento em arco, não numa frase isolada (vai melhor como Caderno)
+- A frase só funciona dentro do contexto do post (não passa o teste "saiu de contexto, ainda é forte?")
+- O conteúdo tem dados quantitativos centrais (vai melhor como Data-Driven ou Micro-Infográfico)
 
 ### Especificações
 | Elemento | Valor |

@@ -746,6 +746,112 @@
   color: var(--text-secondary);
 }
 
+/* VISUAL-001: Dicas "vence/perde quando" no card de estilo */
+.style-card__hint {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px dashed var(--border, rgba(255, 255, 255, 0.08));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs, 4px);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.style-card__hint .hint-vence {
+  color: var(--accent-primary);
+}
+
+.style-card__hint .hint-perde {
+  color: var(--text-muted, var(--text-secondary));
+  opacity: 0.8;
+}
+
+/* VISUAL-002: Card recomendado pelo recommendVisual() */
+.style-card-recommended {
+  position: relative;
+  border-color: var(--accent-primary);
+}
+
+.style-card-recommended.confianca-alta {
+  border-color: var(--accent-primary);
+  border-width: 2px;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
+}
+
+.style-card-recommended.confianca-media {
+  border-color: rgba(20, 184, 166, 0.6);
+  border-width: 2px;
+}
+
+.style-card-recommended.confianca-baixa {
+  border-color: var(--text-muted, var(--text-secondary));
+  border-style: dashed;
+}
+
+.style-card-recommended::before {
+  content: '⭐';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 1.1rem;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+}
+
+.recommend-reason {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px dashed var(--border, rgba(255, 255, 255, 0.08));
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--accent-primary);
+  font-style: italic;
+  text-align: left;
+}
+
+.recommend-reason .confianca-aviso {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-muted, var(--text-secondary));
+  font-style: normal;
+  font-size: 0.72rem;
+}
+
+/* VISUAL-002: 2 checkboxes de sinais opcionais (tem_print, tem_foto) */
+.recommend-signals {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md, 12px);
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-card, rgba(255, 255, 255, 0.03));
+  border: 1px dashed var(--border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-card, 8px);
+  font-size: 0.82rem;
+}
+
+.recommend-signals__label {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+.recommend-signal {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--text-primary, #F1F5F9);
+  user-select: none;
+}
+
+.recommend-signal input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--accent-primary);
+}
+
 /* ─── FORM ─── */
 .form-grid {
   display: flex;

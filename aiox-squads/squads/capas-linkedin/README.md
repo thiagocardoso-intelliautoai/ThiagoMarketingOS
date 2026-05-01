@@ -89,6 +89,20 @@ capas-linkedin/
     └── workflow.yaml
 ```
 
+## ⚠️ Uso Responsável de Prints (Estilo 4 — Print de Autoridade)
+
+Esta squad pode capturar screenshots de posts públicos (Twitter/X, LinkedIn, sites de notícias) via EXA + Playwright. **O operador é o curador final** — verifica se o uso está dentro de fair use (citação com atribuição, comentário editorial sobre conteúdo público).
+
+- Sempre incluir atribuição automática (`via @autor` para redes sociais ou `Fonte: <veículo>` para imprensa)
+- Não capturar conteúdo claramente privado ou behind login wall
+- Se a rede social bloquear o scraping (ex: Twitter sem login), usar Opção 1 (upload manual após baixar via extensão de browser)
+- Domínios fora da white-list só são aceitos via Opção 1 (upload manual com URL/path)
+- Cache local (`output/prints/index.json`) evita re-captura, mas operador sempre vê preview antes de aprovar
+
+> Detalhes técnicos do fluxo: ver `tasks/obter-print-autoridade.md`.
+
+---
+
 ## Requisitos Técnicos
 
 - **Viewport:** 1080 x 1350 (4:5 portrait)

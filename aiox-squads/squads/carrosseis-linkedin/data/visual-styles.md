@@ -21,6 +21,11 @@ Formato inspirado em tweets/posts do X (Twitter) — fundo charcoal, identidade 
 - **Tipo de conteúdo:** Trending topics, breaking news, lançamentos de ferramentas, opiniões rápidas
 - **Gatilho:** Quando existe um print/screenshot de autoridade que contextualiza o tema
 
+### Perde Quando
+- Não há print de autoridade disponível (sem print, perde o gatilho visual diferenciador)
+- A reação cabe em 1 frame sem perder força (vai melhor como capa Print de Autoridade)
+- O conteúdo é puramente didático/framework sem ancoragem em algo público (vai Editorial Clean ou Notebook Raw)
+
 ### Especificações — Slide 1 (Hook)
 - **Fundo:** `#1A1A2E` (Charcoal — `--bg-dark`)
 - **Perfil:** Foto circular (80px diâmetro) + Nome "Thiago C.Lima" + @ "othiago-clima" no topo
@@ -52,6 +57,11 @@ Formato premium/editorial — fundo claro, tipografia bold sans-serif, cor de de
 - **Tipo de conteúdo:** Frameworks, step-by-step, conteúdo educacional, processos, listas estruturadas
 - **Gatilho:** Quando o conteúdo é denso e precisa de máxima clareza e legibilidade
 
+### Perde Quando
+- O tom é provocativo/pessoal/cru (vai melhor como Notebook Raw)
+- O conteúdo é só dados numéricos comparativos (vai melhor como Data-Driven)
+- A peça não pede premium — é opinião rápida (vai melhor como Notebook Raw)
+
 ### Especificações
 - **Fundo:** `#F4F4F5` (Cloud — `--bg-light`)
 - **Texto principal:** `#18181B` (Ink — `--text-primary-light`)
@@ -81,6 +91,11 @@ Formato focado em dados e resultados — fundo charcoal profundo, números gigan
 - **Fonte de tese:** Benchmark Real (com dados)
 - **Tipo de conteúdo:** Case studies, resultados mensuráveis, ROI, antes/depois, benchmarks
 - **Gatilho:** Quando existem números concretos que sustentam a narrativa
+
+### Perde Quando
+- Existe apenas 1 dado central (vai melhor como capa Micro-Infográfico)
+- Não há nenhum dado quantitativo central na narrativa
+- Os dados não têm fonte verificável (sem fonte = sem credibilidade no formato Dashboard)
 
 ### Especificações
 - **Fundo:** `#1A1A2E` (Charcoal — `--bg-dark`)
@@ -114,6 +129,11 @@ Formato anti-template, anti-AI — estética de caderno de anotações com tipog
 - **Fonte de tese:** Falha Documentada
 - **Tipo de conteúdo:** Conteúdo provocativo, mitos/desmistificação, opinião forte, bastidores, reflexões pessoais
 - **Gatilho:** Quando o tom é pessoal, controverso ou anti-corporativo
+
+### Perde Quando
+- É matéria-colab — exige tom premium-neutro (vai melhor como Editorial Clean)
+- Conteúdo tem dados centrais comparativos como elemento principal (vai melhor como Data-Driven)
+- O tema é puramente educacional/tutorial sem opinião pessoal forte (vai melhor como Editorial Clean)
 
 ### Especificações
 - **Fundo:** `#F5F0E8` (Craft — `--bg-craft`) com linhas de caderno sutis (CSS repeating-linear-gradient)

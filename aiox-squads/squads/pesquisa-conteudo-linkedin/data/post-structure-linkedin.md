@@ -142,6 +142,7 @@ CTA: [Concorda ou discorda?]
 - **Tema:** [Tema Curto]
 - **Framework:** [Nome do Framework]
 - **Hook:** [Tipo do Hook]
+- **Sugestão Visual:** [formato/Estilo (motivo curto)]
 
 ### Post
 
@@ -158,4 +159,29 @@ CTA: [Concorda ou discorda?]
 
 **Por que isso é obrigatório?**
 O script de salvamento (`save-post-cli.js`) usa esses headers (`## Metadata`, `### Post`, `### Revisão`) como delimitadores. Sem eles, o corpo do post e o score não são extraídos para a plataforma.
+
+### Campo `Sugestão Visual` (VISUAL-002)
+
+Linha obrigatória que orienta o operador (e a UI do CCC) sobre qual formato/estilo visual usar para esse post específico.
+
+**Formato:** `<formato>/<Estilo> (<motivo curto>)`
+
+**Valores válidos:**
+- `formato`: `capa` ou `carrossel`
+- `Estilo` (capa): `Rascunho no Papel` · `Pessoa + Texto` · `Micro-Infografico` · `Print de Autoridade` · `Quote Card`
+- `Estilo` (carrossel): `Twitter-Style` · `Editorial Clean` · `Data-Driven` · `Notebook Raw`
+
+**Exemplos:**
+- `carrossel/Notebook Raw (lista de 5 etapas com tom pessoal)`
+- `capa/Quote Card (frase falsificável forte)`
+- `carrossel/Data-Driven (benchmark com dados comparativos)`
+- `capa/Rascunho no Papel (default — visualizável humanizado)`
+
+**Como decidir** (árvore de decisão simplificada):
+
+1. **Carrossel ganha quando:** ≥3 etapas sequenciais, ≥2 dados comparativos, framework denso > 1100 chars, storytelling com arco longo
+2. **Capa ganha quando:** mensagem unitária (manifesto, dado único, reação curta, história de 1 cena), char_count ≤ 800, ou empate (CTR maior na thumbnail)
+3. **Estilo:** segue os "vence quando" documentados em `aiox-squads/squads/{capas,carrosseis}-linkedin/data/visual-styles.md`
+
+Se a sugestão não puder ser determinada com confiança, omitir a linha — o CCC calcula client-side via `recommendVisual()` como fallback.
 

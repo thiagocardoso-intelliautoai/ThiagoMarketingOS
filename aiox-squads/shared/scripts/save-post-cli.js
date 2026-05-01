@@ -82,6 +82,8 @@ function parsePostMarkdown(content, title) {
     framework: '',
     hookStructure: '',
     sources: [],
+    // VISUAL-002: sugestao visual emitida pelo squad no markdown
+    recommendedVisual: null,
     reviewScore: argv['review-score'] || null,
     status: argv.status,
     urgency: argv.urgency,
@@ -173,6 +175,12 @@ function parsePostMarkdown(content, title) {
       const sourcesStr = trimmed.replace('- **Fontes:**', '').trim();
       result.sources = sourcesStr.split(',').map(s => s.trim()).filter(Boolean);
     }
+    // VISUAL-002: extrair sugestao visual emitida pelo squad
+    // Formato esperado: "- **Sugestão Visual:** carrossel/Notebook Raw (motivo curto)"
+    if (trimmed.startsWith('- **Sugestão Visual:**') || trimmed.startsWith('- **Sugestao Visual:**')) {
+      const sugestao = trimmed.replace(/- \*\*Sugest[aã]o Visual:\*\*/, '').trim();
+      if (sugestao) result.recommendedVisual = sugestao;
+    }
 
     // Post body
     if (trimmed === '### Post') {
@@ -263,6 +271,7 @@ async function main() {
   console.log(`📊 Pilar: ${postData.pillar} (${postData.pillarLabel || 'N/A'})`);
   console.log(`📐 Framework: ${postData.framework || 'N/A'}`);
   console.log(`📊 Score: ${postData.reviewScore || 'N/A'}`);
+  console.log(`💡 Sugestão Visual: ${postData.recommendedVisual || 'N/A (CCC fará fallback)'}`);
   console.log(`📋 Status: ${postData.status}`);
   console.log(`⏰ Urgência: ${postData.urgency}`);
   console.log(`🪝 Hook: ${postData.hookText ? postData.hookText.substring(0, 80) + '...' : 'N/A'}`);

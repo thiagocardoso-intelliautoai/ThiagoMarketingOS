@@ -1,7 +1,8 @@
 // render.js — DOM Rendering Engine v2.0 (Lucide Icons Edition)
 import { DataStore } from './data.js';
 import { MODE_LABELS, FONTE_TESE_CONFIG, STATUS_LABELS, URGENCY_LABELS } from './state.js';
-import { Prompts } from './prompts.js';
+import { Prompts, CarouselStyles, CoverStyles } from './prompts.js';
+import { getRecommendation } from './recommend-visual.js';
 import { renderLinkedInPreview, attachLinkedInPreviewEvents } from './linkedin-preview.js';
 import { Icons } from './icons.js';
 import { showToast } from './toast.js';
@@ -609,10 +610,69 @@ function openViewPostModal(postId) {
   });
 }
 
+// VISUAL-001 + VISUAL-002: Renderiza cards de estilo a partir da metadata de prompts.js
+// (label + vence_quando + perde_quando) — single source of truth.
+// Recebe `recommendation` (opcional) — se presente e formato/estilo bate, marca o card com classe destacada.
+function renderStyleCards(stylesMap, icons, defaultStyleNum, recommendation = null) {
+  return Object.entries(stylesMap).map(([num, meta]) => {
+    const n = parseInt(num);
+    const icon = icons[n - 1] || '✨';
+    const selectedClass = n === defaultStyleNum ? ' style-card-selected' : '';
+    const isRecommended = recommendation && recommendation.cardNum === n;
+    const recommendedClass = isRecommended
+      ? ` style-card-recommended confianca-${recommendation.confianca || 'media'}`
+      : '';
+    const reasonHtml = isRecommended
+      ? `<div class="recommend-reason">⭐ Sugestão para esse post — ${escapeHtml(recommendation.motivo || '')}${
+          recommendation.confianca === 'baixa'
+            ? ' <span class="confianca-aviso">(baixa confiança — escolha manualmente)</span>'
+            : ''
+        }</div>`
+      : '';
+    return `
+      <div class="style-card${selectedClass}${recommendedClass}" data-style="${n}" tabindex="0" role="button"
+           data-vence="${escapeHtml(meta.vence_quando)}"
+           data-perde="${escapeHtml(meta.perde_quando)}">
+        <div class="style-card-icon">${icon}</div>
+        <h4>${escapeHtml(meta.label.split('(')[0].trim())}</h4>
+        <p>${escapeHtml(meta.short)}</p>
+        <div class="style-card__hint">
+          <span class="hint-vence">✅ ${escapeHtml(meta.vence_quando)}</span>
+          <span class="hint-perde">❌ ${escapeHtml(meta.perde_quando)}</span>
+        </div>
+        ${reasonHtml}
+      </div>`;
+  }).join('');
+}
+
+// VISUAL-002: HTML dos 2 checkboxes que alimentam sinais opcionais (tem_print, tem_foto)
+// usados pelo recommendVisual() para refinar a sugestao em runtime.
+function renderRecommendCheckboxes() {
+  return `
+    <div class="recommend-signals">
+      <span class="recommend-signals__label">Sinais opcionais (refinam a sugestão):</span>
+      <label class="recommend-signal">
+        <input type="checkbox" data-signal="temPrint">
+        <span>Tenho print de autoridade</span>
+      </label>
+      <label class="recommend-signal">
+        <input type="checkbox" data-signal="temFotoContextual">
+        <span>Tenho foto contextual</span>
+      </label>
+    </div>`;
+}
+
 function openCarouselModal(postId) {
   const post = DataStore.getPostById(postId);
   if (!post) return;
   let selectedStyle = 1;
+  let signals = { temPrint: !!post.temPrint, temFotoContextual: !!post.temFotoContextual };
+
+  // VISUAL-002: calcula recomendacao (DB-first com fallback client-side)
+  const computeRec = () => getRecommendation({ ...post, ...signals });
+  let rec = computeRec();
+  // Se a recomendacao e para carrossel, destaca o card; senao, sem destaque (operador escolhe manualmente)
+  const carrosselRec = rec && rec.formato === 'carrossel' ? rec : null;
 
   openModal(`
     <div class="modal-header">
@@ -623,28 +683,11 @@ function openCarouselModal(postId) {
       <p class="modal-subtitle">Post selecionado:</p>
       <p class="modal-highlight">${escapeHtml(post.title)}</p>
 
+      ${renderRecommendCheckboxes()}
+
       <p class="modal-subtitle" style="margin-top:var(--space-lg)">Escolha o estilo visual:</p>
       <div class="style-selector style-selector-carousel">
-        <div class="style-card style-card-selected" data-style="1" tabindex="0" role="button">
-          <div class="style-card-icon">🖤</div>
-          <h4>Twitter Style</h4>
-          <p>Fundo preto, print de autoridade</p>
-        </div>
-        <div class="style-card" data-style="2" tabindex="0" role="button">
-          <div class="style-card-icon">✨</div>
-          <h4>Editorial Clean</h4>
-          <p>Fundo claro, tipografia bold, premium</p>
-        </div>
-        <div class="style-card" data-style="3" tabindex="0" role="button">
-          <div class="style-card-icon">📊</div>
-          <h4>Data-Driven</h4>
-          <p>Fundo navy, números gigantes, dados</p>
-        </div>
-        <div class="style-card" data-style="4" tabindex="0" role="button">
-          <div class="style-card-icon">📓</div>
-          <h4>Notebook Raw</h4>
-          <p>Papel craft, escrita manual, anti-AI</p>
-        </div>
+        ${renderStyleCards(CarouselStyles, ['🖤', '✨', '📊', '📓'], 1, carrosselRec)}
       </div>
 
       <div class="expand-prompt" style="margin-top:var(--space-lg)">
@@ -671,12 +714,41 @@ function openCarouselModal(postId) {
   document.getElementById('copy-carousel-prompt')?.addEventListener('click', () => {
     copyToClipboard(document.getElementById('carousel-prompt').textContent);
   });
+
+  // VISUAL-002: checkboxes recalcula recomendacao e atualiza destaque dos cards
+  document.querySelectorAll('.recommend-signal input').forEach(input => {
+    input.addEventListener('change', (e) => {
+      signals[e.target.dataset.signal] = e.target.checked;
+      const newRec = computeRec();
+      const newCarrosselRec = newRec && newRec.formato === 'carrossel' ? newRec : null;
+      // Re-renderiza apenas o style-selector
+      const container = document.querySelector('.style-selector-carousel');
+      if (container) {
+        container.innerHTML = renderStyleCards(CarouselStyles, ['🖤', '✨', '📊', '📓'], selectedStyle, newCarrosselRec);
+        // Re-attach listeners no novo HTML
+        container.querySelectorAll('.style-card').forEach(card => {
+          card.addEventListener('click', () => {
+            container.querySelectorAll('.style-card').forEach(c => c.classList.remove('style-card-selected'));
+            card.classList.add('style-card-selected');
+            selectedStyle = parseInt(card.dataset.style);
+            document.getElementById('carousel-prompt').textContent = Prompts.carrossel(post, selectedStyle);
+          });
+        });
+      }
+    });
+  });
 }
 
 function openCoverModal(postId) {
   const post = DataStore.getPostById(postId);
   if (!post) return;
   let selectedStyle = 1;
+  let signals = { temPrint: !!post.temPrint, temFotoContextual: !!post.temFotoContextual };
+
+  // VISUAL-002: calcula recomendacao (DB-first com fallback client-side)
+  const computeRec = () => getRecommendation({ ...post, ...signals });
+  let rec = computeRec();
+  const capaRec = rec && rec.formato === 'capa' ? rec : null;
 
   openModal(`
     <div class="modal-header">
@@ -687,33 +759,11 @@ function openCoverModal(postId) {
       <p class="modal-subtitle">Post selecionado:</p>
       <p class="modal-highlight">${escapeHtml(post.title)}</p>
 
+      ${renderRecommendCheckboxes()}
+
       <p class="modal-subtitle" style="margin-top:var(--space-lg)">Escolha o estilo visual:</p>
       <div class="style-selector style-selector-cover">
-        <div class="style-card style-card-selected" data-style="1" tabindex="0" role="button">
-          <div class="style-card-icon">✏️</div>
-          <h4>Rascunho no Papel</h4>
-          <p>Infográfico à lápis sobre foto real de caderno</p>
-        </div>
-        <div class="style-card" data-style="2" tabindex="0" role="button">
-          <div class="style-card-icon">👤</div>
-          <h4>Pessoa + Texto</h4>
-          <p>Foto real com overlay de texto protegido</p>
-        </div>
-        <div class="style-card" data-style="3" tabindex="0" role="button">
-          <div class="style-card-icon">📊</div>
-          <h4>Micro-Infográfico</h4>
-          <p>Um dado/métrica hero visualizado</p>
-        </div>
-        <div class="style-card" data-style="4" tabindex="0" role="button">
-          <div class="style-card-icon">🖼️</div>
-          <h4>Print de Autoridade</h4>
-          <p>Screenshot + opinião do Thiago</p>
-        </div>
-        <div class="style-card" data-style="5" tabindex="0" role="button">
-          <div class="style-card-icon">⚡</div>
-          <h4>Quote Card</h4>
-          <p>Citação editorial premium</p>
-        </div>
+        ${renderStyleCards(CoverStyles, ['✏️', '👤', '📊', '🖼️', '⚡'], 1, capaRec)}
       </div>
 
       <div class="expand-prompt" style="margin-top:var(--space-lg)">
@@ -739,6 +789,27 @@ function openCoverModal(postId) {
 
   document.getElementById('copy-cover-prompt')?.addEventListener('click', () => {
     copyToClipboard(document.getElementById('cover-prompt').textContent);
+  });
+
+  // VISUAL-002: checkboxes recalcula recomendacao e atualiza destaque dos cards
+  document.querySelectorAll('.recommend-signal input').forEach(input => {
+    input.addEventListener('change', (e) => {
+      signals[e.target.dataset.signal] = e.target.checked;
+      const newRec = computeRec();
+      const newCapaRec = newRec && newRec.formato === 'capa' ? newRec : null;
+      const container = document.querySelector('.style-selector-cover');
+      if (container) {
+        container.innerHTML = renderStyleCards(CoverStyles, ['✏️', '👤', '📊', '🖼️', '⚡'], selectedStyle, newCapaRec);
+        container.querySelectorAll('.style-card').forEach(card => {
+          card.addEventListener('click', () => {
+            container.querySelectorAll('.style-card').forEach(c => c.classList.remove('style-card-selected'));
+            card.classList.add('style-card-selected');
+            selectedStyle = parseInt(card.dataset.style);
+            document.getElementById('cover-prompt').textContent = Prompts.capa(post, selectedStyle);
+          });
+        });
+      }
+    });
   });
 }
 
