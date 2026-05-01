@@ -4,6 +4,8 @@
 ### Subpauta: [título curto e específico]
 - **Pauta Central:** [nome da pauta central]
 - **Fonte de tese:** [classificação]
+- **Narrativa-relevance:** 🔴 ALTA | 🟡 MÉDIA | ⚫ NULA
+- **Justificativa-narrativa:** [1-2 linhas explicando a classificação]
 - **Ângulo:** [1 frase — o que torna essa subpauta diferente]
 - **Hook embrionário:** [≤ 210 chars — testável como hook real]
 - **Matéria-prima:** [de onde vem o dado/exemplo — experiência real, ferramenta, caso, etc.]

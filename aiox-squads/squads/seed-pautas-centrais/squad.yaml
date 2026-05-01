@@ -33,6 +33,7 @@ workflow:
 # Dados de referência
 data:
   - data/linkedin-strategy.md
+  - ../../../historia-thiago/criterio-narrativa-relevance.md
 
 # Templates de output
 templates:

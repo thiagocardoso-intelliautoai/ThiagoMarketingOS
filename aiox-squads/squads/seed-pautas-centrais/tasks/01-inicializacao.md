@@ -17,6 +17,7 @@
 Carregar antes de executar:
 - `data/linkedin-strategy.md` — Lente, bandeiras, ICP, fontes de tese, regras de qualidade
 - `agents/estrategista.md` — Persona da Eva Estratégia
+- `../../../historia-thiago/criterio-narrativa-relevance.md` — Critério de classificação de narrativa-relevance (4 sinais, 3 níveis, tabela de decisão)
 
 ---
 
@@ -43,11 +44,24 @@ Para cada Pauta Central confirmada, gerar 3 subpautas. Cada subpauta segue o tem
 ### Subpauta: [título curto e específico]
 - **Pauta Central:** [nome da pauta]
 - **Fonte de tese:** [classificação]
+- **Narrativa-relevance:** 🔴 ALTA | 🟡 MÉDIA | ⚫ NULA
+- **Justificativa-narrativa:** [1-2 linhas explicando a classificação]
 - **Ângulo:** [1 frase — o que torna essa subpauta diferente]
 - **Hook embrionário:** [≤ 210 chars — testável como hook real]
 - **Matéria-prima:** [de onde vem o dado/exemplo — experiência real, ferramenta, caso, etc.]
 - **Urgência:** 🔴 Urgente | 🟡 Relevante | 🟢 Estoque
 ```
+
+### 2.5 Classificar Narrativa-Relevance
+
+Para cada subpauta embrionária gerada no passo 2:
+1. Consultar `criterio-narrativa-relevance.md` (já no Context Loading)
+2. Aplicar os 4 sinais ao hook embrionário da subpauta
+3. Usar a Tabela de Decisão Rápida para determinar o nível
+4. Registrar `Narrativa-relevance` com o emoji e nível correto
+5. Escrever `Justificativa-narrativa` com 1-2 linhas de raciocínio
+
+**Regra de conservadorismo:** Em caso de dúvida entre 🟡 e ⚫, classificar ⚫.
 
 ### 3. Verificar Qualidade
 
@@ -127,6 +141,7 @@ Rejeitar e refazer se:
 3. ❌ Subpauta que não passa na lente "Built, not prompted"
 4. ❌ Mais ou menos de 4 Pautas Centrais
 5. ❌ Pauta Central proposta que não se conecta a uma fonte de tese
+6. ❌ Subpauta sem campo `Narrativa-relevance` classificado
 
 ---
 
@@ -138,6 +153,8 @@ Rejeitar e refazer se:
 - [ ] Balanceamento entre pautas (3 cada)
 - [ ] Nenhuma subpauta duplicada
 - [ ] Matéria-prima identificada pra cada subpauta
+- [ ] `Narrativa-relevance` classificado em todas as 12 subpautas com justificativa
+- [ ] Distribuição realista — mix de 🔴/🟡/⚫ (não 100% 🔴)
 
 ---
 
