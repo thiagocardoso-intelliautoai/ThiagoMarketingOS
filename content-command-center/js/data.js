@@ -119,6 +119,9 @@ export const DataStore = {
       publishedAt: row.published_at,
       scheduledAt: row.scheduled_at || null,
       postUrn: row.post_urn || null,
+      leadMagnetStatus: row.lead_magnet_status || null,
+      leadMagnetObservation: row.lead_magnet_observation || null,
+      leadMagnetUpdatedAt: row.lead_magnet_updated_at || null,
       // Analytics from joined table
       analytics: row.post_analytics?.[0] ? {
         impressions: row.post_analytics[0].impressions || 0,
@@ -261,7 +264,9 @@ export const DataStore = {
           reviewScore: 'review_score', status: 'status',
           urgency: 'urgency', publishedAt: 'published_at', scheduledAt: 'scheduled_at',
           week: 'week', postNumber: 'post_number',
-          series: 'series', seriesOrder: 'series_order'
+          series: 'series', seriesOrder: 'series_order',
+          leadMagnetStatus: 'lead_magnet_status',
+          leadMagnetObservation: 'lead_magnet_observation'
         };
         for (const [jsKey, dbKey] of Object.entries(fieldMap)) {
           if (updates[jsKey] !== undefined) {
@@ -572,6 +577,39 @@ export const DataStore = {
       .select()
       .single();
     if (error) { console.error('[DataStore] updateAtomo:', error.message); return null; }
+    return data;
+  },
+
+  // ─── Lead Magnet ───
+  async updatePostLeadMagnet(postId, { lead_magnet_status, lead_magnet_observation }) {
+    const updates = {
+      lead_magnet_status,
+      lead_magnet_observation: lead_magnet_observation ?? null,
+      lead_magnet_updated_at: new Date().toISOString(),
+    };
+    if (this._isOnline) {
+      const { error } = await supabase
+        .from('posts')
+        .update(updates)
+        .eq('id', postId);
+      if (error) console.error('[DataStore] updatePostLeadMagnet:', error.message);
+    }
+    const idx = this._data.posts.findIndex(p => p.id === postId);
+    if (idx !== -1) {
+      this._data.posts[idx].leadMagnetStatus = lead_magnet_status;
+      this._data.posts[idx].leadMagnetObservation = lead_magnet_observation ?? null;
+      this._saveLocal();
+    }
+  },
+
+  async getSubpautaLeadMagnet(subpautaId) {
+    if (!this._isOnline) return null;
+    const { data, error } = await supabase
+      .from('subpautas')
+      .select('id, titulo, is_lead_magnet, lead_magnet_checklist')
+      .eq('id', subpautaId)
+      .single();
+    if (error) { console.error('[DataStore] getSubpautaLeadMagnet:', error.message); return null; }
     return data;
   },
 

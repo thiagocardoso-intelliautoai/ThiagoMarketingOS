@@ -483,8 +483,18 @@ async function renderPautasCentrais() {
               <div class="sub-card ${s.status === 'usada' ? 'sub-card-usada' : ''}" data-sub-id="${s.id}" data-pauta-id="${p.id}">
                 <div class="sub-card-header">
                   <span class="sub-card-titulo" data-action="post-from-sub">${escapeHtml(s.titulo)}</span>
-                  <span class="badge badge-sub-${s.status}">${s.status}</span>
+                  <div class="sub-card-badges">
+                    <span class="badge badge-sub-${s.status}">${s.status}</span>
+                    ${s.is_lead_magnet ? `<button class="badge badge-lm" data-action="lm-checklist" data-sub-id="${s.id}">🎯 Lead Magnet</button>` : ''}
+                  </div>
                 </div>
+                ${s.is_lead_magnet && s.lead_magnet_checklist?.length > 0 ? `
+                  <div class="lm-checklist" id="lm-checklist-${s.id}" style="display:none">
+                    <ul class="lm-checklist-list">
+                      ${s.lead_magnet_checklist.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+                    </ul>
+                  </div>
+                ` : ''}
                 ${s.angulo ? `<p class="sub-card-angulo">${escapeHtml(s.angulo)}</p>` : ''}
                 ${s.hook_embrionario ? `<p class="sub-card-hook">"${escapeHtml(s.hook_embrionario)}"</p>` : ''}
               </div>
@@ -501,6 +511,20 @@ async function renderPautasCentrais() {
     document.getElementById('pautas-prompt-area').innerHTML = renderPromptBlock(prompt);
     bindPromptCopy();
     document.getElementById('pautas-prompt-block')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  // Toggle checklist do Lead Magnet
+  container.querySelectorAll('[data-action="lm-checklist"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const subId = btn.dataset.subId;
+      const checklist = document.getElementById(`lm-checklist-${subId}`);
+      if (checklist) {
+        const visible = checklist.style.display !== 'none';
+        checklist.style.display = visible ? 'none' : 'block';
+        btn.classList.toggle('badge-lm-open', !visible);
+      }
+    });
   });
 
   // Clicar em subpauta → mostrar prompt Post Direto

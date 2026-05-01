@@ -164,6 +164,62 @@
   font-weight: 500;
 }
 
+/* Lead Magnet badges (post card) */
+.badge-lm-todo {
+  background: rgba(239, 68, 68, 0.12); color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0;
+}
+.badge-lm-done {
+  background: rgba(16, 185, 129, 0.12); color: var(--accent-green);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0;
+}
+
+/* Lead Magnet section (post modal) */
+.lm-section {
+  margin: 0 var(--space-lg) var(--space-md);
+  padding: var(--space-md);
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: var(--radius-md);
+}
+.lm-section-off {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+.lm-section-title {
+  font-size: 0.85rem; font-weight: 600; color: var(--accent-amber);
+  margin-bottom: var(--space-sm);
+}
+.lm-toggle-row { display: flex; gap: var(--space-xs); margin-bottom: var(--space-sm); }
+.lm-toggle-btn {
+  padding: 5px 14px; border-radius: var(--radius-full);
+  font-size: 0.8rem; font-weight: 600; cursor: pointer;
+  border: 1px solid transparent; transition: all 0.15s;
+}
+.lm-btn-inactive {
+  background: rgba(255, 255, 255, 0.05); color: var(--text-muted);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.lm-btn-inactive:hover { background: rgba(255, 255, 255, 0.08); color: var(--text-secondary); }
+.lm-btn-todo-active {
+  background: rgba(239, 68, 68, 0.15); color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+.lm-btn-done-active {
+  background: rgba(16, 185, 129, 0.15); color: var(--accent-green);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+.lm-obs-input {
+  width: 100%; min-height: 60px; resize: vertical;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm); color: var(--text-primary);
+  font-size: 0.85rem; padding: var(--space-xs) var(--space-sm);
+  font-family: inherit;
+}
+.lm-obs-input:focus { outline: none; border-color: var(--accent-green); }
+
 /* Scheduled countdown badge */
 .scheduled-badge {
   display: inline-flex;
