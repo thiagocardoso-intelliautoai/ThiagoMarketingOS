@@ -107,6 +107,10 @@ export const DataStore = {
       cta: row.cta || '',
       hashtags: row.hashtags || [],
       sources: row.sources || [],
+      // VISUAL-002: sugestao automatica de visual emitida pelo squad de redacao.
+      // Formato: "carrossel/Notebook Raw (motivo curto)" — parseado no consumo via parseRecommendedVisual().
+      // Pode ser null se o squad nao emitiu (CCC fara fallback client-side via recommendVisual()).
+      recommendedVisual: row.recommended_visual || null,
       reviewScore: row.review_score,
       status: row.status || 'rascunho',
       urgency: row.urgency || 'relevante',
@@ -163,6 +167,7 @@ export const DataStore = {
       cta: post.cta || '',
       hashtags: post.hashtags || [],
       sources: post.sources || [],
+      recommended_visual: post.recommendedVisual || null,
       review_score: post.reviewScore || null,
       status: post.status || 'rascunho',
       urgency: post.urgency || 'relevante',

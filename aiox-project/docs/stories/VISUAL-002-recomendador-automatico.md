@@ -6,7 +6,7 @@
 **🔗 Bloqueia:** —
 **👤 Assignee:** Dev (Frontend + Squads) + Data Engineer (DDL)
 **🏷️ Labels:** `frontend`, `CCC`, `squads`, `recommender`, `supabase`
-**📊 Status:** `[ ]` Ready
+**📊 Status:** `[ ]` Ready for Review (com 2 sub-tarefas pendentes — ver Change Log)
 
 **📚 Referência arquitetural:** [VISUAL-RECOMMENDER-PLAN.md §3](../architecture/VISUAL-RECOMMENDER-PLAN.md)
 
@@ -33,7 +33,7 @@
 
 ### 2.1 — Função `recommendVisual()` client-side
 
-- [ ] **2.1.1** Criar [content-command-center/js/recommend-visual.js](../../../content-command-center/js/recommend-visual.js) (NOVO arquivo) com:
+- [x] **2.1.1** Criar [content-command-center/js/recommend-visual.js](../../../content-command-center/js/recommend-visual.js) (NOVO arquivo) com:
   - `extractSignals(post)` — deriva sinais do post object
   - `recommendVisual(post)` — retorna `{ formato, estilo, confianca, motivo }`
   - Tabela de motivos curtos (1 frase por ramo da árvore de decisão)
@@ -79,17 +79,17 @@ export function recommendVisual(post) {
 }
 ```
 
-- [ ] **2.1.2** Implementar `extractSignals(post)` com regex:
+- [x] **2.1.2** Implementar `extractSignals(post)` com regex:
   - `dados_quant`: count de `/\d+%/g`, `/R\$\s?\d+/g`, `/\d+x\b/g`, `/\d+\s*(?:min|h|seg|dias?)\b/gi`
   - `dados_quant_comparativos`: presença de `/(?:de|from)\s+\d+\s+(?:para|to)\s+\d+/i` OU múltiplos de `/\bvs\b/i`
   - `tem_etapas`: count de `/^\s*\d+[\.\)]\s/m` ≥ 3 OU `/passo \d/gi` ≥ 3
   - `frase_falsificavel`: hookText < 140 chars + termo contraintuitivo (`/não|nunca|verdade|mito|errado/i`)
 
-- [ ] **2.1.3** Função `calcConfidence(sig)` retorna `'alta' | 'media' | 'baixa'` baseado em quantos sinais fortes são unânimes vs ambíguos
+- [x] **2.1.3** Função `calcConfidence(sig)` retorna `'alta' | 'media' | 'baixa'` baseado em quantos sinais fortes são unânimes vs ambíguos
 
 ### 2.2 — Squads emitem sugestão no post-final.md
 
-- [ ] **2.2.1** Atualizar [aiox-squads/squads/pesquisa-conteudo-linkedin/data/post-structure-linkedin.md](../../../aiox-squads/squads/pesquisa-conteudo-linkedin/data/post-structure-linkedin.md) (seção "Formato Técnico Obrigatório") — adicionar campo:
+- [x] **2.2.1** Atualizar [aiox-squads/squads/pesquisa-conteudo-linkedin/data/post-structure-linkedin.md](../../../aiox-squads/squads/pesquisa-conteudo-linkedin/data/post-structure-linkedin.md) (seção "Formato Técnico Obrigatório") — adicionar campo:
 
 ```markdown
 ## Metadata
@@ -101,21 +101,21 @@ export function recommendVisual(post) {
 - **Sugestão Visual:** carrossel/Notebook Raw (lista de 5 pontos com tom pessoal)
 ```
 
-- [ ] **2.2.2** Atualizar [aiox-squads/squads/pesquisa-conteudo-linkedin/tasks/07-estruturacao-post.md](../../../aiox-squads/squads/pesquisa-conteudo-linkedin/tasks/07-estruturacao-post.md) — passo final do redator emite a sugestão usando os sinais que ele já tem (framework, fonte_tese, char_count) + análise qualitativa
+- [x] **2.2.2** Atualizar [aiox-squads/squads/pesquisa-conteudo-linkedin/tasks/07-estruturacao-post.md](../../../aiox-squads/squads/pesquisa-conteudo-linkedin/tasks/07-estruturacao-post.md) — passo final do redator emite a sugestão usando os sinais que ele já tem (framework, fonte_tese, char_count) + análise qualitativa
 
-- [ ] **2.2.3** Atualizar squad de matéria-colab equivalente em `aiox-squads/squads/criar-materia-colab/`
+- [ ] **2.2.3** Atualizar squad de matéria-colab equivalente em `aiox-squads/squads/criar-materia-colab/` — **PENDENTE** (squad de matéria-colab tem estrutura diferente; requer análise separada para identificar onde injetar o campo. Documentado para próxima iteração — não bloqueia V1 do recomendador, pois CCC fará fallback client-side.)
 
 ### 2.3 — Persistência (DELEGAR a `/data-engineer`)
 
-- [ ] **2.3.1** **DELEGAÇÃO:** @data-engineer cria migration adicionando coluna `recommended_visual TEXT NULL` na tabela `posts`. Sem enum, sem constraint, sem default.
+- [ ] **2.3.1** **DELEGAÇÃO:** @data-engineer cria migration adicionando coluna `recommended_visual TEXT NULL` na tabela `posts`. Sem enum, sem constraint, sem default. **STATUS: PENDENTE — bloqueada na autoridade de @data-engineer (Dara).** O código aplicativo (data.js, save-post-cli, upload-to-supabase) já espera essa coluna; basta criar a migration.
 
-- [ ] **2.3.2** Atualizar [aiox-squads/shared/scripts/save-post-cli.js](../../../aiox-squads/shared/scripts/save-post-cli.js) — extrair linha `Sugestão Visual:` do markdown via regex e popular o novo campo no insert/update
+- [x] **2.3.2** Atualizar [aiox-squads/shared/scripts/save-post-cli.js](../../../aiox-squads/shared/scripts/save-post-cli.js) — extrair linha `Sugestão Visual:` do markdown via regex e popular o novo campo no insert/update. **Também atualizado** `upload-to-supabase.js` para passar `recommended_visual` no row do upsert.
 
-- [ ] **2.3.3** Atualizar [content-command-center/js/data.js](../../../content-command-center/js/data.js) — campo `recommendedVisual` no parse de row (`row.recommended_visual`) e no save (`recommended_visual: post.recommendedVisual`)
+- [x] **2.3.3** Atualizar [content-command-center/js/data.js](../../../content-command-center/js/data.js) — campo `recommendedVisual` no parse de row (`row.recommended_visual`) e no save (`recommended_visual: post.recommendedVisual`)
 
 ### 2.4 — UI minimalista no CCC
 
-- [ ] **2.4.1** Em [content-command-center/js/render.js](../../../content-command-center/js/render.js), área do style selector (~linhas 600-740):
+- [x] **2.4.1** Em [content-command-center/js/render.js](../../../content-command-center/js/render.js), área do style selector (~linhas 600-740):
   - Importar `recommendVisual` de `recommend-visual.js`
   - Calcular `rec = post.recommendedVisual || stringify(recommendVisual(post))` (DB primeiro, fallback client-side)
   - Identificar qual card corresponde à sugestão (mapear nome do estilo → `data-style`)
@@ -134,14 +134,14 @@ if (styleCard) {
 }
 ```
 
-- [ ] **2.4.2** Adicionar 2 checkboxes no preview (acima do seletor de estilo):
+- [x] **2.4.2** Adicionar 2 checkboxes no preview (acima do seletor de estilo):
   - "☐ Este post tem print de autoridade disponível"
   - "☐ Este post tem foto contextual disponível"
   - Mudança do checkbox dispara recálculo do `recommendVisual()` e re-aplica a classe CSS
 
 ### 2.5 — CSS minimalista
 
-- [ ] **2.5.1** Adicionar em arquivo CSS existente do CCC (NÃO criar arquivo novo):
+- [x] **2.5.1** Adicionar em arquivo CSS existente do CCC (NÃO criar arquivo novo):
 
 ```css
 .style-card-recommended {
@@ -176,7 +176,7 @@ if (styleCard) {
 
 ### 2.6 — Testes unitários
 
-- [ ] **2.6.1** Adicionar suite de testes para `recommendVisual()` em `content-command-center/tests/recommend-visual.test.js`:
+- [x] **2.6.1** Adicionar suite de testes para `recommendVisual()` em `content-command-center/tests/recommend-visual.test.js`:
   - PAS curto + Storytelling → `capa/Rascunho no Papel`
   - Lista densa (>3 etapas) + Skills → `carrossel/Notebook Raw`
   - Benchmark com 2+ números → `carrossel/Data-Driven`
@@ -210,18 +210,19 @@ if (styleCard) {
 ## File List
 
 **Novos:**
-- `[ ]` `content-command-center/js/recommend-visual.js`
-- `[ ]` `content-command-center/tests/recommend-visual.test.js`
-- `[ ]` `aiox-project/supabase/migrations/YYYYMMDDHHMM_add_recommended_visual.sql` (DELEGADO @data-engineer)
+- `[x]` `content-command-center/js/recommend-visual.js` — função pura `recommendVisual()` + `extractSignals()` + helpers `parseRecommendedVisual()`/`stringifyRecommendation()`/`getRecommendation()`
+- `[x]` `content-command-center/tests/recommend-visual.test.js` — 10 testes, todos passando (cobre 7 cenários da árvore + 3 helpers)
+- `[ ]` `aiox-project/supabase/migrations/YYYYMMDDHHMM_add_recommended_visual.sql` — **PENDENTE @data-engineer**
 
 **Modificados:**
-- `[ ]` `content-command-center/js/render.js` — classe CSS no card recomendado + 2 checkboxes
-- `[ ]` `content-command-center/css/styles.css` (ou equivalente) — `.style-card-recommended`, `.recommend-reason`
-- `[ ]` `content-command-center/js/data.js` — campo `recommendedVisual` no parse/save
-- `[ ]` `aiox-squads/shared/scripts/save-post-cli.js` — extrair `Sugestão Visual:` do markdown
-- `[ ]` `aiox-squads/squads/pesquisa-conteudo-linkedin/tasks/07-estruturacao-post.md`
-- `[ ]` `aiox-squads/squads/pesquisa-conteudo-linkedin/data/post-structure-linkedin.md`
-- `[ ]` `aiox-squads/squads/criar-materia-colab/` (equivalente — verificar arquivo certo)
+- `[x]` `content-command-center/js/render.js` — `renderStyleCards()` aceita `recommendation` e aplica `style-card-recommended` + classe de confiança; `renderRecommendCheckboxes()` injeta os 2 checkboxes; listeners recalculam ao toggle
+- `[x]` `content-command-center/css/_preview.css` — `.style-card-recommended` (variants alta/media/baixa), `.recommend-reason` (frase do motivo), `.recommend-signals` + `.recommend-signal` (checkboxes)
+- `[x]` `content-command-center/js/data.js` — campo `recommendedVisual` no parse/save
+- `[x]` `aiox-squads/shared/scripts/save-post-cli.js` — extrai linha `Sugestão Visual:` do markdown
+- `[x]` `aiox-squads/shared/scripts/upload-to-supabase.js` — passa `recommended_visual` no row do upsert (modificação não listada originalmente, descoberta durante implementação)
+- `[x]` `aiox-squads/squads/pesquisa-conteudo-linkedin/tasks/07-estruturacao-post.md` — novo step 7 (emitir sugestão visual) com árvore de decisão
+- `[x]` `aiox-squads/squads/pesquisa-conteudo-linkedin/data/post-structure-linkedin.md` — campo `Sugestão Visual` no template + seção explicando formato/valores válidos/exemplos
+- `[ ]` `aiox-squads/squads/criar-materia-colab/` — **PENDENTE** (estrutura diferente, próxima iteração)
 
 ---
 
@@ -229,3 +230,4 @@ if (styleCard) {
 
 - 2026-04-30 — Story criada por @sm (River) com base no plano arquitetural [VISUAL-RECOMMENDER-PLAN.md §3](../architecture/VISUAL-RECOMMENDER-PLAN.md)
 - 2026-04-30 — @po (Pax) validou via `*validate-story-draft`. Score 8/10 → **GO**. Status: Draft → Ready. Observações: critério 4 (scope IN/OUT) implícito via File List + AC, aceitável; critério 8 (riscos) não documentado por ser lógica client-side determinística (baixo risco). Atenção @dev: sub-tarefa 2.3 (DDL) deve ser delegada a @data-engineer.
+- 2026-04-30 — @dev (Dex) implementou em modo YOLO. **10/10 testes unitários passando** (cobre 7 cenários da árvore de decisão + 3 helpers de parsing/stringify). **Decisões autônomas:** (1) Estrutura do `recommendVisual()` retorna `cardNum` direto, simplificando integração com `renderStyleCards()` que já existia da VISUAL-001. (2) UX final é exatamente o pedido: estrelinha + borda destacada + 1 linha de motivo no card, sem banner separado, sem botão de aceitar, sem pré-seleção. (3) 2 checkboxes (`tem_print`/`tem_foto`) recalculam a sugestão dinamicamente — re-renderiza apenas o `.style-selector`, não o modal todo. (4) Adicionei modificação em `upload-to-supabase.js` (não estava na story original) — necessária para o campo chegar no DB. (5) Regex `RX_ANTES_DEPOIS` foi corrigida durante os testes para aceitar unidades coladas no número (ex: "de 800ms para 350ms"). **Status: Ready → Ready for Review com 2 sub-tarefas pendentes:** (a) **2.2.3** (squad criar-materia-colab) — estrutura diferente, requer análise separada; CCC fará fallback client-side. (b) **2.3.1** (DDL `recommended_visual TEXT NULL`) — bloqueada na autoridade exclusiva de @data-engineer (Dara). Código aplicativo pronto, basta migration.
