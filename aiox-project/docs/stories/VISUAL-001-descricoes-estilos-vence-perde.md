@@ -6,7 +6,7 @@
 **🔗 Bloqueia:** VISUAL-002 (motivo da sugestão usa o vocabulário cristalizado aqui)
 **👤 Assignee:** Dev (Frontend + Squads)
 **🏷️ Labels:** `frontend`, `CCC`, `squads`, `docs`, `cosmetic`
-**📊 Status:** `[ ]` Ready for Review
+**📊 Status:** `[x]` Done
 
 **📚 Referência arquitetural:** [VISUAL-RECOMMENDER-PLAN.md §2](../architecture/VISUAL-RECOMMENDER-PLAN.md)
 
@@ -158,3 +158,4 @@ const estiloLabels = {
 - 2026-04-30 — Story criada por @sm (River) com base no plano arquitetural [VISUAL-RECOMMENDER-PLAN.md §2](../architecture/VISUAL-RECOMMENDER-PLAN.md)
 - 2026-04-30 — @po (Pax) validou via `*validate-story-draft`. Score 8/10 → **GO**. Status: Draft → Ready. Observações: critério 4 (scope IN/OUT) implícito via File List, aceitável; critério 8 (riscos) não documentado por ser baixo risco (cosmético).
 - 2026-04-30 — @dev (Dex) implementou em modo YOLO. **Decisões autônomas:** (1) Refatorou render.js para gerar style cards dinamicamente do `CarouselStyles`/`CoverStyles` em vez de hardcoded HTML, eliminando duplicação de strings entre render.js e prompts.js. (2) Adicionou `short` field na metadata para preservar o subtítulo curto que já existia no card (acima do hint). (3) CSS adicionado em `_preview.css` (não criou arquivo novo, conforme story §1.5.1). **Status:** Ready → Ready for Review. **Sintaxe JS validada** com `node --check`.
+- 2026-05-01 — @devops (Gage) merged via PR #2 (squash) commit a7ae3907. Branch remote deletada. Status: Ready for Review → Done.

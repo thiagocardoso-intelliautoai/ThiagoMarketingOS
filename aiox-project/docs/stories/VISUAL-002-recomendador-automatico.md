@@ -6,7 +6,7 @@
 **🔗 Bloqueia:** —
 **👤 Assignee:** Dev (Frontend + Squads) + Data Engineer (DDL)
 **🏷️ Labels:** `frontend`, `CCC`, `squads`, `recommender`, `supabase`
-**📊 Status:** `[ ]` Ready for Review (com 1 sub-tarefa pendente — ver Change Log)
+**📊 Status:** `[x]` Done (com 1 pendência menor não-bloqueante — ver Change Log)
 
 **📚 Referência arquitetural:** [VISUAL-RECOMMENDER-PLAN.md §3](../architecture/VISUAL-RECOMMENDER-PLAN.md)
 
@@ -245,3 +245,4 @@ if (styleCard) {
 - 2026-04-30 — @po (Pax) validou via `*validate-story-draft`. Score 8/10 → **GO**. Status: Draft → Ready. Observações: critério 4 (scope IN/OUT) implícito via File List + AC, aceitável; critério 8 (riscos) não documentado por ser lógica client-side determinística (baixo risco). Atenção @dev: sub-tarefa 2.3 (DDL) deve ser delegada a @data-engineer.
 - 2026-04-30 — @dev (Dex) implementou em modo YOLO. **10/10 testes unitários passando** (cobre 7 cenários da árvore de decisão + 3 helpers de parsing/stringify). **Decisões autônomas:** (1) Estrutura do `recommendVisual()` retorna `cardNum` direto, simplificando integração com `renderStyleCards()` que já existia da VISUAL-001. (2) UX final é exatamente o pedido: estrelinha + borda destacada + 1 linha de motivo no card, sem banner separado, sem botão de aceitar, sem pré-seleção. (3) 2 checkboxes (`tem_print`/`tem_foto`) recalculam a sugestão dinamicamente — re-renderiza apenas o `.style-selector`, não o modal todo. (4) Adicionei modificação em `upload-to-supabase.js` (não estava na story original) — necessária para o campo chegar no DB. (5) Regex `RX_ANTES_DEPOIS` foi corrigida durante os testes para aceitar unidades coladas no número (ex: "de 800ms para 350ms"). **Status: Ready → Ready for Review com 2 sub-tarefas pendentes:** (a) **2.2.3** (squad criar-materia-colab) — estrutura diferente, requer análise separada; CCC fará fallback client-side. (b) **2.3.1** (DDL `recommended_visual TEXT NULL`) — bloqueada na autoridade exclusiva de @data-engineer (Dara). Código aplicativo pronto, basta migration.
 - 2026-04-30 — @data-engineer (Dara) criou migration `20260430_add_recommended_visual.sql`. Idempotente, sem default, sem constraint. Operador roda manualmente no Supabase SQL Editor. **Sub-tarefa 2.3.1 desbloqueada.** Resta apenas 2.2.3 (squad matéria-colab) como pendência não-bloqueante.
+- 2026-05-01 — @devops (Gage) merged via PR #2 (squash) commit a7ae3907. Branch remote deletada. Status: Ready for Review → Done.
