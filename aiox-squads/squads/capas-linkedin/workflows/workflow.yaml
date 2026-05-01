@@ -38,6 +38,24 @@ steps:
     output: output/design-system.md
 
   # ──────────────────────────────────────────
+  # FASE 2b: Obtenção do print (apenas estilo 4)
+  # ──────────────────────────────────────────
+  - id: obter-print
+    type: checkpoint
+    condition: estilo == 4  # Print de Autoridade
+    task: tasks/obter-print-autoridade.md
+    description: >
+      Obter print de autoridade via 3 caminhos: (1) upload manual de path/URL,
+      (2) busca automática EXA + captura Playwright, (3) sugestão curada de 3
+      candidatos EXA com escolha humana. Checkpoint humano obrigatório antes
+      do render — designer NÃO procede sem aprovação do print.
+    human_approval_required: true
+    input: output/cover-input.md
+    output:
+      - output/prints/<slug>/print.png
+      - output/prints/<slug>/metadata.json
+
+  # ──────────────────────────────────────────
   # FASE 3: Criação da capa
   # ──────────────────────────────────────────
   - id: step-03-create-cover

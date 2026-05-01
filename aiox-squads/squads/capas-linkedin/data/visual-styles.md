@@ -198,6 +198,15 @@ Screenshot estilizado de uma fonte de autoridade (tweet, notícia, comentário) 
 - A reação precisa de desenvolvimento longo em ≥3 etapas (vai melhor como carrossel Twitter-Style)
 - O tema é abstrato e não responde a nada público específico
 
+### Pipeline de Criação (Print de Autoridade)
+1. Operador escolhe estilo 4 no checkpoint inicial (step-01)
+2. Designer chama task `tasks/obter-print-autoridade.md` (3 caminhos: upload manual / EXA + Playwright / EXA curado com 3 candidatos)
+3. **Checkpoint humano obrigatório** — operador valida o print escolhido antes do render
+4. Print salvo em `output/prints/<slug>/print.png` + `metadata.json` (URL origem, autor, domínio, hash, atribuição)
+5. Designer renderiza HTML 1080×1350 com print + texto da opinião do Thiago + atribuição automática lida do metadata
+6. Puppeteer headless → PNG (`scripts/render-cover.js`)
+7. Upload Supabase via `node ../../shared/scripts/upload-cover-cli.js`
+
 ### Especificações
 | Elemento | Valor |
 |----------|-------|
