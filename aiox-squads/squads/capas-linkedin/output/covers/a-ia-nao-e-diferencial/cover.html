@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #1A1A2E;
+      --surface: #27293D;
+      --accent-primary: #14B8A6;
+      --text-primary: #F1F5F9;
+      --text-muted: #64748B;
+      --border: #3F3F5C;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+    }
+
+    .cover {
+      width: 1080px;
+      height: 1350px;
+      padding: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* ── Header: Perfil ── */
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .profile-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-name {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .profile-handle {
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    /* ── Conteúdo ── */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 60px;
+    }
+
+    .hero-text {
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      max-width: 900px;
+    }
+
+    .highlight {
+      color: var(--accent-primary);
+      font-weight: 800;
+    }
+
+    /* ── Print de Autoridade ── */
+    .authority-print {
+      background: var(--surface);
+      border-radius: 0px;
+      padding: 40px;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .team-member {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .team-member img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .team-member span {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .print-source {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 32px;
+      text-align: right;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .footer-line {
+      width: 80px;
+      height: 4px;
+      background: var(--accent-primary);
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="profile">
+      <img class="profile-photo" src="profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1 class="hero-text">
+        A IA é só o motor. O mapa do tesouro ainda é o <span class="highlight">processo.</span>
+      </h1>
+
+      <div class="authority-print">
+        <div class="team-grid">
+          <div class="team-member">
+            <img src="photos/rafael.png">
+            <span>@rafaelfaria</span>
+          </div>
+          <div class="team-member">
+            <img src="photos/ivan.png">
+            <span>@ivan</span>
+          </div>
+          <div class="team-member">
+            <img src="photos/coutinho.png">
+            <span>@coutinho</span>
+          </div>
+        </div>
+        <p class="print-source">Reunião estratégica ROI — Winning Sales</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span class="brand">Thiago C.Lima</span>
+      <div class="footer-line"></div>
+    </div>
+  </div>
+</body>
+</html>
