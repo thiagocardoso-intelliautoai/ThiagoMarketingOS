@@ -7,7 +7,7 @@
 **🔗 Bloqueia:** HISTORIA-002, HISTORIA-003
 **👤 Executor:** @dev (Dex)
 **🛡️ Quality Gate:** @po (Pax) — validação obrigatória antes de desbloquear dependentes
-**📊 Status:** `InProgress`
+**📊 Status:** `InReview`
 **📋 Origem:** [HISTORIA-thiago-integration.md](../architecture/HISTORIA-thiago-integration.md) — aprovado pela Aria (Architect)
 
 > ⚠️ **Foundation Story:** Erro aqui contamina HISTORIA-002, HISTORIA-003 e HISTORIA-004. @po deve validar esta story separadamente antes de @dev iniciar qualquer dependente.
@@ -53,7 +53,7 @@ Este documento é o **single source of truth** para todos os agentes e squads qu
 - [x] Os 4 sinais com exemplos positivos e negativos de subpautas reais
 - [x] Exemplos validados contra histórias em `historia-thiago/jornada-profissional.md` e `historia-thiago/evolucao-pessoal.md`
 - [x] Linkado no `historia-thiago/_index.md` (adicionar referência ao critério)
-- [ ] @po valida antes de desbloquear HISTORIA-002 e HISTORIA-003
+- [x] @po valida antes de desbloquear HISTORIA-002 e HISTORIA-003
 
 ---
 
@@ -131,8 +131,8 @@ O critério deve ser **conservador**: quando há dúvida entre 🟡 e ⚫, class
 **Story Type Analysis:** documento markdown puro, sem código. CodeRabbit focus em estrutura e completude, não em code patterns.
 
 **Quality Gate Tasks:**
-- [ ] Revisão manual pelo @po: document structure, completeness, critérios objetivos
-- [ ] Validação de exemplos contra dados reais (histórias existentes)
+- [x] Revisão manual pelo @po: document structure, completeness, critérios objetivos
+- [x] Validação de exemplos contra dados reais (histórias existentes)
 
 ---
 
@@ -152,3 +152,4 @@ Os assets referenciados nesta story (`historia-thiago/` e `.claude/agents/histor
 | 2026-04-30 | 1.0 | Story criada a partir do plano arquitetural HISTORIA | River (@sm) |
 | 2026-04-30 | 1.1 | Validação @po: GO 8/10 — Status Draft→Ready. Achado crítico: assets em branch não-mergeado. Should-Fix: adicionar seção Out-of-Scope e Riscos. | Pax (@po) |
 | 2026-04-30 | 1.2 | Implementação @dev: `criterio-narrativa-relevance.md` criado com 4 sinais, 3 níveis, tabela de decisão, 9 exemplos reais (3x🔴/3x🟡/3x⚫), regra de tie-break. `_index.md` copiado e atualizado com referência ao critério. Status Ready→InProgress. | Dex (@dev) |
+| 2026-04-30 | 1.3 | Validação @po pós-implementação: GO 8/8 AC. Todos os critérios objetivos presentes. Exemplos validados contra dados reais. Tie-break implementado com rationale. Status InProgress→InReview. Aguarda @devops para Done → desbloquear HISTORIA-003. | Pax (@po) |
