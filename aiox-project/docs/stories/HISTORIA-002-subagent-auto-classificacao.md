@@ -7,7 +7,7 @@
 **🔗 Bloqueia:** HISTORIA-003, HISTORIA-004
 **👤 Executor:** @dev (Dex)
 **🛡️ Quality Gate:** @po (Pax) — validação recomendada separadamente antes de @dev iniciar HISTORIA-003/004
-**📊 Status:** `InReview`
+**📊 Status:** `Done`
 
 > ✅ **Desbloqueada:** HISTORIA-001 validada pelo @po (2026-04-30). Assets em main após merge.
 > 💡 **Nota para @dev:** Resolver ambiguidade de responsabilidade de escrita de `output/historia-relevante.md` — veja seção de pré-requisito abaixo.
@@ -53,7 +53,7 @@ O subagent `historia-thiago.md` em `.claude/agents/` já existe e funciona para 
 - [x] Teste manual: query sobre tema sem história direta gera sugestão adjacente (AC 2) — seção Opção C
 - [x] Teste manual: query sobre tema ⚫ retorna `status: skip` sem buscar (AC 5) — step 0 + Auto-classificação
 - [x] Teste manual: output é YAML válido em todos os 3 casos (AC 3) — seção Formato YAML
-- [ ] @po valida antes de desbloquear HISTORIA-003 e HISTORIA-004
+- [x] @po valida antes de desbloquear HISTORIA-003 e HISTORIA-004
 
 ---
 
@@ -152,3 +152,4 @@ O arquivo `.claude/agents/historia-thiago.md` tem uma seção "Formato de retorn
 | 2026-04-30 | 1.0 | Story criada a partir do plano arquitetural HISTORIA | River (@sm) |
 | 2026-04-30 | 1.1 | Validação @po: GO 8/10 — Status Blocked→Ready. Should-Fix: adicionar Out-of-Scope e Riscos. Nota: responsabilidade de escrita de output/historia-relevante.md é do squad chamador. | Pax (@po) |
 | 2026-05-01 | 1.2 | Implementação @dev: 3 seções adicionadas ao `.claude/agents/historia-thiago.md` — step 0 (verificar classificação), Auto-classificação (Modo 4), Opção C (histórias adjacentes), Formato YAML padronizado. Status Ready→InReview. | Dex (@dev) |
+| 2026-05-01 | 1.3 | Validação @po pós-implementação: GO 6/6 AC. Todos os critérios objetivos presentes. Cobertura dupla de AC5 (explícito + auto). Compatibilidade Markdown preservada. Status InReview→Done. HISTORIA-003 e HISTORIA-004 desbloqueadas. | Pax (@po) |

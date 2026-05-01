@@ -7,7 +7,7 @@
 **🔗 Bloqueia:** HISTORIA-002, HISTORIA-003
 **👤 Executor:** @dev (Dex)
 **🛡️ Quality Gate:** @po (Pax) — validação obrigatória antes de desbloquear dependentes
-**📊 Status:** `InReview`
+**📊 Status:** `Done`
 **📋 Origem:** [HISTORIA-thiago-integration.md](../architecture/HISTORIA-thiago-integration.md) — aprovado pela Aria (Architect)
 
 > ⚠️ **Foundation Story:** Erro aqui contamina HISTORIA-002, HISTORIA-003 e HISTORIA-004. @po deve validar esta story separadamente antes de @dev iniciar qualquer dependente.
