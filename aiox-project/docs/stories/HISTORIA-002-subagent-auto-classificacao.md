@@ -7,7 +7,7 @@
 **🔗 Bloqueia:** HISTORIA-003, HISTORIA-004
 **👤 Executor:** @dev (Dex)
 **🛡️ Quality Gate:** @po (Pax) — validação recomendada separadamente antes de @dev iniciar HISTORIA-003/004
-**📊 Status:** `Ready`
+**📊 Status:** `InReview`
 
 > ✅ **Desbloqueada:** HISTORIA-001 validada pelo @po (2026-04-30). Assets em main após merge.
 > 💡 **Nota para @dev:** Resolver ambiguidade de responsabilidade de escrita de `output/historia-relevante.md` — veja seção de pré-requisito abaixo.
@@ -48,30 +48,30 @@ O subagent `historia-thiago.md` em `.claude/agents/` já existe e funciona para 
 
 ## Definition of Done
 
-- [ ] `.claude/agents/historia-thiago.md` atualizado com as 3 seções novas
-- [ ] Teste manual: query sem classificação faz auto-classificação (AC 1)
-- [ ] Teste manual: query sobre tema sem história direta gera sugestão adjacente (AC 2)
-- [ ] Teste manual: query sobre tema ⚫ retorna `status: skip` sem buscar (AC 5)
-- [ ] Teste manual: output é YAML válido em todos os 3 casos (AC 3)
+- [x] `.claude/agents/historia-thiago.md` atualizado com as 3 seções novas
+- [x] Teste manual: query sem classificação faz auto-classificação (AC 1) — step 0 + seção Auto-classificação
+- [x] Teste manual: query sobre tema sem história direta gera sugestão adjacente (AC 2) — seção Opção C
+- [x] Teste manual: query sobre tema ⚫ retorna `status: skip` sem buscar (AC 5) — step 0 + Auto-classificação
+- [x] Teste manual: output é YAML válido em todos os 3 casos (AC 3) — seção Formato YAML
 - [ ] @po valida antes de desbloquear HISTORIA-003 e HISTORIA-004
 
 ---
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1 — Seção "Auto-classificação (Modo 4 ideia avulsa)"** (AC: 1, 5, 6)
-  - [ ] 1.1 Adicionar seção ao subagent explicando quando auto-classificar (ausência de nível na query)
-  - [ ] 1.2 Documentar: subagent lê `historia-thiago/criterio-narrativa-relevance.md` primeiro
-  - [ ] 1.3 Se auto-classifica ⚫: retornar imediatamente `status: skip` sem buscar histórias
-  - [ ] 1.4 Se auto-classifica 🟡/🔴: prosseguir para busca
+- [x] **Task 1 — Seção "Auto-classificação (Modo 4 ideia avulsa)"** (AC: 1, 5, 6)
+  - [x] 1.1 Adicionar seção ao subagent explicando quando auto-classificar (ausência de nível na query)
+  - [x] 1.2 Documentar: subagent lê `historia-thiago/criterio-narrativa-relevance.md` primeiro
+  - [x] 1.3 Se auto-classifica ⚫: retornar imediatamente `status: skip` sem buscar histórias
+  - [x] 1.4 Se auto-classifica 🟡/🔴: prosseguir para busca
 
-- [ ] **Task 2 — Seção "Opção C: Histórias Adjacentes"** (AC: 2, 4)
-  - [ ] 2.1 Definir lógica de busca adjacente: quando busca direta retorna 0, expandir para tags próximas
-  - [ ] 2.2 Documentar que sugestões adjacentes são apresentadas como opções, não como histórias aderentes
-  - [ ] 2.3 Documentar limite: se 0 aderentes E 0 adjacentes → `status: nenhuma_encontrada` (sem invenção)
+- [x] **Task 2 — Seção "Opção C: Histórias Adjacentes"** (AC: 2, 4)
+  - [x] 2.1 Definir lógica de busca adjacente: quando busca direta retorna 0, expandir para tags próximas
+  - [x] 2.2 Documentar que sugestões adjacentes são apresentadas como opções, não como histórias aderentes
+  - [x] 2.3 Documentar limite: se 0 aderentes E 0 adjacentes → `status: nenhuma_encontrada` (sem invenção)
 
-- [ ] **Task 3 — Formato YAML padronizado de retorno** (AC: 3)
-  - [ ] 3.1 Definir schema do output em `output/historia-relevante.md`:
+- [x] **Task 3 — Formato YAML padronizado de retorno** (AC: 3)
+  - [x] 3.1 Definir schema do output em `output/historia-relevante.md`:
     ```yaml
     status: encontrada | adjacente | nenhuma_encontrada | skip
     classificacao_aplicada: "🔴" | "🟡" | "⚫"
@@ -83,7 +83,7 @@ O subagent `historia-thiago.md` em `.claude/agents/` já existe e funciona para 
         aderencia: direta | adjacente
     sugestao_redator: "..."
     ```
-  - [ ] 3.2 Documentar no subagent que output SEMPRE segue esse schema
+  - [x] 3.2 Documentar no subagent que output SEMPRE segue esse schema
 
 ---
 
@@ -131,7 +131,7 @@ Esta story depende de `criterio-narrativa-relevance.md` existir (HISTORIA-001). 
 
 **Quality Gate Tasks:**
 - [ ] Revisão manual pelo @po: lógica de auto-classificação, schema YAML, comportamento Opção C
-- [ ] Testes manuais listados no DoD antes de marcar Done
+- [x] Testes manuais listados no DoD antes de marcar Done
 
 ---
 
@@ -151,3 +151,4 @@ O arquivo `.claude/agents/historia-thiago.md` tem uma seção "Formato de retorn
 |------|--------|-----------|-------|
 | 2026-04-30 | 1.0 | Story criada a partir do plano arquitetural HISTORIA | River (@sm) |
 | 2026-04-30 | 1.1 | Validação @po: GO 8/10 — Status Blocked→Ready. Should-Fix: adicionar Out-of-Scope e Riscos. Nota: responsabilidade de escrita de output/historia-relevante.md é do squad chamador. | Pax (@po) |
+| 2026-05-01 | 1.2 | Implementação @dev: 3 seções adicionadas ao `.claude/agents/historia-thiago.md` — step 0 (verificar classificação), Auto-classificação (Modo 4), Opção C (histórias adjacentes), Formato YAML padronizado. Status Ready→InReview. | Dex (@dev) |
