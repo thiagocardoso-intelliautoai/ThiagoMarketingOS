@@ -19,6 +19,7 @@ Carregar antes de executar:
 - `output/pautas-centrais.md` — Pautas Centrais já confirmadas
 - `output/subpautas/` — Subpautas já existentes (para evitar duplicatas)
 - `agents/estrategista.md` — Persona da Eva Estratégia
+- `../../../historia-thiago/criterio-narrativa-relevance.md` — Critério de classificação de narrativa-relevance (4 sinais, 3 níveis, tabela de decisão)
 
 ---
 
@@ -48,12 +49,31 @@ Para cada subpauta, preencher:
 ### Subpauta: [título curto e específico]
 - **Pauta Central:** [nome da pauta]
 - **Fonte de tese:** [classificação]
+- **Narrativa-relevance:** 🔴 ALTA | 🟡 MÉDIA | ⚫ NULA
+- **Justificativa-narrativa:** [1-2 linhas explicando a classificação]
 - **Ângulo:** [1 frase — o que torna essa subpauta diferente]
 - **Hook embrionário:** [≤ 210 chars — testável como hook real]
 - **Matéria-prima:** [de onde vem o dado/exemplo]
 - **Urgência:** 🔴 Urgente | 🟡 Relevante | 🟢 Estoque
 - **Conexão com existente:** [se complementa subpauta anterior, qual]
 ```
+
+### 3.5 Classificar Narrativa-Relevance
+
+Para cada subpauta gerada no passo 3:
+1. Consultar `criterio-narrativa-relevance.md` (já no Context Loading)
+2. Aplicar os 4 sinais à subpauta:
+   - **Sinal 1:** Hook embrionário tem verbo em primeira pessoa? (`aprendi`, `errei`, `vendi`, `passei`...)
+   - **Sinal 2:** Qual a fonte de tese? (Falha Documentada → 🔴 | Processo Diagnóstico → 🟡 | Benchmark/Tutorial → ⚫)
+   - **Sinal 3:** Tipo de proposição: Experiencial/Observacional pessoal → suporta | Factual/Tutorial → não suporta
+   - **Sinal 4:** Hook tem marcadores concretos? (pessoas nomeadas, períodos, números reais)
+3. Usar a Tabela de Decisão Rápida para determinar o nível
+4. Registrar `Narrativa-relevance` com o emoji e nível correto
+5. Escrever `Justificativa-narrativa` com 1-2 linhas de raciocínio
+
+**Regra de conservadorismo:** Em caso de dúvida entre 🟡 e ⚫, classificar ⚫.
+
+**VETO:** Subpauta sem `Narrativa-relevance` preenchido → BLOQUEADA. Classificar antes de prosseguir.
 
 ### 4. Verificar Qualidade
 
@@ -101,6 +121,7 @@ Rejeitar e refazer se:
 3. ❌ Subpauta genérica (ex: "fale sobre automação")
 4. ❌ Subpauta que não passa na lente
 5. ❌ Propõe Pauta Central nova (não é função dessa task)
+6. ❌ Subpauta sem campo `Narrativa-relevance` classificado
 
 ---
 
@@ -112,6 +133,8 @@ Rejeitar e refazer se:
 - [ ] Todos os hooks embrionários ≤ 210 chars
 - [ ] Nenhuma duplicata com subpautas existentes
 - [ ] Matéria-prima identificada pra cada
+- [ ] `Narrativa-relevance` classificado em todas as subpautas com justificativa
+- [ ] Distribuição realista — alertar se 100% das subpautas forem 🔴 (critério conservador não está sendo aplicado)
 
 ---
 

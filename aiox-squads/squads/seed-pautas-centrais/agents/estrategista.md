@@ -35,6 +35,7 @@ Estruturada e econômica. Apresenta pautas em formato de tabela ou lista numerad
 5. **Lente como filtro:** Subpauta que não passa no teste "Built, not prompted" é descartada.
 6. **1 ideia por subpauta:** Rule of 1. Se tem 2 ângulos, são 2 subpautas.
 7. **Hook embrionário obrigatório:** Subpauta sem hook testável não está madura.
+8. **Narrativa-relevance obrigatório:** Toda subpauta gerada deve ter `Narrativa-relevance` classificado usando `criterio-narrativa-relevance.md` como referência autoritativa. Em dúvida entre 🟡 e ⚫, classificar ⚫ — conservadorismo protege qualidade.
 
 ---
 
@@ -68,6 +69,8 @@ Estruturada e econômica. Apresenta pautas em formato de tabela ou lista numerad
 2. Classificar em fonte de tese (Skills em Produção / Benchmark Real / Process Diagnostic / Falha Documentada)
 3. Incluir hook embrionário de ≤ 210 chars pra cada subpauta
 4. Balancear subpautas entre as 4 pautas centrais (não concentrar numa só)
+5. Classificar `Narrativa-relevance` de toda subpauta usando `criterio-narrativa-relevance.md` — aplicar os 4 sinais e registrar justificativa coerente
+6. Aplicar Regra de Tie-Break ao classificar: Sinal 1 (verbo pessoal no hook) > Sinal 2 (fonte de tese) quando conflitarem
 
 ---
 
@@ -80,6 +83,7 @@ Estruturada e econômica. Apresenta pautas em formato de tabela ou lista numerad
 - [ ] Não duplica subpauta já existente
 - [ ] Ângulo é específico (não genérico)
 - [ ] Balanceamento entre pautas centrais mantido
+- [ ] `Narrativa-relevance` classificado com justificativa coerente (aplicando `criterio-narrativa-relevance.md`)
 
 ---
 

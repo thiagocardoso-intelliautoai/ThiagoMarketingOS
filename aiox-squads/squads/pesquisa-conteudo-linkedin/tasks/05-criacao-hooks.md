@@ -13,13 +13,17 @@ Max 210 caracteres cada. Recomendar o mais forte.
 
 ## Instruções
 
-### 1. Receber a Ideia Aprovada
+### 1. Receber a Ideia Aprovada e a História (se houver)
 - Ler a ideia selecionada pelo Thiago no step-02 (Seleção e Decisão)
+- Ler `output/historia-relevante.md` (gerado no step-04-historia) para verificar disponibilidade de história autêntica:
+  - **`status: encontrada` ou `adjacente`:** história disponível — usar fala literal em ≥1 dos 3 hooks
+  - **`status: skip` ou `nenhuma_encontrada`:** seguir sem história, todos os hooks marcados "✓ sem história"
 
 ### 2. Consultar Referências
 - `data/hook-structures.md` — 9 estruturas validadas
 - `data/tone-of-voice.md` — Tom e vocabulário
 - `data/linkedin-strategy.md` — Lente e fontes de tese da ideia
+- `output/historia-relevante.md` — fala literal e contexto da história disponível
 
 ### 3. Criar 3 Hooks (Estruturas DIFERENTES)
 
@@ -30,7 +34,13 @@ Para cada hook:
 - **Texto:** "[hook completo]"
 - **Caracteres:** [contagem]
 - **Por que funciona:** [1 frase justificando]
+- **Origem:** ✓ usa fala de: [título da história em historia-relevante.md] | ✓ sem história
 ```
+
+**Regra obrigatória quando `historia-relevante.md` tem `status: encontrada` ou `adjacente`:**
+- ≥1 dos 3 hooks DEVE usar fala literal da história (citação direta entre aspas)
+- Os outros podem ser sem história, mas pelo menos um deve aproveitar a história disponível
+- Se `status: adjacente`: marcar explicitamente "sugestão adjacente — Thiago decide no step-06"
 
 ### 4. Recomendar o Mais Forte
 ```

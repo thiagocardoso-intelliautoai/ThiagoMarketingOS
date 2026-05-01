@@ -3,11 +3,12 @@
 # Descrição: Pipeline completo de pesquisa → criação → revisão de posts texto para LinkedIn
 
 name: pesquisa-conteudo-linkedin
-version: "2.0"
+version: "2.1"
 description: >
   Squad especializada em pesquisa de mercado, geração de insights e criação
   de posts de texto para o perfil LinkedIn do Thiago C.Lima / Winning Sales.
   Foco em IA aplicada a vendas B2B, gestão comercial e automação.
+  v2.1 adiciona step-04-historia (busca história autêntica via subagent historia-thiago).
 
 # ─── Agentes ───────────────────────────────────────────────
 agents:
@@ -26,6 +27,18 @@ agents:
     name: "Rafael Revisor 🔎"
     file: agents/revisor.md
     description: Editor e quality gate — checklist de revisão, veto conditions, aprovação/rejeição de posts
+
+# ─── Subagentes Externos (invocados via Task tool) ────────
+subagents:
+  - id: historia-thiago
+    file: ../../../.claude/agents/historia-thiago.md
+    description: >
+      Subagent dedicado a buscar histórias autênticas da vida do Thiago C.Lima
+      em historia-thiago/. Usado pelo step-04-historia. Auto-classifica via
+      criterio-narrativa-relevance.md. Invocado via Task tool — isolamento
+      proposital (~3-5k tokens por execução vs ~30-50k inline).
+    invocation: task-tool
+    consumed_by: [step-04-historia]
 
 # ─── Workflow ──────────────────────────────────────────────
 workflow:
@@ -100,6 +113,10 @@ tasks:
     file: tasks/03-aprofundamento.md
     description: "⚠️ DEPRECIADO — Absorvido pelo Step 01 (Contexto BR integrado)"
 
+  - id: buscar-historia
+    file: tasks/04-buscar-historia.md
+    description: Step 04 (v2.1) — Verifica narrativa-relevance e busca história autêntica via subagent historia-thiago. Skip se ⚫, busca se 🔴/🟡, bloqueia Modo 4 + 🔴 + 0 histórias.
+
   - id: criacao-hooks
     file: tasks/05-criacao-hooks.md
     description: Criação de 3 opções de hook
@@ -122,6 +139,7 @@ output:
   files:
     - armazem/ideias.md     # Armazém cronológico de ideias
     - research-report.md    # Relatório de pesquisa (qualquer modo)
+    - historia-relevante.md # História autêntica do Thiago (step-04-historia, v2.1)
     - hooks.md              # Hooks gerados para seleção
     - post-final.md         # Post aprovado final (com score de qualidade)
     - planejamento-mensal-tabela.md  # Tabela de 12 posts (Modo 5)

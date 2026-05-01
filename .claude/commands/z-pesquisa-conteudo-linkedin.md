@@ -33,28 +33,32 @@ Pergunte ao usuário como quer operar hoje:
 
 ## Pipeline por Modo
 
-### Modos 1, 2, 3 → Pipeline completo (7 steps)
+### Modos 1, 2, 3 → Pipeline completo (8 steps — v2.1)
 
 | Step | Tipo | Descrição |
 |------|------|-----------|
 | 00 | ⏸️ Checkpoint | Seleção de Modo |
 | 01 | 🤖 Pesquisador | Executa pesquisa conforme o modo (com Contexto BR integrado) |
 | 02 | ⏸️ Checkpoint | **Seleção e Decisão** — Thiago escolhe qual vira post, resto vai pro armazém |
-| 05 | 🤖 Redator | Criação de 3 hooks (max 210 chars cada) |
+| 04 | 🤖 Subagent | **Buscar História Relevante** — verifica narrativa-relevance e busca via `historia-thiago` (skip se ⚫) |
+| 05 | 🤖 Redator | Criação de 3 hooks (max 210 chars cada) — usa fala literal se disponível |
 | 06 | ⏸️ Checkpoint | Escolha do Hook |
 | 07 | 🤖 Redator | **Post Final Completo** + Revisão integrada (4 blocos, score ≥ 80%) |
 | 09 | ⏸️ Checkpoint | **Aprovação Final** + Salvar no Content Command Center |
 
-### Modo 4 → Pipeline direto (6 steps)
+### Modo 4 → Pipeline direto (7 steps — v2.1)
 
 | Step | Tipo | Descrição |
 |------|------|-----------|
 | 00 | ⏸️ Checkpoint | Seleção de Modo (4) |
 | 02 | ⏸️ Checkpoint | Armazém de Ideias — escolher ideia existente ou nova |
-| 05 | 🤖 Redator | Criação de 3 hooks |
+| 04 | 🤖 Subagent | **Buscar História Relevante** — auto-classifica se sem nível, busca via `historia-thiago`. Bloqueia se 🔴 + 0 histórias (volta ao step-02) |
+| 05 | 🤖 Redator | Criação de 3 hooks — usa fala literal se disponível |
 | 06 | ⏸️ Checkpoint | Escolha do Hook |
 | 07 | 🤖 Redator | Post Final Completo + Revisão integrada |
 | 09 | ⏸️ Checkpoint | Aprovação Final + Salvar no Content Command Center |
+
+> **Step-04-historia (v2.1):** invocado em todos os modos 1/2/3/4. Lê `narrativa-relevance` da ideia (Eva já classifica nas subpautas — HISTORIA-003) ou auto-classifica em Modo 4 avulso. Output em formato YAML em `output/historia-relevante.md` consumido pelo step-05 e step-07. Subagent `historia-thiago` invocado via Task tool (isolamento de contexto).
 
 ### Modo 5 → Planejamento Mensal (12 Posts de uma vez)
 

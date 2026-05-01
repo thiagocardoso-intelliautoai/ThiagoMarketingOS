@@ -1,9 +1,9 @@
 # Workflow: Pesquisa e Conteúdo LinkedIn
 # Pipeline com 5 modos de operação — da pesquisa semanal à aprovação final do post
-# v2.0 — Pipeline otimizado (10→7 steps nos modos 1/2/3)
+# v2.1 — Adiciona step-04-historia (busca história autêntica via subagent historia-thiago)
 
 name: pesquisa-conteudo-linkedin
-version: "2.0"
+version: "2.1"
 description: >
   Pipeline otimizado para criação de posts de texto LinkedIn.
   5 modos de operação + 4 checkpoints humanos obrigatórios.
@@ -146,7 +146,32 @@ steps:
     input: output/research-report.md
     output:
       - output/armazem/ideias.md    # Ideias para uso futuro
-      - ideia-aprovada               # Ideia que segue para hooks
+      - ideia-aprovada               # Ideia que segue para busca de história
+    next: step-04-historia
+
+  # ─── FASE 1.75: BUSCA DE HISTÓRIA AUTÊNTICA ─────────────
+  - id: step-04-historia
+    name: "Buscar História Relevante"
+    task: tasks/04-buscar-historia.md
+    subagent: historia-thiago
+    data:
+      - data/linkedin-strategy.md
+    input: ideia-aprovada
+    output: output/historia-relevante.md
+    description: >
+      Verifica narrativa-relevance da ideia aprovada e busca história
+      autêntica via subagent historia-thiago quando aplicável (🔴/🟡).
+      Skip automático se ⚫ nula. Modo 4 sem classificação aciona
+      auto-classificação. Output em formato YAML padronizado.
+    next: step-05
+    on_block:
+      condition: "modo == 4 AND classificacao_aplicada == 🔴 AND historias_encontradas == 0"
+      action: return_to_step
+      target: step-02
+      message: "Tema 🔴 sem histórias aderentes (diretas nem adjacentes). Reclassifique como 🟡 ou escolha outro ângulo. Retornando ao step-02."
+    on_failure:
+      action: graceful_degrade
+      fallback: "Salvar status: skip + log do erro, seguir para step-05 (exceto Modo 4 + 🔴)"
 
   # ─── FASE 2: CRIAÇÃO ────────────────────────────────────
   - id: step-05
@@ -235,12 +260,12 @@ steps:
           importará automaticamente no próximo refresh.
           Dedup automática por título — posts já existentes são ignorados.
 
-# ─── Resumo dos Modos ─────────────────────────────────────
-# Modo 1: step-00 → step-01-pesquisa  → step-02 → step-05 → step-06 → step-07 → step-09
-# Modo 2: step-00 → step-01-benchmark → step-02 → step-05 → step-06 → step-07 → step-09
-# Modo 3: step-00 → step-01-briefing  → step-02 → step-05 → step-06 → step-07 → step-09
-# Modo 4: step-00 → step-02 (pula pesquisa) → step-05 → step-06 → step-07 → step-09
-# Modo 5: step-00 → step-01-planejamento-mensal → step-02-planejamento (12 posts individuais)
+# ─── Resumo dos Modos (v2.1 — com step-04-historia) ──────
+# Modo 1: step-00 → step-01-pesquisa  → step-02 → step-04-historia → step-05 → step-06 → step-07 → step-09
+# Modo 2: step-00 → step-01-benchmark → step-02 → step-04-historia → step-05 → step-06 → step-07 → step-09
+# Modo 3: step-00 → step-01-briefing  → step-02 → step-04-historia → step-05 → step-06 → step-07 → step-09
+# Modo 4: step-00 → step-02 (pula pesquisa) → step-04-historia → step-05 → step-06 → step-07 → step-09
+# Modo 5: step-00 → step-01-planejamento-mensal → step-02-planejamento (12 posts individuais — sem step-04-historia)
 
 # ─── Resumo dos Checkpoints ───────────────────────────────
 # step-00: Seleção de modo (1, 2, 3, 4 ou 5)
@@ -253,4 +278,11 @@ steps:
 # REMOVIDO: step-03 (Aprofundamento) — absorvido pelo Step 01 com Contexto BR
 # REMOVIDO: step-04 (Armazém checkpoint separado) — fundido com Step 02
 # REMOVIDO: step-08 (Revisão separada do Revisor) — integrado no Step 07
-# RESULTADO: 10 → 7 steps (Modos 1/2/3), 7 → 6 steps (Modo 4)
+# RESULTADO v2.0: 10 → 7 steps (Modos 1/2/3), 7 → 6 steps (Modo 4)
+
+# ─── Mudanças v2.1 (HISTORIA-004) ─────────────────────────
+# ADICIONADO: step-04-historia entre step-02 e step-05 nos modos 1/2/3/4
+# - Verifica narrativa-relevance e busca história autêntica via subagent historia-thiago
+# - Modo 4 + 🔴 + 0 histórias → retorno ao step-02 (bloqueio funcional)
+# - Modo 5 (planejamento mensal) NÃO usa step-04-historia (escopo de tabela, não post individual)
+# RESULTADO v2.1: 7 → 8 steps (Modos 1/2/3), 6 → 7 steps (Modo 4)
