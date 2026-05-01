@@ -58,8 +58,14 @@ tasks:
     file: tasks/02-gerar-subpautas.md
     description: Modo 2 — Execuções subsequentes. Gera Subpautas novas dentro das Pautas existentes
 
+  - id: persistir-supabase
+    file: tasks/03-persistir-supabase.md
+    description: Step final — Salvar pautas e subpautas aprovadas no Supabase via save-pautas-cli.js
+
 # Checkpoints humanos
 checkpoints:
   - step-00: "Seleção do modo (Inicialização ou Subpautas)"
   - step-02: "Aprovação das Pautas Centrais (só no modo 1)"
   - step-04: "Aprovação das Subpautas geradas"
+  - step-03-persistir: "Persistência no Supabase (Modo 1)"
+  - step-05-persistir: "Persistência no Supabase (Modo 2)"
