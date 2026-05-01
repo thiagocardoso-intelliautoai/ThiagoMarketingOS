@@ -56,6 +56,16 @@ steps:
       - output/pautas-centrais.md
       - output/subpautas/seed-inicial.md
     output: pautas-aprovadas
+    next: step-03-persistir
+
+  - id: step-03-persistir
+    name: "Persistir no Supabase — Modo 1"
+    type: action
+    task: tasks/03-persistir-supabase.md
+    description: >
+      Salvar pautas centrais + subpautas aprovadas no Supabase.
+      Executar: node aiox-squads/shared/scripts/save-pautas-cli.js
+    command: "node aiox-squads/shared/scripts/save-pautas-cli.js"
 
   # ─── MODO 2: GERAÇÃO DE SUBPAUTAS ──────────────────────
   - id: step-03-gerar-subpautas
@@ -81,10 +91,20 @@ steps:
       Subpautas aprovadas são adicionadas ao estoque permanente.
     input: output/subpautas/subpautas-{data}.md
     output: subpautas-aprovadas
+    next: step-05-persistir
+
+  - id: step-05-persistir
+    name: "Persistir no Supabase — Modo 2"
+    type: action
+    task: tasks/03-persistir-supabase.md
+    description: >
+      Salvar subpautas novas aprovadas no Supabase.
+      Executar: node aiox-squads/shared/scripts/save-pautas-cli.js --subpautas-file output/subpautas/subpautas-{data}.md
+    command: "node aiox-squads/shared/scripts/save-pautas-cli.js --subpautas-file output/subpautas/subpautas-{data}.md"
 
 # ─── Resumo dos Modos ─────────────────────────────────────
-# Modo 1: step-00 → step-01-inicializacao → step-02-aprovacao-pautas
-# Modo 2: step-00 → step-03-gerar-subpautas → step-04-aprovacao-subpautas
+# Modo 1: step-00 → step-01-inicializacao → step-02-aprovacao-pautas → step-03-persistir
+# Modo 2: step-00 → step-03-gerar-subpautas → step-04-aprovacao-subpautas → step-05-persistir
 
 # ─── Resumo dos Checkpoints ──────────────────────────────
 # step-00: Seleção de modo (1 ou 2)

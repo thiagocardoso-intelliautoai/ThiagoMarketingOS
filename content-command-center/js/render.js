@@ -282,6 +282,8 @@ function renderPostCard(post) {
         <span class="meta-item">${Icons.calendar} ${formatDate(post.createdAt)}</span>
         ${post.reviewScore ? `<span class="meta-item">${Icons.barChart} ${post.reviewScore}%</span>` : ''}
         <span class="badge badge-status">${URGENCY_LABELS[post.urgency] || post.urgency}</span>
+        ${post.leadMagnetStatus === 'a_fazer' ? '<span class="badge badge-lm-todo">🎯</span>' : ''}
+        ${post.leadMagnetStatus === 'concluido' ? '<span class="badge badge-lm-done">🎯✓</span>' : ''}
         ${scheduledBadge}
       </div>
       ${footerHtml}
@@ -452,9 +454,29 @@ function openViewPostModal(postId) {
     </div>
   `;
 
+  const lmStatus = post.leadMagnetStatus;
+  const lmObsValue = post.leadMagnetObservation || '';
+  const lmSectionHtml = lmStatus ? `
+    <div class="lm-section" id="lm-section">
+      <div class="lm-section-title">🎯 Material do Lead Magnet</div>
+      <div class="lm-toggle-row">
+        <button class="lm-toggle-btn ${lmStatus === 'a_fazer' ? 'lm-btn-todo-active' : 'lm-btn-inactive'}" id="lm-btn-todo">A fazer</button>
+        <button class="lm-toggle-btn ${lmStatus === 'concluido' ? 'lm-btn-done-active' : 'lm-btn-inactive'}" id="lm-btn-done">Já ✓</button>
+      </div>
+      ${lmStatus === 'concluido' ? `
+        <textarea class="lm-obs-input" id="lm-obs-input" placeholder="Link ou observação do material...">${escapeHtml(lmObsValue)}</textarea>
+      ` : ''}
+    </div>
+  ` : `
+    <div class="lm-section lm-section-off">
+      <button class="btn-ghost btn-sm" id="lm-enable-btn">🎯 Marcar como Lead Magnet</button>
+    </div>
+  `;
+
   openModal(`
     ${headerHtml}
     ${bodyHtml}
+    ${lmSectionHtml}
     <div class="modal-footer">
       <div class="modal-footer-left">
         <button class="btn-outline-primary btn-sm" id="modal-copy-post">${Icons.copy} Copiar Post</button>
@@ -495,6 +517,47 @@ function openViewPostModal(postId) {
 
   // LinkedIn preview events (expand/collapse text)
   attachLinkedInPreviewEvents();
+
+  // Lead Magnet events
+  const bindLmEvents = (currentStatus) => {
+    document.getElementById('lm-enable-btn')?.addEventListener('click', async () => {
+      await DataStore.updatePostLeadMagnet(post.id, { lead_magnet_status: 'a_fazer', lead_magnet_observation: null });
+      post.leadMagnetStatus = 'a_fazer';
+      closeModal();
+      openViewPostModal(post.id);
+      renderLibrary();
+    });
+
+    document.getElementById('lm-btn-todo')?.addEventListener('click', async () => {
+      if (currentStatus === 'a_fazer') return;
+      await DataStore.updatePostLeadMagnet(post.id, { lead_magnet_status: 'a_fazer', lead_magnet_observation: null });
+      post.leadMagnetStatus = 'a_fazer';
+      post.leadMagnetObservation = null;
+      closeModal();
+      openViewPostModal(post.id);
+      renderLibrary();
+    });
+
+    document.getElementById('lm-btn-done')?.addEventListener('click', async () => {
+      if (currentStatus === 'concluido') return;
+      await DataStore.updatePostLeadMagnet(post.id, { lead_magnet_status: 'concluido', lead_magnet_observation: null });
+      post.leadMagnetStatus = 'concluido';
+      closeModal();
+      openViewPostModal(post.id);
+      renderLibrary();
+    });
+
+    const obsInput = document.getElementById('lm-obs-input');
+    const saveObs = async () => {
+      const obs = obsInput.value.trim();
+      await DataStore.updatePostLeadMagnet(post.id, { lead_magnet_status: 'concluido', lead_magnet_observation: obs });
+      post.leadMagnetObservation = obs;
+      showToast('Observação salva', 'success');
+    };
+    obsInput?.addEventListener('blur', saveObs);
+    obsInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); saveObs(); } });
+  };
+  bindLmEvents(lmStatus);
 
   // Edit/Save logic
   let isEditing = false;

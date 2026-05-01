@@ -279,6 +279,57 @@ async function uploadCarousel(slug, slidePngs, pdfPath, style, postId) {
   return { pdfUrl, carouselId, slideCount: slidePngs.length };
 }
 
+// ── savePauta ─────────────────────────────────────────────────
+
+/**
+ * Upsert de uma pauta central na tabela `pautas_centrais` por nome.
+ * Retorna o registro inserido/atualizado (com id).
+ *
+ * fonte_tese válidos: skills_producao | benchmark_real | process_diagnostic | falha_documentada
+ */
+async function savePauta({ nome, fonte_tese, descricao, ordem }) {
+  const { data, error } = await supabase
+    .from('pautas_centrais')
+    .upsert({ nome, fonte_tese, descricao, ordem: ordem ?? 0 }, { onConflict: 'nome' })
+    .select('id, nome')
+    .single();
+
+  if (error) throw new Error(`savePauta("${nome}"): ${error.message}`);
+  return data;
+}
+
+// ── saveSubpauta ──────────────────────────────────────────────
+
+/**
+ * Upsert de uma subpauta na tabela `subpautas` por (titulo, pauta_central_id).
+ * Retorna o registro inserido/atualizado (com id).
+ *
+ * urgencia válidos: urgente | relevante | pode_esperar
+ * status válidos:  ativa | usada | descartada
+ */
+async function saveSubpauta({ pauta_central_id, titulo, angulo, hook_embrionario, materia_prima, urgencia, status, is_lead_magnet }) {
+  const { data, error } = await supabase
+    .from('subpautas')
+    .upsert(
+      {
+        pauta_central_id,
+        titulo,
+        angulo: angulo ?? null,
+        hook_embrionario: hook_embrionario ?? null,
+        materia_prima: materia_prima ?? null,
+        urgencia: urgencia ?? 'relevante',
+        status: status ?? 'ativa',
+        is_lead_magnet: is_lead_magnet ?? false,
+      },
+      { onConflict: 'titulo,pauta_central_id' }
+    )
+    .select('id, titulo')
+    .single();
+
+  if (error) throw new Error(`saveSubpauta("${titulo}"): ${error.message}`);
+  return data;
+}
+
 // ── savePessoa ────────────────────────────────────────────────
 
 /**
@@ -400,6 +451,8 @@ module.exports = {
   savePost,
   uploadCover,
   uploadCarousel,
+  savePauta,
+  saveSubpauta,
   savePessoa,
   saveAngulo,
   updateAnguloStatus,
