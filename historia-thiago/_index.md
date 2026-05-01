@@ -13,6 +13,7 @@
 | `evolucao-pessoal.md` | 13 histórias: mindset, livros, fé, família, hábitos, vida social | Quando query é sobre **mentalidade, propósito, família, equilíbrio, espiritualidade** |
 | `pessoas-marcantes.md` | 18 perfis: mentores, sócios, colegas, família | Quando query menciona **uma pessoa específica** ou pede história COM alguém |
 | `momentos-marcantes.md` | Catálogo cruzado: primeiras vezes, viradas, fracassos, conquistas | Quando query é por **TIPO de momento** (não por tema) |
+| `criterio-narrativa-relevance.md` | Critério de quando buscar história: 4 sinais, 3 níveis, tabela de decisão | Quando precisar **decidir se deve invocar o subagent** (auto-classificação) |
 
 ---
 
@@ -114,21 +115,36 @@
 
 ## 🔑 Palavras-chave / Sinônimos
 
+<<<<<<< HEAD
 `ai` `ia` `inteligencia artificial` `vendas` `linkedin` `lead magnet` `aprendizado` `fracasso` `sucesso` `familia` `mãe` `irmã` `mentores` `agencia` `consultoria` `winning sales` `winning hub` `rafael` `ivan` `coutinho` `afinha` `shaya` `alan nicholas` `aios` `antigravity` `inbound` `outbound` `resgate` `proposta de valor` `icp` `nicochat` `make` `concessionária` `volkswagen` `recreio veículos` `discord` `comunidade` `mentor` `cobrança` `prospecção` `whatsapp` `email` `cold outbound` `surf` `exercicio` `gratidão` `livros` `presença` `ansiedade` `mindset`
+=======
+`ai` `ia` `inteligencia artificial` `vendas` `linkedin` `lead magnet` `aprendizado` `fracasso` `sucesso` `familia` `mãe` `irmã` `mentores` `agencia` `consultoria` `winning sales` `winning hub` `rafael` `ivan` `coutinho` `afinha` `shaya` `alan nicholas` `aios` `antigravity` `inbound` `outbound` `resgate` `proposta de valor` `icp` `nicochat` `make` `concessionária` `volkswagen` `discord` `comunidade` `mentor` `cobrança` `prospecção` `whatsapp` `email` `cold outbound` `surf` `exercicio` `gratidão` `livros` `presença` `ansiedade` `mindset`
+>>>>>>> a856f0b (feat(historia): implement HISTORIA-001 — criterio-narrativa-relevance)
 
 ---
 
 ## 📋 Como o subagent deve usar este índice
 
 1. **Ler este `_index.md` primeiro** (sempre — é pequeno)
+<<<<<<< HEAD
 2. **Identificar a intenção da query**:
+=======
+2. **Se não há classificação na query (Modo 4 avulso):** ler `criterio-narrativa-relevance.md` e classificar antes de buscar
+3. **Identificar a intenção da query**:
+>>>>>>> a856f0b (feat(historia): implement HISTORIA-001 — criterio-narrativa-relevance)
    - Pediu lição → seção "Busca por LIÇÃO"
    - Pediu arquetipo (primeira vez, virada, fracasso, conquista) → seção "Busca por ARQUETIPO"
    - Mencionou pessoa → ir direto a `pessoas-marcantes.md`
    - Período/data → seção "Timeline"
+<<<<<<< HEAD
 3. **Abrir 1 ou 2 arquivos relevantes** (não todos)
 4. **Extrair 1-3 histórias mais aderentes**
 5. **Retornar no formato definido pelo subagent** (cena, falas literais, concreto, lição, use cases, tags)
+=======
+4. **Abrir 1 ou 2 arquivos relevantes** (não todos)
+5. **Extrair 1-3 histórias mais aderentes**
+6. **Retornar no formato definido pelo subagent** (cena, falas literais, concreto, lição, use cases, tags)
+>>>>>>> a856f0b (feat(historia): implement HISTORIA-001 — criterio-narrativa-relevance)
 
 ---
 
