@@ -6,7 +6,7 @@
 **🔗 Bloqueia:** —
 **👤 Assignee:** Dev (Frontend + Squads) + Data Engineer (DDL)
 **🏷️ Labels:** `frontend`, `CCC`, `squads`, `recommender`, `supabase`
-**📊 Status:** `[ ]` Ready for Review (com 2 sub-tarefas pendentes — ver Change Log)
+**📊 Status:** `[ ]` Ready for Review (com 1 sub-tarefa pendente — ver Change Log)
 
 **📚 Referência arquitetural:** [VISUAL-RECOMMENDER-PLAN.md §3](../architecture/VISUAL-RECOMMENDER-PLAN.md)
 
@@ -107,7 +107,7 @@ export function recommendVisual(post) {
 
 ### 2.3 — Persistência (DELEGAR a `/data-engineer`)
 
-- [ ] **2.3.1** **DELEGAÇÃO:** @data-engineer cria migration adicionando coluna `recommended_visual TEXT NULL` na tabela `posts`. Sem enum, sem constraint, sem default. **STATUS: PENDENTE — bloqueada na autoridade de @data-engineer (Dara).** O código aplicativo (data.js, save-post-cli, upload-to-supabase) já espera essa coluna; basta criar a migration.
+- [x] **2.3.1** **DELEGAÇÃO @data-engineer:** Migration criada em [`content-command-center/supabase/migrations/20260430_add_recommended_visual.sql`](../../../content-command-center/supabase/migrations/20260430_add_recommended_visual.sql). Adiciona `recommended_visual TEXT NULL` na tabela `posts` com COMMENT documentando uso. Idempotente (`ADD COLUMN IF NOT EXISTS`). Operador deve rodar manualmente no Supabase SQL Editor.
 
 - [x] **2.3.2** Atualizar [aiox-squads/shared/scripts/save-post-cli.js](../../../aiox-squads/shared/scripts/save-post-cli.js) — extrair linha `Sugestão Visual:` do markdown via regex e popular o novo campo no insert/update. **Também atualizado** `upload-to-supabase.js` para passar `recommended_visual` no row do upsert.
 
@@ -212,7 +212,7 @@ if (styleCard) {
 **Novos:**
 - `[x]` `content-command-center/js/recommend-visual.js` — função pura `recommendVisual()` + `extractSignals()` + helpers `parseRecommendedVisual()`/`stringifyRecommendation()`/`getRecommendation()`
 - `[x]` `content-command-center/tests/recommend-visual.test.js` — 10 testes, todos passando (cobre 7 cenários da árvore + 3 helpers)
-- `[ ]` `aiox-project/supabase/migrations/YYYYMMDDHHMM_add_recommended_visual.sql` — **PENDENTE @data-engineer**
+- `[x]` `content-command-center/supabase/migrations/20260430_add_recommended_visual.sql` — migration criada por @data-engineer (Dara). Idempotente. Operador roda manualmente no Supabase SQL Editor.
 
 **Modificados:**
 - `[x]` `content-command-center/js/render.js` — `renderStyleCards()` aceita `recommendation` e aplica `style-card-recommended` + classe de confiança; `renderRecommendCheckboxes()` injeta os 2 checkboxes; listeners recalculam ao toggle
@@ -231,3 +231,4 @@ if (styleCard) {
 - 2026-04-30 — Story criada por @sm (River) com base no plano arquitetural [VISUAL-RECOMMENDER-PLAN.md §3](../architecture/VISUAL-RECOMMENDER-PLAN.md)
 - 2026-04-30 — @po (Pax) validou via `*validate-story-draft`. Score 8/10 → **GO**. Status: Draft → Ready. Observações: critério 4 (scope IN/OUT) implícito via File List + AC, aceitável; critério 8 (riscos) não documentado por ser lógica client-side determinística (baixo risco). Atenção @dev: sub-tarefa 2.3 (DDL) deve ser delegada a @data-engineer.
 - 2026-04-30 — @dev (Dex) implementou em modo YOLO. **10/10 testes unitários passando** (cobre 7 cenários da árvore de decisão + 3 helpers de parsing/stringify). **Decisões autônomas:** (1) Estrutura do `recommendVisual()` retorna `cardNum` direto, simplificando integração com `renderStyleCards()` que já existia da VISUAL-001. (2) UX final é exatamente o pedido: estrelinha + borda destacada + 1 linha de motivo no card, sem banner separado, sem botão de aceitar, sem pré-seleção. (3) 2 checkboxes (`tem_print`/`tem_foto`) recalculam a sugestão dinamicamente — re-renderiza apenas o `.style-selector`, não o modal todo. (4) Adicionei modificação em `upload-to-supabase.js` (não estava na story original) — necessária para o campo chegar no DB. (5) Regex `RX_ANTES_DEPOIS` foi corrigida durante os testes para aceitar unidades coladas no número (ex: "de 800ms para 350ms"). **Status: Ready → Ready for Review com 2 sub-tarefas pendentes:** (a) **2.2.3** (squad criar-materia-colab) — estrutura diferente, requer análise separada; CCC fará fallback client-side. (b) **2.3.1** (DDL `recommended_visual TEXT NULL`) — bloqueada na autoridade exclusiva de @data-engineer (Dara). Código aplicativo pronto, basta migration.
+- 2026-04-30 — @data-engineer (Dara) criou migration `20260430_add_recommended_visual.sql`. Idempotente, sem default, sem constraint. Operador roda manualmente no Supabase SQL Editor. **Sub-tarefa 2.3.1 desbloqueada.** Resta apenas 2.2.3 (squad matéria-colab) como pendência não-bloqueante.
