@@ -746,6 +746,28 @@
   color: var(--text-secondary);
 }
 
+/* VISUAL-001: Dicas "vence/perde quando" no card de estilo */
+.style-card__hint {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px dashed var(--border, rgba(255, 255, 255, 0.08));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs, 4px);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.style-card__hint .hint-vence {
+  color: var(--accent-primary);
+}
+
+.style-card__hint .hint-perde {
+  color: var(--text-muted, var(--text-secondary));
+  opacity: 0.8;
+}
+
 /* ─── FORM ─── */
 .form-grid {
   display: flex;

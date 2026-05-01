@@ -1,7 +1,7 @@
 // render.js — DOM Rendering Engine v2.0 (Lucide Icons Edition)
 import { DataStore } from './data.js';
 import { MODE_LABELS, FONTE_TESE_CONFIG, STATUS_LABELS, URGENCY_LABELS } from './state.js';
-import { Prompts } from './prompts.js';
+import { Prompts, CarouselStyles, CoverStyles } from './prompts.js';
 import { renderLinkedInPreview, attachLinkedInPreviewEvents } from './linkedin-preview.js';
 import { Icons } from './icons.js';
 import { showToast } from './toast.js';
@@ -609,6 +609,28 @@ function openViewPostModal(postId) {
   });
 }
 
+// VISUAL-001: Renderiza cards de estilo a partir da metadata de prompts.js
+// (label + vence_quando + perde_quando) — single source of truth.
+function renderStyleCards(stylesMap, icons, defaultStyleNum) {
+  return Object.entries(stylesMap).map(([num, meta]) => {
+    const n = parseInt(num);
+    const icon = icons[n - 1] || '✨';
+    const selectedClass = n === defaultStyleNum ? ' style-card-selected' : '';
+    return `
+      <div class="style-card${selectedClass}" data-style="${n}" tabindex="0" role="button"
+           data-vence="${escapeHtml(meta.vence_quando)}"
+           data-perde="${escapeHtml(meta.perde_quando)}">
+        <div class="style-card-icon">${icon}</div>
+        <h4>${escapeHtml(meta.label.split('(')[0].trim())}</h4>
+        <p>${escapeHtml(meta.short)}</p>
+        <div class="style-card__hint">
+          <span class="hint-vence">✅ ${escapeHtml(meta.vence_quando)}</span>
+          <span class="hint-perde">❌ ${escapeHtml(meta.perde_quando)}</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
 function openCarouselModal(postId) {
   const post = DataStore.getPostById(postId);
   if (!post) return;
@@ -625,26 +647,7 @@ function openCarouselModal(postId) {
 
       <p class="modal-subtitle" style="margin-top:var(--space-lg)">Escolha o estilo visual:</p>
       <div class="style-selector style-selector-carousel">
-        <div class="style-card style-card-selected" data-style="1" tabindex="0" role="button">
-          <div class="style-card-icon">🖤</div>
-          <h4>Twitter Style</h4>
-          <p>Fundo preto, print de autoridade</p>
-        </div>
-        <div class="style-card" data-style="2" tabindex="0" role="button">
-          <div class="style-card-icon">✨</div>
-          <h4>Editorial Clean</h4>
-          <p>Fundo claro, tipografia bold, premium</p>
-        </div>
-        <div class="style-card" data-style="3" tabindex="0" role="button">
-          <div class="style-card-icon">📊</div>
-          <h4>Data-Driven</h4>
-          <p>Fundo navy, números gigantes, dados</p>
-        </div>
-        <div class="style-card" data-style="4" tabindex="0" role="button">
-          <div class="style-card-icon">📓</div>
-          <h4>Notebook Raw</h4>
-          <p>Papel craft, escrita manual, anti-AI</p>
-        </div>
+        ${renderStyleCards(CarouselStyles, ['🖤', '✨', '📊', '📓'], 1)}
       </div>
 
       <div class="expand-prompt" style="margin-top:var(--space-lg)">
@@ -689,31 +692,7 @@ function openCoverModal(postId) {
 
       <p class="modal-subtitle" style="margin-top:var(--space-lg)">Escolha o estilo visual:</p>
       <div class="style-selector style-selector-cover">
-        <div class="style-card style-card-selected" data-style="1" tabindex="0" role="button">
-          <div class="style-card-icon">✏️</div>
-          <h4>Rascunho no Papel</h4>
-          <p>Infográfico à lápis sobre foto real de caderno</p>
-        </div>
-        <div class="style-card" data-style="2" tabindex="0" role="button">
-          <div class="style-card-icon">👤</div>
-          <h4>Pessoa + Texto</h4>
-          <p>Foto real com overlay de texto protegido</p>
-        </div>
-        <div class="style-card" data-style="3" tabindex="0" role="button">
-          <div class="style-card-icon">📊</div>
-          <h4>Micro-Infográfico</h4>
-          <p>Um dado/métrica hero visualizado</p>
-        </div>
-        <div class="style-card" data-style="4" tabindex="0" role="button">
-          <div class="style-card-icon">🖼️</div>
-          <h4>Print de Autoridade</h4>
-          <p>Screenshot + opinião do Thiago</p>
-        </div>
-        <div class="style-card" data-style="5" tabindex="0" role="button">
-          <div class="style-card-icon">⚡</div>
-          <h4>Quote Card</h4>
-          <p>Citação editorial premium</p>
-        </div>
+        ${renderStyleCards(CoverStyles, ['✏️', '👤', '📊', '🖼️', '⚡'], 1)}
       </div>
 
       <div class="expand-prompt" style="margin-top:var(--space-lg)">

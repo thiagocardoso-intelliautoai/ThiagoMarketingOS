@@ -6,7 +6,7 @@
 **🔗 Bloqueia:** VISUAL-002 (motivo da sugestão usa o vocabulário cristalizado aqui)
 **👤 Assignee:** Dev (Frontend + Squads)
 **🏷️ Labels:** `frontend`, `CCC`, `squads`, `docs`, `cosmetic`
-**📊 Status:** `[ ]` Ready
+**📊 Status:** `[ ]` Ready for Review
 
 **📚 Referência arquitetural:** [VISUAL-RECOMMENDER-PLAN.md §2](../architecture/VISUAL-RECOMMENDER-PLAN.md)
 
@@ -34,7 +34,7 @@ Hoje os 9 estilos visuais (5 de capa + 4 de carrossel) aparecem no CCC apenas co
 
 ### 1.1 — Atualizar `visual-styles.md` da capa
 
-- [ ] **1.1.1** Em [aiox-squads/squads/capas-linkedin/data/visual-styles.md](../../../aiox-squads/squads/capas-linkedin/data/visual-styles.md), adicionar bloco **"Perde Quando"** abaixo da seção **"Quando Usar"** existente em cada um dos 5 estilos:
+- [x] **1.1.1** Em [aiox-squads/squads/capas-linkedin/data/visual-styles.md](../../../aiox-squads/squads/capas-linkedin/data/visual-styles.md), adicionar bloco **"Perde Quando"** abaixo da seção **"Quando Usar"** existente em cada um dos 5 estilos:
 
 | Estilo | Vence quando (já existe na seção "Quando Usar") | Perde quando (NOVO) |
 |---|---|---|
@@ -46,7 +46,7 @@ Hoje os 9 estilos visuais (5 de capa + 4 de carrossel) aparecem no CCC apenas co
 
 ### 1.2 — Atualizar `visual-styles.md` do carrossel
 
-- [ ] **1.2.1** Em [aiox-squads/squads/carrosseis-linkedin/data/visual-styles.md](../../../aiox-squads/squads/carrosseis-linkedin/data/visual-styles.md), adicionar bloco **"Perde Quando"** em cada um dos 4 estilos:
+- [x] **1.2.1** Em [aiox-squads/squads/carrosseis-linkedin/data/visual-styles.md](../../../aiox-squads/squads/carrosseis-linkedin/data/visual-styles.md), adicionar bloco **"Perde Quando"** em cada um dos 4 estilos:
 
 | Estilo | Vence quando | Perde quando |
 |---|---|---|
@@ -57,7 +57,7 @@ Hoje os 9 estilos visuais (5 de capa + 4 de carrossel) aparecem no CCC apenas co
 
 ### 1.3 — Estender labels no `prompts.js`
 
-- [ ] **1.3.1** Em [content-command-center/js/prompts.js](../../../content-command-center/js/prompts.js) (linhas 82-87 e 99-105), trocar a estrutura de `estiloLabels` de `{ 1: 'string' }` para `{ 1: { label: '...', vence_quando: '...', perde_quando: '...' } }`.
+- [x] **1.3.1** Em [content-command-center/js/prompts.js](../../../content-command-center/js/prompts.js) (linhas 82-87 e 99-105), trocar a estrutura de `estiloLabels` de `{ 1: 'string' }` para `{ 1: { label: '...', vence_quando: '...', perde_quando: '...' } }`.
 
 ```javascript
 // Exemplo carrossel:
@@ -72,11 +72,11 @@ const estiloLabels = {
 };
 ```
 
-- [ ] **1.3.2** Manter retrocompatibilidade — funções `carrossel()` e `capa()` continuam recebendo `estilo` numérico e renderizando o `label` no prompt (campos de descrição são metadata para o CCC).
+- [x] **1.3.2** Manter retrocompatibilidade — funções `carrossel()` e `capa()` continuam recebendo `estilo` numérico e renderizando o `label` no prompt (campos de descrição são metadata para o CCC).
 
 ### 1.4 — Adicionar tooltip nos cards do CCC
 
-- [ ] **1.4.1** Em [content-command-center/js/render.js](../../../content-command-center/js/render.js) (área do style-selector, ~linhas 600-740), cada `.style-card` recebe `data-vence` e `data-perde` no HTML:
+- [x] **1.4.1** Em [content-command-center/js/render.js](../../../content-command-center/js/render.js) (área do style-selector, ~linhas 600-740), cada `.style-card` recebe `data-vence` e `data-perde` no HTML:
 
 ```javascript
 // Exemplo dentro do loop que renderiza os cards:
@@ -94,7 +94,7 @@ const estiloLabels = {
 
 ### 1.5 — Estilos CSS
 
-- [ ] **1.5.1** Adicionar em arquivo CSS existente do CCC (NÃO criar novo arquivo):
+- [x] **1.5.1** Adicionar em arquivo CSS existente do CCC (NÃO criar novo arquivo):
 
 ```css
 .style-card__hint {
@@ -134,11 +134,11 @@ const estiloLabels = {
 
 ## File List
 
-- `[ ]` `aiox-squads/squads/capas-linkedin/data/visual-styles.md` — adicionar "Perde Quando" nos 5 estilos
-- `[ ]` `aiox-squads/squads/carrosseis-linkedin/data/visual-styles.md` — adicionar "Perde Quando" nos 4 estilos
-- `[ ]` `content-command-center/js/prompts.js` — estrutura `{ label, vence_quando, perde_quando }`
-- `[ ]` `content-command-center/js/render.js` — renderizar as 2 frases nos cards
-- `[ ]` `content-command-center/css/styles.css` (ou arquivo equivalente) — `.style-card__hint`, `.hint-vence`, `.hint-perde`
+- `[x]` `aiox-squads/squads/capas-linkedin/data/visual-styles.md` — "Perde Quando" adicionado nos 5 estilos
+- `[x]` `aiox-squads/squads/carrosseis-linkedin/data/visual-styles.md` — "Perde Quando" adicionado nos 4 estilos
+- `[x]` `content-command-center/js/prompts.js` — exporta `CarouselStyles` e `CoverStyles` com `{ label, short, vence_quando, perde_quando }`; `carrossel()` e `capa()` consomem via `.label`
+- `[x]` `content-command-center/js/render.js` — helper `renderStyleCards()` gera cards dinamicamente das constantes + injeta dicas ✅/❌
+- `[x]` `content-command-center/css/_preview.css` — `.style-card__hint`, `.hint-vence` (Teal), `.hint-perde` (muted)
 
 ---
 
@@ -146,3 +146,4 @@ const estiloLabels = {
 
 - 2026-04-30 — Story criada por @sm (River) com base no plano arquitetural [VISUAL-RECOMMENDER-PLAN.md §2](../architecture/VISUAL-RECOMMENDER-PLAN.md)
 - 2026-04-30 — @po (Pax) validou via `*validate-story-draft`. Score 8/10 → **GO**. Status: Draft → Ready. Observações: critério 4 (scope IN/OUT) implícito via File List, aceitável; critério 8 (riscos) não documentado por ser baixo risco (cosmético).
+- 2026-04-30 — @dev (Dex) implementou em modo YOLO. **Decisões autônomas:** (1) Refatorou render.js para gerar style cards dinamicamente do `CarouselStyles`/`CoverStyles` em vez de hardcoded HTML, eliminando duplicação de strings entre render.js e prompts.js. (2) Adicionou `short` field na metadata para preservar o subtítulo curto que já existia no card (acima do hint). (3) CSS adicionado em `_preview.css` (não criou arquivo novo, conforme story §1.5.1). **Status:** Ready → Ready for Review. **Sintaxe JS validada** com `node --check`.
