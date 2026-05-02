@@ -27,15 +27,15 @@ function getFirstDayOfWeek(year, month) {
   return new Date(year, month, 1).getDay();
 }
 
-function padZero(n) {
+export function padZero(n) {
   return n < 10 ? '0' + n : '' + n;
 }
 
-function formatDateBR(date) {
+export function formatDateBR(date) {
   return `${padZero(date.getDate())}/${padZero(date.getMonth() + 1)}/${date.getFullYear()}`;
 }
 
-function formatTimeBR(hours, minutes) {
+export function formatTimeBR(hours, minutes) {
   return `${padZero(hours)}:${padZero(minutes)}`;
 }
 
@@ -52,7 +52,7 @@ function isPast(year, month, day) {
 }
 
 // ─── CALENDAR RENDERER ───
-function renderCalendar(year, month, selectedDate) {
+export function renderCalendar(year, month, selectedDate) {
   const daysInMonth = getDaysInMonth(year, month);
   const firstDay = getFirstDayOfWeek(year, month);
   const now = new Date();
@@ -99,7 +99,7 @@ function renderCalendar(year, month, selectedDate) {
 }
 
 // ─── TIME PICKER (Custom Scroll Wheel) ───
-function renderTimePicker(hours, minutes) {
+export function renderTimePicker(hours, minutes) {
   const hourItems = Array.from({ length: 24 }, (_, i) =>
     `<div class="time-scroll-item ${i === hours ? 'time-scroll-item--selected' : ''}" data-value="${i}">${padZero(i)}</div>`
   ).join('');
@@ -133,7 +133,7 @@ function renderTimePicker(hours, minutes) {
 }
 
 // ─── SCHEDULE PICKER PANEL ───
-function renderSchedulePicker(selectedDate, hours, minutes) {
+export function renderSchedulePicker(selectedDate, hours, minutes) {
   const now = new Date();
   const calYear = selectedDate ? selectedDate.getFullYear() : now.getFullYear();
   const calMonth = selectedDate ? selectedDate.getMonth() : now.getMonth();
@@ -163,6 +163,57 @@ function renderSchedulePicker(selectedDate, hours, minutes) {
       </div>
     </div>
   `;
+}
+
+// ─── SCROLL WHEEL (module-level, shared with schedule-management) ───
+export function updateSelection(list, items, selectedVal) {
+  items.forEach(item => {
+    const val = parseInt(item.dataset.value, 10);
+    if (val === selectedVal) {
+      item.classList.add('time-scroll-item--selected');
+    } else {
+      item.classList.remove('time-scroll-item--selected');
+    }
+  });
+}
+
+export function initScrollWheel(colId, initialValue, onChange) {
+  const col = document.getElementById(colId);
+  if (!col) return;
+  const list = col.querySelector('.time-scroll-list');
+  if (!list) return;
+
+  const items = list.querySelectorAll('.time-scroll-item');
+  const itemHeight = 36;
+
+  const selectedIdx = Array.from(items).findIndex(el => parseInt(el.dataset.value, 10) === initialValue);
+  if (selectedIdx >= 0) {
+    requestAnimationFrame(() => { list.scrollTop = selectedIdx * itemHeight; });
+  }
+
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const val = parseInt(item.dataset.value, 10);
+      const idx = Array.from(items).indexOf(item);
+      list.scrollTo({ top: idx * itemHeight, behavior: 'smooth' });
+      updateSelection(list, items, val);
+      onChange(val);
+    });
+  });
+
+  let scrollTimeout;
+  list.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const scrollTop = list.scrollTop;
+      const nearestIdx = Math.round(scrollTop / itemHeight);
+      const clampedIdx = Math.max(0, Math.min(nearestIdx, items.length - 1));
+      list.scrollTo({ top: clampedIdx * itemHeight, behavior: 'smooth' });
+      const val = parseInt(items[clampedIdx].dataset.value, 10);
+      updateSelection(list, items, val);
+      onChange(val);
+    }, 80);
+  });
 }
 
 // ─── PUBLISH MODAL (2-screen flow) ───
@@ -445,61 +496,6 @@ export function openPublishModal(postId) {
     initScrollWheel('time-scroll-minute', selectedMinute, (val) => {
       selectedMinute = val;
       updateScheduleSummary();
-    });
-  }
-
-  function initScrollWheel(colId, initialValue, onChange) {
-    const col = document.getElementById(colId);
-    if (!col) return;
-    const list = col.querySelector('.time-scroll-list');
-    if (!list) return;
-
-    const items = list.querySelectorAll('.time-scroll-item');
-    const itemHeight = 36;
-
-    // Scroll to initial selected value
-    const selectedIdx = Array.from(items).findIndex(el => parseInt(el.dataset.value, 10) === initialValue);
-    if (selectedIdx >= 0) {
-      requestAnimationFrame(() => {
-        list.scrollTop = selectedIdx * itemHeight;
-      });
-    }
-
-    // Click on item → select it
-    items.forEach(item => {
-      item.addEventListener('click', () => {
-        const val = parseInt(item.dataset.value, 10);
-        const idx = Array.from(items).indexOf(item);
-        list.scrollTo({ top: idx * itemHeight, behavior: 'smooth' });
-        updateSelection(list, items, val);
-        onChange(val);
-      });
-    });
-
-    // On scroll stop → snap to nearest item
-    let scrollTimeout;
-    list.addEventListener('scroll', () => {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        const scrollTop = list.scrollTop;
-        const nearestIdx = Math.round(scrollTop / itemHeight);
-        const clampedIdx = Math.max(0, Math.min(nearestIdx, items.length - 1));
-        list.scrollTo({ top: clampedIdx * itemHeight, behavior: 'smooth' });
-        const val = parseInt(items[clampedIdx].dataset.value, 10);
-        updateSelection(list, items, val);
-        onChange(val);
-      }, 80);
-    });
-  }
-
-  function updateSelection(list, items, selectedVal) {
-    items.forEach(item => {
-      const val = parseInt(item.dataset.value, 10);
-      if (val === selectedVal) {
-        item.classList.add('time-scroll-item--selected');
-      } else {
-        item.classList.remove('time-scroll-item--selected');
-      }
     });
   }
 

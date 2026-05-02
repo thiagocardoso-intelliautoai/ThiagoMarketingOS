@@ -9,6 +9,7 @@ import { showToast } from './toast.js';
 import { openModal, closeModal } from './modal.js';
 import { copyToClipboard, downloadFile, escapeHtml, truncate, formatDate } from './utils.js';
 import { openPublishModal } from './linkedin-publish.js';
+import { renderScheduleBanner, attachScheduleManagementEvents } from './schedule-management.js';
 
 // ─── RENDER DASHBOARD ───
 export function renderDashboard() {
@@ -476,6 +477,7 @@ function openViewPostModal(postId) {
   openModal(`
     ${headerHtml}
     ${bodyHtml}
+    ${renderScheduleBanner(post)}
     ${lmSectionHtml}
     <div class="modal-footer">
       <div class="modal-footer-left">
@@ -490,7 +492,7 @@ function openViewPostModal(postId) {
           ? `<button class="btn-download btn-sm" id="modal-download-pdf" data-url="${post.derivations.carousel.pdfPath}" data-filename="carrossel-${(post.title || 'post').replace(/[^a-zA-Z0-9]/g, '-').slice(0, 40)}.pdf">${Icons.download} Baixar PDF</button>`
           : `<button class="btn-primary btn-sm" id="modal-gen-carousel" data-id="${post.id}">${Icons.layers} Gerar Carrossel</button>`
         }
-        ${!isPublished ? `<button class="btn-linkedin btn-sm" id="modal-publish-btn" data-id="${post.id}">${Icons.send} Publicar</button>` : ''}
+        ${!isPublished && post.status !== 'agendado' ? `<button class="btn-linkedin btn-sm" id="modal-publish-btn" data-id="${post.id}">${Icons.send} Publicar</button>` : ''}
       </div>
     </div>
   `);
@@ -517,6 +519,9 @@ function openViewPostModal(postId) {
 
   // LinkedIn preview events (expand/collapse text)
   attachLinkedInPreviewEvents();
+
+  // Schedule management events (reagendar / cancelar agendamento)
+  attachScheduleManagementEvents(post);
 
   // Lead Magnet events
   const bindLmEvents = (currentStatus) => {
