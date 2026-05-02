@@ -107,22 +107,23 @@ async function uploadCover(slug, pngPath, style, postId) {
   const fileBuffer = fs.readFileSync(pngPath);
   const storagePath = `covers/${slug}/cover.png`;
 
-  // 2. Upload para Storage (upsert)
+  // 2. Upload para Storage (upsert, sem cache — covers são substituídas com frequência)
   const { error: uploadErr } = await supabase.storage
     .from(BUCKET)
     .upload(storagePath, fileBuffer, {
       contentType: 'image/png',
-      upsert: true
+      upsert: true,
+      cacheControl: '0'
     });
 
   if (uploadErr) throw new Error(`uploadCover storage ("${slug}"): ${uploadErr.message}`);
 
-  // 3. Obter URL pública
+  // 3. Obter URL pública com cache-buster (evita CDN servir versão antiga)
   const { data: urlData } = supabase.storage
     .from(BUCKET)
     .getPublicUrl(storagePath);
 
-  const imageUrl = urlData.publicUrl;
+  const imageUrl = `${urlData.publicUrl}?v=${Date.now()}`;
 
   // 4. Upsert na tabela covers
   // Primeiro verificar se já existe
