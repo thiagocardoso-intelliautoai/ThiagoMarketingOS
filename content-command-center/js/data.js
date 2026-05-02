@@ -293,9 +293,18 @@ export const DataStore = {
     }
 
     // Update local cache regardless
-    Object.assign(this._data.posts[idx], updates);
+    const post = this._data.posts[idx];
+    Object.assign(post, updates);
+
+    // Promote to top when transitioning to a published status
+    const PROMOTED_STATUSES = ['publicado', 'agendado', 'manual'];
+    if (updates.status && PROMOTED_STATUSES.includes(updates.status)) {
+      this._data.posts.splice(idx, 1);
+      this._data.posts.unshift(post);
+    }
+
     this._saveLocal();
-    return this._data.posts[idx];
+    return post;
   },
 
   // ─── deletePost() — Supabase delete + cache update ───
