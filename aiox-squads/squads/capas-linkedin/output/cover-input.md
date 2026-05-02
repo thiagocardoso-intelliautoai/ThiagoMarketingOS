@@ -1,36 +1,40 @@
 # Cover Input
 
-## Post
-A maioria das empresas pensa assim:
-"Vou criar uma automação de follow-up, rodar 30 dias e ver o resultado."
+## Tema
+A IA não é diferencial nenhum
 
-Ruim? Não.
-Mas não se compara a fazer IA virar cultura.
+## Post de Texto
+O diferencial real é a parte chata que quase ninguém faz.
 
-É isso que a gente tá construindo na Winning:
+Todo mundo consegue criar um app, uma landing page ou um script com IA hoje. Isso virou o trabalho "legal", a commodity.
 
-1. O CEO ensina na prática.
-@Ivan fez uma aula de 1 hora pro time — tela compartilhada, prompt por prompt. Não foi slide bonito. Foi como ele usa IA de verdade.
+O que separa quem tem resultado de quem só brinca de tecnologia é o que vem antes:
 
-2. Líderes que puxam o bonde.
-@Rafinha nunca foi técnico. Mas em poucos dias depois dessa aula, já tinha criado uma skill pra usar no próprio processo. Não só ouviu — colocou em prática antes de todo mundo.
+1. Entender o processo por completo (sem pular etapas).
+2. Selecionar qual microprocesso vai receber o foco.
+3. Mapear o ROI real de automatizar essa etapa específica.
+4. Repetir isso até encontrar o maior ganho de eficiência.
 
-Quando o líder se move, o time se move.
+Só aí você investe energia para automatizar.
 
-3. Sistema que dá condição pra todo mundo inovar.
-Criei vídeo-aulas pro time e coloquei 3 coisas no lugar: acesso direto a mim pra tirar dúvidas, conteúdo pra aprender e incentivo $ pra quem criar algo real.
+Foi o que fizemos na Winning Sales.
+Conversei com o time, mapeei processos e microprocessos e defini o ROI de cada um.
 
-@Wiktoria e @Samuel juntaram forças e criaram uma skill que automatizou a geração de relatórios.
-Um processo de +6 horas por cliente rodando em minutos.
+Só depois de uma reunião com os decisores @rafaelfaria @ivan e @coutinho é que definimos onde gastar energia.
 
-Isso é construir cultura.
-É o que chamam por aí de "AI First" — só que na prática.
+Resultado? Processo automatizado com impacto real, não apenas "perfumaria" tecnológica.
+
+Algo que me ajudou foi uma skill que criei: ela lê a transcrição do diagnóstico, cria formulários de aprofundamento via Jotform (usando MCP) e me entrega exatamente a informação que preciso para a automação final.
+
+A IA é só o motor. O mapa do tesouro ainda é o processo.
 
 ## Estilo Visual
-**Estilo 2: Pessoa + Texto** — Foto real com overlay de texto
+1 — Rascunho no Papel
 
 ## Foto Selecionada
-`IMG_20260225_201815722.jpg` — Selfie com equipe (contexto: bastidor, equipe, Winning Sales)
+paper-05-selfie-close-caderno-grande.jpg
+URL: https://mvryaxohnbftupocdlqa.supabase.co/storage/v1/object/public/content-assets/source-photos/papers/paper-05-selfie-close-caderno-grande.jpg
+Motivo: post de opinião forte / provocação
 
-## Frase da Capa
-"IA virou cultura no nosso time." (5 palavras — síntese do post)
+## Slug
+ia-nao-e-diferencial-nenhum

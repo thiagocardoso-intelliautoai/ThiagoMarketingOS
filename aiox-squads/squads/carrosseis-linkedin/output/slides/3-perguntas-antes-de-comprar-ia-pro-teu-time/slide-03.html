@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F4F4F5;
+      color: #18181B;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+    }
+    .slide {
+      width: 1080px;
+      height: 1350px;
+      padding: 64px 80px 56px;
+      display: flex;
+      flex-direction: column;
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .profile-photo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .profile-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #18181B;
+      letter-spacing: -0.02em;
+    }
+    .profile-handle {
+      font-size: 17px;
+      font-weight: 400;
+      color: #888888;
+    }
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 40px;
+    }
+    .label {
+      font-size: 22px;
+      font-weight: 700;
+      color: #14B8A6;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .divider {
+      width: 80px;
+      height: 4px;
+      background: #14B8A6;
+    }
+    .hero-text {
+      font-size: 58px;
+      font-weight: 800;
+      line-height: 1.12;
+      color: #18181B;
+      letter-spacing: -0.03em;
+    }
+    .body-text {
+      font-size: 36px;
+      font-weight: 500;
+      line-height: 1.45;
+      color: #444444;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 24px;
+      border-top: 1px solid #E2E2E3;
+    }
+    .footer-brand {
+      font-size: 18px;
+      font-weight: 600;
+      color: #94A3B8;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .swipe-hint {
+      font-size: 20px;
+      font-weight: 500;
+      color: #94A3B8;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="profile">
+      <img class="profile-photo" src="profile-photo.png" alt="Thiago C.Lima">
+      <div>
+        <div class="profile-name">Thiago C.Lima</div>
+        <div class="profile-handle">@othiago-clima</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <span class="label">Pergunta 1</span>
+      <div class="divider"></div>
+
+      <h1 class="hero-text">Qual tarefa tem alto volume e critério claro de sucesso?</h1>
+
+      <p class="body-text">Não a mais demorada.<br>A que repete muito — e dá pra medir.</p>
+    </div>
+
+    <div class="footer">
+      <span class="footer-brand">Thiago C.Lima</span>
+      <span class="swipe-hint">Deslize →</span>
+    </div>
+  </div>
+</body>
+</html>

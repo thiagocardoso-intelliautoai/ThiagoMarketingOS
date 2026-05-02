@@ -1,40 +1,52 @@
-# A IA não é diferencial nenhum
+# 4 Termos de IA Que Separam Quem Constrói de Quem Testa
 
 ## Metadata
 - **Pilar ACRE:** A (Autoridade)
-- **Tema:** IA e Processos
-- **Framework:** Contraste
+- **Tema:** Vocabulário fundamental de IA para empresários
+- **Framework:** Lista (4 itens)
 - **Hook:** Declaração Contrária
+- **Sugestão Visual:** carrossel/Editorial Clean (4 termos com definição — formato glossário estratégico)
 
 ### Post
 
-Eu uso o Claude Code todo dia para criar soluções com IA e preciso confessar: a IA não é diferencial nenhum. 
+Se você conhece sobre esses 4 termos está acima de 92% dos empresários que usam IA hoje
 
-O diferencial real é a parte chata que quase ninguém faz.
+A maioria usa IA sem entender os conceitos por baixo.
+E aí toma decisão no chute.
 
-Todo mundo consegue criar um app, uma landing page ou um script com IA hoje. Isso virou o trabalho "legal", a commodity.
+→ Token
+A unidade de processamento. Cada prompt gasta tokens — define custo, velocidade e limite de entrada.
 
-O que separa quem tem resultado de quem só brinca de tecnologia é o que vem antes:
+→ Janela de Contexto
+A "memória" ativa da IA. Manda 40 páginas numa janela pequena — ela esquece metade. Você não sabe qual.
 
-1. Entender o processo por completo (sem pular etapas).
-2. Selecionar qual microprocesso vai receber o foco.
-3. Mapear o ROI real de automatizar essa etapa específica.
-4. Repetir isso até encontrar o maior ganho de eficiência.
+→ Skill
+Uma capacidade específica de um agente. É o que separa chatbot genérico de agente que qualifica lead ou diagnostica processo.
 
-Só aí você investe energia para automatizar.
+→ Squad
+Múltiplos agentes com papéis definidos trabalhando juntos. Um pesquisa. Outro analisa. Outro executa.
 
-Foi o que fizemos na Winning Sales. 
-Conversei com o time, mapeei processos e microprocessos e defini o ROI de cada um. 
+Quem não sabe esses 4 termos usa IA como ferramenta.
+Quem sabe, constrói sistema.
 
-Só depois de uma reunião com os decisores @rafaelfaria @ivan e @coutinho é que definimos onde gastar energia. 
-
-Resultado? Processo automatizado com impacto real, não apenas "perfumaria" tecnológica.
-
-Algo que me ajudou foi uma skill que criei: ela lê a transcrição do diagnóstico, cria formulários de aprofundamento via Jotform (usando MCP) e me entrega exatamente a informação que preciso para a automação final.
-
-A IA é só o motor. O mapa do tesouro ainda é o processo.
-
-Na sua operação, você gasta mais tempo escolhendo a ferramenta ou mapeando o gargalo?
+Montei uma aula explicando os 4 do zero + material de apoio.
+Comenta "TERMOS" aqui embaixo que te mando.
 
 ### Revisão
-**TOTAL** **97%**
+| Bloco | Peso | Score |
+|-------|------|-------|
+| 🪝 Hook | 40% | 90 |
+| 📐 Estrutura | 25% | 82 |
+| 🗣️ Tom de Voz | 20% | 91 |
+| 📣 CTA | 15% | 90 |
+
+**TOTAL** **88%**
+
+**Notas do Revisor:**
+- Hook 87 chars ✅ — cria dissonância (leitor testa se sabe os 4 antes de clicar)
+- Post ~840 chars ✅ — bem dentro do limite de 1.300
+- Vocabulário proibido: nenhum ✅
+- Rule of 1: ideia única (4 termos fundamentais de IA) ✅
+- CTA específico: "comenta TERMOS" + lead magnet concreto ✅
+- Insight final ("ferramenta vs sistema") ancora no posicionamento "Built, not prompted" ✅
+- ⚠️ Nota: "92%" é afirmação experiencial do Thiago, não stat citado — funciona como provocação, mas estar preparado para defender nos comentários

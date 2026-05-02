@@ -2,25 +2,25 @@
   Capa: IA virou cultura no nosso time
   Estilo: 2 — Pessoa + Texto
   Viewport: 1080 x 1350 (4:5)
-  Foto: IMG_20260225_201815722.jpg (selfie equipe Winning Sales)
-  
+  Foto: team-photo.png (time Winning Sales em sala de reunião com dashboard)
+
   Design System:
-  - Fundo: Foto real (selfie equipe bar)
-  - Overlay: Gradient escuro bottom-heavy (88% base)
-  - Texto: Inter 800, #FFFFFF, 54px
-  - Accent: #14B8A6 (Teal — --accent-primary)
-  - Assinatura: Inter 500, 20px, #64748B
+  - Fundo: Foto time (sala de reunião, dashboard na tela ao fundo)
+  - Overlay: Gradient bottom-heavy — preserva time visível, protege texto
+  - Hero: Inter 800, 64px, #FFFFFF / "cultura." em #14B8A6 (Teal)
+  - Accent line: 56px × 3px, #14B8A6 — único elemento decorativo
+  - Brand: foto perfil + nome + handle, rodapé
   - Hierarquia: tipografia + peso, zero efeitos
-  
+
   Anti-AI Compliance:
-  ✅ Zero gradient text fill
+  ✅ Zero gradient text fill (cores flat)
   ✅ Zero radial glow
   ✅ Zero ícones literais
-  ✅ Assimetria intencional (texto alinhado à esquerda, terço inferior)
-  ✅ Max 2 elementos decorativos (accent-line + brand)
-  ✅ Accent flat (Teal sólido)
-  ✅ 30%+ espaço negativo (foto respira na parte superior)
-  ✅ Paleta não-óbvia
+  ✅ Assimetria intencional (left-aligned, terço inferior)
+  ✅ 1 elemento decorativo (accent line) — abaixo do limite de 2
+  ✅ Accent flat sólido (Teal #14B8A6)
+  ✅ 30%+ espaço negativo
+  ✅ Paleta não-óbvia (Teal + branco sobre foto)
   ✅ Cores do Design System global
 -->
 <!DOCTYPE html>
@@ -28,7 +28,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1080">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -42,6 +42,7 @@
       height: 1350px;
       overflow: hidden;
       position: relative;
+      background: #111;
     }
 
     .cover {
@@ -50,19 +51,19 @@
       position: relative;
     }
 
-    /* ── Background: Foto equipe ── */
+    /* ── Background: Foto time Winning Sales ── */
     .bg-photo {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 20%;
+      object-position: center 30%;
       position: absolute;
       top: 0;
       left: 0;
       z-index: 1;
     }
 
-    /* ── Overlay de contraste (bottom-heavy) ── */
+    /* ── Overlay — preserva time no centro, escurece rodapé para texto ── */
     .overlay {
       width: 100%;
       height: 100%;
@@ -72,15 +73,14 @@
       z-index: 2;
       background: linear-gradient(
         180deg,
-        rgba(0, 0, 0, 0.10) 0%,
-        rgba(0, 0, 0, 0.20) 25%,
-        rgba(0, 0, 0, 0.55) 55%,
-        rgba(0, 0, 0, 0.82) 75%,
-        rgba(0, 0, 0, 0.92) 100%
+        rgba(0, 0, 0, 0.06) 0%,
+        rgba(0, 0, 0, 0.18) 38%,
+        rgba(0, 0, 0, 0.68) 68%,
+        rgba(0, 0, 0, 0.91) 100%
       );
     }
 
-    /* ── Conteúdo sobre a foto ── */
+    /* ── Conteúdo ancorado no rodapé ── */
     .content-wrapper {
       width: 100%;
       height: 100%;
@@ -88,18 +88,18 @@
       top: 0;
       left: 0;
       z-index: 3;
-      padding: 64px 72px;
+      padding: 0 72px 64px 72px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
     }
 
-    /* ── Marca (brand) ── */
+    /* ── Marca ── */
     .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 28px;
+      gap: 16px;
+      margin-bottom: 36px;
     }
 
     .brand-photo {
@@ -107,71 +107,63 @@
       height: 52px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid rgba(255, 255, 255, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.40);
+      flex-shrink: 0;
     }
 
     .brand-info {
       display: flex;
       flex-direction: column;
+      gap: 3px;
     }
 
     .brand-name {
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 600;
-      color: #FFFFFF;
-      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+      color: rgba(255, 255, 255, 0.90);
+      letter-spacing: 0.01em;
     }
 
     .brand-handle {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 400;
-      color: rgba(255, 255, 255, 0.55);
+      color: rgba(255, 255, 255, 0.48);
     }
 
-    /* ── Linha de acento ── */
+    /* ── Linha de acento (único elemento decorativo) ── */
     .accent-line {
       width: 56px;
-      height: 4px;
+      height: 3px;
       background: #14B8A6;
       margin-bottom: 28px;
     }
 
-    /* ── Texto principal ── */
+    /* ── Hero text ── */
     .hero-text {
-      font-size: 54px;
-      font-weight: 700;
-      line-height: 1.18;
-      color: #FFFFFF;
-      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.7);
-      margin-bottom: 40px;
-      letter-spacing: -0.02em;
-      max-width: 780px;
-    }
-
-    .highlight {
-      color: #14B8A6;
+      font-size: 64px;
       font-weight: 800;
+      line-height: 1.08;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.55);
     }
 
-    /* ── Assinatura rodapé ── */
-    .footer-sig {
-      font-size: 20px;
-      font-weight: 500;
-      color: #64748B;
-      margin-bottom: 0;
+    .accent {
+      color: #14B8A6;
     }
   </style>
 </head>
 <body>
   <div class="cover">
-    <!-- Foto de fundo: selfie equipe Winning Sales -->
-    <img class="bg-photo" src="photos/IMG_20260225_201815722.jpg" alt="Equipe Winning Sales">
-    
+    <!-- Foto do time (sala de reunião com dashboard) -->
+    <img class="bg-photo" src="team-photo.png" alt="Time Winning Sales">
+
     <!-- Overlay de contraste -->
     <div class="overlay"></div>
 
-    <!-- Conteúdo sobre a foto -->
+    <!-- Conteúdo -->
     <div class="content-wrapper">
+
       <div class="brand">
         <img class="brand-photo" src="profile-photo.png" alt="Thiago C.Lima">
         <div class="brand-info">
@@ -183,10 +175,9 @@
       <div class="accent-line"></div>
 
       <h1 class="hero-text">
-        IA virou <span class="highlight">cultura</span> no nosso time.
+        IA virou<br><span class="accent">cultura.</span>
       </h1>
 
-      <span class="footer-sig">Thiago C.Lima</span>
     </div>
   </div>
 </body>
