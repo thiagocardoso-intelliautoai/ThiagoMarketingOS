@@ -189,8 +189,9 @@ export function renderLibrary() {
 }
 
 function renderSectionedList(posts) {
-  const toPublish = posts.filter(p => p.status === 'rascunho');
-  const published = posts.filter(p => p.status !== 'rascunho');
+  const PUBLISHED_STATUSES = ['publicado', 'agendado', 'manual'];
+  const toPublish = posts.filter(p => !PUBLISHED_STATUSES.includes(p.status));
+  const published = posts.filter(p =>  PUBLISHED_STATUSES.includes(p.status));
 
   const chevronSvg = `<svg class="section-chevron" viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`;
 
@@ -393,10 +394,11 @@ function bindLibraryEvents() {
     // Listener no document é adicionado uma única vez usando flag no elemento
     if (!document.body.dataset.advFilterListenerAttached) {
       document.body.dataset.advFilterListenerAttached = '1';
-      document.addEventListener('click', () => {
+      document.addEventListener('click', (e) => {
         const panel = document.getElementById('advanced-filters-panel');
-        const btn = document.getElementById('btn-filter-advanced');
-        if (panel && !panel.classList.contains('hidden')) {
+        const btn   = document.getElementById('btn-filter-advanced');
+        const wrap  = document.querySelector('.filter-advanced-wrap');
+        if (panel && !panel.classList.contains('hidden') && !wrap?.contains(e.target)) {
           panel.classList.add('hidden');
           if (btn) btn.textContent = 'Filtros ▼';
         }
@@ -438,13 +440,21 @@ function bindLibraryEvents() {
 }
 
 function applyFilters() {
-  const urgency = document.getElementById('filter-urgency')?.value || '';
-  const contentType = document.getElementById('filter-content-type')?.value || '';
+  const toPublishWasExpanded = document.getElementById('section-to-publish')
+    ?.querySelector('.status-section-header')?.classList.contains('expanded') ?? true;
+  const publishedWasExpanded = document.getElementById('section-published')
+    ?.querySelector('.status-section-header')?.classList.contains('expanded') ?? false;
+
+  const urgency        = document.getElementById('filter-urgency')?.value || '';
+  const contentType    = document.getElementById('filter-content-type')?.value || '';
   const pautaCentralId = document.getElementById('filter-pauta-central')?.value || '';
-  const search = document.getElementById('search-posts')?.value || '';
-  const posts = DataStore.filterPosts({ urgency, contentType, search, pautaCentralId });
-  const list = document.getElementById('posts-list');
+  const search         = document.getElementById('search-posts')?.value || '';
+  const posts          = DataStore.filterPosts({ urgency, contentType, search, pautaCentralId });
+  const list           = document.getElementById('posts-list');
   list.innerHTML = posts.length > 0 ? renderSectionedList(posts) : renderEmptyState();
+
+  if (!toPublishWasExpanded) window._toggleSection('section-to-publish');
+  if (publishedWasExpanded)  window._toggleSection('section-published');
 }
 
 // ─── MODALS ───
