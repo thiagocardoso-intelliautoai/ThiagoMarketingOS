@@ -398,9 +398,8 @@ export const DataStore = {
   },
 
   // Filter & Search (client-side on cache — unchanged API)
-  filterPosts({ status, urgency, contentType, search, pautaCentralId } = {}) {
+  filterPosts({ urgency, contentType, search, pautaCentralId } = {}) {
     let posts = this.getPosts();
-    if (status) posts = posts.filter(p => p.status === status);
     if (urgency) posts = posts.filter(p => p.urgency === urgency);
     if (pautaCentralId) posts = posts.filter(p => p.pautaCentralId === pautaCentralId);
     if (contentType === 'carousel') {

@@ -152,18 +152,6 @@ export function renderLibrary() {
 
       <div class="library-filters">
         <div class="filter-group">
-          <select id="filter-status" class="filter-select" aria-label="Filtrar por status">
-            <option value="">Todos os Status</option>
-            <option value="rascunho">Rascunho</option>
-            <option value="agendado">Agendado</option>
-            <option value="publicado">Publicado</option>
-          </select>
-          <select id="filter-urgency" class="filter-select" aria-label="Filtrar por urgência">
-            <option value="">Todas as Urgências</option>
-            <option value="urgente">Urgente</option>
-            <option value="relevante">Relevante</option>
-            <option value="pode_esperar">Pode esperar</option>
-          </select>
           <select id="filter-content-type" class="filter-select" aria-label="Filtrar por tipo de conteúdo">
             <option value="">Todos os Tipos</option>
             <option value="carousel">🎠 Carrossel</option>
@@ -172,6 +160,17 @@ export function renderLibrary() {
           <select id="filter-pauta-central" class="filter-select" aria-label="Filtrar por pauta central">
             <option value="">Todas as Pautas</option>
           </select>
+          <div class="filter-advanced-wrap">
+            <button class="btn-filter-advanced" id="btn-filter-advanced" aria-label="Filtros avançados">Filtros ▼</button>
+            <div class="advanced-filters-panel hidden" id="advanced-filters-panel">
+              <select id="filter-urgency" class="filter-select" aria-label="Filtrar por urgência">
+                <option value="">Todas as Urgências</option>
+                <option value="urgente">Urgente</option>
+                <option value="relevante">Relevante</option>
+                <option value="pode_esperar">Pode esperar</option>
+              </select>
+            </div>
+          </div>
         </div>
         <div class="search-group">
           <input type="text" id="search-posts" class="input-field search-input" placeholder="Buscar por título ou tema..." aria-label="Buscar posts" />
@@ -179,7 +178,7 @@ export function renderLibrary() {
       </div>
 
       <div id="posts-list" class="posts-list">
-        ${posts.length > 0 ? posts.map(p => renderPostCard(p)).join('') : renderEmptyState()}
+        ${posts.length > 0 ? renderSectionedList(posts) : renderEmptyState()}
       </div>
     </section>
 
@@ -189,14 +188,94 @@ export function renderLibrary() {
   bindLibraryEvents();
 }
 
+function renderSectionedList(posts) {
+  const toPublish = posts.filter(p => p.status === 'rascunho');
+  const published = posts.filter(p => p.status !== 'rascunho');
+
+  const chevronSvg = `<svg class="section-chevron" viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`;
+
+  const toPublishSection = `
+    <div class="status-section" id="section-to-publish">
+      <button class="status-section-header expanded" onclick="window._toggleSection('section-to-publish')" aria-expanded="true">
+        <span class="status-section-label">A Publicar</span>
+        <span class="status-section-count">${toPublish.length}</span>
+        ${chevronSvg}
+      </button>
+      <div class="status-section-body">
+        ${toPublish.length > 0
+          ? toPublish.map(p => renderPostCard(p)).join('')
+          : '<p class="section-empty">Nenhum rascunho pendente.</p>'
+        }
+      </div>
+    </div>`;
+
+  const publishedSection = `
+    <div class="status-section" id="section-published">
+      <button class="status-section-header" onclick="window._toggleSection('section-published')" aria-expanded="false">
+        <span class="status-section-label">Publicados</span>
+        <span class="status-section-count">${published.length}</span>
+        ${chevronSvg}
+      </button>
+      <div class="status-section-body hidden">
+        ${published.length > 0
+          ? published.map(p => renderPostCard(p)).join('')
+          : '<p class="section-empty">Nenhum post publicado ainda.</p>'
+        }
+      </div>
+    </div>`;
+
+  return toPublishSection + publishedSection;
+}
+
+// Global toggle usado pelo onclick inline (necessário porque render.js é um módulo)
+window._toggleSection = function(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+  const header = section.querySelector('.status-section-header');
+  const body = section.querySelector('.status-section-body');
+  const isExpanded = header.classList.contains('expanded');
+  header.classList.toggle('expanded', !isExpanded);
+  header.setAttribute('aria-expanded', String(!isExpanded));
+  body.classList.toggle('hidden', isExpanded);
+};
+
+// Fallback para thumbnail quebrado — evita onerror com HTML inline com aspas duplas
+window._thumbFallback = function(el, initial) {
+  el.parentElement.innerHTML = `<div class="post-card-thumb-placeholder"><span class="thumb-initial">${initial}</span></div>`;
+};
+
+function renderCardThumbnail(post) {
+  const firstSlideUrl = post.derivations?.carousel?.slides?.[0]?.imageUrl || null;
+  const slidesCount = post.derivations?.carousel?.slidesCount || 0;
+  const coverUrl = post.covers?.image_url || post.derivations?.cover?.coverPath || null;
+  const initial = (post.title || '?').charAt(0).toUpperCase();
+  const placeholder = `<div class="post-card-thumb-placeholder"><span class="thumb-initial">${initial}</span></div>`;
+
+  if (firstSlideUrl) {
+    return `
+      <div class="post-card-thumb-wrap">
+        <img src="${firstSlideUrl}" alt="" class="post-card-thumb" loading="lazy" onerror="window._thumbFallback(this,'${initial}')" />
+        ${slidesCount > 1 ? `<span class="thumb-slides-badge">📑 ${slidesCount}</span>` : ''}
+      </div>`;
+  }
+  if (coverUrl) {
+    return `
+      <div class="post-card-thumb-wrap">
+        <img src="${coverUrl}" alt="" class="post-card-thumb" loading="lazy" onerror="window._thumbFallback(this,'${initial}')" />
+      </div>`;
+  }
+  return `<div class="post-card-thumb-wrap">${placeholder}</div>`;
+}
+
 function renderPostCard(post) {
-  // Status-based card variant
+  // Status class (background) + urgency class (border)
   const statusClass = post.status === 'publicado' ? 'post-card--publicado'
     : post.status === 'agendado' ? 'post-card--agendado'
     : post.status === 'manual' ? 'post-card--manual'
     : 'post-card--rascunho';
+  const urgencyClass = post.urgency === 'urgente' ? 'post-card--urgency-urgente' : '';
 
-  // Media badges
+  // Media badges (clickable, na área de assets do footer)
   const hasCoverUrl = !!(post.covers?.image_url);
   const hasCarouselUrl = !!post.derivations?.carousel?.pdfPath;
   const hasCoverDeriv = !!(post.contentType === 'cover' || post.derivations?.cover);
@@ -204,31 +283,19 @@ function renderPostCard(post) {
 
   let carouselBadge = '';
   if (hasCarouselUrl) {
-    carouselBadge = `<span class="badge badge-carousel badge-media-ready badge-clickable" data-action="carousel" data-id="${post.id}">${Icons.layers} Carrossel</span>`;
+    carouselBadge = `<span class="badge badge-carousel-type badge-media-ready badge-clickable" data-action="carousel" data-id="${post.id}">${Icons.layers} Carrossel</span>`;
   } else if (hasCarouselDeriv) {
-    carouselBadge = `<span class="badge badge-carousel badge-media-pending badge-clickable" data-action="carousel" data-id="${post.id}">${Icons.layers} Carrossel</span>`;
+    carouselBadge = `<span class="badge badge-carousel-type badge-media-pending badge-clickable" data-action="carousel" data-id="${post.id}">${Icons.layers} Carrossel</span>`;
   }
 
   let coverBadge = '';
   if (hasCoverUrl) {
-    coverBadge = `<span class="badge badge-cover badge-media-ready badge-clickable" data-action="cover" data-id="${post.id}">${Icons.image} Capa</span>`;
+    coverBadge = `<span class="badge badge-cover-type badge-media-ready badge-clickable" data-action="cover" data-id="${post.id}">${Icons.image} Capa</span>`;
   } else if (hasCoverDeriv) {
-    coverBadge = `<span class="badge badge-cover badge-media-pending badge-clickable" data-action="cover" data-id="${post.id}">${Icons.image} Capa</span>`;
+    coverBadge = `<span class="badge badge-cover-type badge-media-pending badge-clickable" data-action="cover" data-id="${post.id}">${Icons.image} Capa</span>`;
   }
 
-  // Thumbnail
-  const thumbUrl = post.covers?.image_url || post.derivations?.cover?.coverPath || null;
-  const thumbHtml = thumbUrl
-    ? `<img src="${thumbUrl}" alt="" class="post-card-thumb" loading="lazy" onerror="this.remove()" />`
-    : '';
-
-  // Status badge with color
-  const statusBadgeClass = post.status === 'publicado' ? 'badge-publicado'
-    : post.status === 'agendado' ? 'badge-agendado'
-    : post.status === 'manual' ? 'badge-manual'
-    : 'badge-rascunho';
-
-  // Scheduled date badge for agendado
+  // Scheduled date badge
   const scheduledBadge = post.status === 'agendado' && post.scheduledAt
     ? `<span class="scheduled-badge">⏰ ${new Date(post.scheduledAt).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} às ${new Date(post.scheduledAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</span>`
     : '';
@@ -256,40 +323,35 @@ function renderPostCard(post) {
     </div>
   ` : '';
 
-  const footerHtml = `
-    <div class="post-card-footer">
-      <div class="post-card-assets">
-        ${carouselBadge}
-        ${coverBadge}
-      </div>
-      <div class="post-card-secondary">
-        <button class="btn-icon-sm" data-action="delete" data-id="${post.id}" title="Excluir" aria-label="Excluir post">${Icons.trash}</button>
-      </div>
-    </div>
-  `;
-
   return `
-    <div class="post-card ${statusClass}" data-id="${post.id}">
-      ${thumbHtml}
-      <div class="post-card-header">
+    <div class="post-card ${statusClass} ${urgencyClass}" data-id="${post.id}">
+      ${renderCardThumbnail(post)}
+      <div class="post-card-content">
         <h3 class="post-card-title">${escapeHtml(post.title)}</h3>
-        <span class="badge ${statusBadgeClass}">${STATUS_LABELS[post.status] || post.status}</span>
-      </div>
-      ${post.status !== 'publicado' ? `
-        <div class="post-card-hook">
-          <p>${truncate(post.hookText, 120)}</p>
+        ${post.hookText ? `
+          <div class="post-card-hook">
+            <p>${truncate(post.hookText, 110)}</p>
+          </div>
+        ` : ''}
+        ${metricsHtml}
+        <div class="post-card-meta">
+          <span>${Icons.calendar} ${formatDate(post.createdAt)}</span>
+          ${post.reviewScore ? `<span>${Icons.barChart} ${post.reviewScore}%</span>` : ''}
+          ${post.urgency ? `<span>${URGENCY_LABELS[post.urgency] || post.urgency}</span>` : ''}
+          ${post.leadMagnetStatus === 'a_fazer' ? '<span>🎯 Lead Magnet</span>' : ''}
+          ${post.leadMagnetStatus === 'concluido' ? '<span>🎯✓</span>' : ''}
+          ${scheduledBadge}
         </div>
-      ` : ''}
-      ${metricsHtml}
-      <div class="post-card-info">
-        <span class="meta-item">${Icons.calendar} ${formatDate(post.createdAt)}</span>
-        ${post.reviewScore ? `<span class="meta-item">${Icons.barChart} ${post.reviewScore}%</span>` : ''}
-        <span class="badge badge-status">${URGENCY_LABELS[post.urgency] || post.urgency}</span>
-        ${post.leadMagnetStatus === 'a_fazer' ? '<span class="badge badge-lm-todo">🎯</span>' : ''}
-        ${post.leadMagnetStatus === 'concluido' ? '<span class="badge badge-lm-done">🎯✓</span>' : ''}
-        ${scheduledBadge}
+        <div class="post-card-footer">
+          <div class="post-card-assets">
+            ${carouselBadge}
+            ${coverBadge}
+          </div>
+          <div class="post-card-secondary">
+            <button class="btn-icon-sm" data-action="delete" data-id="${post.id}" title="Excluir" aria-label="Excluir post">${Icons.trash}</button>
+          </div>
+        </div>
       </div>
-      ${footerHtml}
     </div>
   `;
 }
@@ -314,10 +376,33 @@ function renderEmptyState() {
 }
 
 function bindLibraryEvents() {
-  ['filter-status', 'filter-urgency', 'filter-content-type', 'filter-pauta-central'].forEach(id => {
+  ['filter-urgency', 'filter-content-type', 'filter-pauta-central'].forEach(id => {
     document.getElementById(id)?.addEventListener('change', applyFilters);
   });
   document.getElementById('search-posts')?.addEventListener('input', applyFilters);
+
+  // Painel de filtros avançados
+  const btnAdv = document.getElementById('btn-filter-advanced');
+  const panelAdv = document.getElementById('advanced-filters-panel');
+  if (btnAdv && panelAdv) {
+    btnAdv.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const hidden = panelAdv.classList.toggle('hidden');
+      btnAdv.textContent = hidden ? 'Filtros ▼' : 'Filtros ▲';
+    });
+    // Listener no document é adicionado uma única vez usando flag no elemento
+    if (!document.body.dataset.advFilterListenerAttached) {
+      document.body.dataset.advFilterListenerAttached = '1';
+      document.addEventListener('click', () => {
+        const panel = document.getElementById('advanced-filters-panel');
+        const btn = document.getElementById('btn-filter-advanced');
+        if (panel && !panel.classList.contains('hidden')) {
+          panel.classList.add('hidden');
+          if (btn) btn.textContent = 'Filtros ▼';
+        }
+      });
+    }
+  }
 
   // Populate pauta central dropdown async
   (async () => {
@@ -353,14 +438,13 @@ function bindLibraryEvents() {
 }
 
 function applyFilters() {
-  const status = document.getElementById('filter-status')?.value || '';
   const urgency = document.getElementById('filter-urgency')?.value || '';
   const contentType = document.getElementById('filter-content-type')?.value || '';
   const pautaCentralId = document.getElementById('filter-pauta-central')?.value || '';
   const search = document.getElementById('search-posts')?.value || '';
-  const posts = DataStore.filterPosts({ status, urgency, contentType, search, pautaCentralId });
+  const posts = DataStore.filterPosts({ urgency, contentType, search, pautaCentralId });
   const list = document.getElementById('posts-list');
-  list.innerHTML = posts.length > 0 ? posts.map(p => renderPostCard(p)).join('') : renderEmptyState();
+  list.innerHTML = posts.length > 0 ? renderSectionedList(posts) : renderEmptyState();
 }
 
 // ─── MODALS ───
