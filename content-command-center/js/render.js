@@ -193,6 +193,7 @@ function renderPostCard(post) {
   // Status-based card variant
   const statusClass = post.status === 'publicado' ? 'post-card--publicado'
     : post.status === 'agendado' ? 'post-card--agendado'
+    : post.status === 'manual' ? 'post-card--manual'
     : 'post-card--rascunho';
 
   // Media badges
@@ -224,6 +225,7 @@ function renderPostCard(post) {
   // Status badge with color
   const statusBadgeClass = post.status === 'publicado' ? 'badge-publicado'
     : post.status === 'agendado' ? 'badge-agendado'
+    : post.status === 'manual' ? 'badge-manual'
     : 'badge-rascunho';
 
   // Scheduled date badge for agendado

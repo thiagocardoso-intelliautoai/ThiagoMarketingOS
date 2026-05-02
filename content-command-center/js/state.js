@@ -39,6 +39,7 @@ export const STATUS_LABELS = {
   rascunho: 'Rascunho',
   agendado: 'Agendado',
   publicado: 'Publicado',
+  manual: 'Manual',
 };
 
 export const URGENCY_LABELS = {

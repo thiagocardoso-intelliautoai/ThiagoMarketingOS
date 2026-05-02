@@ -109,6 +109,17 @@
   box-shadow: var(--shadow-card-hover), 0 0 20px rgba(245, 158, 11, 0.06);
 }
 
+/* Manual — cyan accent (publicado/agendado fora da plataforma) */
+.post-card--manual {
+  background: rgba(39, 41, 61, 0.48);
+  border-left-color: var(--badge-cyan);
+  border-left-style: solid;
+}
+.post-card--manual:hover {
+  border-left-color: var(--badge-cyan);
+  box-shadow: var(--shadow-card-hover), 0 0 20px rgba(6, 182, 212, 0.06);
+}
+
 .post-card-header {
   display: flex;
   justify-content: space-between;
@@ -154,6 +165,12 @@
   background: rgba(245, 158, 11, 0.12);
   color: var(--accent-amber);
   border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.badge-manual {
+  background: var(--badge-cyan-bg);
+  color: var(--badge-cyan);
+  border: 1px solid rgba(6, 182, 212, 0.25);
 }
 
 /* Urgency/generic status */

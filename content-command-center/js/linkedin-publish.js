@@ -295,6 +295,22 @@ export function openPublishModal(postId) {
         <div class="publish-radio" id="publish-radio-schedule"></div>
       </div>
 
+      <div class="publish-option-card" id="option-card-manual">
+        <div class="publish-option-info">
+          <div class="publish-option-icon publish-option-icon--manual">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="10" cy="10" r="8" stroke-dasharray="3.5 2.5"/>
+              <path d="M6.5 10.5l2.5 2.5 4.5-5"/>
+            </svg>
+          </div>
+          <div>
+            <p class="publish-option-title">Já publiquei ou agendei manualmente</p>
+            <p class="publish-option-desc">Marcar como registrado fora da plataforma</p>
+          </div>
+        </div>
+        <div class="publish-radio" id="publish-radio-manual"></div>
+      </div>
+
       <div class="schedule-picker-wrapper" id="schedule-picker-wrapper">
         <!-- Calendar injected here when schedule is selected -->
       </div>
@@ -411,30 +427,28 @@ export function openPublishModal(postId) {
   // ── Option card selection ──
   function selectOption(mode) {
     publishMode = mode;
-    const cardNow = document.getElementById('option-card-now');
-    const cardSchedule = document.getElementById('option-card-schedule');
-    const radioNow = document.getElementById('publish-radio-now');
-    const radioSchedule = document.getElementById('publish-radio-schedule');
-    const pickerWrapper = document.getElementById('schedule-picker-wrapper');
-    const iconNow = cardNow?.querySelector('.publish-option-icon');
-    const iconSchedule = cardSchedule?.querySelector('.publish-option-icon');
 
-    if (mode === 'now') {
-      cardNow?.classList.add('publish-option-card--selected');
-      cardSchedule?.classList.remove('publish-option-card--selected');
-      radioNow?.classList.add('publish-radio--on');
-      radioSchedule?.classList.remove('publish-radio--on');
-      iconNow?.classList.add('publish-option-icon--active');
-      iconSchedule?.classList.remove('publish-option-icon--active');
-      if (pickerWrapper) pickerWrapper.innerHTML = '';
-    } else {
-      cardSchedule?.classList.add('publish-option-card--selected');
-      cardNow?.classList.remove('publish-option-card--selected');
-      radioSchedule?.classList.add('publish-radio--on');
-      radioNow?.classList.remove('publish-radio--on');
-      iconSchedule?.classList.add('publish-option-icon--active');
-      iconNow?.classList.remove('publish-option-icon--active');
+    ['now', 'schedule', 'manual'].forEach(m => {
+      const card = document.getElementById(`option-card-${m}`);
+      const radio = document.getElementById(`publish-radio-${m}`);
+      const icon = card?.querySelector('.publish-option-icon');
+      card?.classList.remove('publish-option-card--selected');
+      radio?.classList.remove('publish-radio--on');
+      icon?.classList.remove('publish-option-icon--active');
+    });
+
+    const activeCard = document.getElementById(`option-card-${mode}`);
+    const activeRadio = document.getElementById(`publish-radio-${mode}`);
+    const activeIcon = activeCard?.querySelector('.publish-option-icon');
+    activeCard?.classList.add('publish-option-card--selected');
+    activeRadio?.classList.add('publish-radio--on');
+    activeIcon?.classList.add('publish-option-icon--active');
+
+    const pickerWrapper = document.getElementById('schedule-picker-wrapper');
+    if (mode === 'schedule') {
       showSchedulePicker();
+    } else if (pickerWrapper) {
+      pickerWrapper.innerHTML = '';
     }
 
     updateNextButton();
@@ -555,28 +569,37 @@ export function openPublishModal(postId) {
       const confirmText = document.getElementById('publish-confirm-text');
       const whenIcon = document.getElementById('review-when-icon');
 
-      if (publishMode === 'schedule' && selectedDate) {
+      const isSchedule = publishMode === 'schedule' && selectedDate;
+      const isManual = publishMode === 'manual';
+
+      if (isSchedule) {
         const dateStr = `${formatDateBR(selectedDate)} às ${formatTimeBR(selectedHour, selectedMinute)}`;
         if (whenText) whenText.innerHTML = `📅 Agendado para ${dateStr}`;
         if (whenIcon) whenIcon.innerHTML = `<svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>`;
         if (confirmText) confirmText.innerHTML = `Ao clicar em <strong>"Agendar"</strong>, seu post será salvo na fila de publicação e será publicado automaticamente em <strong>${dateStr}</strong>.`;
+      } else if (isManual) {
+        if (whenText) whenText.innerHTML = '☑ Registrado manualmente fora da plataforma';
+        if (whenIcon) whenIcon.innerHTML = `<svg viewBox="0 0 20 20" fill="none" stroke="var(--badge-cyan)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8" stroke-dasharray="3.5 2.5"/><path d="M6.5 10.5l2.5 2.5 4.5-5"/></svg>`;
+        if (whenIcon) whenIcon.style.background = 'rgba(6, 182, 212, 0.12)';
+        if (confirmText) confirmText.innerHTML = `Ao clicar em <strong>"Confirmar Registro"</strong>, este post será marcado como publicado/agendado manualmente. <strong>Ele não será publicado novamente pela plataforma.</strong>`;
       } else {
         if (whenText) whenText.innerHTML = '⚡ Publicar imediatamente';
         if (confirmText) confirmText.innerHTML = `Ao clicar em <strong>"Publicar Agora"</strong>, seu post será publicado imediatamente no LinkedIn e o status será atualizado para <strong>publicado</strong>.`;
       }
 
       footer.style.display = '';
-      const isSchedule = publishMode === 'schedule' && selectedDate;
       footer.innerHTML = `
         <button class="btn-ghost btn-sm" id="publish-btn-back">${Icons.arrowLeft} Voltar</button>
-        <button class="${isSchedule ? 'btn-primary' : 'btn-linkedin'} btn-sm" id="publish-btn-confirm">
-          ${isSchedule ? '📅 Agendar' : `${Icons.send} Publicar Agora`}
+        <button class="${isSchedule || isManual ? 'btn-primary' : 'btn-linkedin'} btn-sm" id="publish-btn-confirm">
+          ${isSchedule ? '📅 Agendar' : isManual ? '☑ Confirmar Registro' : `${Icons.send} Publicar Agora`}
         </button>
       `;
       document.getElementById('publish-btn-back')?.addEventListener('click', () => showScreen(1));
       document.getElementById('publish-btn-confirm')?.addEventListener('click', () => {
         if (isSchedule) {
           handleSchedule(post);
+        } else if (isManual) {
+          handleManual(post);
         } else {
           handlePublish(post);
         }
@@ -768,6 +791,42 @@ export function openPublishModal(postId) {
     }
   }
 
+  // ── Manual registration action ──
+  async function handleManual(post) {
+    const btn = document.getElementById('publish-btn-confirm');
+    if (!btn) return;
+
+    btn.disabled = true;
+    btn.innerHTML = `
+      <svg class="publish-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+        <circle cx="12" cy="12" r="10" stroke-dasharray="60" stroke-dashoffset="15"/>
+      </svg>
+      Registrando...
+    `;
+
+    try {
+      await DataStore.updatePost(post.id, { status: 'manual' });
+
+      const successTitle = document.getElementById('success-title');
+      const successDesc = document.getElementById('success-desc');
+      if (successTitle) successTitle.textContent = 'Registrado com sucesso!';
+      if (successDesc) successDesc.textContent = 'O post foi marcado como publicado/agendado manualmente.';
+
+      showScreen(3);
+
+      setTimeout(() => {
+        closeModal();
+        showToast('Post marcado como publicado manualmente ☑', 'success');
+        renderLibrary();
+      }, 2000);
+    } catch (err) {
+      console.error('[Manual] Error:', err);
+      showToast('Erro ao registrar: ' + err.message, 'error');
+      btn.disabled = false;
+      btn.innerHTML = '☑ Confirmar Registro';
+    }
+  }
+
   // ── Init ──
   document.querySelector('.modal-close')?.addEventListener('click', closeModal);
   document.getElementById('publish-btn-next')?.addEventListener('click', () => showScreen(2));
@@ -775,4 +834,5 @@ export function openPublishModal(postId) {
   // Option card click handlers
   document.getElementById('option-card-now')?.addEventListener('click', () => selectOption('now'));
   document.getElementById('option-card-schedule')?.addEventListener('click', () => selectOption('schedule'));
+  document.getElementById('option-card-manual')?.addEventListener('click', () => selectOption('manual'));
 }
