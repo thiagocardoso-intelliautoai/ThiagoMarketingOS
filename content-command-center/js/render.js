@@ -193,79 +193,68 @@ function renderSectionedList(posts) {
   const toPublish = posts.filter(p => !PUBLISHED_STATUSES.includes(p.status));
   const published = posts.filter(p =>  PUBLISHED_STATUSES.includes(p.status));
 
-  const chevronSvg = `<svg class="section-chevron" viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`;
+  const activeTab = window._activeTab || 'to-publish';
+  const activePosts = activeTab === 'published' ? published : toPublish;
+  const emptyMsg = activeTab === 'published'
+    ? 'Nenhum post publicado ainda.'
+    : 'Nenhum rascunho pendente.';
 
-  const toPublishSection = `
-    <div class="status-section" id="section-to-publish">
-      <button class="status-section-header expanded" onclick="window._toggleSection('section-to-publish')" aria-expanded="true">
-        <span class="status-section-label">A Publicar</span>
-        <span class="status-section-count">${toPublish.length}</span>
-        ${chevronSvg}
+  return `
+    <div class="view-tabs" id="view-tabs">
+      <button class="view-tab ${activeTab === 'to-publish' ? 'active' : ''}" onclick="window._switchTab('to-publish')">
+        A Publicar <span class="tab-count">${toPublish.length}</span>
       </button>
-      <div class="status-section-body">
-        ${toPublish.length > 0
-          ? toPublish.map(p => renderPostCard(p)).join('')
-          : '<p class="section-empty">Nenhum rascunho pendente.</p>'
-        }
-      </div>
-    </div>`;
-
-  const publishedSection = `
-    <div class="status-section" id="section-published">
-      <button class="status-section-header" onclick="window._toggleSection('section-published')" aria-expanded="false">
-        <span class="status-section-label">Publicados</span>
-        <span class="status-section-count">${published.length}</span>
-        ${chevronSvg}
+      <button class="view-tab ${activeTab === 'published' ? 'active' : ''}" onclick="window._switchTab('published')">
+        Publicados <span class="tab-count">${published.length}</span>
       </button>
-      <div class="status-section-body hidden">
-        ${published.length > 0
-          ? published.map(p => renderPostCard(p)).join('')
-          : '<p class="section-empty">Nenhum post publicado ainda.</p>'
-        }
-      </div>
+    </div>
+    <div class="posts-list-inner" id="posts-list-inner">
+      ${activePosts.length > 0
+        ? activePosts.map(p => renderPostCard(p)).join('')
+        : `<p class="section-empty">${emptyMsg}</p>`
+      }
     </div>`;
-
-  return toPublishSection + publishedSection;
 }
 
-// Global toggle usado pelo onclick inline (necessário porque render.js é um módulo)
-window._toggleSection = function(sectionId) {
-  const section = document.getElementById(sectionId);
-  if (!section) return;
-  const header = section.querySelector('.status-section-header');
-  const body = section.querySelector('.status-section-body');
-  const isExpanded = header.classList.contains('expanded');
-  header.classList.toggle('expanded', !isExpanded);
-  header.setAttribute('aria-expanded', String(!isExpanded));
-  body.classList.toggle('hidden', isExpanded);
+// Global: alterna tab ativo e re-renderiza a lista
+window._switchTab = function(tab) {
+  window._activeTab = tab;
+  const list = document.getElementById('posts-list');
+  if (!list) return;
+  const urgency = document.getElementById('filter-urgency')?.value || '';
+  const contentType = document.getElementById('filter-content-type')?.value || '';
+  const pautaCentralId = document.getElementById('filter-pauta-central')?.value || '';
+  const search = document.getElementById('search-posts')?.value || '';
+  const posts = (urgency || contentType || pautaCentralId || search)
+    ? DataStore.filterPosts({ urgency, contentType, search, pautaCentralId })
+    : DataStore.getPosts();
+  list.innerHTML = posts.length > 0 ? renderSectionedList(posts) : renderEmptyState();
 };
 
-// Fallback para thumbnail quebrado — evita onerror com HTML inline com aspas duplas
-window._thumbFallback = function(el, initial) {
-  el.parentElement.innerHTML = `<div class="post-card-thumb-placeholder"><span class="thumb-initial">${initial}</span></div>`;
+// Fallback para imagem quebrada — mostra placeholder sem texto
+window._thumbFallback = function(el) {
+  el.parentElement.innerHTML = `<div class="post-card-thumb-placeholder post-card-thumb-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></div>`;
 };
 
 function renderCardThumbnail(post) {
   const firstSlideUrl = post.derivations?.carousel?.slides?.[0]?.imageUrl || null;
   const slidesCount = post.derivations?.carousel?.slidesCount || 0;
   const coverUrl = post.covers?.image_url || post.derivations?.cover?.coverPath || null;
-  const initial = (post.title || '?').charAt(0).toUpperCase();
-  const placeholder = `<div class="post-card-thumb-placeholder"><span class="thumb-initial">${initial}</span></div>`;
+
+  // Sem imagem → sem thumbnail (card ocupa largura total)
+  if (!firstSlideUrl && !coverUrl) return '';
 
   if (firstSlideUrl) {
     return `
       <div class="post-card-thumb-wrap">
-        <img src="${firstSlideUrl}" alt="" class="post-card-thumb" loading="lazy" onerror="window._thumbFallback(this,'${initial}')" />
-        ${slidesCount > 1 ? `<span class="thumb-slides-badge">📑 ${slidesCount}</span>` : ''}
+        <img src="${firstSlideUrl}" alt="" class="post-card-thumb" loading="lazy" onerror="window._thumbFallback(this)" />
+        ${slidesCount > 1 ? `<span class="thumb-slides-badge">${Icons.layers} ${slidesCount}</span>` : ''}
       </div>`;
   }
-  if (coverUrl) {
-    return `
-      <div class="post-card-thumb-wrap">
-        <img src="${coverUrl}" alt="" class="post-card-thumb" loading="lazy" onerror="window._thumbFallback(this,'${initial}')" />
-      </div>`;
-  }
-  return `<div class="post-card-thumb-wrap">${placeholder}</div>`;
+  return `
+    <div class="post-card-thumb-wrap">
+      <img src="${coverUrl}" alt="" class="post-card-thumb" loading="lazy" onerror="window._thumbFallback(this)" />
+    </div>`;
 }
 
 function renderPostCard(post) {
@@ -298,7 +287,7 @@ function renderPostCard(post) {
 
   // Scheduled date badge
   const scheduledBadge = post.status === 'agendado' && post.scheduledAt
-    ? `<span class="scheduled-badge">⏰ ${new Date(post.scheduledAt).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} às ${new Date(post.scheduledAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</span>`
+    ? `<span class="scheduled-badge">${Icons.clock} ${new Date(post.scheduledAt).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} às ${new Date(post.scheduledAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</span>`
     : '';
 
   // Metrics bar for published posts
@@ -337,10 +326,10 @@ function renderPostCard(post) {
         ${metricsHtml}
         <div class="post-card-meta">
           <span>${Icons.calendar} ${formatDate(post.createdAt)}</span>
-          ${post.reviewScore ? `<span>${Icons.barChart} ${post.reviewScore}%</span>` : ''}
-          ${post.urgency ? `<span>${URGENCY_LABELS[post.urgency] || post.urgency}</span>` : ''}
-          ${post.leadMagnetStatus === 'a_fazer' ? '<span>🎯 Lead Magnet</span>' : ''}
-          ${post.leadMagnetStatus === 'concluido' ? '<span>🎯✓</span>' : ''}
+          ${post.reviewScore ? `<span class="score-chip score-chip--${post.reviewScore >= 80 ? 'high' : post.reviewScore >= 60 ? 'mid' : 'low'}">${Icons.barChart} ${post.reviewScore}%</span>` : ''}
+          ${post.urgency ? `<span class="urgency-chip urgency-chip--${post.urgency}">${URGENCY_LABELS[post.urgency] || post.urgency}</span>` : ''}
+          ${post.leadMagnetStatus === 'a_fazer' ? `<span class="lm-chip lm-chip--pending">${Icons.target} Lead Magnet</span>` : ''}
+          ${post.leadMagnetStatus === 'concluido' ? `<span class="lm-chip lm-chip--done">${Icons.target}</span>` : ''}
           ${scheduledBadge}
         </div>
         <div class="post-card-footer">
@@ -440,11 +429,6 @@ function bindLibraryEvents() {
 }
 
 function applyFilters() {
-  const toPublishWasExpanded = document.getElementById('section-to-publish')
-    ?.querySelector('.status-section-header')?.classList.contains('expanded') ?? true;
-  const publishedWasExpanded = document.getElementById('section-published')
-    ?.querySelector('.status-section-header')?.classList.contains('expanded') ?? false;
-
   const urgency        = document.getElementById('filter-urgency')?.value || '';
   const contentType    = document.getElementById('filter-content-type')?.value || '';
   const pautaCentralId = document.getElementById('filter-pauta-central')?.value || '';
@@ -452,9 +436,6 @@ function applyFilters() {
   const posts          = DataStore.filterPosts({ urgency, contentType, search, pautaCentralId });
   const list           = document.getElementById('posts-list');
   list.innerHTML = posts.length > 0 ? renderSectionedList(posts) : renderEmptyState();
-
-  if (!toPublishWasExpanded) window._toggleSection('section-to-publish');
-  if (publishedWasExpanded)  window._toggleSection('section-published');
 }
 
 // ─── MODALS ───

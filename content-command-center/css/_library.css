@@ -648,12 +648,16 @@
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.18) 0%, rgba(168, 85, 247, 0.18) 100%);
 }
 
-.thumb-initial {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.3);
-  font-family: var(--font-display);
-  line-height: 1;
+/* Fallback de imagem quebrada — ícone genérico sem texto */
+.post-card-thumb-empty {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.post-card-thumb-empty svg {
+  width: 22px;
+  height: 22px;
+  color: rgba(255, 255, 255, 0.12);
+  stroke: currentColor;
 }
 
 /* Card layout: horizontal com thumbnail */
@@ -696,6 +700,157 @@
   color: var(--text-muted);
   letter-spacing: 0.01em;
   margin-bottom: var(--space-xs);
+}
+
+/* Ícones SVG dentro do meta row — tamanho proporcional ao texto */
+.post-card-meta svg {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+  vertical-align: -0.1em;
+  opacity: 0.7;
+}
+
+/* ─── TAB STRIP (A Publicar / Publicados) ─── */
+.view-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 0 var(--space-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: var(--space-md);
+}
+
+.view-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.2s, background 0.2s;
+}
+
+.view-tab:hover {
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.view-tab.active {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 600;
+}
+
+.tab-count {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+  padding: 1px 7px;
+  font-size: 0.70rem;
+  font-weight: 700;
+}
+
+.view-tab.active .tab-count {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── LEAD MAGNET CHIP ─── */
+.lm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.lm-chip svg {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  opacity: 1;
+}
+
+.lm-chip--pending {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.lm-chip--done {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--accent-green);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* ─── SCORE CHIP (color-coded) ─── */
+.score-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.score-chip svg {
+  width: 11px;
+  height: 11px;
+  opacity: 0.8;
+}
+
+.score-chip--high { color: var(--accent-green); }
+.score-chip--mid  { color: #fbbf24; }
+.score-chip--low  { color: #f87171; }
+
+/* ─── URGENCY CHIP ─── */
+.urgency-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 99px;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.urgency-chip--urgente {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.urgency-chip--relevante {
+  background: rgba(99, 102, 241, 0.12);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.urgency-chip--pode_esperar {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.68rem;
+  background: none;
+  border: none;
+  padding: 2px 0;
+}
+
+/* Ícones SVG nos badges de thumbnail/scheduled */
+.thumb-slides-badge svg {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  vertical-align: -0.1em;
+}
+
+.scheduled-badge svg {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  vertical-align: -0.1em;
 }
 
 /* Badges de tipo com cor semântica */
