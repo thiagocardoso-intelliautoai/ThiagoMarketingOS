@@ -71,17 +71,9 @@ templates:
     file: templates/pessoa-texto.html
     description: Foto real do banco com overlay de texto protegido por gradient.
 
-  - id: micro-infografico
-    file: templates/micro-infografico.html
-    description: UM dado/métrica/insight visualizado de forma limpa e impactante.
-
   - id: print-autoridade
     file: templates/print-autoridade.html
     description: Screenshot estilizado de fonte de autoridade com contexto do Thiago.
-
-  - id: quote-card
-    file: templates/quote-card.html
-    description: Citação estilizada com design editorial premium.
 
 # Checkpoints humanos
 checkpoints:

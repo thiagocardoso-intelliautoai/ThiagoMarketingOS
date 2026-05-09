@@ -13,9 +13,7 @@ Squads são pipelines de produção ativados via slash command. Cada um carrega 
 |---------|-------|-----------|
 | `/z-pesquisa-conteudo-linkedin` | Pesquisa & Post | Pesquisa → hooks → post final texto |
 | `/z-carrosseis-linkedin` | Carrosséis | Post aprovado → carrossel visual (4 estilos) |
-| `/z-capas-linkedin` | Capas | Post aprovado → capa visual (5 estilos) |
-| `/z-criar-materia-colab` | Matéria-Colab | Ângulo aprovado → matéria completa |
-| `/z-seed-lista-distribuicao` | Seed Distribuição | Pesquisa e mantém lista de alvos para matéria-colab |
+| `/z-capas-linkedin` | Capas | Post aprovado → capa visual (3 estilos) |
 | `/z-seed-pautas-centrais` | Seed Pautas | Gera e mantém pautas centrais e subpautas |
 
 **Como usar:** `/z-pesquisa-conteudo-linkedin` ou cole o prompt gerado pelo Content Command Center (já vem formatado).
@@ -76,8 +74,6 @@ aiox-squads/squads/   ← Squad definitions (squad.yaml, agents/, data/, tasks/,
   pesquisa-conteudo-linkedin/
   carrosseis-linkedin/
   capas-linkedin/
-  criar-materia-colab/
-  seed-lista-distribuicao/
   seed-pautas-centrais/
 aiox-squads/shared/scripts/  ← CLIs de persistência no Supabase
 content-command-center/      ← Dashboard web (Vanilla JS + Supabase)

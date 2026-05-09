@@ -148,42 +148,7 @@ Foto real do Thiago ou do contexto com overlay de texto protegido por gradient. 
 
 ---
 
-## Estilo 3: Micro-Infográfico
-
-### Conceito
-UM dado, UMA métrica, UM insight — visualizado de forma limpa e impactante. "Data point hero", não infográfico complexo.
-
-### Quando Usar
-- Posts de Credibilidade (C) e Alcance (A)
-- Quando o post contém um número/dado impactante
-- Quando quer gerar "saves" (métrica mais valiosa do algoritmo)
-
-### Perde Quando
-- Tem ≥2 dados centrais comparativos (vai melhor como Data-Driven carrossel)
-- Não há nenhum dado quantitativo central no post
-- O dado não tem fonte verificável (sem fonte = sem credibilidade)
-
-### Especificações
-| Elemento | Valor |
-|----------|-------|
-| Fundo | `#1A1A2E` (Charcoal — `--bg-dark`) |
-| Número grande | Inter 72-96px / 800, cor `#14B8A6` (Teal — `--accent-primary`) ou `#F59E0B` (Amber — `--accent-secondary`) |
-| Legenda | O que o número significa, 24-32px / 500, `#F1F5F9` (Chalk — `--text-primary-dark`) |
-| Fonte citada | "Fonte: Gartner 2025", 18px / 400, `#64748B` (`--text-muted`) |
-| Ícone | SVG inline simples (opcional), 48-64px |
-| Mini-chart | Barras horizontais simples (opcional), max 3-4 barras, cor Teal |
-| Marca | "Thiago C.Lima" — Inter 500, 20px, `#64748B` (`--text-muted`), rodapé |
-
-### Regras
-- APENAS UM dado principal — nunca 2 ou 3 números grandes
-- Se usar mini-chart, deve reforçar o dado principal (não competir)
-- Ícone deve ser relevante ao contexto — usar SVG, não emoji
-- Fonte do dado SEMPRE citada — credibilidade exige atribuição
-- Accent: usar Teal OU Amber (nunca ambos, exceto em barras comparativas)
-
----
-
-## Estilo 4: Print de Autoridade
+## Estilo 3: Print de Autoridade
 
 ### Conceito
 Screenshot estilizado de uma fonte de autoridade (tweet, notícia, comentário) com contexto visual. Consistente com o estilo Twitter-Style do carrossel.
@@ -226,47 +191,12 @@ Screenshot estilizado de uma fonte de autoridade (tweet, notícia, comentário) 
 
 ---
 
-## Estilo 5: Quote Card
-
-### Conceito
-Frase/citação com design editorial premium. Não é "quote Canva" genérico — é frase falsificável e opinativa com design de revista.
-
-### Quando Usar
-- Posts de Engajamento (E) e Alcance (A)
-- Quando a frase é forte o suficiente para ser compartilhada como screenshot
-- Frase do Thiago ou de uma referência relevante
-- Quando precisa de cadência rápida (produção rápida)
-
-### Perde Quando
-- A força do post está no desenvolvimento em arco, não numa frase isolada (vai melhor como Caderno)
-- A frase só funciona dentro do contexto do post (não passa o teste "saiu de contexto, ainda é forte?")
-- O conteúdo tem dados quantitativos centrais (vai melhor como Data-Driven ou Micro-Infográfico)
-
-### Especificações
-| Elemento | Valor |
-|----------|-------|
-| Fundo | `#1A1A2E` (Charcoal — `--bg-dark`) com noise texture sutil (opacity <5%) |
-| Aspas decorativas | 120-160px, cor Teal `#14B8A6` (`--accent-primary`) com opacity 0.15, posição top-left |
-| Texto da citação | Inter 36-48px / 500 italic ou medium, `#F1F5F9` (Chalk — `--text-primary-dark`) |
-| Atribuição | "— Thiago C.Lima" ou "— [Referência]", 22px / 400, `#94A3B8` (`--text-secondary`) |
-| Separador | Linha horizontal 80px × 3px em Teal (`--accent-primary`) |
-| Marca | "Thiago C.Lima" — Inter 500, 20px, `#64748B` (`--text-muted`), rodapé |
-
-### Regras
-- Aspas decorativas são ELEMENTO GRÁFICO (não parte do texto)
-- Frase sempre entre aspas reais no texto ("" ou « »)
-- Separador visual entre citação e atribuição
-- Se for frase de terceiro, SEMPRE citar a fonte
-- Se for frase do Thiago, pode omitir atribuição se o header com foto estiver presente
-
----
-
 ## Tipografia Consolidada (Todos os Estilos)
 
-| Elemento | Rascunho no Papel | Pessoa+Texto | Micro-Info | Print | Quote Card |
-|----------|:-----------------:|:------------:|:----------:|:-----:|:----------:|
-| Viewport | 1080 x 1350 | 1080 x 1350 | 1080 x 1350 | 1080 x 1350 | 1080 x 1350 |
-| Hero text | Manuscrito/lápis | 44-56px/600 | 72-96px/800 | 38-48px/700 | 36-48px/500i |
-| Subtitle | Manuscrito/lápis | — | 24-32px/500 | 22-28px/500 | 22px/400 |
-| Caption | 18px/400 (marca) | — | 18px/400 | 18px/400 | 18px/400 |
-| Font | Lápis real (imagem) | Inter / Montserrat | Inter | Inter | Inter |
+| Elemento | Rascunho no Papel | Pessoa+Texto | Print de Autoridade |
+|----------|:-----------------:|:------------:|:-------------------:|
+| Viewport | 1080 x 1350 | 1080 x 1350 | 1080 x 1350 |
+| Hero text | Manuscrito/lápis | 44-56px/600 | 38-48px/700 |
+| Subtitle | Manuscrito/lápis | — | 22-28px/500 |
+| Caption | 18px/400 (marca) | — | 18px/400 |
+| Font | Lápis real (imagem) | Inter / Montserrat | Inter |

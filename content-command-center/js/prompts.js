@@ -44,22 +44,10 @@ export const CoverStyles = {
     perde_quando: 'Tema é abstrato/conceitual sem cena real para ancorar'
   },
   3: {
-    label: 'Micro-Infográfico (dado/métrica hero)',
-    short: 'Um dado/métrica hero visualizado',
-    vence_quando: 'Post inteiro orbita 1 dado quantitativo verificável com fonte citada',
-    perde_quando: 'Tem ≥2 dados centrais (vai Data-Driven carrossel) ou nenhum dado'
-  },
-  4: {
     label: 'Print de Autoridade (screenshot + opinião)',
     short: 'Screenshot + opinião do Thiago',
     vence_quando: 'Reação curta a algo público (tweet, headline) cabe em 1-2 parágrafos',
     perde_quando: 'Não tem print real, ou reação precisa de desenvolvimento longo'
-  },
-  5: {
-    label: 'Quote Card (citação editorial premium)',
-    short: 'Citação editorial premium',
-    vence_quando: 'Existe UMA frase central falsificável que vira screenshot por si só',
-    perde_quando: 'A força do post está no desenvolvimento, não numa frase isolada'
   }
 };
 
@@ -88,45 +76,6 @@ Escolher do Armazém de Ideias`;
   seedPautas() {
     return `/z-seed-pautas-centrais
 Modo: Geração de novas pautas e subpautas`;
-  },
-
-  seedDistribuicao(blacklist = []) {
-    const blacklistStr = blacklist.length > 0
-      ? `\nBlacklist (NÃO sugerir estas pessoas):\n${blacklist.map(n => `- ${n}`).join('\n')}`
-      : '';
-    return `/z-seed-lista-distribuicao
-Modo: Gerar sugestões de novas pessoas para matéria-colab${blacklistStr}`;
-  },
-
-  // ─── v3: Ângulos — novos prompts ───
-
-  aprofundarPessoa(nome, angulosExistentes = [], inputLivre = '') {
-    const angulosStr = angulosExistentes.length > 0
-      ? `\nÂngulos já existentes (NÃO repetir):\n${angulosExistentes.map(a => `- [${a.arquetipo}] ${a.titulo_pela_lente}`).join('\n')}`
-      : '\nNenhum ângulo existente — gerar ângulos iniciais.';
-    const inputStr = inputLivre
-      ? `\nDireção livre do operador: "${inputLivre}"`
-      : '';
-    return `/z-seed-lista-distribuicao
-Modo: Aprofundar ângulos de pessoa existente
-Pessoa: "${nome}"${angulosStr}${inputStr}`;
-  },
-
-  criarMateriaColab(angulo, pessoa) {
-    const evidenciasStr = Array.isArray(angulo.evidencias) && angulo.evidencias.length > 0
-      ? `\nEvidências:\n${angulo.evidencias.map(e => `- ${e}`).join('\n')}`
-      : '';
-    return `/z-criar-materia-colab
-Pessoa: "${pessoa.nome}"
-Função: ${pessoa.funcao || '(não informada)'}
-Rede relevante: ${pessoa.rede_relevante || '(não informada)'}
-
-Ângulo selecionado:
-Arquétipo: ${angulo.arquetipo}
-Título pela lente: "${angulo.titulo_pela_lente}"${evidenciasStr}
-${angulo.risco ? `Risco editorial: ${angulo.risco}` : ''}
-
-Ângulo ID: ${angulo.id}`;
   },
 
   postDiretoFromSubpauta(subpauta) {

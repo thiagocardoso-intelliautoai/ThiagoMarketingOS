@@ -142,10 +142,9 @@ INSERT INTO atomos_estrategicos (chave, valor) VALUES
   "diferenciacao_no_feed": "O oceano de carrossel do empresário brasileiro é fundo preto/texto branco/emoji de fogo. Caderno destoa em 0.3 segundos de scroll.",
   "regra_de_rotacao": "Caderno é default. Só sai quando o conteúdo for estruturalmente incompatível.",
   "excecoes": [
-    {"estilo": "Data-Driven", "quando": "Peça é benchmark com números/gráfico comparativo."},
-    {"estilo": "Quote Card", "quando": "Tese tem frase tão afiada que o visual tem que sair da frente. Raro, uso cirúrgico."}
+    {"estilo": "Data-Driven", "quando": "Peça é benchmark com números/gráfico comparativo."}
   ],
-  "proporcao_orientativa": "70% caderno, 20% data-driven, 10% quote card.",
+  "proporcao_orientativa": "80% caderno, 20% data-driven.",
   "exclusoes_de_signature": ["Pessoa+Texto", "Print de Autoridade", "Editorial Clean (exceto matéria-colab)", "Twitter Style", "Micro-Infográfico"]
 }'::jsonb),
 

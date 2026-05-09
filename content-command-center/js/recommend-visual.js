@@ -29,9 +29,7 @@ export const ESTILO_TO_CARD = {
   capa: {
     'Rascunho no Papel': 1,
     'Pessoa + Texto': 2,
-    'Micro-Infografico': 3,
-    'Print de Autoridade': 4,
-    'Quote Card': 5
+    'Print de Autoridade': 3
   }
 };
 
@@ -105,8 +103,6 @@ function calcConfidence(sig, formato, estilo) {
     return 'media';
   }
   if (formato === 'capa') {
-    if (sig.frase_falsificavel && estilo === 'Quote Card') return 'alta';
-    if (sig.dados_quant === 1 && estilo === 'Micro-Infografico') return 'alta';
     if (sig.tem_print && estilo === 'Print de Autoridade') return 'alta';
     if (sig.tem_foto_contextual && sig.framework === 'Storytelling' && estilo === 'Pessoa + Texto') return 'alta';
     if (estilo === 'Rascunho no Papel' && sig.char_count > 400) return 'media';
@@ -153,11 +149,7 @@ export function recommendVisual(post) {
       estilo = 'Editorial Clean'; motivos.push('versátil para conteúdo neutro');
     }
   } else { // capa
-    if (sig.frase_falsificavel && sig.char_count <= 600) {
-      estilo = 'Quote Card'; motivos.push('frase falsificável forte');
-    } else if (sig.dados_quant === 1) {
-      estilo = 'Micro-Infografico'; motivos.push('1 dado-hero');
-    } else if (sig.tem_print) {
+    if (sig.tem_print) {
       estilo = 'Print de Autoridade'; motivos.push('reação curta com print');
     } else if (sig.tem_foto_contextual && sig.framework === 'Storytelling') {
       estilo = 'Pessoa + Texto'; motivos.push('storytelling com foto contextual');

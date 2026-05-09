@@ -112,5 +112,4 @@ pesquisa-conteudo-linkedin/
 ## 📝 Changelog
 
 - **v2.0** — Pipeline otimizado: 10→7 steps. Removido Aprofundamento (absorvido pelo Step 01), fundido Seleção+Armazém, integrado revisão no Redator. Adicionada integração Thiago Marketing OS.
-- **v1.1** — Adicionado Modo 5 (Planejamento Mensal de 12 posts).
 - **v1.0** — Pipeline original com 10 steps.
