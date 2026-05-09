@@ -790,6 +790,58 @@
   border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
+/* REFAC-002 — badge semântico "este post É lead magnet" (coexiste com workflow chips acima) */
+.lm-chip--semantic {
+  background: rgba(20, 184, 166, 0.12);
+  color: #5eead4;
+  border: 1px solid rgba(20, 184, 166, 0.25);
+  cursor: help;
+}
+
+/* REFAC-002 — campos condicionais que aparecem ao marcar checkbox "É lead magnet?" */
+.form-conditional {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+  padding: 14px 16px;
+  border-left: 3px solid rgba(20, 184, 166, 0.45);
+  background: rgba(20, 184, 166, 0.04);
+  border-radius: 0 6px 6px 0;
+}
+
+.form-conditional.is-visible {
+  display: flex;
+}
+
+.form-conditional .form-conditional-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.lm-toggle-row-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.lm-toggle-row-form input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #14b8a6;
+  cursor: pointer;
+}
+
+.lm-toggle-row-form label {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-primary, #f1f5f9);
+  cursor: pointer;
+  user-select: none;
+}
+
 /* ─── SCORE CHIP (color-coded) ─── */
 .score-chip {
   display: inline-flex;

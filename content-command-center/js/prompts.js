@@ -51,22 +51,41 @@ export const CoverStyles = {
   }
 };
 
+// REFAC-002: front-matter YAML embutido no topo dos prompts de pesquisa
+// para o squad detectar lead-magnet sem perguntar (Step 0.0 do 00-selecao-modo.md).
+// SEMPRE inclui is_lead_magnet (true OU false explícito) — a presença do bloco
+// é o sinal de que o prompt veio do CCC e o squad pula a pergunta manual.
+function buildLeadMagnetFrontMatter(opts = {}) {
+  const isLM = opts.isLeadMagnet === true;
+  const resource = isLM && opts.leadMagnetResource ? JSON.stringify(opts.leadMagnetResource) : 'null';
+  const ctaArte = isLM && opts.ctaArte ? JSON.stringify(opts.ctaArte) : 'null';
+  return `---
+is_lead_magnet: ${isLM}
+lead_magnet_resource: ${resource}
+cta_arte: ${ctaArte}
+---
+`;
+}
+
 export const Prompts = {
   // ─── TAB CREATE (modos que ficam) ───
 
-  briefing(tema) {
-    return `/z-pesquisa-conteudo-linkedin
+  briefing(tema, opts = {}) {
+    return `${buildLeadMagnetFrontMatter(opts)}
+/z-pesquisa-conteudo-linkedin
 Modo: 3 — Briefing On-Demand
 Tema: "${tema}"`;
   },
 
-  postDireto(ideia) {
+  postDireto(ideia, opts = {}) {
     if (ideia) {
-      return `/z-pesquisa-conteudo-linkedin
+      return `${buildLeadMagnetFrontMatter(opts)}
+/z-pesquisa-conteudo-linkedin
 Modo: 4 — Escrever Post Direto
 Ideia: "${ideia}"`;
     }
-    return `/z-pesquisa-conteudo-linkedin
+    return `${buildLeadMagnetFrontMatter(opts)}
+/z-pesquisa-conteudo-linkedin
 Modo: 4 — Escrever Post Direto
 Escolher do Armazém de Ideias`;
   },
@@ -78,8 +97,9 @@ Escolher do Armazém de Ideias`;
 Modo: Geração de novas pautas e subpautas`;
   },
 
-  postDiretoFromSubpauta(subpauta) {
-    return `/z-pesquisa-conteudo-linkedin
+  postDiretoFromSubpauta(subpauta, opts = {}) {
+    return `${buildLeadMagnetFrontMatter(opts)}
+/z-pesquisa-conteudo-linkedin
 Modo: 4 — Escrever Post Direto
 Subpauta: "${subpauta.titulo}"
 Ângulo: ${subpauta.angulo || '(livre)'}
@@ -118,8 +138,8 @@ Hashtags: ${(post.hashtags || []).join(' ') || '(sem hashtags)'}`;
 
   getByMode(mode, options = {}) {
     switch (mode) {
-      case 3: return this.briefing(options.tema || '');
-      case 4: return this.postDireto(options.ideia || '');
+      case 3: return this.briefing(options.tema || '', options);
+      case 4: return this.postDireto(options.ideia || '', options);
       default: return '';
     }
   }

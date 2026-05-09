@@ -126,6 +126,10 @@ export const DataStore = {
       leadMagnetStatus: row.lead_magnet_status || null,
       leadMagnetObservation: row.lead_magnet_observation || null,
       leadMagnetUpdatedAt: row.lead_magnet_updated_at || null,
+      // REFAC-002 — Marcação semântica de lead magnet (coexiste com workflow acima)
+      isLeadMagnet: row.is_lead_magnet === true,
+      leadMagnetResource: row.lead_magnet_resource || null,
+      ctaArte: row.cta_arte || null,
       // Analytics from joined table
       analytics: row.post_analytics?.[0] ? {
         impressions: row.post_analytics[0].impressions || 0,
@@ -179,7 +183,11 @@ export const DataStore = {
       series: post.series || null,
       series_order: post.seriesOrder || null,
       published_at: post.publishedAt || null,
-      post_urn: post.postUrn || null
+      post_urn: post.postUrn || null,
+      // REFAC-002 — Marcação semântica de lead magnet (defaults garantem regressão zero)
+      is_lead_magnet: post.isLeadMagnet === true,
+      lead_magnet_resource: post.leadMagnetResource || null,
+      cta_arte: post.ctaArte || null
     };
   },
 
@@ -271,7 +279,11 @@ export const DataStore = {
           week: 'week', postNumber: 'post_number',
           series: 'series', seriesOrder: 'series_order',
           leadMagnetStatus: 'lead_magnet_status',
-          leadMagnetObservation: 'lead_magnet_observation'
+          leadMagnetObservation: 'lead_magnet_observation',
+          // REFAC-002 — edit retroativo dos campos semânticos de lead magnet
+          isLeadMagnet: 'is_lead_magnet',
+          leadMagnetResource: 'lead_magnet_resource',
+          ctaArte: 'cta_arte'
         };
         for (const [jsKey, dbKey] of Object.entries(fieldMap)) {
           if (updates[jsKey] !== undefined) {
