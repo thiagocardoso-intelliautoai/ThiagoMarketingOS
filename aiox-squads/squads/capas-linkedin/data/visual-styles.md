@@ -200,3 +200,56 @@ Screenshot estilizado de uma fonte de autoridade (tweet, notícia, comentário) 
 | Subtitle | Manuscrito/lápis | — | 22-28px/500 |
 | Caption | 18px/400 (marca) | — | 18px/400 |
 | Font | Lápis real (imagem) | Inter / Montserrat | Inter |
+
+---
+
+## REFAC-002 — CTA-Block Condicional (`cta_arte`)
+
+> Quando o post é lead magnet (`is_lead_magnet=true` no front-matter do `post-final.md`), o Designer renderiza um bloco de CTA dentro da arte. Quando é `false`, o bloco é removido do HTML antes do render.
+
+### Princípio operativo
+
+- O `cta_arte` (ex: "Comente FRAMEWORK pra receber na DM") **vai DENTRO da arte**, nunca no body do post.
+- Faixa inferior, contraste alto, ≤ 10% da altura total (135px de 1350px).
+- Defesa §6.10 do `linkedin-algorithm-2026-reference.md`: ao manter o bait fora do texto, não é detectado pelo NLP do feed; quem captura é quem está engajado o suficiente para ler a arte.
+
+### Especificação por estilo
+
+#### Estilo 1 — Rascunho no Papel
+| Atributo | Valor |
+|----------|-------|
+| Posição | Faixa inferior do papel (~10% da altura útil) |
+| Estilo | **Manuscrito** a lápis/caneta — NUNCA tipografia digital sobre o papel |
+| Sublinhado | Linha ondulada à mão livre |
+| Cor | Lápis preto/cinza-escuro (mesmo do rascunho) |
+| Comprimento | ≤ 60 caracteres (1 linha) |
+| Implementação | Trecho extra no prompt do `generate-cover-pro.js` — ver `templates/rascunho-papel.md` seção "CTA-BLOCK Condicional" |
+
+#### Estilo 2 — Pessoa + Texto
+| Atributo | Valor |
+|----------|-------|
+| Posição | Faixa absoluta, `bottom: 0`, full-width |
+| Background | Gradient escuro 0% → 95% (rgba(0,0,0,X)) — protege contraste sobre foto |
+| Tipografia | Inter 26px / 600, branco `#FFFFFF` |
+| Padding | 18px vertical × 40px horizontal |
+| Altura máxima | 130px (≤10% de 1350px) |
+| Letter-spacing | -0.005em |
+| Implementação | `.cta-bar` no `templates/pessoa-texto.html` entre marcadores `<!-- CTA-BLOCK -->` e `<!-- /CTA-BLOCK -->` |
+
+#### Estilo 3 — Print de Autoridade
+| Atributo | Valor |
+|----------|-------|
+| Posição | Inline ao final do `.cover` (margin-top 28px após footer-line) |
+| Background | Gradient teal accent (rgba(20,184,166,X)) — coerente com a paleta accent do estilo |
+| Border-top | 1px solid rgba(20,184,166,0.5) |
+| Tipografia | Inter 26px / 600, Chalk `#F1F5F9` |
+| Padding | 22px vertical × 32px horizontal |
+| Altura máxima | 130px |
+| Implementação | `.cta-bar` no `templates/print-autoridade.html` entre marcadores `<!-- CTA-BLOCK -->` e `<!-- /CTA-BLOCK -->` |
+
+### Regra de render
+
+1. Designer abre `output/post-final.md`, faz parse do front-matter YAML.
+2. Se `is_lead_magnet=true`: substitui `{{ cta_arte }}` pelo valor literal e mantém o bloco.
+3. Se `is_lead_magnet=false` (ou ausente): **deleta** todo o conteúdo entre `<!-- CTA-BLOCK -->` e `<!-- /CTA-BLOCK -->` (inclusive os comentários) antes do `render-cover.js`.
+4. Validação visual: o bloco não deve ocupar mais que 10% da altura (135px); se `cta_arte` for tão longo que ultrapasse, encurtar o texto, NUNCA aumentar a faixa.

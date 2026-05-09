@@ -149,6 +149,19 @@ Os hooks devem seguir as estruturas do arquivo `data/hook-structures.md`. Estrut
 5. CTA genérico ("Espero que ajude!", "Curtiu? Compartilhe!")
 6. Duas ou mais ideias concorrentes no mesmo post
 7. **Ausência dos headers técnicos obrigatórios** (`## Metadata`, `### Post`, `### Revisão`) exigidos no `data/post-structure-linkedin.md`
+8. **Lead Magnet — regra dura anti-bait (REFAC-002, §6.2 + §6.10 do `linkedin-algorithm-2026-reference.md`)**
+   Aplica somente quando `is_lead_magnet=true` no front-matter do prompt/output. Qualquer um dos itens abaixo presentes = REFAZER:
+   - Menção textual ao `lead_magnet_resource` no body do post (o recurso entra na **arte**, nunca no texto)
+   - Link externo no body (acumula penalidade §6.4 + composição §6.10)
+   - Padrões de engagement bait detectáveis por NLP (§6.2):
+     - "Comente X que mando no DM"
+     - "Comment YES if you agree" / "Like for part 2"
+     - "Tag a friend who needs this" / "Type 1 if X, 2 if Y"
+     - "Save this for later" como CTA isolado e único
+   - Hashtags > 3 (§6.5 hashtag stuffing)
+   - CTA do texto não é pergunta aberta genuína nem ação que gera conversa no post (a captura é por **inbound** — DM espontânea, perfil, newsletter — não por bait)
+
+   **Princípio §6.10:** asset entregue *dentro* do post (carrossel/capa = formato premiado) é coerência semântica para topical DNA do Thiago (operador-builder oferecendo framework técnico), não bait. O que o algoritmo penaliza é a **composição** bait + link externo + bounce — não o conceito de oferecer valor.
 
 ### Checklist de Qualidade (4 Blocos com Peso)
 | Bloco | Peso | Critérios |

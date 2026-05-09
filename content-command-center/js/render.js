@@ -86,6 +86,28 @@ function expandModePanel(mode) {
     `;
   }
 
+  // REFAC-002 — Lead Magnet section (modos 3 e 4)
+  const leadMagnetInput = (mode === 3 || mode === 4) ? `
+    <div class="expand-field">
+      <div class="lm-toggle-row-form">
+        <input type="checkbox" id="lm-flag" />
+        <label for="lm-flag">📌 É lead magnet?</label>
+      </div>
+      <div class="form-conditional" id="lm-conditional-fields">
+        <div class="expand-field">
+          <label for="lm-resource">Recurso entregue</label>
+          <input type="text" id="lm-resource" class="input-field" placeholder='Ex: "framework de prospecção em 5 etapas"' />
+        </div>
+        <div class="expand-field">
+          <label for="lm-cta-arte">CTA na arte</label>
+          <input type="text" id="lm-cta-arte" class="input-field" placeholder='Ex: "Comente FRAMEWORK pra receber na DM"' />
+        </div>
+        <p class="form-conditional-hint">
+          O CTA vai DENTRO da capa/carrossel — nunca no body do post (defesa §6.2/§6.10 do algoritmo).
+        </p>
+      </div>
+    </div>
+  ` : '';
 
   panel.innerHTML = `
     <div class="expand-content">
@@ -95,6 +117,7 @@ function expandModePanel(mode) {
       </div>
       <p class="expand-desc">${info.desc}</p>
       ${extraInput}
+      ${leadMagnetInput}
       <div class="expand-prompt">
         <label>${Icons.terminal} Prompt gerado</label>
         <pre class="prompt-block" id="prompt-output">${generatePromptForMode(mode)}</pre>
@@ -116,25 +139,55 @@ function expandModePanel(mode) {
     copyToClipboard(document.getElementById('prompt-output').textContent);
   });
 
+  // REFAC-002 — Lead magnet wiring (mode 3 e 4)
+  const lmFlagEl = document.getElementById('lm-flag');
+  const lmCondEl = document.getElementById('lm-conditional-fields');
+  const lmResourceEl = document.getElementById('lm-resource');
+  const lmCtaArteEl = document.getElementById('lm-cta-arte');
+
+  const collectLmOpts = () => ({
+    isLeadMagnet: !!lmFlagEl?.checked,
+    leadMagnetResource: (lmResourceEl?.value || '').trim() || null,
+    ctaArte: (lmCtaArteEl?.value || '').trim() || null
+  });
+
+  const refreshPrompt = () => {
+    const opts = collectLmOpts();
+    if (mode === 3) {
+      const tema = document.getElementById('briefing-theme')?.value || '';
+      document.getElementById('prompt-output').textContent = Prompts.briefing(tema, opts);
+    } else if (mode === 4) {
+      const ideia = document.getElementById('direct-idea')?.value || '';
+      document.getElementById('prompt-output').textContent = Prompts.postDireto(ideia, opts);
+    }
+  };
+
   if (mode === 3) {
-    document.getElementById('briefing-theme').addEventListener('input', (e) => {
-      document.getElementById('prompt-output').textContent = Prompts.briefing(e.target.value);
-    });
+    document.getElementById('briefing-theme').addEventListener('input', refreshPrompt);
   }
   if (mode === 4) {
-    document.getElementById('direct-idea').addEventListener('input', (e) => {
-      document.getElementById('prompt-output').textContent = Prompts.postDireto(e.target.value);
-    });
+    document.getElementById('direct-idea').addEventListener('input', refreshPrompt);
   }
 
+  if (lmFlagEl) {
+    lmFlagEl.addEventListener('change', () => {
+      lmCondEl?.classList.toggle('is-visible', lmFlagEl.checked);
+      refreshPrompt();
+    });
+    lmResourceEl?.addEventListener('input', refreshPrompt);
+    lmCtaArteEl?.addEventListener('input', refreshPrompt);
+  }
+
+  // initial render reflecting default opts (is_lead_magnet=false explicit)
+  refreshPrompt();
 
   panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function generatePromptForMode(mode) {
   switch (mode) {
-    case 3: return Prompts.briefing('');
-    case 4: return Prompts.postDireto('');
+    case 3: return Prompts.briefing('', { isLeadMagnet: false });
+    case 4: return Prompts.postDireto('', { isLeadMagnet: false });
     default: return '';
   }
 }
@@ -330,6 +383,7 @@ function renderPostCard(post) {
           ${post.urgency ? `<span class="urgency-chip urgency-chip--${post.urgency}">${URGENCY_LABELS[post.urgency] || post.urgency}</span>` : ''}
           ${post.leadMagnetStatus === 'a_fazer' ? `<span class="lm-chip lm-chip--pending">${Icons.target} Lead Magnet</span>` : ''}
           ${post.leadMagnetStatus === 'concluido' ? `<span class="lm-chip lm-chip--done">${Icons.target}</span>` : ''}
+          ${post.isLeadMagnet ? `<span class="lm-chip lm-chip--semantic" title="${escapeHtml(post.leadMagnetResource || 'Lead magnet')}">📌 Lead Magnet</span>` : ''}
           ${scheduledBadge}
         </div>
         <div class="post-card-footer">
@@ -659,44 +713,83 @@ function openViewPostModal(postId) {
       const hookText = post.hookText || '';
       const bodyText = post.body || '';
       const ctaText = post.cta || '';
-      
+      const isLM = post.isLeadMagnet === true;
+      const lmResource = post.leadMagnetResource || '';
+      const lmCtaArte = post.ctaArte || '';
+
       textContainer.innerHTML = `
         <div class="edit-fields-container">
           <label class="edit-label">Hook (Gancho)</label>
           <textarea id="edit-post-hook" class="edit-mode-textarea-sm" placeholder="Hook do post...">${hookText}</textarea>
-          
+
           <label class="edit-label">Corpo do Post</label>
           <textarea id="edit-post-body" class="edit-mode-textarea" placeholder="Texto principal...">${bodyText}</textarea>
-          
+
           <label class="edit-label">CTA (Chamada para ação)</label>
           <textarea id="edit-post-cta" class="edit-mode-textarea-sm" placeholder="CTA final...">${ctaText}</textarea>
+
+          <!-- REFAC-002 — Lead Magnet (edit retroativo) -->
+          <div class="lm-toggle-row-form" style="margin-top:14px">
+            <input type="checkbox" id="edit-post-is-lead-magnet" ${isLM ? 'checked' : ''} />
+            <label for="edit-post-is-lead-magnet">📌 É lead magnet?</label>
+          </div>
+          <div class="form-conditional ${isLM ? 'is-visible' : ''}" id="edit-lm-conditional">
+            <label class="edit-label">Recurso entregue</label>
+            <input type="text" id="edit-post-lead-magnet-resource" class="input-field" placeholder='Ex: "framework de prospecção em 5 etapas"' value="${escapeHtml(lmResource)}" />
+
+            <label class="edit-label">CTA na arte</label>
+            <input type="text" id="edit-post-cta-arte" class="input-field" placeholder='Ex: "Comente FRAMEWORK pra receber na DM"' value="${escapeHtml(lmCtaArte)}" />
+            <p class="form-conditional-hint">CTA vai dentro da arte — nunca no body do post.</p>
+          </div>
         </div>
       `;
-      
+
       // Auto-focus on body
       document.getElementById('edit-post-body').focus();
+
+      // REFAC-002 — toggle visibility conditional block
+      const editLmFlag = document.getElementById('edit-post-is-lead-magnet');
+      const editLmCond = document.getElementById('edit-lm-conditional');
+      editLmFlag?.addEventListener('change', () => {
+        editLmCond?.classList.toggle('is-visible', editLmFlag.checked);
+      });
     } else {
       // Save and Switch to View Mode
       const newHook = document.getElementById('edit-post-hook').value;
       const newBody = document.getElementById('edit-post-body').value;
       const newCta = document.getElementById('edit-post-cta').value;
-      
+
+      // REFAC-002 — coletar e validar campos lead magnet
+      const newIsLeadMagnet = !!document.getElementById('edit-post-is-lead-magnet')?.checked;
+      const newLeadMagnetResource = (document.getElementById('edit-post-lead-magnet-resource')?.value || '').trim();
+      const newCtaArte = (document.getElementById('edit-post-cta-arte')?.value || '').trim();
+      if (newIsLeadMagnet && (!newLeadMagnetResource || !newCtaArte)) {
+        showToast('Lead magnet exige Recurso e CTA na arte', 'warning');
+        return;
+      }
+
       try {
         editBtn.innerHTML = '<span class="spinner-sm"></span>';
         editBtn.disabled = true;
 
-        await DataStore.updatePost(post.id, { 
+        await DataStore.updatePost(post.id, {
           hookText: newHook,
           body: newBody,
-          cta: newCta
+          cta: newCta,
+          isLeadMagnet: newIsLeadMagnet,
+          leadMagnetResource: newIsLeadMagnet ? newLeadMagnetResource : null,
+          ctaArte: newIsLeadMagnet ? newCtaArte : null
         });
-        
+
         showToast('Post atualizado!', 'success');
-        
+
         // Update local object
         post.hookText = newHook;
         post.body = newBody;
         post.cta = newCta;
+        post.isLeadMagnet = newIsLeadMagnet;
+        post.leadMagnetResource = newIsLeadMagnet ? newLeadMagnetResource : null;
+        post.ctaArte = newIsLeadMagnet ? newCtaArte : null;
         
         // Re-render
         closeModal();
@@ -1049,6 +1142,27 @@ function openAddPostModal() {
           <label for="post-score">Score de Revisão (0-100)</label>
           <input type="number" id="post-score" class="input-field" min="0" max="100" placeholder="87" />
         </div>
+
+        <!-- REFAC-002 — Lead Magnet semântico -->
+        <div class="form-group">
+          <div class="lm-toggle-row-form">
+            <input type="checkbox" id="post-is-lead-magnet" />
+            <label for="post-is-lead-magnet">📌 É lead magnet?</label>
+          </div>
+          <div class="form-conditional" id="post-lm-conditional">
+            <div class="form-group">
+              <label for="post-lead-magnet-resource">Recurso entregue *</label>
+              <input type="text" id="post-lead-magnet-resource" class="input-field" placeholder='Ex: "framework de prospecção em 5 etapas"' />
+            </div>
+            <div class="form-group">
+              <label for="post-cta-arte">CTA na arte *</label>
+              <input type="text" id="post-cta-arte" class="input-field" placeholder='Ex: "Comente FRAMEWORK pra receber na DM"' />
+            </div>
+            <p class="form-conditional-hint">
+              O CTA vai DENTRO da capa/carrossel — nunca no body do post (defesa §6.2/§6.10).
+            </p>
+          </div>
+        </div>
       </form>
     </div>
     <div class="modal-footer">
@@ -1059,6 +1173,13 @@ function openAddPostModal() {
 
   document.querySelectorAll('.modal-close').forEach(b => b.addEventListener('click', closeModal));
 
+  // REFAC-002 — toggle conditional fields
+  const lmFlagEl = document.getElementById('post-is-lead-magnet');
+  const lmCondEl = document.getElementById('post-lm-conditional');
+  lmFlagEl?.addEventListener('change', () => {
+    lmCondEl?.classList.toggle('is-visible', lmFlagEl.checked);
+  });
+
   document.getElementById('save-post-btn')?.addEventListener('click', async () => {
     const title = document.getElementById('post-title').value.trim();
     const theme = document.getElementById('post-theme').value.trim();
@@ -1067,6 +1188,15 @@ function openAddPostModal() {
 
     if (!title || !theme || !hookText || !body) {
       showToast('Preencha os campos obrigatórios', 'warning');
+      return;
+    }
+
+    // REFAC-002 — coletar e validar lead magnet
+    const isLeadMagnet = !!document.getElementById('post-is-lead-magnet')?.checked;
+    const leadMagnetResource = (document.getElementById('post-lead-magnet-resource')?.value || '').trim();
+    const ctaArte = (document.getElementById('post-cta-arte')?.value || '').trim();
+    if (isLeadMagnet && (!leadMagnetResource || !ctaArte)) {
+      showToast('Lead magnet exige Recurso e CTA na arte', 'warning');
       return;
     }
 
@@ -1084,6 +1214,9 @@ function openAddPostModal() {
       reviewScore: parseInt(document.getElementById('post-score').value) || null,
       status: document.getElementById('post-status').value,
       urgency: document.getElementById('post-urgency').value,
+      isLeadMagnet,
+      leadMagnetResource: isLeadMagnet ? leadMagnetResource : null,
+      ctaArte: isLeadMagnet ? ctaArte : null,
     });
 
     closeModal();

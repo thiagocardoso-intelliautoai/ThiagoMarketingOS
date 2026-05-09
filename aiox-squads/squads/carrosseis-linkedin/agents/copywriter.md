@@ -77,13 +77,35 @@ Direto como o Thiago. Apresenta opções de forma estruturada com numeração. E
 - [ ] CTA é ação específica ou pergunta genuína
 - [ ] Tom consistente com a voz do Thiago (coloquial BR, anti-guru)
 - [ ] Sem vocabulário proibido
-- [ ] 3-5 hashtags na última linha
+- [ ] Hashtags 0-3 (§6.5 — NUNCA stuffing)
 - [ ] Post caption + slides entregues juntos
+- [ ] **REFAC-002 — Lead Magnet (quando `is_lead_magnet=true`)**:
+  - [ ] Slide N+1 (final) é o **CTA-SLIDE** com `cta_arte` interpolado dentro da arte
+  - [ ] Body do post (caption) NÃO menciona o `lead_magnet_resource` (defesa §6.10 / Veto #8 do redator)
+  - [ ] CTA-SLIDE renderizado conforme marcador `<!-- CTA-SLIDE -->` do template-base do estilo escolhido
+  - [ ] Slides 1..N seguem padrão atual — só o slide final muda
+
+---
+
+## Regra REFAC-002 — Slide CTA Condicional
+
+Cada um dos 4 templates-base de carrossel (twitter-style, editorial-clean, data-driven, notebook-raw) contém um marcador documentado:
+
+```html
+<!-- CTA-SLIDE: render only when is_lead_magnet=true -->
+```
+
+**Workflow do Copywriter:**
+
+1. Ler front-matter do `output/post-final.md` recebido do squad de pesquisa.
+2. **Se `is_lead_magnet=true`**: gerar **N slides de conteúdo** (8-10) + **slide N+1 = CTA-SLIDE**, usando o `cta_arte` literal do front-matter como copy principal do slide final. O slide final segue o design system do estilo escolhido (Twitter/Editorial/Data-driven/Notebook).
+3. **Se `is_lead_magnet=false`**: gerar slides 1..N normalmente — não há slide CTA. O Designer remove o bloco `<!-- CTA-SLIDE ... -->` do template antes do render.
+4. Em ambos os casos: o copy do body / caption do post **nunca cita** o `lead_magnet_resource`. Coerência §6.10: asset DENTRO da arte, captura por inbound.
 
 ---
 
 ## Integration
 
-- **Reads from:** tema do usuário (step-01), ângulo selecionado (step-03), `data/linkedin-strategy.md`, `data/tone-of-voice.md`
+- **Reads from:** tema do usuário (step-01), ângulo selecionado (step-03), `data/linkedin-strategy.md`, `data/tone-of-voice.md`, **`output/post-final.md` (front-matter `is_lead_magnet`, `cta_arte`)**
 - **Writes to:** `output/angles.md`, `output/carousel-copy.md`
 - **Triggers:** step-02 (generate-angles), step-04 (create-copy)

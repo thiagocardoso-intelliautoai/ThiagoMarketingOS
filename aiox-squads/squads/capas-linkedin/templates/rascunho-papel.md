@@ -126,6 +126,36 @@ O arquivo será sobrescrito automaticamente.
 
 > 📝 **Fallback local:** substituir `--image-url` por `--image assets/papers/{mesma-foto}.jpg`
 
+## CTA-BLOCK Condicional (REFAC-002)
+
+> Marcador documental — não é HTML porque o estilo Rascunho é gerado via Nano Banana Pro a partir do prompt. Aqui o "bloco CTA" se traduz em **instruções extras no prompt** apenas quando `is_lead_magnet=true`.
+
+<!-- CTA-BLOCK: render only when is_lead_magnet=true; interpolate {{ cta_arte }} -->
+
+### Workflow do Designer
+
+1. Ler front-matter do `output/post-final.md`.
+2. **Se `is_lead_magnet=true`**: anexar ao final do prompt enviado ao `generate-cover-pro.js` o seguinte trecho:
+
+   ```
+   In the bottom 10% of the visible notebook page, write a short hand-lettered call-to-action: "{{ cta_arte }}" (in Portuguese). Underline it with a wavy hand-drawn line. Use the same pencil/pen style as the rest of the sketch. Keep it inside the paper area — do NOT extend to the surrounding scene.
+   ```
+
+3. **Se `is_lead_magnet=false`**: NÃO incluir o trecho. O rascunho fica sem CTA, como o padrão atual.
+
+### Especificação visual (alinha com data/visual-styles.md)
+
+| Elemento | Valor |
+|----------|-------|
+| Posição | Faixa inferior do papel (10% da altura útil) |
+| Estilo | Manuscrito a lápis/caneta (NUNCA tipografia digital) |
+| Sublinhado | Linha ondulada à mão livre |
+| Comprimento | ≤ 60 caracteres (1 linha) |
+
+<!-- /CTA-BLOCK -->
+
+---
+
 ## Dicas para o Designer (Dani Design)
 
 - **Menos é mais** — 3 blocos com setas simples > 7 blocos apertados

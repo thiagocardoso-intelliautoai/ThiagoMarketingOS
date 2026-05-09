@@ -303,6 +303,38 @@
       text-decoration: none;
       transform: rotate(0.3deg);
     }
+
+    /* ── CTA-SLIDE (REFAC-002 — só quando is_lead_magnet=true) ── */
+    .cta-slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 28px;
+    }
+
+    .cta-slide-arrow {
+      font-family: 'Caveat', cursive;
+      font-size: 64px;
+      font-weight: 700;
+      color: #C2410C;
+      transform: rotate(-1deg);
+      line-height: 1;
+    }
+
+    .cta-slide-text {
+      font-family: 'Caveat', cursive;
+      font-size: 76px;
+      font-weight: 700;
+      line-height: 1.18;
+      color: #2D2D2D;
+      letter-spacing: -0.005em;
+      transform: rotate(-0.4deg);
+      max-width: 90%;
+      border-bottom: 3px solid #C2410C;
+      padding-bottom: 12px;
+    }
   </style>
 </head>
 <body>
@@ -338,5 +370,30 @@
       <span class="swipe-hint">vira a página →</span>
     </div>
   </div>
+
+  <!-- ═══════════════════════════════════════════
+       CTA-SLIDE: render only when is_lead_magnet=true
+       Copywriter: slide N+1 (final). Designer: se is_lead_magnet=false,
+       REMOVER o bloco inteiro abaixo antes do render. Interpolar {{ cta_arte }}.
+       Estilo: manuscrito (Caveat), tinta de marker laranja, anti-perfeição.
+       ═══════════════════════════════════════════ -->
+  <div class="paper-bg" data-cta-slide="true"></div>
+  <div class="slide" data-cta-slide="true">
+    <div class="header">
+      <span class="topic-tag"># próximo passo</span>
+      <span class="page-corner">[N]/[N]</span>
+    </div>
+
+    <div class="cta-slide-content">
+      <span class="cta-slide-arrow">↓ aqui</span>
+      <h1 class="cta-slide-text">{{ cta_arte }}</h1>
+    </div>
+
+    <div class="footer">
+      <span class="signature">— Thiago C.Lima</span>
+      <span class="swipe-hint"></span>
+    </div>
+  </div>
+  <!-- /CTA-SLIDE -->
 </body>
 </html>

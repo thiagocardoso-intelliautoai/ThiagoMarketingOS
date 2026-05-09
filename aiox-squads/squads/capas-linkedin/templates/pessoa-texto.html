@@ -141,6 +141,33 @@
       font-weight: 400;
       color: rgba(255, 255, 255, 0.6);
     }
+
+    /* ── CTA-BLOCK (REFAC-002) ── */
+    /* Faixa inferior — só renderiza quando is_lead_magnet=true */
+    .cta-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 4;
+      padding: 18px 40px;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.0) 0%,
+        rgba(0, 0, 0, 0.85) 60%,
+        rgba(0, 0, 0, 0.95) 100%
+      );
+      font-family: 'Inter', sans-serif;
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: #FFFFFF;
+      letter-spacing: -0.005em;
+      text-align: left;
+      max-height: 130px; /* ≤10% de 1350px */
+      display: flex;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
@@ -171,6 +198,11 @@
         <span class="highlight">processo.</span>
       </h1>
     </div>
+
+    <!-- CTA-BLOCK: render only when is_lead_magnet=true; interpolate {{ cta_arte }} -->
+    <!-- Designer: se is_lead_magnet=false, REMOVER o bloco inteiro abaixo (do comentário CTA-BLOCK até /CTA-BLOCK) antes do render. -->
+    <div class="cta-bar">{{ cta_arte }}</div>
+    <!-- /CTA-BLOCK -->
   </div>
 </body>
 </html>

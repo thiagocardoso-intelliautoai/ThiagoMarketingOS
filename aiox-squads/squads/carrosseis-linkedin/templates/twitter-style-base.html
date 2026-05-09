@@ -155,6 +155,32 @@
       border-radius: 50px;
       text-decoration: none;
     }
+
+    /* ── CTA-SLIDE (REFAC-002 — só quando is_lead_magnet=true) ── */
+    .cta-slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 36px;
+    }
+
+    .cta-slide-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #FFFFFF;
+      letter-spacing: -0.015em;
+    }
+
+    .cta-slide-accent {
+      width: 80px;
+      height: 4px;
+      background: #14B8A6;
+      border-radius: 2px;
+    }
   </style>
 </head>
 <body>
@@ -188,5 +214,33 @@
       <span class="swipe-hint">Deslize →</span>
     </div>
   </div>
+
+  <!-- ═══════════════════════════════════════════
+       CTA-SLIDE: render only when is_lead_magnet=true
+       Copywriter: gerar este slide como N+1 (final) quando is_lead_magnet=true.
+       Designer: se is_lead_magnet=false, REMOVER o bloco inteiro abaixo
+                 (do comentário CTA-SLIDE até /CTA-SLIDE) antes do render.
+       Interpolar {{ cta_arte }} com o valor literal do front-matter.
+       ═══════════════════════════════════════════ -->
+  <div class="slide" data-cta-slide="true">
+    <div class="profile">
+      <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="cta-slide-content">
+      <div class="cta-slide-accent"></div>
+      <h1 class="cta-slide-text">{{ cta_arte }}</h1>
+    </div>
+
+    <div class="footer">
+      <span class="slide-number">[N]/[N]</span>
+      <span class="swipe-hint"></span>
+    </div>
+  </div>
+  <!-- /CTA-SLIDE -->
 </body>
 </html>

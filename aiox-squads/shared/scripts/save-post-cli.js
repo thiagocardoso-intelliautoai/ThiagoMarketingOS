@@ -58,8 +58,65 @@ const argv = yargs(process.argv.slice(2))
     default: 'text',
     describe: 'Tipo de conteúdo (text, cover, carousel)'
   })
+  // REFAC-002 — flags de lead-magnet semântico. Sobrescrevem o front-matter do .md se passados.
+  .option('is-lead-magnet', {
+    type: 'boolean',
+    default: undefined,  // undefined = "use front-matter ou false". true/false explícito = override.
+    describe: 'Marcar este post como lead magnet'
+  })
+  .option('lead-magnet-resource', {
+    type: 'string',
+    describe: 'Recurso entregue (ex: "framework de prospecção em 5 etapas")'
+  })
+  .option('cta-arte', {
+    type: 'string',
+    describe: 'Texto do CTA injetado na arte (capa/carrossel)'
+  })
   .help()
   .parseSync();
+
+// ── Front-matter YAML parser (REFAC-002) ──────────────────────
+/**
+ * Extrai bloco YAML delimitado por --- no topo de um markdown.
+ * Retorna { is_lead_magnet, lead_magnet_resource, cta_arte } ou {} se ausente.
+ * Parser minimalista: só lê os campos esperados, ignora o resto.
+ */
+function parseFrontMatter(content) {
+  if (!content.startsWith('---')) return { remainingContent: content, frontMatter: {} };
+  const match = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+  if (!match) return { remainingContent: content, frontMatter: {} };
+
+  const yamlBlock = match[1];
+  const remainingContent = content.slice(match[0].length);
+  const frontMatter = {};
+
+  for (const rawLine of yamlBlock.split('\n')) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) continue;
+    const colonIdx = line.indexOf(':');
+    if (colonIdx === -1) continue;
+    const key = line.slice(0, colonIdx).trim();
+    let value = line.slice(colonIdx + 1).trim();
+
+    // Strip wrapping quotes
+    if ((value.startsWith('"') && value.endsWith('"')) ||
+        (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1);
+    }
+
+    if (value === 'null' || value === '~' || value === '') {
+      frontMatter[key] = null;
+    } else if (value === 'true') {
+      frontMatter[key] = true;
+    } else if (value === 'false') {
+      frontMatter[key] = false;
+    } else {
+      frontMatter[key] = value;
+    }
+  }
+
+  return { remainingContent, frontMatter };
+}
 
 // ── Markdown Parser ───────────────────────────────────────────
 
@@ -71,6 +128,23 @@ const argv = yargs(process.argv.slice(2))
  *   ### Revisão (score)
  */
 function parsePostMarkdown(content, title) {
+  // REFAC-002: extrair front-matter YAML antes de parsear o conteúdo
+  const { remainingContent, frontMatter } = parseFrontMatter(content);
+  content = remainingContent;
+
+  // CLI flags têm precedência. Se ausentes, usa front-matter. Se também ausente, default false/null.
+  const isLeadMagnet =
+    argv['is-lead-magnet'] !== undefined ? argv['is-lead-magnet'] :
+    frontMatter.is_lead_magnet === true;
+
+  const leadMagnetResource =
+    argv['lead-magnet-resource'] !== undefined ? argv['lead-magnet-resource'] :
+    (frontMatter.lead_magnet_resource || null);
+
+  const ctaArte =
+    argv['cta-arte'] !== undefined ? argv['cta-arte'] :
+    (frontMatter.cta_arte || null);
+
   const result = {
     title,
     hookText: '',
@@ -88,6 +162,10 @@ function parsePostMarkdown(content, title) {
     status: argv.status,
     urgency: argv.urgency,
     contentType: argv['content-type'],
+    // REFAC-002: marcação semântica de lead magnet
+    isLeadMagnet,
+    leadMagnetResource: isLeadMagnet ? leadMagnetResource : null,
+    ctaArte:            isLeadMagnet ? ctaArte : null,
   };
 
   // Tentar encontrar o bloco do post específico por título parcial
@@ -275,6 +353,7 @@ async function main() {
   console.log(`📋 Status: ${postData.status}`);
   console.log(`⏰ Urgência: ${postData.urgency}`);
   console.log(`🪝 Hook: ${postData.hookText ? postData.hookText.substring(0, 80) + '...' : 'N/A'}`);
+  console.log(`📌 Lead Magnet: ${postData.isLeadMagnet ? 'SIM' : 'não'}${postData.isLeadMagnet ? ` — ${postData.leadMagnetResource} | CTA-arte: "${postData.ctaArte}"` : ''}`);
   console.log('');
 
   try {
