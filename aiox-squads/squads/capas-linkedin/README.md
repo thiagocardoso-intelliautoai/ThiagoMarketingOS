@@ -99,7 +99,7 @@ Esta squad pode capturar screenshots de posts públicos (Twitter/X, LinkedIn, si
 - Domínios fora da white-list só são aceitos via Opção 1 (upload manual com URL/path)
 - Cache local (`output/prints/index.json`) evita re-captura, mas operador sempre vê preview antes de aprovar
 
-> Detalhes técnicos do fluxo: ver `tasks/obter-print-autoridade.md`.
+> Detalhes técnicos do fluxo: ver `../../shared/tasks/obter-print-autoridade.md`.
 
 ---
 

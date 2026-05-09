@@ -43,7 +43,7 @@ steps:
   - id: obter-print
     type: checkpoint
     condition: estilo == 4  # Print de Autoridade
-    task: tasks/obter-print-autoridade.md
+    task: ../../shared/tasks/obter-print-autoridade.md
     description: >
       Obter print de autoridade via 3 caminhos: (1) upload manual de path/URL,
       (2) busca automática EXA + captura Playwright, (3) sugestão curada de 3

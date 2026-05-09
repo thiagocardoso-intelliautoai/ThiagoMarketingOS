@@ -68,7 +68,7 @@ Visual primeiro: apresenta o design system documentado antes de mostrar o result
 - Texto do Thiago em 38-48px
 - Screenshot centralizado com borda arredondada + shadow
 - Atribuição da fonte
-- **Obtenção do print:** SEMPRE consultar `tasks/obter-print-autoridade.md` ANTES de renderizar.
+- **Obtenção do print:** SEMPRE consultar `../../shared/tasks/obter-print-autoridade.md` ANTES de renderizar.
   Esta task oferece 3 caminhos (upload manual / EXA + Playwright / EXA curado com 3 candidatos)
   e é checkpoint humano obrigatório — designer NÃO procede para o render sem aprovação do operador.
   Renderer lê `output/prints/<slug>/metadata.json` para popular automaticamente a atribuição.
@@ -86,7 +86,7 @@ Visual primeiro: apresenta o design system documentado antes de mostrar o result
 
 Quando o operador escolhe o estilo 4, o designer **NÃO** assume que o print já existe localmente. Em vez disso:
 
-1. **Antes de qualquer render**, executar `tasks/obter-print-autoridade.md`.
+1. **Antes de qualquer render**, executar `../../shared/tasks/obter-print-autoridade.md`.
 2. A task oferece 3 caminhos ao operador:
    1. **Upload manual** — path local OU URL pública
    2. **Busca automática** — EXA descobre 1 candidato + Playwright captura
