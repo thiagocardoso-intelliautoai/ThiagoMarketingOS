@@ -109,10 +109,6 @@ tasks:
     file: tasks/01-briefing-on-demand.md
     description: Modo 3 — Pesquisa de tema fornecido pelo usuário
 
-  - id: aprofundamento
-    file: tasks/03-aprofundamento.md
-    description: "⚠️ DEPRECIADO — Absorvido pelo Step 01 (Contexto BR integrado)"
-
   - id: buscar-historia
     file: tasks/04-buscar-historia.md
     description: Step 04 (v2.1) — Verifica narrativa-relevance e busca história autêntica via subagent historia-thiago. Skip se ⚫, busca se 🔴/🟡, bloqueia Modo 4 + 🔴 + 0 histórias.
@@ -125,13 +121,6 @@ tasks:
     file: tasks/07-estruturacao-post.md
     description: Criação do post final completo com revisão de qualidade integrada (4 blocos + score)
 
-  - id: revisao-qualidade
-    file: tasks/08-revisao-qualidade.md
-    description: "⚠️ DEPRECIADO — Absorvido pelo Step 07 (revisão integrada no Redator)"
-
-  - id: planejamento-mensal
-    file: tasks/05-planejamento-mensal.md
-    description: Modo 5 — Planejamento mensal de 12 posts (4 semanas) com metodologia DTC + fontes de tese
 
 # ─── Output ───────────────────────────────────────────────
 output:
@@ -142,16 +131,3 @@ output:
     - historia-relevante.md # História autêntica do Thiago (step-04-historia, v2.1)
     - hooks.md              # Hooks gerados para seleção
     - post-final.md         # Post aprovado final (com score de qualidade)
-    - planejamento-mensal-tabela.md  # Tabela de 12 posts (Modo 5)
-    - planejamento-mensal/post-01.md # Posts individuais do planejamento
-    - planejamento-mensal/post-02.md
-    - planejamento-mensal/post-03.md
-    - planejamento-mensal/post-04.md
-    - planejamento-mensal/post-05.md
-    - planejamento-mensal/post-06.md
-    - planejamento-mensal/post-07.md
-    - planejamento-mensal/post-08.md
-    - planejamento-mensal/post-09.md
-    - planejamento-mensal/post-10.md
-    - planejamento-mensal/post-11.md
-    - planejamento-mensal/post-12.md

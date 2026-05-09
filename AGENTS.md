@@ -1,7 +1,7 @@
-# Marketing OS — Claude Code
+# Marketing OS — Codex
 
 Sistema de produção de conteúdo LinkedIn para Thiago C.Lima / Winning Sales.
-Plataforma: Content Command Center (web) + Squads (Claude Code CLI).
+Plataforma: Content Command Center (web) + Squads (Codex CLI).
 
 ---
 
@@ -13,7 +13,9 @@ Squads são pipelines de produção ativados via slash command. Cada um carrega 
 |---------|-------|-----------|
 | `/z-pesquisa-conteudo-linkedin` | Pesquisa & Post | Pesquisa → hooks → post final texto |
 | `/z-carrosseis-linkedin` | Carrosséis | Post aprovado → carrossel visual (4 estilos) |
-| `/z-capas-linkedin` | Capas | Post aprovado → capa visual (3 estilos) |
+| `/z-capas-linkedin` | Capas | Post aprovado → capa visual (5 estilos) |
+| `/z-criar-materia-colab` | Matéria-Colab | Ângulo aprovado → matéria completa |
+| `/z-seed-lista-distribuicao` | Seed Distribuição | Pesquisa e mantém lista de alvos para matéria-colab |
 | `/z-seed-pautas-centrais` | Seed Pautas | Gera e mantém pautas centrais e subpautas |
 
 **Como usar:** `/z-pesquisa-conteudo-linkedin` ou cole o prompt gerado pelo Content Command Center (já vem formatado).
@@ -62,24 +64,26 @@ Para trabalhar no código do Marketing OS, ative um agente AIOX:
 | `/squad-creator` | — | Cria novos squads de conteúdo |
 
 **Sintaxe de comando:** prefixo `*` (ex: `*help`, `*create-story`, `*exit`)
-**Regras de autoridade:** `aiox-project/.claude/rules/agent-authority.md`
+**Regras de autoridade:** `aiox-project/.Codex/rules/agent-authority.md`
 
 ---
 
 ## Estrutura do Projeto
 
 ```
-.claude/commands/     ← Slash commands (squads + agentes) — você está aqui
+.Codex/commands/     ← Slash commands (squads + agentes) — você está aqui
 aiox-squads/squads/   ← Squad definitions (squad.yaml, agents/, data/, tasks/, templates/)
   pesquisa-conteudo-linkedin/
   carrosseis-linkedin/
   capas-linkedin/
+  criar-materia-colab/
+  seed-lista-distribuicao/
   seed-pautas-centrais/
 aiox-squads/shared/scripts/  ← CLIs de persistência no Supabase
 content-command-center/      ← Dashboard web (Vanilla JS + Supabase)
 aiox-project/                ← Framework AIOX (agentes, rules, stories)
   .antigravity/agents/       ← Definições dos agentes AIOX
-  .claude/rules/             ← Regras do Claude Code (agent-authority, workflow, etc.)
+  .Codex/rules/             ← Regras do Codex (agent-authority, workflow, etc.)
   docs/stories/              ← Stories de desenvolvimento
 ```
 
@@ -89,7 +93,7 @@ aiox-project/                ← Framework AIOX (agentes, rules, stories)
 
 **Produção de conteúdo:**
 ```
-Content Command Center (web) → gera prompt → cola no Claude Code
+Content Command Center (web) → gera prompt → cola no Codex
 → Squad executa pipeline → output salvo via CLI → aparece no CCC
 ```
 
@@ -102,7 +106,7 @@ Content Command Center (web) → gera prompt → cola no Claude Code
 
 ## Regras Globais
 
-- Leia `aiox-project/.claude/CLAUDE.md` para regras do framework AIOX
+- Leia `aiox-project/.Codex/AGENTS.md` para regras do framework AIOX
 - Nunca modifique `aiox-project/.aiox-core/core/` ou `aiox-project/.aiox-core/constitution.md`
 - `git push` e `gh pr create` são exclusivos do agente `/devops`
 - Todo desenvolvimento começa com uma story em `aiox-project/docs/stories/`
