@@ -231,6 +231,50 @@ Story dedicada para `/ux-design-expert (Uma)` auditar com lente dupla:
 
 ---
 
+## QA Results
+
+**Reviewer:** Quinn (QA Guardian) — 2026-05-09
+**Verdict:** `PASS_WITH_CONCERNS`
+**Gate file:** [`aiox-project/docs/qa/gates/REFAC-004-gate.yml`](../qa/gates/REFAC-004-gate.yml)
+
+### 7 Quality Checks
+
+| # | Check | Status | Severidade |
+|---|-------|:------:|:----------:|
+| 1 | Code review | CONCERNS | low |
+| 2 | Unit tests | WAIVED | — |
+| 3 | Acceptance criteria | PASS | — |
+| 4 | Regressions | CONCERNS | low |
+| 5 | Performance | PASS | — |
+| 6 | Security | PASS | — |
+| 7 | Documentation | PASS | — |
+
+### Verificações independentes (não-confiando no auto-report)
+
+- ✅ Twitter-style: 7 ocorrências de `slide-with-print`/`slide-no-print` (CSS rules + classes em divs) — 2 layouts presentes como blocos completos
+- ✅ Editorial Clean: 17 ocorrências de `variant-{data,quote,dense,closing}` — 4 variantes presentes
+- ✅ Capas-linkedin: 0 referências antigas a `tasks/obter-print-autoridade` sem prefix `../../shared/`
+- ✅ Designer (carrosseis): 5 menções a `with-print`/`no-print` — protocolo documentado
+- ✅ Copywriter (carrosseis): 7 menções a `N-1`/`encolhimento` — regra de slide-count documentada
+- ✅ Auditoria Uma: 23 referências do tipo `L\d+` — diff por linha real, não recomendação genérica
+- ⚠️ Editorial Clean template: 1 hex literal fora de `:root` (`#FFFFFF` na linha 207, `.cta-button`) — viola gate "nenhum hex fora de :root" estabelecido pela auditoria
+
+### Issues identificados (todos low, não-bloqueantes)
+
+1. **[code]** `color: #FFFFFF;` na linha 207 do `editorial-clean-base.html` é hex literal fora do `:root`. Recomenda tokenizar como `--cta-text` ou documentar exceção no checklist específico.
+2. **[tests]** Smoke E2E pendentes (DoD): rodar 1 post Twitter-style com print + 1 sem print; rodar 1 carrossel Editorial Clean cobrindo variantes. Dependem do operador executar via CCC.
+3. **[tests]** Smoke A.4 (capas-linkedin pós-move) foi cumprido por grep, não por execução real. Recomenda rodar 1 capa estilo 4 após merge para confirmar resolver de paths shared/.
+
+### Próximos passos
+
+1. **`@devops *push`** do branch `feature/refac-004-visuais-v2` (5 commits) — pode seguir.
+2. **Operador executa** os 3 smoke tests recomendados (2 do DoD + 1 regressão capas).
+3. **Story → Done** se todos passarem; abrir bugfix cirúrgico se algum falhar (não rollback).
+
+— Quinn, guardião da qualidade 🛡️
+
+---
+
 ## Change Log
 
 | Data | Agente | Ação |
@@ -241,3 +285,4 @@ Story dedicada para `/ux-design-expert (Uma)` auditar com lente dupla:
 | 2026-05-09 | @dev (Dex) | Sub-tarefa B — Twitter-style refeito com 2 layouts (`with-print` ~70% image-fill / `no-print` BG #0F1419 com encolhimento N→N-1). Atualizados squad.yaml, template, designer.md, copywriter.md, visual-styles.md §14, review-checklist.md (gates condicionais). Commit `83fcf88`. |
 | 2026-05-09 | @ux-design-expert (Uma) | Sub-tarefa C — Auditoria Editorial Clean entregue: `aiox-project/docs/auditoria-editorial-clean.md`. 19 mudanças cirúrgicas com diff por linha + 4 variantes (data-feature, quote, dense-text, closing) + 30 itens de checklist. Lente dupla aplicada (§3.1, §5.2, §3.4, §6.1). Commit `f5a30a5`. |
 | 2026-05-09 | @dev (Dex) | Sub-tarefa D — Aplicado diff da auditoria + 4 variantes no template Editorial Clean (tokens centralizados em :root, WCAG AA fixes #94A3B8→#71717A, paleta unificada Teal). Visual-styles.md §50 reescrita; `editorial-clean-checklist.md` criado; review-checklist.md referencia o específico. Commit `01358d6`. Status: InProgress → InReview. |
+| 2026-05-09 | @qa (Quinn) | QA gate executado. **Verdict: PASS_WITH_CONCERNS.** 7 quality checks: 4 PASS, 2 CONCERNS (low), 1 WAIVED. 3 issues low não-bloqueantes (1 hex literal #FFFFFF fora :root no L207 do editorial-clean; 2 smoke E2E pendentes via CCC). 10/10 ACs verificados independentemente. Gate file: `aiox-project/docs/qa/gates/REFAC-004-gate.yml`. Liberado para `@devops *push`. |
