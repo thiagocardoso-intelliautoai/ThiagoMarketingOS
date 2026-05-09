@@ -77,6 +77,50 @@ Apresenta opções de hook numeradas com justificativa curta. Quando estrutura o
 
 ---
 
+## Sistema Decisório de CTA (REFAC-003)
+
+> Heurística de 2 ramos para CTA. Decisão NÃO é estilística — é função do tipo de valor entregue pelo post. Maximiza comments substantivos (~15× peso de like, §3.1) e save rate (~5× peso, §3.1) sem cair em engagement bait (§6.2).
+
+### Pergunta-pivô
+**O post entrega valor durável** (framework / dado original / processo replicável / matriz de decisão / checklist)?
+
+### Ramo 1 — SIM, valor durável → CTA "Salva"
+
+Formato: `Salva — [justificativa específica e lógica]`
+
+A justificativa precisa dizer **POR QUE** e **QUANDO** o leitor vai precisar do conteúdo. Genérico = REJECT.
+
+| ✅ Aceitável | ❌ Rejeitado |
+|--------------|--------------|
+| "Salva — vai precisar dessa árvore de decisão na próxima reunião de pipeline." | "Salva pra ler depois." |
+| "Salva — é o checklist que evita perder deal por follow-up esquecido." | "Salva pra não esquecer." |
+| "Salva — é o template de prompt que rodou na Winning Sales por 6 meses." | "Salva pra usar depois." |
+
+### Ramo 2 — NÃO, sem valor durável claro → CTA "Comente longo"
+
+Pos que conta história, observação, tese ou opinião sem ferramenta replicável. Formato: provocação que pede **resposta de 2-3 frases mínimo**.
+
+| ✅ Aceitável | ❌ Rejeitado |
+|--------------|--------------|
+| "Me conta: como vc lidou com isso? quero comparar com o que rolou aqui." | "Concorda?" |
+| "Quero entender: na sua operação isso aparece como gargalo de processo ou de pessoa?" | "É isso ou tô viajando?" |
+| "Conta a tua versão: foi mais erro de processo, de ferramenta, ou de leitura do parceiro?" | "Curtiu?" |
+
+### Banidos sempre (qualquer ramo)
+- "Salva pra ler depois" / "Salva pra não esquecer" / "Salva pra usar depois"
+- "Comente YES" / "Comment YES if you agree"
+- "Tag um amigo" / "Tag a friend who needs this"
+- "Like se concordar" / "Curtiu? Compartilhe!"
+- "Comente X que mando" (REFAC-002 — composição §6.2 + §6.10)
+- Emoji-as-bullet (🔥/🚀/💡 abrindo cada item)
+- Polls (§6.9 — dwell time zero)
+- Link externo no body (§6.4 — ~60% reach)
+
+### Coexistência com regra Lead Magnet (REFAC-002)
+Quando `is_lead_magnet=true` no front-matter, a regra anti-bait do **Veto 8** (abaixo) prevalece — o CTA do post NUNCA pode mencionar o `lead_magnet_resource` textualmente; a captura é por inbound (DM espontânea, perfil, newsletter). O sistema decisório acima continua aplicável: se o carrossel/capa entrega framework, o CTA do texto é Salva-justificada; se conta história, é Comente-longo.
+
+---
+
 ## Hook Library (Reference)
 
 Os hooks devem seguir as estruturas do arquivo `data/hook-structures.md`. Estruturas principais:
@@ -184,8 +228,11 @@ Os hooks devem seguir as estruturas do arquivo `data/hook-structures.md`. Estrut
 1. **Blocos de texto**: Parágrafo com 4+ linhas = morte no feed
 2. **Hook clichê**: "No mundo de hoje...", "Você sabia que..." — scroll instantâneo
 3. **CTA genérico**: "Espero que ajude!" não é CTA. Ação específica ou pergunta genuína
-4. **Vender no post**: LinkedIn é conversa, não página de vendas
-5. **Copiar hook do concorrente**: Framework sim, copy não. Adaptar, não copiar
+4. **CTA "Salva pra ler depois"**: Genérico — Ramo 1 do Sistema Decisório de CTA exige **justificativa específica e lógica**. Genérico = REJECT
+5. **CTA pergunta sim/não em post sem valor durável**: Ramo 2 exige provocação que pede **2-3 frases mínimo**. "Concorda?" / "Curtiu?" = REJECT
+6. **Vender no post**: LinkedIn é conversa, não página de vendas
+7. **Copiar hook do concorrente**: Framework sim, copy não. Adaptar, não copiar
+8. **Padrões anti-AI (§6.1)**: "It's not just X, it's Y", "Here's the truth about...", "Let me tell you...", listas perfeitamente paralelas com emoji-as-bullet, gramática excessivamente polida sem variação humana
 
 ### Always Do
 1. **3 hooks antes de escolher**: Apresentar 3 opções com justificativa
@@ -197,13 +244,17 @@ Os hooks devem seguir as estruturas do arquivo `data/hook-structures.md`. Estrut
 ## Quality Criteria
 
 - [ ] Hook ≤ 210 caracteres e para o scroll (teste do "ver mais")
-- [ ] Post ≤ 1.300 caracteres com espaços
+- [ ] Post ≤ 1.300 caracteres com espaços (sweet spot 800-2.000, §5.4)
 - [ ] Parágrafos de max 2 linhas, espaço entre eles
 - [ ] Uma ideia central (Rule of 1)
-- [ ] CTA é pergunta ou ação específica
+- [ ] **CTA aplica Sistema Decisório (Ramo 1 ou Ramo 2)** — coerente com tipo de valor entregue
+- [ ] **Se "Salva": justificativa é específica e lógica** (não genérica como "pra ler depois")
+- [ ] **Se "Comente": provocação pede 2-3 frases mínimo** (não pergunta sim/não)
 - [ ] Tom consistente com voz do Thiago (coloquial BR, anti-guru)
 - [ ] Sem vocabulário proibido
-- [ ] Dados específicos quando o tema permite
+- [ ] Sem padrões anti-AI (§6.1)
+- [ ] Hashtags 0-3 (§6.5), zero polls (§6.9), zero link externo no body (§6.4)
+- [ ] Dados específicos quando o tema permite (§7.5 — 3-4× reach)
 
 ---
 

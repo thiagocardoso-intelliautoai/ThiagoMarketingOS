@@ -83,6 +83,31 @@ Se QUALQUER condição abaixo for verdadeira, **REFAZER o post antes de prossegu
 
 > Se qualquer veto for acionado, corrigir imediatamente antes de continuar.
 
+### 4.5 Selecionar CTA — Árvore de Decisão (REFAC-003)
+
+Antes de finalizar o post, decidir o CTA aplicando a árvore do Sistema Decisório (referência: `agents/redator.md` § Sistema Decisório de CTA + `data/post-structure-linkedin.md` § CTA — Sistema Decisório).
+
+```
+Pergunta-pivô: O post entrega framework / dado original / processo replicável / matriz / checklist?
+
+  SIM → Ramo 1: CTA "Salva — [justificativa específica e lógica]"
+        ⚠️ Justificativa precisa dizer POR QUE e QUANDO o leitor vai precisar.
+        ❌ "Salva pra ler depois" / "Salva pra não esquecer" → REFAZER
+
+  NÃO → Ramo 2: CTA "Comente longo — [provocação que pede 2-3 frases]"
+        ⚠️ Provocação aberta, pedindo 2-3 frases mínimo.
+        ❌ "Concorda?" / "Curtiu?" / pergunta sim-não → REFAZER
+```
+
+**Validar contra banidos** (lista do `agents/redator.md` § Sistema Decisório de CTA › Banidos sempre):
+
+- "Salva pra ler depois" / "Salva pra não esquecer" / "Salva pra usar depois"
+- "Comente YES" / "Tag um amigo" / "Like se concordar" / "Curtiu? Compartilhe!"
+- "Comente X que mando" (REFAC-002 §6.2 + §6.10)
+- Emoji-as-bullet, polls, link externo no body
+
+**Se `is_lead_magnet=true`:** aplicar PRIMEIRO o Veto 8 do `agents/redator.md` (anti-bait — sem mencionar `lead_magnet_resource` no body, sem link externo). Depois escolher entre Ramo 1 (Salva-justificada) ou Ramo 2 (Comente-longo). A captura é por inbound (DM espontânea, perfil, newsletter) — nunca por bait.
+
 ### 5. Aplicar Revisão de Qualidade Integrada
 
 Avaliar o post nos 4 blocos abaixo (referência: `checklists/review-checklist.md`):
@@ -110,14 +135,12 @@ Avaliar o post nos 4 blocos abaixo (referência: `checklists/review-checklist.md
 - [ ] Sem jargões sem contexto
 - [ ] Emojis apenas funcionais (✅, 📌, →, ⚠️) — NUNCA 🔥, 🚀, 💪, 💡
 
-#### 📣 CTA — Peso: 15%
-- [ ] CTA é pergunta ou ação específica (não genérico)
-- [ ] CTA alinhado com o objetivo do post:
-  - **Gerar debate:** pergunta aberta ou polarizadora
-  - **Gerar salvamentos:** promessa de valor ("salva pra usar depois")
-  - **Gerar conversa:** pedido específico ("me conta: qual é o maior gargalo?")
-- [ ] Sem venda direta / "compre agora" / "saiba mais"
-- [ ] Gera conversa e comentários
+#### 📣 CTA — Peso: 15% (Sistema Decisório REFAC-003)
+- [ ] **(1)** CTA aplica o Sistema Decisório (Ramo 1 ou Ramo 2) — coerente com tipo de valor entregue
+- [ ] **(2)** Se Ramo 1 (Salva): justificativa **específica e lógica** (diz POR QUE e QUANDO o leitor vai precisar). Genérica ("pra ler depois", "pra não esquecer") = REJECT
+- [ ] **(3)** Se Ramo 2 (Comente longo): provocação pede **2-3 frases mínimo**. Pergunta sim/não ou "Concorda?" = REJECT
+- [ ] **(4)** Nenhum padrão banido aparece: "Salva pra ler depois", "Comente YES", "Tag um amigo", "Like se concordar", "Comente X que mando" (§6.2), emoji-as-bullet, polls, link externo no body (§6.4)
+- [ ] Sem venda direta ("compre agora", "saiba mais", "link na bio")
 
 ### 6. Calcular Score
 
