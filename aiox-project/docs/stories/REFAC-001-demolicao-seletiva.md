@@ -22,7 +22,11 @@ O sistema acumulou gordura mensurável: 7 squads (3 deles para matéria-colab qu
 
 ## Contexto Técnico
 
-- **Schema:** `content-command-center/supabase/migrations/20260423_etapa3_schema.sql` cria as 2 tabelas a dropar. Ambas são leaf tables (sem FKs entrantes).
+- **Schema:** 3 tabelas matéria-colab existem no schema (corrigido durante QA — claim original "leaf tables" estava errado):
+  - `lista_distribuicao` (criada em `20260423_etapa3_schema.sql` §3) — pessoas
+  - `exclusoes_distribuicao` (criada em `20260423_etapa3_schema.sql` §4) — exclusões
+  - `angulos_distribuicao` (criada em `20260424_distribuicao_angulos.sql`) — ângulos por pessoa, **com FK → lista_distribuicao(id)**
+  - Drop deve seguir ordem topológica: angulos → exclusoes → lista.
 - **Squads:** `aiox-squads/squads/{briefing-materia-colab,criar-materia-colab,seed-lista-distribuicao}/` (deletar pastas inteiras).
 - **CCC frontend:** `content-command-center/js/{pautas.js,prompts.js,render.js,recommend-visual.js}` + `supabase/migrations/20260423_etapa3_seeds.sql`.
 - **CLI:** `aiox-squads/shared/scripts/save-distribuicao-cli.js`.
@@ -39,7 +43,7 @@ O sistema acumulou gordura mensurável: 7 squads (3 deles para matéria-colab qu
 - [x] **A.1** Backup das 2 tabelas antes do drop — **N/A**: tabelas nunca foram aplicadas no remote DB (apenas migration 20260406 foi aplicada remotamente). Risco de perda de dados = zero.
 - [x] **A.2** Validar FKs entrantes — **N/A**: tabelas inexistentes no remote → 0 FKs confirmadas.
 - [x] **A.3** Criar migration `content-command-center/supabase/migrations/20260508_drop_materia_colab.sql` com `DROP TABLE IF EXISTS` idempotente.
-- [ ] **A.4** Aplicar migration via `supabase db push` — **PENDENTE**: 12 outras migrations locais não-aplicadas fora do escopo desta story. Aplicar isoladamente via SQL Editor no Supabase Dashboard (migration é idempotente/no-op pois tabelas não existem).
+- [x] **A.4** Aplicar migration via SQL Editor no Supabase Dashboard ✓ (aplicado em 2026-05-08; 3 tabelas dropadas: angulos_distribuicao, exclusoes_distribuicao, lista_distribuicao).
 
 ### B. Squads e CLI
 
@@ -129,3 +133,4 @@ O sistema acumulou gordura mensurável: 7 squads (3 deles para matéria-colab qu
 | 2026-05-08 | @sm (River) | Story criada (Draft) |
 | 2026-05-08 | @po (Pax) | Validação 10-point: 9.5/10. **GO**. Status: Draft → Ready. Adicionada seção Out of Scope. |
 | 2026-05-08 | @dev (Dex) | Implementação completa. Status: Ready → InProgress → InReview. Etapas B, C, D.1, E concluídas. A.3 criada (migration idempotente); A.4 e D.2 pendentes (manual). Pré-flight: 3 decisões tomadas (C.3 no-op; C.5 atualizar signature_visual; schema via Dex+Dara). |
+| 2026-05-08 | @qa (Quinn) | QA gate: CONCERNS → PASS após fix. Bug detectado no smoke test: SQL DROP falhou pois `angulos_distribuicao` (criada em 20260424) tem FK → `lista_distribuicao`. Migration `20260508_drop_materia_colab.sql` corrigida com ordem topológica (angulos → exclusoes → lista). SQL aplicado com sucesso no remote. Bug #2 (aba Distribuição persistindo) era cache de produção Vercel — resolvido pelo merge da PR #6. |
