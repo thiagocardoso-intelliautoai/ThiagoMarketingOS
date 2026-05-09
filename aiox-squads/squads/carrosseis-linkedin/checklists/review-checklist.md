@@ -67,6 +67,21 @@
 
 ---
 
+## 2. Design — Editorial Clean (Peso: 30%)
+
+> Aplicar apenas se o estilo selecionado for Editorial Clean.
+> **Validação detalhada em `checklists/editorial-clean-checklist.md`** (specs de paleta, tipografia, variantes e gates anti-AI — REFAC-004 auditoria Uma).
+
+Resumo dos gates críticos (ver checklist específico para detalhes):
+- [ ] Paleta restrita aos 6 tokens declarados em `:root` — sem hex literal nos seletores
+- [ ] Cor `--muted` é `#71717A` (passa WCAG AA 4.6:1) — proibido `#94A3B8` ou `#888888`
+- [ ] Accent é Teal `#14B8A6` em **todo** slide — proibido azul `#2563EB`
+- [ ] Hero ≥44px (variantes definem o tamanho exato), body ≥36px
+- [ ] Pelo menos 2 slides usam variantes diferentes do base (anti-AI §6.1)
+- [ ] `border-radius: 0px` em todos os containers/buttons
+
+---
+
 ## 2. Design — Pessoa-Style (Peso: 30%)
 
 > Aplicar apenas se o estilo selecionado for Pessoa-Style.
