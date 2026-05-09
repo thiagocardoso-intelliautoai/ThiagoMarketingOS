@@ -177,10 +177,32 @@ Se a capa "parecer feita por IA", é REJECT automático.
 
 ## Integration
 
-- **Reads from:** post de texto finalizado (input), estilo visual (step-01), `data/visual-styles.md`, `../../data/anti-ai-design-rules.md`
+- **Reads from:** post de texto finalizado (input — `output/post-final.md` do squad de pesquisa), estilo visual (step-01), `data/visual-styles.md`, `../../data/anti-ai-design-rules.md`
   - **Fotos:** Supabase `source_photos` table via `node shared/scripts/list-source-photos-cli.js` _(fallback: `assets/`)_
   - **Profile photo:** Supabase `content-assets/source-photos/profile-photo.png` _(fallback: `assets/profile-photo.png`)_
+  - **Front-matter YAML do post (REFAC-002):** ler obrigatoriamente o bloco `---` no topo do `output/post-final.md`. Campos relevantes:
+    - `is_lead_magnet: true | false`
+    - `cta_arte: "<texto a injetar>"` (apenas quando `is_lead_magnet=true`)
 - **Writes to:** `output/covers/{slug}/` (HTML + PNG auto-renderizados)
 - **Triggers:** step-03 (create-cover)
 
 > 📌 **Source of truth: Supabase.** Fallback: `assets/` local (fase de transição).
+
+---
+
+## Regra REFAC-002 — Bloco CTA Condicional
+
+Cada um dos 3 templates de capa (pessoa-texto, print-autoridade, rascunho-papel) contém um marcador de bloco CTA documentado:
+
+```html
+<!-- CTA-BLOCK: render only when is_lead_magnet=true; interpolate {{ cta_arte }} -->
+```
+
+**Workflow do Designer ao renderizar:**
+
+1. Abrir `output/post-final.md` e fazer parse do front-matter YAML do topo.
+2. **Se `is_lead_magnet=true`**: manter o bloco CTA do template e substituir `{{ cta_arte }}` pelo valor exato do front-matter. O bloco fica visível na faixa inferior da capa final.
+3. **Se `is_lead_magnet=false` (ou ausente)**: **REMOVER** todo o bloco CTA do HTML (entre os marcadores `<!-- CTA-BLOCK ... -->` e `<!-- /CTA-BLOCK -->`) antes do render. O HTML final NÃO contém referência ao CTA.
+4. Especificação visual do bloco está documentada em `data/visual-styles.md` por estilo (faixa inferior, gradient escuro, Inter 24-28px peso 600, branco, ≤10% altura da imagem).
+
+**Nunca** misturar este CTA visual com o CTA do body do post — eles são canais separados (defesa §6.10): o CTA-na-arte fica DENTRO da imagem; o CTA do texto é pergunta aberta.
