@@ -31,8 +31,8 @@
 ├─────────────────────────────────────────────┤
 │                                             │ ← Espaço
 ├─────────────────────────────────────────────┤
-│ CTA                                         │ ← Pergunta ou ação
-│ Gera conversa, não venda                    │
+│ CTA                                         │ ← Salva-justificado OU Comente-longo
+│ (Sistema Decisório — Ramo 1 ou Ramo 2)      │
 └─────────────────────────────────────────────┘
 ```
 
@@ -116,15 +116,50 @@ CTA: [Concorda ou discorda?]
 
 ---
 
-## Tipos de CTA por Objetivo
+## CTA — Sistema Decisório (REFAC-003)
 
-| Objetivo | Tipo de CTA | Exemplo |
-|----------|-------------|---------|
-| Engajamento | Pergunta aberta | "Você já passou por isso?" |
-| Debate | Pergunta polarizadora | "Concorda ou estou viajando?" |
-| Salvamentos | Promessa de valor | "Salva esse post pra usar na próxima reunião." |
-| Comentários | Pedido específico | "Me conta: qual é o maior gargalo do seu time?" |
-| ⚠️ NUNCA | Venda direta | ~~"Link na bio"~~, ~~"Compre agora"~~ |
+> **Árvore de decisão canônica.** Substitui o sistema antigo de "objetivos genéricos" (debate / salvamentos / conversa). Decisão é função do **tipo de valor entregue**, não do estilo desejado.
+
+### Árvore
+
+```
+Post entrega framework / dado original / processo replicável / matriz / checklist?
+
+  SIM ──> CTA "Salva — [justificativa específica e lógica]"
+          Ex: "Salva — vai precisar dessa árvore na próxima reunião de pipeline."
+
+  NÃO ──> CTA "Comente longo — [provocação que pede 2-3 frases]"
+          Ex: "Me conta: como vc lidou com isso? quero comparar com [contexto]."
+```
+
+### Regras de aplicação
+
+| Ramo | Validação obrigatória | REJECT se... |
+|------|------------------------|--------------|
+| **1 — Salva** | Justificativa diz POR QUE e QUANDO o leitor vai precisar | Justificativa genérica ("pra ler depois", "pra não esquecer", "pra usar depois") |
+| **2 — Comente** | Provocação pede 2-3 frases mínimo | Pergunta sim/não, pede uma palavra, "Concorda?", "Curtiu?" |
+
+### ⚠️ NUNCA (qualquer ramo)
+
+- "Salva pra ler depois" / "Salva pra não esquecer" / "Salva pra usar depois"
+- "Comente YES" / "Comment YES if you agree" / "Like for part 2"
+- "Tag um amigo" / "Tag a friend who needs this"
+- "Like se concordar" / "Curtiu? Compartilhe!"
+- "Comente X que mando" (REFAC-002 — composição §6.2 + §6.10)
+- Emoji-as-bullet (🔥/🚀/💡 abrindo cada item)
+- Polls (§6.9 — dwell time zero)
+- Link externo no body (§6.4 — ~60% reach)
+- Venda direta: ~~"Link na bio"~~, ~~"Compre agora"~~, ~~"Saiba mais"~~
+
+### Tabela de objetivos (referência secundária)
+
+> A árvore acima é canônica. A tabela abaixo permanece como referência de exemplos por intenção; sempre que conflitar com a árvore, **a árvore vence**.
+
+| Objetivo | Ramo | Exemplo |
+|----------|------|---------|
+| Salvamentos (valor durável entregue) | Ramo 1 | "Salva — é o template que rodou na Winning Sales por 6 meses." |
+| Conversa profunda | Ramo 2 | "Me conta: qual é o maior gargalo do seu time?" |
+| Debate (post de tese) | Ramo 2 | "Conta a tua versão: foi mais erro de processo ou de leitura?" |
 
 ---
 

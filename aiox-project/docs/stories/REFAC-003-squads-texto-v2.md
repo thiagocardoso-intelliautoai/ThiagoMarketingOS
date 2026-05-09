@@ -6,7 +6,7 @@
 **🔗 Bloqueia:** —
 **👤 Assignee:** Dev (Dex)
 **🏷️ Labels:** `refactor`, `prompt-engineering`, `squads`, `algoritmo-2026`
-**📊 Status:** Ready (validada por @po — bloqueada por REFAC-002)
+**📊 Status:** Ready for Review
 
 **📚 Brief:** [Plano da refatoração](../../../C:/Users/thiag/.claude/plans/aswring-you-modo-quirky-bear.md) — seção 3.8 + 3.11 + 5.8.3
 
@@ -54,21 +54,21 @@ Se a justificativa do "salva" for genérica → REJECT, força Redator a refazer
 
 ### A. CTA novo no Redator
 
-- [ ] **A.1** Editar `agents/redator.md` — adicionar seção "Sistema decisório de CTA":
+- [x] **A.1** Editar `agents/redator.md` — adicionar seção "Sistema decisório de CTA":
   - **Ramo 1 — Salva (valor durável):** quando o post entrega framework / dado original / processo replicável / matriz de decisão / checklist. CTA: "Salva — [justificativa específica e lógica]". Exemplo aceitável: *"Salva — vai precisar dessa árvore de decisão na próxima reunião de pipeline."* Exemplo rejeitado: *"Salva pra ler depois"*.
   - **Ramo 2 — Comente longo (sem valor durável):** quando o post conta história, observação ou tese sem ferramenta replicável. CTA: provocação que pede 2-3 frases. Exemplo aceitável: *"Me conta: como vc lidou com isso? quero comparar com [contexto]."* Exemplo rejeitado: *"Concorda?"* (curto demais, não pede frase).
   - **Banidos sempre:** "Salva pra ler depois", "Salva pra não esquecer", "Comente YES", "Tag um amigo", "Like se concordar", "Comente X que mando" (já em REFAC-002 mas reforçar aqui), emoji-as-bullet, polls, link externo no body.
-- [ ] **A.2** Editar `data/post-structure-linkedin.md` — incluir árvore de decisão visual:
+- [x] **A.2** Editar `data/post-structure-linkedin.md` — incluir árvore de decisão visual:
   ```
   Post entrega framework / dado / processo replicável?
     SIM → CTA "Salva" + justificativa específica e lógica
     NÃO → CTA "Comente longo" + provocação que pede 2-3 frases
   ```
-- [ ] **A.3** Editar `tasks/07-estruturacao-post.md` — passo explícito de seleção de CTA antes do Redator escrever a parte final.
+- [x] **A.3** Editar `tasks/07-estruturacao-post.md` — passo explícito de seleção de CTA antes do Redator escrever a parte final.
 
 ### B. Quality gate no checklist
 
-- [ ] **B.1** Editar `checklists/review-checklist.md` — bloco CTA (mantém 15% do peso, mas regras mais duras):
+- [x] **B.1** Editar `checklists/review-checklist.md` — bloco CTA (mantém 15% do peso, mas regras mais duras):
   - **(1)** CTA escolhido é coerente com tipo de valor entregue? (Salva quando há valor durável; Comente quando não há.)
   - **(2)** Se "Salva": a justificativa é **específica e lógica** (não genérica como "pra ler depois")? Se genérica → REJECT.
   - **(3)** Se "Comente": a provocação pede resposta de **2-3 frases mínimo** (não pergunta sim/não, não pede uma palavra)? Se sim/não → REJECT.
@@ -76,18 +76,18 @@ Se a justificativa do "salva" for genérica → REJECT, força Redator a refazer
 
 ### C. Alinhamento ao algoritmo 2026
 
-- [ ] **C.1** Adicionar seção nova em `data/linkedin-strategy.md`: **"Algoritmo 2026 — o que premia e suprime"**.
+- [x] **C.1** Adicionar seção nova em `data/linkedin-strategy.md`: **"Algoritmo 2026 — o que premia e suprime"**.
   - Sumarizar §3 (sinais), §6 (supressões) e §7 (recompensas) do `linkedin-algorithm-2026-reference.md` em ~30-50 linhas.
   - Foco em **direção de movimento**, não números absolutos (o doc-fonte avisa contra tratar números como leis).
   - Citar seções do doc-fonte para cada regra (ex: "Hashtags 0-3 — §6.5").
-- [ ] **C.2** Editar `agents/redator.md` — regras duras para 2026:
+- [x] **C.2** Editar `agents/redator.md` — regras duras para 2026:
   - Hashtags: **0-3** (§6.5).
   - **Zero polls** (§6.9).
   - **Zero link externo no body** (§6.4).
   - **Zero padrões anti-AI**: "It's not just X, it's Y", "Here's the truth about...", "Let me tell you...", listas perfeitamente paralelas, excesso de emoji-as-bullet, gramática excessivamente polida (§6.1).
   - **Specificidade premiada**: nomes de empresas, métricas exatas, períodos específicos, frameworks nomeados (§7.5).
   - **Length sweet spot**: 800-2.000 chars; cutoff "see more" em 210 (§5.4).
-- [ ] **C.3** Auditar `data/hook-structures.md`:
+- [x] **C.3** Auditar `data/hook-structures.md`:
   - Para cada uma das 9 estruturas atuais: aplicar teste — gera dwell time hook (§3.1) E não cai em padrão clichê de LLM (§6.1)?
   - **Manter:** as que passam.
   - **Cortar:** as que viraram clichê (provavelmente "It's not just X, it's Y" e variantes).
@@ -95,7 +95,7 @@ Se a justificativa do "salva" for genérica → REJECT, força Redator a refazer
 
 ### D. Seed-pautas — Topical DNA hardening
 
-- [ ] **D.1** Editar `seed-pautas-centrais/agents/estrategista.md` — incluir regra dura §7.1:
+- [x] **D.1** Editar `seed-pautas-centrais/agents/estrategista.md` — incluir regra dura §7.1:
   - **Teto: 4 pilares máximo** no perfil. Se Thiago tentar criar 5º pilar → estrategista alerta antes de salvar.
   - **80% de aderência:** dos posts dos últimos 90 dias, ≥80% precisam estar dentro dos 4 pilares.
   - **Janela 90 dias:** o sistema só categoriza autoridade após ~90 dias de consistência num nicho.
@@ -138,12 +138,42 @@ Se a justificativa do "salva" for genérica → REJECT, força Redator a refazer
 
 ## Definition of Done
 
-- [ ] Sub-tarefas A, B, C, D todas marcadas
-- [ ] Os 10 ACs verificados
-- [ ] **Smoke test E2E:** rodar pelo menos 2 posts (1 com framework, 1 com história) e validar CTAs no output
-- [ ] **Smoke test do gate:** propositalmente passar 1 post com CTA genérico e validar REJECT
-- [ ] Commit message inclui referência a §3.1, §6.1, §6.4, §6.5, §6.9, §7.1, §7.5 onde aplicável
-- [ ] Branch local `feature/refac-003-texto-v2`, mergeada localmente, push fica com `/devops`
+- [x] Sub-tarefas A, B, C, D todas marcadas
+- [x] Os 10 ACs verificados (mapeamento em `.ai/decision-log-REFAC-003.md`)
+- [x] **Smoke test E2E:** rodar pelo menos 2 posts (1 com framework, 1 com história) e validar CTAs no output (Tests 1 e 2 no decision log)
+- [x] **Smoke test do gate:** propositalmente passar 1 post com CTA genérico e validar REJECT (Test 3 no decision log)
+- [x] **Smoke test não-regressão Lead Magnet (REFAC-002):** Veto 8 do `redator.md` preservado intacto (Test 4 no decision log)
+- [x] Commit messages incluem refs §3.1, §5.4, §6.1, §6.2, §6.4, §6.5, §6.9, §6.10, §7.1, §7.5
+- [x] Branch local `feature/refac-003-texto-v2` com 4 commits atômicos por sub-task; push fica com `/devops`
+
+---
+
+## File List
+
+**Squad pesquisa-conteudo-linkedin (modificados):**
+- `aiox-squads/squads/pesquisa-conteudo-linkedin/agents/redator.md` — A.1 + C.2
+- `aiox-squads/squads/pesquisa-conteudo-linkedin/data/post-structure-linkedin.md` — A.2
+- `aiox-squads/squads/pesquisa-conteudo-linkedin/tasks/07-estruturacao-post.md` — A.3
+- `aiox-squads/squads/pesquisa-conteudo-linkedin/checklists/review-checklist.md` — B.1
+- `aiox-squads/squads/pesquisa-conteudo-linkedin/data/linkedin-strategy.md` — C.1
+- `aiox-squads/squads/pesquisa-conteudo-linkedin/data/hook-structures.md` — C.3
+
+**Squad seed-pautas-centrais (modificado):**
+- `aiox-squads/squads/seed-pautas-centrais/agents/estrategista.md` — D.1
+
+**Documentação (criados):**
+- `.ai/decision-log-REFAC-003.md` — log YOLO + 4 smoke tests + mapeamento AC
+
+**Documentação (modificado):**
+- `aiox-project/docs/stories/REFAC-003-squads-texto-v2.md` — status, checkboxes, File List, Change Log
+
+---
+
+## Completion Notes
+
+- **Hooks: nenhuma das 9 cortada** (D1 no decision log). "It's not just X, it's Y" não está representada nas 9 estruturas. Nota anti-LLM adicionada no topo do `hook-structures.md`; cuidado do hook #7 ("E se") ampliado para cobrir o padrão LLM em inglês.
+- **Princípio 9 do Redator** atualizado de "Sem hashtags" para "Hashtags 0-3 máximo (§6.5)" — alinhado ao algoritmo, sem mudar a prática editorial do squad (Thiago não usa hashtags por escolha; agora pode usar 1-3 quando fizer sentido como pista de tópico).
+- **Coexistência REFAC-002:** Veto 8 (anti-bait quando `is_lead_magnet=true`) preservado integralmente. Sistema Decisório de CTA inclui sub-bloco "Coexistência com regra Lead Magnet (REFAC-002)" com referência cruzada explícita.
 
 ---
 
@@ -170,3 +200,4 @@ Se a justificativa do "salva" for genérica → REJECT, força Redator a refazer
 |------|--------|------|
 | 2026-05-08 | @sm (River) | Story criada (Draft) — sem dependência declarada |
 | 2026-05-08 | @po (Pax) | Validação 10-point: 8/10 conditional. **GO** após adicionar dependência formal a REFAC-002 (conflito de arquivos). Status: Draft → Ready. Adicionada seção Out of Scope. |
+| 2026-05-09 | @dev (Dex) | Implementação YOLO em 4 commits atômicos (A/B/C/D). Decision log criado em `.ai/decision-log-REFAC-003.md` com 4 decisões autônomas + 4 smoke tests (E2E framework, E2E história, gate REJECT, não-regressão Lead Magnet). Status: Ready → Ready for Review. |

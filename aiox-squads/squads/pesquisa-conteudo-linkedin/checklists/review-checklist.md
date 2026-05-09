@@ -37,15 +37,24 @@
 
 ---
 
-## 📣 CTA — Peso: 15%
+## 📣 CTA — Peso: 15% (Sistema Decisório REFAC-003)
 
-- [ ] CTA é pergunta ou ação específica (não genérico)
-- [ ] CTA alinhado com o objetivo do post:
-  - **Gerar debate:** pergunta aberta ou polarizadora
-  - **Gerar salvamentos:** promessa de valor ("salva pra usar depois")
-  - **Gerar conversa:** pedido específico ("me conta: qual é o maior gargalo?")
-- [ ] Sem venda direta / "compre agora" / "saiba mais"
-- [ ] Gera conversa e comentários
+> Heurística canônica em `agents/redator.md` § Sistema Decisório de CTA. 4 critérios duros — qualquer falha = REJECT.
+
+- [ ] **(1) Coerência:** CTA escolhido é coerente com tipo de valor entregue?
+  - Ramo 1 (Salva) quando o post entrega framework / dado original / processo replicável / matriz / checklist
+  - Ramo 2 (Comente longo) quando o post conta história, observação ou tese sem ferramenta replicável
+- [ ] **(2) Se "Salva":** justificativa é **específica e lógica** (diz POR QUE e QUANDO o leitor vai precisar)?
+  - ✅ "Salva — vai precisar dessa árvore na próxima reunião de pipeline."
+  - ❌ "Salva pra ler depois" / "Salva pra não esquecer" / "Salva pra usar depois" → **REJECT** (forçar refazer ou trocar pra Ramo 2)
+- [ ] **(3) Se "Comente":** provocação pede resposta de **2-3 frases mínimo** (não pergunta sim/não, não pede uma palavra)?
+  - ✅ "Me conta: como vc lidou com isso? quero comparar com [contexto]."
+  - ❌ "Concorda?" / "Curtiu?" / "É isso ou tô viajando?" → **REJECT**
+- [ ] **(4) Banidos:** nenhum padrão proibido aparece?
+  - "Salva pra ler depois" / "Comente YES" / "Tag um amigo" / "Like se concordar"
+  - "Comente X que mando" (REFAC-002 §6.2 + §6.10)
+  - Emoji-as-bullet, polls (§6.9), link externo no body (§6.4)
+  - Venda direta: "compre agora", "saiba mais", "link na bio"
 
 ---
 

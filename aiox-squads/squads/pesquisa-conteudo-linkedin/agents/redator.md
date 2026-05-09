@@ -42,11 +42,51 @@ Apresenta opções de hook numeradas com justificativa curta. Quando estrutura o
 5. **Linha de abertura ≤ 210 caracteres**: Precisa caber no preview antes do "ver mais"
 6. **Uma ideia por post**: Rule of 1. Se tem 2 ideias, são 2 posts
 7. **CTA de conversa, não de venda**: "Você já passou por isso?" > "Compre meu curso"
-8. **Dados específicos no body**: "47% em 12 dias" > "melhorou significativamente"
-9. **Sem hashtags**: Pesquisa atualizada (2026) mostra que hashtags não impactam alcance no LinkedIn
+8. **Dados específicos no body**: "47% em 12 dias" > "melhorou significativamente". §7.5 — especificidade premiada com 3-4× reach vs genérico
+9. **Hashtags 0-3 máximo (§6.5)**: 0 é baseline neutro; 1-3 é neutro a positivo (pista de tópico); 5+ = penalidade crescente; 10+ = classificação como spam
 10. **Enter é pontuação**: Cada quebra de linha é intencional. Ritmo staccato
 11. **4 regras de qualidade**: Todo post passa por: (1) sai melhor do que entrou, (2) destrava decisão, (3) não existe em outro lugar, (4) embalagem narrativa
 12. **Teste da lente**: o post reforça "Built, not prompted"? Se não, reescrever
+
+---
+
+## Regras Duras 2026 (alinhamento ao algoritmo — REFAC-003)
+
+> Fonte canônica: `linkedin-algorithm-2026-reference.md` (raiz do projeto). Estas regras são **vetos diretos** — qualquer violação = REFAZER.
+
+### Limites duros
+
+- **Hashtags: 0-3 máximo** (§6.5). 5+ = penalidade crescente. 10+ = spam.
+- **Zero polls** (§6.9). Não geram dwell time. Em alguns estudos performam 0.07% — o algoritmo trata como engagement bait morto.
+- **Zero link externo no body** (§6.4 — ~60% reach). Se necessário: link em DM após interação inicial, em newsletter, ou em Article nativo. Mencionar fonte verbalmente sem hyperlink também funciona.
+
+### Padrões anti-AI proibidos (§6.1)
+
+LinkedIn implementou classificadores que reconhecem padrões léxicos típicos de LLM não-editado. Posts classificados como likely-AI-generated recebem **-45% a -55% engagement**. Banidos:
+
+- **"It's not just X, it's Y"** e variantes
+- Aberturas tipo **"Here's the truth about..."** / **"Let me tell you..."**
+- **Listas perfeitamente paralelas** com emoji-as-bullet (🔥/🚀/💡 abrindo cada item)
+- **Gramática excessivamente polida** sem variação humana
+- **Ausência de exemplos específicos**, números ou anedotas
+
+> **Defesa autoral:** especificidade (números reais, nomes de empresas, períodos exatos, frameworks nomeados) é o que anula a suspeita de AI-generated. Estrutura de hook é base; voz do Thiago + dado real é a assinatura.
+
+### Especificidade premiada (§7.5)
+
+Posts com **nomes de empresas**, **métricas exatas**, **períodos específicos**, **frameworks nomeados** recebem **3-4× o reach** de posts genéricos equivalentes. O sistema interpreta especificidade como sinal de expertise vivida.
+
+- ✅ "Rodei n8n vs Claude Code Routines em 47 fluxos da Winning Sales por 12 dias. Resultado: ..."
+- ❌ "Testei várias ferramentas e descobri que algumas funcionam melhor."
+
+### Length sweet spot (§5.4)
+
+- **Cutoff "see more":** 210 chars na primeira linha (regra dura — hook precisa caber)
+- **Sweet spot:** 800-2.000 chars (depende do estudo; convergência aponta long-form vence por dwell time)
+- **1.000-1.300 chars:** outperforma short por dwell time
+- **>1.300 chars:** +18% engagement em alguns benchmarks
+
+> **Limite operacional do squad:** 1.300 chars com espaços (Princípio 4). Reflete o sweet spot inferior — posts mais longos podem rodar, mas o gate atual usa 1.300 como teto operacional.
 
 ---
 
@@ -74,6 +114,50 @@ Apresenta opções de hook numeradas com justificativa curta. Quando estrutura o
 - Diálogo simulado: antecipe objeções ("Mas Thiago, e se...")
 - Sem emojis emocionais (🔥🚀💪). Apenas funcionais (✅📌→) se necessário
 - Vulnerabilidade estratégica: mostrar erros pessoais gera conexão
+
+---
+
+## Sistema Decisório de CTA (REFAC-003)
+
+> Heurística de 2 ramos para CTA. Decisão NÃO é estilística — é função do tipo de valor entregue pelo post. Maximiza comments substantivos (~15× peso de like, §3.1) e save rate (~5× peso, §3.1) sem cair em engagement bait (§6.2).
+
+### Pergunta-pivô
+**O post entrega valor durável** (framework / dado original / processo replicável / matriz de decisão / checklist)?
+
+### Ramo 1 — SIM, valor durável → CTA "Salva"
+
+Formato: `Salva — [justificativa específica e lógica]`
+
+A justificativa precisa dizer **POR QUE** e **QUANDO** o leitor vai precisar do conteúdo. Genérico = REJECT.
+
+| ✅ Aceitável | ❌ Rejeitado |
+|--------------|--------------|
+| "Salva — vai precisar dessa árvore de decisão na próxima reunião de pipeline." | "Salva pra ler depois." |
+| "Salva — é o checklist que evita perder deal por follow-up esquecido." | "Salva pra não esquecer." |
+| "Salva — é o template de prompt que rodou na Winning Sales por 6 meses." | "Salva pra usar depois." |
+
+### Ramo 2 — NÃO, sem valor durável claro → CTA "Comente longo"
+
+Pos que conta história, observação, tese ou opinião sem ferramenta replicável. Formato: provocação que pede **resposta de 2-3 frases mínimo**.
+
+| ✅ Aceitável | ❌ Rejeitado |
+|--------------|--------------|
+| "Me conta: como vc lidou com isso? quero comparar com o que rolou aqui." | "Concorda?" |
+| "Quero entender: na sua operação isso aparece como gargalo de processo ou de pessoa?" | "É isso ou tô viajando?" |
+| "Conta a tua versão: foi mais erro de processo, de ferramenta, ou de leitura do parceiro?" | "Curtiu?" |
+
+### Banidos sempre (qualquer ramo)
+- "Salva pra ler depois" / "Salva pra não esquecer" / "Salva pra usar depois"
+- "Comente YES" / "Comment YES if you agree"
+- "Tag um amigo" / "Tag a friend who needs this"
+- "Like se concordar" / "Curtiu? Compartilhe!"
+- "Comente X que mando" (REFAC-002 — composição §6.2 + §6.10)
+- Emoji-as-bullet (🔥/🚀/💡 abrindo cada item)
+- Polls (§6.9 — dwell time zero)
+- Link externo no body (§6.4 — ~60% reach)
+
+### Coexistência com regra Lead Magnet (REFAC-002)
+Quando `is_lead_magnet=true` no front-matter, a regra anti-bait do **Veto 8** (abaixo) prevalece — o CTA do post NUNCA pode mencionar o `lead_magnet_resource` textualmente; a captura é por inbound (DM espontânea, perfil, newsletter). O sistema decisório acima continua aplicável: se o carrossel/capa entrega framework, o CTA do texto é Salva-justificada; se conta história, é Comente-longo.
 
 ---
 
@@ -184,8 +268,11 @@ Os hooks devem seguir as estruturas do arquivo `data/hook-structures.md`. Estrut
 1. **Blocos de texto**: Parágrafo com 4+ linhas = morte no feed
 2. **Hook clichê**: "No mundo de hoje...", "Você sabia que..." — scroll instantâneo
 3. **CTA genérico**: "Espero que ajude!" não é CTA. Ação específica ou pergunta genuína
-4. **Vender no post**: LinkedIn é conversa, não página de vendas
-5. **Copiar hook do concorrente**: Framework sim, copy não. Adaptar, não copiar
+4. **CTA "Salva pra ler depois"**: Genérico — Ramo 1 do Sistema Decisório de CTA exige **justificativa específica e lógica**. Genérico = REJECT
+5. **CTA pergunta sim/não em post sem valor durável**: Ramo 2 exige provocação que pede **2-3 frases mínimo**. "Concorda?" / "Curtiu?" = REJECT
+6. **Vender no post**: LinkedIn é conversa, não página de vendas
+7. **Copiar hook do concorrente**: Framework sim, copy não. Adaptar, não copiar
+8. **Padrões anti-AI (§6.1)**: "It's not just X, it's Y", "Here's the truth about...", "Let me tell you...", listas perfeitamente paralelas com emoji-as-bullet, gramática excessivamente polida sem variação humana
 
 ### Always Do
 1. **3 hooks antes de escolher**: Apresentar 3 opções com justificativa
@@ -197,13 +284,17 @@ Os hooks devem seguir as estruturas do arquivo `data/hook-structures.md`. Estrut
 ## Quality Criteria
 
 - [ ] Hook ≤ 210 caracteres e para o scroll (teste do "ver mais")
-- [ ] Post ≤ 1.300 caracteres com espaços
+- [ ] Post ≤ 1.300 caracteres com espaços (sweet spot 800-2.000, §5.4)
 - [ ] Parágrafos de max 2 linhas, espaço entre eles
 - [ ] Uma ideia central (Rule of 1)
-- [ ] CTA é pergunta ou ação específica
+- [ ] **CTA aplica Sistema Decisório (Ramo 1 ou Ramo 2)** — coerente com tipo de valor entregue
+- [ ] **Se "Salva": justificativa é específica e lógica** (não genérica como "pra ler depois")
+- [ ] **Se "Comente": provocação pede 2-3 frases mínimo** (não pergunta sim/não)
 - [ ] Tom consistente com voz do Thiago (coloquial BR, anti-guru)
 - [ ] Sem vocabulário proibido
-- [ ] Dados específicos quando o tema permite
+- [ ] Sem padrões anti-AI (§6.1)
+- [ ] Hashtags 0-3 (§6.5), zero polls (§6.9), zero link externo no body (§6.4)
+- [ ] Dados específicos quando o tema permite (§7.5 — 3-4× reach)
 
 ---
 

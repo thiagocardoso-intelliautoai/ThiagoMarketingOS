@@ -103,6 +103,49 @@ Cada post precisa passar nas 4:
 
 ---
 
+## Algoritmo 2026 — o que premia e suprime (REFAC-003)
+
+> Resumo operacional para o squad. **Direção de movimento**, não números absolutos — o doc-fonte alerta contra tratar números como leis.
+> Fonte canônica: `linkedin-algorithm-2026-reference.md` (raiz do projeto).
+
+### Sinais que pesam (§3.1)
+
+- **Dwell time 61+s** (vs 1.2% engagement em 0-3s) → maior amplificador
+- **Comment substantivo 25+ palavras** → ~15× peso de like
+- **Save** → ~5× peso de like, ~2× comment
+- **Share com texto** → topo da hierarquia
+- **Profile-content alignment** → gate de Fase 1 + amplificador Fase 3
+
+### O que o sistema suprime (§6)
+
+- **AI-content sem edição** (-45 a -55% engagement) — §6.1 (padrões léxicos típicos de LLM)
+- **Engagement bait** detectado por NLP — §6.2 ("Comment YES", "Tag a friend", "Save for later" como CTA isolado)
+- **External link no body** (~60% reach) — §6.4
+- **Hashtag stuffing 5+** (10+ = spam) — §6.5
+- **Edição pesada nos primeiros 60-90 min** (interrompe golden hour) — §6.6
+- **Polls** (dwell time zero, 0.07% engagement em alguns estudos) — §6.9
+- **Lead magnets como composição** (bait + link + bounce) — §6.10 — não atômico, é a *composição* que penaliza
+
+### O que o sistema recompensa (§7)
+
+- **Topical consistency** — 2-4 pilares, 80% dentro, 90 dias mínimo — §7.1
+- **Saves e shares como métricas norte** — 8%+ save rate = ciclos virais; 4-6% = top-tier — §7.2
+- **Comments substantivos e threaded conversations** — replies entre comentadores > replies só com autor — §7.3
+- **Profile-content alignment** — input em toda decisão de ranking — §7.4
+- **Específicos e dados originais** — nomes de empresas, métricas exatas, períodos, frameworks nomeados → 3-4× reach vs genérico equivalente — §7.5
+- **Posting cadence consistente** — 3-5 posts/semana reconhecida — §7.7
+
+### Implicação operacional para o squad
+
+- **CTA:** prefere Salva-justificada (Ramo 1) e Comente-longo (Ramo 2) — vide `agents/redator.md` § Sistema Decisório de CTA. CTA genérico ("Salva pra ler depois") é REJECT no gate.
+- **Hashtags:** 0-3 máximo (§6.5). Padrão histórico de "sem hashtags" continua aceitável — 0 é baseline neutro.
+- **Polls:** zero. Não geram dwell time, classificáveis como engagement bait.
+- **Link externo:** zero no body. Se necessário, link em DM após interação inicial, em newsletter, ou em Article nativo.
+- **Hook:** especificidade (números, nomes, períodos, frameworks nomeados) é a defesa contra suspeita de AI-generated (§6.1). Estrutura de `data/hook-structures.md` é base; voz autoral do Thiago + dado real anula penalidade.
+- **Length:** sweet spot 800-2.000 chars; cutoff "see more" em 210 chars. Long-form (1.000-1.300 chars) outperforma short por dwell time (§5.4).
+
+---
+
 ## Regras Editoriais
 
 1. **Nunca publicar sem revisão** (step-07 do pipeline com checklist integrado)
