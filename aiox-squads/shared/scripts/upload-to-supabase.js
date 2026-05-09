@@ -166,6 +166,105 @@ async function uploadCover(slug, pngPath, style, postId) {
   return { imageUrl, storagePath };
 }
 
+// ── uploadCoverMultiImage ─────────────────────────────────────
+
+/**
+ * REFAC-005A-INFRA: Faz upload de N imagens de capa (formato multi-image do LinkedIn)
+ * para o Storage e insere/atualiza N rows na tabela `covers` com `sequence` 1..N.
+ *
+ * Single-image (1 imagem) continua funcionando via uploadCover() — esta função é
+ * para o caso multi-image (3-9 imagens em sequência).
+ *
+ * Estratégia de "atomicidade":
+ *  - Apaga rows existentes em `covers` para o post_id antes de inserir as novas
+ *    (similar ao que uploadCarousel faz com carousel_slides), evitando estado misto.
+ *  - Storage: upsert por path determinístico (covers/{slug}/cover-NN.png) — re-uploads
+ *    sobrescrevem o mesmo arquivo, sem leftover de imagens antigas.
+ *  - Se uma imagem falhar no meio, lança erro com info de qual sequence falhou
+ *    (o caller decide se faz cleanup manual; rows já apagadas + storage upsert tornam
+ *    re-execução determinística).
+ *
+ * @param {string}   slug    - Slug do post
+ * @param {Array}    images  - Array ordenado de { path: string, caption?: string }
+ *                             (sequence é derivado do índice + 1)
+ * @param {string}   style   - Estilo visual (ex: "Pessoa+Texto Multi-Image")
+ * @param {string}   postId  - UUID do post pai
+ * @returns {Object} { count, urls: [{ sequence, imageUrl, storagePath }] }
+ */
+async function uploadCoverMultiImage(slug, images, style, postId) {
+  if (!Array.isArray(images) || images.length === 0) {
+    throw new Error(`uploadCoverMultiImage ("${slug}"): array de imagens vazio`);
+  }
+
+  // 1. Apagar rows existentes em covers para este post (re-upload determinístico)
+  const { error: deleteErr } = await supabase
+    .from('covers')
+    .delete()
+    .eq('post_id', postId);
+
+  if (deleteErr) throw new Error(`uploadCoverMultiImage delete ("${slug}"): ${deleteErr.message}`);
+
+  // 2. Para cada imagem, fazer upload no Storage e construir row
+  const results = [];
+  const rows = [];
+
+  for (let i = 0; i < images.length; i++) {
+    const { path: imgPath, caption } = images[i];
+    const sequence = i + 1;
+    const fileName = `cover-${String(sequence).padStart(2, '0')}.png`;
+    const storagePath = `covers/${slug}/${fileName}`;
+
+    let fileBuffer;
+    try {
+      fileBuffer = fs.readFileSync(imgPath);
+    } catch (err) {
+      throw new Error(`uploadCoverMultiImage read seq=${sequence} ("${slug}"): ${err.message}`);
+    }
+
+    const { error: uploadErr } = await supabase.storage
+      .from(BUCKET)
+      .upload(storagePath, fileBuffer, {
+        contentType: 'image/png',
+        upsert: true,
+        cacheControl: '0'
+      });
+
+    if (uploadErr) {
+      throw new Error(`uploadCoverMultiImage upload seq=${sequence} ("${slug}"): ${uploadErr.message}`);
+    }
+
+    const { data: urlData } = supabase.storage
+      .from(BUCKET)
+      .getPublicUrl(storagePath);
+
+    const imageUrl = `${urlData.publicUrl}?v=${Date.now()}`;
+
+    rows.push({
+      post_id: postId,
+      slug,
+      style,
+      image_url: imageUrl,
+      image_path: storagePath,
+      file_size: fileBuffer.length,
+      sequence,
+      caption: caption || null,
+    });
+
+    results.push({ sequence, imageUrl, storagePath });
+  }
+
+  // 3. Inserir todas as rows de uma vez (atomic insert)
+  const { error: insertErr } = await supabase
+    .from('covers')
+    .insert(rows);
+
+  if (insertErr) {
+    throw new Error(`uploadCoverMultiImage insert ("${slug}"): ${insertErr.message}`);
+  }
+
+  return { count: results.length, urls: results };
+}
+
 // ── uploadCarousel ────────────────────────────────────────────
 
 /**
@@ -455,6 +554,7 @@ module.exports = {
   slugify,
   savePost,
   uploadCover,
+  uploadCoverMultiImage,
   uploadCarousel,
   savePauta,
   saveSubpauta,

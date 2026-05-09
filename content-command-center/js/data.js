@@ -87,8 +87,12 @@ export const DataStore = {
 
   // ─── Map DB row (snake_case) → JS object (camelCase) ───
   _mapPostFromDB(row) {
-    // Extract the first cover/carousel (one-to-one via UNIQUE constraint)
-    const cover = Array.isArray(row.covers) ? row.covers[0] : row.covers;
+    // REFAC-005A-INFRA: covers agora é array ordenado por sequence (multi-image).
+    // Single-image vira array de 1 elemento. derivations.cover preservado pra
+    // backward compat (aponta sempre pra sequence=1, ou seja, primeira imagem).
+    const coversArr = Array.isArray(row.covers) ? [...row.covers] : (row.covers ? [row.covers] : []);
+    coversArr.sort((a, b) => (a.sequence ?? 1) - (b.sequence ?? 1));
+    const cover = coversArr[0] || null;
     const carousel = Array.isArray(row.carousels) ? row.carousels[0] : row.carousels;
 
     return {
@@ -140,11 +144,21 @@ export const DataStore = {
       } : null,
       // Backward-compat derivations for render.js
       derivations: {
+        // REFAC-005A-INFRA: cover (single, primeira imagem) preservado para legacy callers
         cover: cover ? {
           slug: cover.slug,
           coverPath: cover.image_url,
           style: cover.style
         } : null,
+        // Multi-image: array completo ordenado por sequence ASC
+        // Single-image vira array de 1; coversList sempre é array (mesmo vazio se sem cover)
+        coversList: coversArr.map((c) => ({
+          slug: c.slug,
+          coverPath: c.image_url,
+          style: c.style,
+          sequence: c.sequence ?? 1,
+          caption: c.caption || null
+        })),
         carousel: carousel ? {
           style: carousel.visual_style,
           slidesCount: carousel.slide_count,

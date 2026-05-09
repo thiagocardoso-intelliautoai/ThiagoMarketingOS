@@ -292,7 +292,10 @@ window._thumbFallback = function(el) {
 function renderCardThumbnail(post) {
   const firstSlideUrl = post.derivations?.carousel?.slides?.[0]?.imageUrl || null;
   const slidesCount = post.derivations?.carousel?.slidesCount || 0;
-  const coverUrl = post.covers?.image_url || post.derivations?.cover?.coverPath || null;
+  // REFAC-005A-INFRA: thumbnail prioriza primeira imagem do multi-image (sequence=1)
+  const coversList = post.derivations?.coversList || [];
+  const coversCount = coversList.length;
+  const coverUrl = post.covers?.image_url || post.derivations?.cover?.coverPath || coversList[0]?.coverPath || null;
 
   // Sem imagem → sem thumbnail (card ocupa largura total)
   if (!firstSlideUrl && !coverUrl) return '';
@@ -307,6 +310,7 @@ function renderCardThumbnail(post) {
   return `
     <div class="post-card-thumb-wrap">
       <img src="${coverUrl}" alt="" class="post-card-thumb" loading="lazy" onerror="window._thumbFallback(this)" />
+      ${coversCount > 1 ? `<span class="thumb-slides-badge">${Icons.image} 1/${coversCount}</span>` : ''}
     </div>`;
 }
 

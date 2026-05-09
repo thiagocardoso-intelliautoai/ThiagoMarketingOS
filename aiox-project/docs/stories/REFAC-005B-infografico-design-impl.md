@@ -170,9 +170,25 @@ Igual REFAC-005A: doc de design entregue antes da impl, Thiago assina explicitam
 
 ---
 
+## Decisões Confirmadas (pré-execução)
+<!-- Preenchido por /run-wave em 2026-05-09 -->
+
+Decisões estratégicas do Thiago capturadas antes de soltar o squad-creator na fase 1. Squad-creator deve **respeitar** estas decisões e produzir o doc de design coerente com elas (não re-perguntar).
+
+- **Tipologia primária** → **Single-page denso** (1 imagem com muita info estruturada — matriz 2×2, processo passo a passo, mapa mental). Foco em dwell time §3.1: leitor para pra ler. **Importante:** Thiago **não quer achismo** sobre formato dentro da tipologia — squad-creator deve **pesquisar formatos de infográfico que comprovadamente retêm e geram engajamento** (referências reais, dados de Socialinsider/AuthoredUp/van der Blom, exemplos de perfis que performam) antes de propor o formato específico (matriz vs processo vs mapa mental vs outro). Pesquisa fica no doc de design como justificativa. Multi-data layout e híbrido ficam como variantes futuras (stories separadas se Thiago quiser).
+- **Paleta de cores** → **Herda dos estilos existentes** (Pessoa+Texto, Print de Autoridade). Coerência visual máxima entre estilos do squad. Brand-book Winning Sales descartado como paleta primária; expandir paleta com variações descartado.
+- **Tipografia** → **Mesma de Pessoa+Texto / Print de Autoridade**. Coerência 100% com squad existente. Squad-creator pode propor variantes de tamanho/peso (ex: headline maior pra dar peso a dados) mas a família tipográfica base é fixada.
+
+**Origem:** pre-flight 2026-05-09.
+
+**Implicação prática para o squad-creator:** o foco da pesquisa de fase 1 desloca de "qual paleta/tipografia usar" (já fixados) para "qual formato de single-page denso comprova que retém e engaja". Doc de design fica menor mas mais defensável.
+
+---
+
 ## Change Log
 
 | Data | Agente | Ação |
 |------|--------|------|
 | 2026-05-08 | @sm (River) | Story criada (Draft) |
 | 2026-05-08 | @po (Pax) | Validação 10-point: 10/10. **GO**. Status: Draft → Ready. **Atenção:** fase 2 só começa após Thiago assinar `design-infografico.md` (gate humano duro no AC #2). Adicionada seção Out of Scope. |
+| 2026-05-09 | @run-wave | Decisões pré-execução capturadas via `/run-wave 0 --preflight-only`: tipologia=single-page denso (com pesquisa obrigatória de formatos), paleta=herda existente, tipografia=mesma de Pessoa+Texto. |

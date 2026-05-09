@@ -21,6 +21,12 @@ desktop.ini
 *.log
 npm-debug.log*
 
+# AIOX runtime state (wave-status, handoffs, decision logs)
+.aiox/wave-status.json
+.aiox/handoffs/
+.aiox/logs/
+.ai/decision-log-*.md
+
 # Build output
 dist/
 build/

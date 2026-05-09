@@ -1,5 +1,17 @@
 # Story REFAC-005A — Multi-Image Autoral (Design + Implementação)
 
+> **⚠️ SUPERSEDED em 2026-05-09 por @sm (River) após análise estratégica do @analyst (Atlas).**
+>
+> **Motivo:** "Multi-Image" foi escopado como estilo novo, mas é apenas um formato (envelope de 1 → N imagens). Os estilos do squad são definidos por proposição estratégica + visual + fonte de asset, não por quantidade. A fonte das imagens (autoral / pesquisa / IA) é o eixo crítico do algoritmo (§6.7 — só "3+ imagens autorais" reverte penalidade) e ficou subdimensionada nesta story.
+>
+> **Substituída por duas stories independentes:**
+> - **[REFAC-005A-INFRA](REFAC-005A-INFRA-multi-image-infra.md)** — suporte técnico ao formato (schema, CLI, vitrine CCC). Sem decisão de estilo. Sem checkpoint humano.
+> - **[REFAC-005A-DESIGN](REFAC-005A-DESIGN-multi-image-variantes.md)** — design das variantes multi-image dos estilos existentes (Pessoa+Texto, Print de Autoridade, etc.) com proposição estratégica + fonte de fotos definida por variante. Com checkpoint humano duro.
+>
+> **Esta story permanece arquivada como referência histórica. NÃO executar.**
+
+---
+
 **🏷️ ID:** `REFAC-005A`
 **📐 Estimativa:** 4-6h design + 8-12h impl (total 12-18h, com gate humano duro entre os dois)
 **🔗 Depende de:** —
@@ -8,8 +20,8 @@
 - **Fase 1 (design):** Squad Creator + Thiago (checkpoint humano DURO)
 - **Fase 2 (impl):** Data Engineer (Dara) + Dev (Dex)
 - **Sub-fase UX:** UX Design Expert (Uma) opina sobre vitrine antes da impl
-**🏷️ Labels:** `refactor`, `feature`, `design`, `squad-creator`, `supabase`, `algoritmo-2026`, `checkpoint-humano`
-**📊 Status:** Ready (validada por @po — sem dependências; impl bloqueada por checkpoint humano duro na fase 1)
+**🏷️ Labels:** `refactor`, `feature`, `design`, `squad-creator`, `supabase`, `algoritmo-2026`, `checkpoint-humano`, `superseded`
+**📊 Status:** Superseded (substituída por REFAC-005A-INFRA + REFAC-005A-DESIGN em 2026-05-09)
 
 **📚 Brief:** [Plano da refatoração](../../../C:/Users/thiag/.claude/plans/aswring-you-modo-quirky-bear.md) — seção 3.9 + 5.2 + 5.8.2
 
@@ -199,3 +211,4 @@ São formatos diferentes. Multi-Image vive no squad de **capas**, não no de car
 |------|--------|------|
 | 2026-05-08 | @sm (River) | Story criada (Draft) |
 | 2026-05-08 | @po (Pax) | Validação 10-point: 10/10. **GO**. Status: Draft → Ready. **Atenção:** fase 2 só começa após Thiago assinar `design-multi-image.md` (gate humano duro no AC #2). Adicionada seção Out of Scope. |
+| 2026-05-09 | @sm (River) | **SUPERSEDED** após análise do @analyst (Atlas). Confusão entre formato (envelope) e estilo (proposição). Quebrada em REFAC-005A-INFRA (técnico, sem checkpoint) + REFAC-005A-DESIGN (variantes dos estilos existentes, com checkpoint). Status: Ready → Superseded. |

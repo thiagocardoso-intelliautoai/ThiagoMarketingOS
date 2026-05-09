@@ -161,39 +161,94 @@ export function renderLinkedInPreview(post) {
   }
 
   // Cover section — only if post has cover data
-  const hasCover = post.contentType === 'cover' || post.derivations?.cover;
+  // REFAC-005A-INFRA: suporte a multi-image (coversList array). Single-image
+  // continua funcionando via derivations.cover (mantido para backward compat).
+  const coversList = post.derivations?.coversList || [];
+  const isMultiImage = coversList.length > 1;
+  const hasCover = post.contentType === 'cover' || post.derivations?.cover || coversList.length > 0;
   const coverData = post.derivations?.cover || {};
+  const firstCoverUrl = post.covers?.image_url || coverData.coverPath || coversList[0]?.coverPath || null;
 
-  const coverSection = hasCover ? `
-    <div class="li-preview-cover">
+  let coverSection = '';
+  if (hasCover) {
+    const headerAndMeta = `
       <div class="li-cover-header">
         <span class="li-cover-icon">${LiIcons.image}</span>
-        <span class="li-cover-label">Capa LinkedIn</span>
+        <span class="li-cover-label">Capa LinkedIn${isMultiImage ? ` <span class="li-cover-multi-tag">${coversList.length}× multi-image</span>` : ''}</span>
       </div>
       <div class="li-cover-meta">
-        <span class="li-cover-badge">${esc(coverData.style || 'Rascunho no Papel')}</span>
-        <span class="li-cover-badge">${esc(coverData.slug || '—')}</span>
+        <span class="li-cover-badge">${esc(coverData.style || coversList[0]?.style || 'Rascunho no Papel')}</span>
+        <span class="li-cover-badge">${esc(coverData.slug || coversList[0]?.slug || '—')}</span>
       </div>
-      ${(post.covers?.image_url || coverData.coverPath) ? `
-        <div class="li-cover-image-wrapper">
-          <img src="${post.covers?.image_url || coverData.coverPath}" 
-               alt="Capa: ${esc(post.title)}" 
-               class="li-cover-image"
-               loading="lazy"
-               onerror="this.parentElement.innerHTML='<span class=\\'li-cover-error\\'>⚠️ Imagem indisponível</span>'" />
+    `;
+
+    if (isMultiImage) {
+      // Carousel horizontal com swipe + dots (decisão pré-execução de Thiago, REFAC-005A-INFRA)
+      // IDs com prefixo cover- para não colidir com o carousel do PDF (lá usa carousel-*).
+      coverSection = `
+        <div class="li-preview-cover">
+          ${headerAndMeta}
+          <div class="li-carousel-viewer li-cover-carousel" id="cover-carousel-viewer">
+            <div class="carousel-slide-container">
+              ${coversList.map((c, i) => `
+                <div class="carousel-slide ${i === 0 ? 'carousel-slide-active' : ''}" data-cover-slide="${i}">
+                  <img src="${c.coverPath}"
+                       alt="Capa ${c.sequence}: ${esc(post.title)}"
+                       class="carousel-slide-img"
+                       loading="${i === 0 ? 'eager' : 'lazy'}"
+                       onerror="this.parentElement.innerHTML='<span class=\\'li-cover-error\\'>⚠️ Imagem ${c.sequence} indisponível</span>'" />
+                </div>
+              `).join('')}
+            </div>
+            <button class="carousel-nav carousel-prev" id="cover-carousel-prev" aria-label="Imagem anterior">‹</button>
+            <button class="carousel-nav carousel-next" id="cover-carousel-next" aria-label="Próxima imagem">›</button>
+            <div class="carousel-bottom-bar">
+              <div class="carousel-indicators" id="cover-carousel-indicators">
+                ${coversList.map((_, i) => `
+                  <span class="carousel-dot ${i === 0 ? 'carousel-dot-active' : ''}" data-cover-dot="${i}"></span>
+                `).join('')}
+              </div>
+              <span class="carousel-counter" id="cover-carousel-counter">1/${coversList.length}</span>
+            </div>
+          </div>
         </div>
-      ` : ''}
-    </div>
-    ${(post.covers?.image_url || coverData.coverPath) ? `
-      <div class="li-media-actions">
-        <button class="li-media-download-btn" id="li-download-cover"
-          data-url="${post.covers?.image_url || coverData.coverPath}"
-          data-filename="capa-${esc((post.title || 'post').replace(/[^a-zA-Z0-9]/g, '-').slice(0, 40))}.png">
-          ${LiIcons.download} Baixar Capa (PNG)
-        </button>
-      </div>
-    ` : ''}
-  ` : '';
+        ${firstCoverUrl ? `
+          <div class="li-media-actions">
+            <button class="li-media-download-btn" id="li-download-cover"
+              data-url="${firstCoverUrl}"
+              data-filename="capa-${esc((post.title || 'post').replace(/[^a-zA-Z0-9]/g, '-').slice(0, 40))}-01.png">
+              ${LiIcons.download} Baixar Capa #1 (PNG)
+            </button>
+          </div>
+        ` : ''}
+      `;
+    } else {
+      // Single-image (legacy + default) — mantém renderização antiga
+      coverSection = `
+        <div class="li-preview-cover">
+          ${headerAndMeta}
+          ${firstCoverUrl ? `
+            <div class="li-cover-image-wrapper">
+              <img src="${firstCoverUrl}"
+                   alt="Capa: ${esc(post.title)}"
+                   class="li-cover-image"
+                   loading="lazy"
+                   onerror="this.parentElement.innerHTML='<span class=\\'li-cover-error\\'>⚠️ Imagem indisponível</span>'" />
+            </div>
+          ` : ''}
+        </div>
+        ${firstCoverUrl ? `
+          <div class="li-media-actions">
+            <button class="li-media-download-btn" id="li-download-cover"
+              data-url="${firstCoverUrl}"
+              data-filename="capa-${esc((post.title || 'post').replace(/[^a-zA-Z0-9]/g, '-').slice(0, 40))}.png">
+              ${LiIcons.download} Baixar Capa (PNG)
+            </button>
+          </div>
+        ` : ''}
+      `;
+    }
+  }
 
   return `
     <div class="li-preview" id="linkedin-preview-card">
@@ -307,6 +362,57 @@ export function attachLinkedInPreviewEvents() {
       if (e.key === 'ArrowLeft') { e.preventDefault(); goToSlide(current - 1); }
       if (e.key === 'ArrowRight') { e.preventDefault(); goToSlide(current + 1); }
     });
+  }
+
+  // ── REFAC-005A-INFRA: Multi-image cover carousel ──
+  const coverViewer = document.getElementById('cover-carousel-viewer');
+  if (coverViewer) {
+    const coverSlides = coverViewer.querySelectorAll('.carousel-slide');
+    const coverDots = coverViewer.querySelectorAll('.carousel-dot');
+    const coverCounter = document.getElementById('cover-carousel-counter');
+    const coverPrev = document.getElementById('cover-carousel-prev');
+    const coverNext = document.getElementById('cover-carousel-next');
+    const coverTotal = coverSlides.length;
+    let coverCurrent = 0;
+
+    function goToCoverSlide(n) {
+      if (n < 0) n = coverTotal - 1;
+      if (n >= coverTotal) n = 0;
+
+      coverSlides.forEach(s => s.classList.remove('carousel-slide-active'));
+      coverDots.forEach(d => d.classList.remove('carousel-dot-active'));
+
+      coverSlides[n]?.classList.add('carousel-slide-active');
+      coverDots[n]?.classList.add('carousel-dot-active');
+
+      if (coverCounter) coverCounter.textContent = `${n + 1}/${coverTotal}`;
+      coverCurrent = n;
+    }
+
+    coverPrev?.addEventListener('click', () => goToCoverSlide(coverCurrent - 1));
+    coverNext?.addEventListener('click', () => goToCoverSlide(coverCurrent + 1));
+    coverDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        goToCoverSlide(parseInt(dot.dataset.coverDot, 10));
+      });
+    });
+
+    // Swipe touch (mobile) — só horizontal
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const SWIPE_THRESHOLD = 50;
+
+    coverViewer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    coverViewer.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const dx = touchEndX - touchStartX;
+      if (Math.abs(dx) < SWIPE_THRESHOLD) return;
+      if (dx > 0) goToCoverSlide(coverCurrent - 1);
+      else goToCoverSlide(coverCurrent + 1);
+    }, { passive: true });
   }
 
   // ── SUPABASE-005: Inline download buttons ──

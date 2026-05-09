@@ -1,0 +1,110 @@
+storyId: REFAC-005A-INFRA
+title: Suporte Técnico ao Formato Multi-Image
+verdict: CONCERNS
+reviewedAt: 2026-05-09
+reviewedBy: '@run-wave (qa-gate)'
+wave: 0-antecipado
+
+summary: |
+  Implementação de código completa em modo yolo. Todos os artefatos esperados foram
+  criados/modificados e seguem os padrões existentes do squad de capas e CCC. A
+  verdict é CONCERNS (não PASS) porque dois ACs requerem ambiente Supabase rodando
+  para validação final — escopo do operador (Thiago), não do pipeline.
+
+quality_checks:
+  code_review:
+    status: pass
+    notes: |
+      - Migration idempotente com validação prévia + comments inline.
+      - uploadCoverMultiImage() é função NOVA (separada de uploadCover existente)
+        — preserva regressão zero do caminho single-image.
+      - CLI dual-mode (--file vs --slides-dir) com check mutuamente-exclusivo.
+      - data.js: minimal change; coversList[] adicionado, derivations.cover preservado.
+      - linkedin-preview: IDs com prefixo cover- evitam colisão com PDF carousel.
+      - CSS: classes novas não-conflitantes (.li-cover-multi-tag, .li-cover-carousel).
+      - Touch swipe nativo sem libs externas.
+
+  unit_tests:
+    status: concerns
+    notes: |
+      Story não exigia unit tests (escopo de smoke E2E manual).
+      Recomendação futura: testes pra detectMultiImages() (parsing de manifest)
+      e pra _mapPostFromDB() (sort por sequence). Não bloqueia esta story.
+
+  acceptance_criteria:
+    status: concerns
+    notes: |
+      8 ACs no total. Estado por AC:
+      - AC #1 (schema sequence + UNIQUE composto): ⚠️ código pronto, pendente
+        aplicação da migration no Supabase pelo Thiago.
+      - AC #2 (regressão zero single-image): ✅ default sequence=1, derivations.cover preservado.
+      - AC #3 (idempotência migration): ✅ DO blocks + IF EXISTS/NOT EXISTS, drop antes de re-add.
+      - AC #4 (CLI --file legacy): ✅ caminho único (uploadCover) preservado.
+      - AC #5 (CLI --slides-dir + manifest): ✅ implementado com fallback alfabético.
+      - AC #6 (vitrine carousel + dots): ⚠️ código pronto, pendente smoke visual pelo Thiago.
+      - AC #7 (partial failure handling): ✅ delete-then-insert + storage upsert.
+      - AC #8 (data.js sempre array): ✅ coversList[] sempre array (mesmo vazio).
+
+  regressions:
+    status: pass
+    notes: |
+      Caminhos existentes preservados:
+      - uploadCover() intacta para single-image legacy.
+      - derivations.cover ainda é single-object (primeira imagem) em data.js.
+      - linkedin-preview single-image render unchanged.
+      - render.js card thumbnail badge só aparece se coversCount > 1.
+
+  performance:
+    status: pass
+    notes: |
+      - Multi-image upload sequencial (3-9 imagens é aceitável; falha cedo se
+        algo der errado, em vez de orfanar Promise.all).
+      - Frontend: primeira imagem com loading=eager, demais lazy.
+      - DB: index novo (post_id, sequence) suporta query ordenada eficiente.
+
+  security:
+    status: pass
+    notes: |
+      - Sem SQL injection (Supabase JS client com bind params).
+      - Coverpath não é escapado em template literal do carousel, mas é URL
+        controlada pelo backend (não input do user) — OK.
+      - File ops: existência de paths validada antes de readFileSync.
+      - Manifest JSON: parse com try/catch, valida shape antes de usar.
+
+  documentation:
+    status: pass
+    notes: |
+      - Story file com File List, Smoke Test Manual (6 cenários), Dev Notes.
+      - Migration tem comments inline explicando cada step.
+      - JSDoc completo em uploadCoverMultiImage().
+      - CLI --help atualizado com ambos os modos.
+
+issues:
+  - severity: medium
+    category: requirements
+    description: |
+      Migration 004-covers-multi-image.sql não foi aplicada no Supabase (sem
+      acesso ao ambiente nesta sessão). AC #1 e #6 visual ficam não-validados.
+    recommendation: |
+      Thiago deve aplicar a migration via Supabase dashboard SQL editor ou
+      `supabase db push`, depois rodar os 6 cenários do smoke test (seção
+      "Smoke Test Manual" da story). Após smoke OK, story pode ir Done.
+    owner: thiago
+
+  - severity: low
+    category: tests
+    description: Sem cobertura unit testes para detectMultiImages() e _mapPostFromDB() multi-image.
+    recommendation: |
+      Adicionar em iteração futura (não bloqueia esta story). Sugestão:
+      tests/upload-cover-cli.test.js (manifest parsing) +
+      tests/data-cover-mapping.test.js (sort + coversList shape).
+    owner: backlog
+
+next_steps:
+  - Thiago aplica migration 004-covers-multi-image.sql no Supabase
+  - Thiago roda os 6 cenários do Smoke Test Manual
+  - Se OK → marcar Status: InReview → Done; senão → criar follow-up story
+  - Story habilita REFAC-005A-DESIGN fase 2 (que depende desta infra)
+
+unblocks:
+  - REFAC-005A-DESIGN (fase 2 — implementação das variantes)
