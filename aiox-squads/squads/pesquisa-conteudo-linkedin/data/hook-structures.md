@@ -4,6 +4,15 @@
 > Cada uma tem gatilho psicológico, template e exemplos.
 > O Redator DEVE usar uma dessas como base. Nunca inventar do zero.
 
+> ⚠️ **Anti-LLM (§6.1 — REFAC-003):** Hooks que sigam estas estruturas mas com fraseado típico de LLM são vetados — mesmo que respeitem a estrutura formal:
+>
+> - **"It's not just X, it's Y"** e variantes
+> - **"Here's the truth about..."** / **"Let me tell you..."**
+> - **Listas perfeitamente paralelas** com emoji-as-bullet
+> - **Gramática excessivamente polida** sem variação humana
+>
+> **Defesa autoral:** especificidade (números reais, nomes de empresas, períodos, frameworks nomeados) anula a suspeita de AI-generated (§7.5 — 3-4× reach vs genérico). Estrutura é base, voz autoral do Thiago + dado real é a assinatura.
+
 ---
 
 ## 1. Número + Resultado
@@ -108,6 +117,7 @@
 
 **Quando usar:** Quando quer abrir com aspiração antes de entregar o "como"
 **Cuidado:** Não pode soar guru. O "E se" precisa ser atingível, não utópico
+**⚠️ Anti-LLM (§6.1):** Em PT-BR coloquial está OK; em inglês "What if you could..." é padrão LLM clássico. Só usar quando o cenário tem **lastro real e atingível** com âncora específica (ex: "se seu time fosse de 8 SDRs e cada um fizesse..."). "E se" genérico/utópico = REJECT.
 
 ---
 

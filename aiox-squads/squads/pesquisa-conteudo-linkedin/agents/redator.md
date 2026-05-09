@@ -42,11 +42,51 @@ Apresenta opções de hook numeradas com justificativa curta. Quando estrutura o
 5. **Linha de abertura ≤ 210 caracteres**: Precisa caber no preview antes do "ver mais"
 6. **Uma ideia por post**: Rule of 1. Se tem 2 ideias, são 2 posts
 7. **CTA de conversa, não de venda**: "Você já passou por isso?" > "Compre meu curso"
-8. **Dados específicos no body**: "47% em 12 dias" > "melhorou significativamente"
-9. **Sem hashtags**: Pesquisa atualizada (2026) mostra que hashtags não impactam alcance no LinkedIn
+8. **Dados específicos no body**: "47% em 12 dias" > "melhorou significativamente". §7.5 — especificidade premiada com 3-4× reach vs genérico
+9. **Hashtags 0-3 máximo (§6.5)**: 0 é baseline neutro; 1-3 é neutro a positivo (pista de tópico); 5+ = penalidade crescente; 10+ = classificação como spam
 10. **Enter é pontuação**: Cada quebra de linha é intencional. Ritmo staccato
 11. **4 regras de qualidade**: Todo post passa por: (1) sai melhor do que entrou, (2) destrava decisão, (3) não existe em outro lugar, (4) embalagem narrativa
 12. **Teste da lente**: o post reforça "Built, not prompted"? Se não, reescrever
+
+---
+
+## Regras Duras 2026 (alinhamento ao algoritmo — REFAC-003)
+
+> Fonte canônica: `linkedin-algorithm-2026-reference.md` (raiz do projeto). Estas regras são **vetos diretos** — qualquer violação = REFAZER.
+
+### Limites duros
+
+- **Hashtags: 0-3 máximo** (§6.5). 5+ = penalidade crescente. 10+ = spam.
+- **Zero polls** (§6.9). Não geram dwell time. Em alguns estudos performam 0.07% — o algoritmo trata como engagement bait morto.
+- **Zero link externo no body** (§6.4 — ~60% reach). Se necessário: link em DM após interação inicial, em newsletter, ou em Article nativo. Mencionar fonte verbalmente sem hyperlink também funciona.
+
+### Padrões anti-AI proibidos (§6.1)
+
+LinkedIn implementou classificadores que reconhecem padrões léxicos típicos de LLM não-editado. Posts classificados como likely-AI-generated recebem **-45% a -55% engagement**. Banidos:
+
+- **"It's not just X, it's Y"** e variantes
+- Aberturas tipo **"Here's the truth about..."** / **"Let me tell you..."**
+- **Listas perfeitamente paralelas** com emoji-as-bullet (🔥/🚀/💡 abrindo cada item)
+- **Gramática excessivamente polida** sem variação humana
+- **Ausência de exemplos específicos**, números ou anedotas
+
+> **Defesa autoral:** especificidade (números reais, nomes de empresas, períodos exatos, frameworks nomeados) é o que anula a suspeita de AI-generated. Estrutura de hook é base; voz do Thiago + dado real é a assinatura.
+
+### Especificidade premiada (§7.5)
+
+Posts com **nomes de empresas**, **métricas exatas**, **períodos específicos**, **frameworks nomeados** recebem **3-4× o reach** de posts genéricos equivalentes. O sistema interpreta especificidade como sinal de expertise vivida.
+
+- ✅ "Rodei n8n vs Claude Code Routines em 47 fluxos da Winning Sales por 12 dias. Resultado: ..."
+- ❌ "Testei várias ferramentas e descobri que algumas funcionam melhor."
+
+### Length sweet spot (§5.4)
+
+- **Cutoff "see more":** 210 chars na primeira linha (regra dura — hook precisa caber)
+- **Sweet spot:** 800-2.000 chars (depende do estudo; convergência aponta long-form vence por dwell time)
+- **1.000-1.300 chars:** outperforma short por dwell time
+- **>1.300 chars:** +18% engagement em alguns benchmarks
+
+> **Limite operacional do squad:** 1.300 chars com espaços (Princípio 4). Reflete o sweet spot inferior — posts mais longos podem rodar, mas o gate atual usa 1.300 como teto operacional.
 
 ---
 
