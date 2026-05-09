@@ -36,6 +36,16 @@ agents:
 workflow:
   entry: workflows/workflow.yaml
 
+# Tasks compartilhadas (DRY entre squads visuais — REFAC-004 §5.4)
+tasks:
+  - id: obter-print-autoridade
+    file: ../../shared/tasks/obter-print-autoridade.md
+    description: >
+      Obtém print de autoridade (3 caminhos: upload manual / EXA + Playwright /
+      EXA curado). Retorna path/URL ou null. Usada pelo Twitter-style para
+      decidir entre layout `with-print` (slide 1 = print real) e `no-print`
+      (slide 1 = texto-tweet puro). Compartilhada com capas-linkedin.
+
 # Dados de referência
 data:
   - data/linkedin-strategy.md

@@ -39,13 +39,46 @@
 
 > Aplicar apenas se o estilo selecionado for Twitter-Style.
 
-- [ ] Fundo preto (#000000)
-- [ ] Foto de perfil circular + nome + @ visíveis no topo
-- [ ] Texto branco (#FFFFFF) com contraste mín. 4.5:1
-- [ ] Slide 1 inclui print de autoridade como hook visual
-- [ ] Font size mín. 34px para body, 58px para hero
+### Critérios comuns (ambos os layouts)
+- [ ] Fundo charcoal `#1A1A2E` (with-print) ou `#0F1419` (no-print)
+- [ ] Foto de perfil circular 80px + nome + @ visíveis no topo
+- [ ] Texto principal `#F1F5F9` com contraste mín. 4.5:1
+- [ ] Font size mín. 34px para body, 52-58px para hero/tweet
 - [ ] HTML self-contained (sem dependências externas exceto Google Fonts)
 - [ ] Viewport exato: 1080 x 1350
+
+### Gate condicional por layout (REFAC-004)
+
+**Se slide 1 = `with-print` (a task `obter-print-autoridade` retornou path/URL):**
+- [ ] Print real ocupa ~70% do slide em image-fill (não placeholder, não imagem genérica)
+- [ ] Hero text reduzido (~32px) por cima — não compete com o print
+- [ ] **Autenticidade da fonte validada:**
+  - [ ] URL pública e acessível (não conteúdo behind login wall)
+  - [ ] Atribuição correta presente (autor/@ ou veículo)
+  - [ ] Sem deepfake, sem citação fora de contexto, sem manipulação visual
+  - [ ] Domínio na white-list da task ou aprovado via upload manual
+- [ ] Total de slides do post = N (preservou a estrutura original)
+
+**Se slide 1 = `no-print` (a task retornou null):**
+- [ ] Slide 1 = texto-tweet puro (BG `#0F1419`, body 52-58px), sem placeholder de imagem
+- [ ] **Hook do ex-slide-2 promovido é forte o suficiente para abrir o post sozinho** (sem ancoragem visual do print)
+- [ ] Total de slides = N-1 (encolheu corretamente — o slide-1-com-print não foi gerado, e o conteúdo do slide 2 subiu para a posição 1)
+- [ ] Copy do slide promovido cabe na Rule of 1 (max 30 palavras) e mantém o sentido sem perda
+
+---
+
+## 2. Design — Editorial Clean (Peso: 30%)
+
+> Aplicar apenas se o estilo selecionado for Editorial Clean.
+> **Validação detalhada em `checklists/editorial-clean-checklist.md`** (specs de paleta, tipografia, variantes e gates anti-AI — REFAC-004 auditoria Uma).
+
+Resumo dos gates críticos (ver checklist específico para detalhes):
+- [ ] Paleta restrita aos 6 tokens declarados em `:root` — sem hex literal nos seletores
+- [ ] Cor `--muted` é `#71717A` (passa WCAG AA 4.6:1) — proibido `#94A3B8` ou `#888888`
+- [ ] Accent é Teal `#14B8A6` em **todo** slide — proibido azul `#2563EB`
+- [ ] Hero ≥44px (variantes definem o tamanho exato), body ≥36px
+- [ ] Pelo menos 2 slides usam variantes diferentes do base (anti-AI §6.1)
+- [ ] `border-radius: 0px` em todos os containers/buttons
 
 ---
 

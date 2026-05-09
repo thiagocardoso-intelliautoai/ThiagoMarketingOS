@@ -2,14 +2,34 @@
   Template Base: Twitter-Style — Carrosséis LinkedIn
   Squad: carrosseis-linkedin
   Viewport: 1080 x 1350 (4:5, otimizado para feed LinkedIn)
-  
+
+  ════════════════════════════════════════════════════════════════
+  REFAC-004 — TEMPLATE COM 2 LAYOUTS PARA SLIDE 1
+  ════════════════════════════════════════════════════════════════
+  Antes de renderizar Twitter-style, o Designer DEVE executar:
+    `../../shared/tasks/obter-print-autoridade.md`
+
+  A task retorna `path/URL` (print real aprovado) OU `null` (sem print).
+  Designer escolhe o layout de slide 1 com base nesse retorno:
+
+    • Retorno != null  →  LAYOUT `with-print`
+        Slide 1 = print real em image-fill (~70% do slide) com hero text
+        reduzido (32px) por cima. Total de slides do post = N (preserva).
+
+    • Retorno == null  →  LAYOUT `no-print`
+        Slide 1 = texto-tweet puro (header + corpo 52-58px, BG #0F1419).
+        O slide-1-com-print NÃO é gerado, e o conteúdo do slide 2 sobe
+        para a posição 1 (encolhimento). Total de slides = N-1.
+        Copywriter deve garantir que o "ex-slide 2" tenha hook forte
+        para abrir o post sozinho.
+
   INSTRUÇÕES PARA O DESIGNER (Denis Design):
-  1. Use este template como BASE — personalize para cada carrossel
-  2. Slide 1: inclua print de autoridade como hook visual
-  3. Slides seguintes: foco em texto/ensinamento (sem print)
-  4. Último slide: CTA claro
-  5. HTML self-contained (sem dependências externas exceto Google Fonts)
-  6. Renderizar via Playwright para PNG
+  1. Use este template como BASE — escolha o LAYOUT de slide 1 conforme
+     retorno da task `obter-print-autoridade`.
+  2. Slides 2..N-1: foco em texto/ensinamento (sem print) — bloco BODY.
+  3. Último slide: CTA claro (ou CTA-SLIDE quando is_lead_magnet=true).
+  4. HTML self-contained (sem dependências externas exceto Google Fonts).
+  5. Renderizar via `node scripts/render-slides.js output/slides/{slug}`.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -73,7 +93,7 @@
       color: #8B8B8B;
     }
 
-    /* ── Conteúdo ── */
+    /* ── Conteúdo (slides body) ── */
     .content {
       flex: 1;
       display: flex;
@@ -101,17 +121,52 @@
       font-weight: 700;
     }
 
-    /* ── Print de Autoridade (Slide 1) ── */
+    /* ── LAYOUT with-print: Print de Autoridade (~70% do slide) ── */
+    .slide-with-print .content {
+      gap: 28px;
+    }
+
+    .slide-with-print .hero-text {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
     .authority-print {
+      flex: 1;
       background: #27293D;
-      border-radius: 0px;
-      padding: 32px;
       border: 1px solid #3F3F5C;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
     .authority-print img {
       width: 100%;
+      max-height: 100%;
+      object-fit: contain;
       border-radius: 0px;
+    }
+
+    /* ── LAYOUT no-print: Texto-tweet puro ── */
+    .slide-no-print {
+      background: #0F1419;
+    }
+
+    .slide-no-print .content {
+      justify-content: flex-start;
+      padding-top: 40px;
+      gap: 40px;
+    }
+
+    .slide-no-print .tweet-body {
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #F1F5F9;
+      letter-spacing: -0.01em;
     }
 
     /* ── Footer ── */
@@ -131,29 +186,6 @@
       font-size: 22px;
       font-weight: 500;
       color: #64748B;
-    }
-
-    /* ── CTA (Último Slide) ── */
-    .cta-container {
-      text-align: center;
-    }
-
-    .cta-text {
-      font-size: 48px;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 40px;
-    }
-
-    .cta-button {
-      display: inline-block;
-      background: #14B8A6;
-      color: #1A1A2E;
-      font-size: 32px;
-      font-weight: 700;
-      padding: 20px 48px;
-      border-radius: 50px;
-      text-decoration: none;
     }
 
     /* ── CTA-SLIDE (REFAC-002 — só quando is_lead_magnet=true) ── */
@@ -184,10 +216,15 @@
   </style>
 </head>
 <body>
-  <!-- ═══════════════════════════════════════════
-       SLIDE 1: Hook + Print de Autoridade
-       ═══════════════════════════════════════════ -->
-  <div class="slide">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       LAYOUT: with-print
+       Renderizar SLIDE 1 a partir deste bloco quando a task
+       `obter-print-autoridade` retornar path/URL aprovado.
+       Designer: substituir [URL_DO_PRINT] e o hero text.
+       ═══════════════════════════════════════════════════════════════ -->
+  <!-- LAYOUT: with-print -->
+  <div class="slide slide-with-print">
     <div class="profile">
       <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
       <div class="profile-info">
@@ -198,13 +235,12 @@
 
     <div class="content">
       <h1 class="hero-text">
-        <!-- HOOK: max 210 chars -->
-        Seu texto de hook vai aqui.
-        <span class="highlight">Destaque</span> em amarelo.
+        <!-- Hero curto (1-2 linhas, ~32px) — o print é o protagonista visual -->
+        Hero text curto, complementa o print.
       </h1>
 
       <div class="authority-print">
-        <!-- Print de autoridade: screenshot de post/notícia -->
+        <!-- Print de autoridade aprovado pela task obter-print-autoridade -->
         <img src="[URL_DO_PRINT]" alt="Print de autoridade">
       </div>
     </div>
@@ -214,14 +250,81 @@
       <span class="swipe-hint">Deslize →</span>
     </div>
   </div>
+  <!-- /LAYOUT: with-print -->
 
-  <!-- ═══════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════════════════════
+       LAYOUT: no-print
+       Renderizar SLIDE 1 a partir deste bloco quando a task
+       `obter-print-autoridade` retornar null.
+       Estilo: texto-tweet puro, BG #0F1419 (mais escuro), tipografia grande.
+       Comportamento: o slide-1-com-print NÃO é gerado, e o conteúdo do
+       que seria slide 2 sobe para esta posição 1. Total de slides do
+       post passa de N para N-1.
+       Copywriter: garantir hook forte no ex-slide 2 (ele vira a abertura).
+       ═══════════════════════════════════════════════════════════════ -->
+  <!-- LAYOUT: no-print -->
+  <div class="slide slide-no-print">
+    <div class="profile">
+      <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <p class="tweet-body">
+        <!-- Conteúdo do que seria slide 2 — texto-tweet puro, hook forte -->
+        Texto-tweet aqui.
+        <span class="highlight">Hook</span> em destaque.
+      </p>
+    </div>
+
+    <div class="footer">
+      <span class="slide-number">1/[N-1]</span>
+      <span class="swipe-hint">Deslize →</span>
+    </div>
+  </div>
+  <!-- /LAYOUT: no-print -->
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       BODY: slides 2..N-1 (com-print) ou 2..N-2 (no-print)
+       Renderizar para cada slide intermediário do carrossel.
+       Designer: substituir o body-text por slide.
+       ═══════════════════════════════════════════════════════════════ -->
+  <!-- LAYOUT: body -->
+  <div class="slide">
+    <div class="profile">
+      <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <p class="body-text">
+        Body do slide — uma ideia, max 30 palavras.
+        <span class="highlight">Destaque</span> opcional.
+      </p>
+    </div>
+
+    <div class="footer">
+      <span class="slide-number">[K]/[TOTAL]</span>
+      <span class="swipe-hint">Deslize →</span>
+    </div>
+  </div>
+  <!-- /LAYOUT: body -->
+
+  <!-- ═══════════════════════════════════════════════════════════════
        CTA-SLIDE: render only when is_lead_magnet=true
-       Copywriter: gerar este slide como N+1 (final) quando is_lead_magnet=true.
+       Copywriter: gerar este slide como slide final (N ou N-1) quando
+       is_lead_magnet=true.
        Designer: se is_lead_magnet=false, REMOVER o bloco inteiro abaixo
                  (do comentário CTA-SLIDE até /CTA-SLIDE) antes do render.
        Interpolar {{ cta_arte }} com o valor literal do front-matter.
-       ═══════════════════════════════════════════ -->
+       ═══════════════════════════════════════════════════════════════ -->
+  <!-- CTA-SLIDE -->
   <div class="slide" data-cta-slide="true">
     <div class="profile">
       <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
@@ -237,7 +340,7 @@
     </div>
 
     <div class="footer">
-      <span class="slide-number">[N]/[N]</span>
+      <span class="slide-number">[FINAL]</span>
       <span class="swipe-hint"></span>
     </div>
   </div>

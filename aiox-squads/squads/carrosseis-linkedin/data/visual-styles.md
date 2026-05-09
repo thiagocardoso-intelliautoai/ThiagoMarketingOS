@@ -14,36 +14,82 @@
 ## Estilo 1: Twitter-Style
 
 ### Conceito
-Formato inspirado em tweets/posts do X (Twitter) — fundo charcoal, identidade minimalista, texto branco de alto impacto com print de autoridade como hook visual.
+Formato inspirado em tweets/posts do X (Twitter) — fundo charcoal, identidade minimalista, texto branco de alto impacto. **Fluxo print-first, fallback-text (REFAC-004):** o slide 1 tem 2 layouts possíveis dependendo da disponibilidade de um print autêntico.
 
 ### Quando Usar
 - **Fonte de tese:** Falha Documentada, Benchmark Real
 - **Tipo de conteúdo:** Trending topics, breaking news, lançamentos de ferramentas, opiniões rápidas
-- **Gatilho:** Quando existe um print/screenshot de autoridade que contextualiza o tema
+- **Gatilho:** Sempre que o conteúdo tem ancoragem em algo público (com print) **ou** o tom é tweet-like — opinião curta, direta, formato rede-social (sem print)
 
 ### Perde Quando
-- Não há print de autoridade disponível (sem print, perde o gatilho visual diferenciador)
-- A reação cabe em 1 frame sem perder força (vai melhor como capa Print de Autoridade)
-- O conteúdo é puramente didático/framework sem ancoragem em algo público (vai Editorial Clean ou Notebook Raw)
+- A reação cabe em 1 frame sem perder força (vai melhor como capa Print de Autoridade — squad de capas)
+- O conteúdo é puramente didático/framework, longo e estruturado (vai melhor Editorial Clean)
+- Tom é provocativo/cru com bastidor pessoal (vai melhor Notebook Raw)
 
-### Especificações — Slide 1 (Hook)
-- **Fundo:** `#1A1A2E` (Charcoal — `--bg-dark`)
-- **Perfil:** Foto circular (80px diâmetro) + Nome "Thiago C.Lima" + @ "othiago-clima" no topo
-- **Texto principal:** `#F1F5F9` (Chalk — `--text-primary-dark`), fonte Inter 700, 40-58px, alinhado à esquerda
-- **Print de autoridade:** Screenshot de um post/notícia de alguém com autoridade no assunto, posicionado na metade inferior do slide como prova social/hook visual
-- **Container do print:** `background: #27293D` (`--surface`), `border: 1px solid #3F3F5C` (`--border`), `padding: 24px`
-- **Layout:** Compacto, simulando um post de rede social
+### Fluxo Slide 1 — print-first, fallback-text
 
-### Especificações — Slides Seguintes (Conteúdo)
+Antes de renderizar, o Designer executa `../../shared/tasks/obter-print-autoridade.md`, que retorna **path/URL** ou **null**. O Designer escolhe o layout do template `twitter-style-base.html`:
+
+| Retorno | Layout | Slide 1 | Total de slides |
+|---------|--------|---------|------------------|
+| path/URL | **`with-print`** | Print real em image-fill (~70% do slide) + hero text **32px** por cima | N (preserva) |
+| null | **`no-print`** | Texto-tweet puro (BG `#0F1419`, body **52-58px**, sem imagem). O conteúdo do que seria slide 2 **sobe para a posição 1** | **N-1** (encolhe) |
+
+#### Exemplo — Layout `with-print`
+
+```
+┌──────────────────────────────────────────┐
+│  [foto80] Thiago C.Lima  @othiago-clima  │
+│                                           │
+│  Hero text curto (32px), complementa     │
+│  o print abaixo                          │
+│                                           │
+│  ┌────────────────────────────────────┐  │
+│  │                                    │  │
+│  │      [PRINT AUTÊNTICO ~70%]        │  │
+│  │                                    │  │
+│  └────────────────────────────────────┘  │
+│  1/N                          Deslize →  │
+└──────────────────────────────────────────┘
+BG: #1A1A2E  •  Container print: #27293D + border #3F3F5C
+```
+
+#### Exemplo — Layout `no-print`
+
+```
+┌──────────────────────────────────────────┐
+│  [foto80] Thiago C.Lima  @othiago-clima  │
+│                                           │
+│  Texto-tweet aqui.                       │
+│  Hook em destaque.                       │
+│  (corpo 52-58px, hook forte que abre     │
+│  o post sozinho — ex-slide-2 promovido)  │
+│                                           │
+│                                           │
+│  1/N-1                        Deslize →  │
+└──────────────────────────────────────────┘
+BG: #0F1419 (mais escuro que with-print, "modo tweet")
+```
+
+### Especificações Compartilhadas — Slides Seguintes (Body)
 - **Fundo:** `#1A1A2E` (Charcoal)
-- **Perfil:** Foto circular menor (48px) + nome no topo (consistência)
-- **Texto:** `#F1F5F9` (Chalk), 34-43px, foco total no conteúdo textual
+- **Perfil:** Foto 80px + nome + @ no topo (consistência)
+- **Texto:** `#F1F5F9` (Chalk), Inter 500, 34-38px, foco total no conteúdo textual
 - **Sem print** — o foco é no texto/ensinamento
-- **Último slide:** CTA claro (seguir, comentar, salvar)
-- **Assinatura rodapé:** "Thiago C.Lima" em Inter 500, 20px, cor `#64748B` (`--text-muted`)
+- **Último slide:** CTA claro OU CTA-SLIDE quando `is_lead_magnet=true`
+- **Highlight inline:** `#14B8A6` (Teal) ou `#F59E0B` (Amber)
 
-### Referência Visual
-O print na primeira imagem funciona como "gatilho de autoridade" — usar posts reais de referências do mercado (ex: CEO de empresa conhecida, lançamento de ferramenta, dado relevante) para contextualizar e agregar credibilidade ao tema.
+### Gate de Autenticidade (Layout with-print)
+Quando o slide 1 = print real, o Reviewer valida no checklist:
+- URL pública e acessível (não conteúdo behind-login privado)
+- Atribuição correta (autor/veículo nomeado)
+- Sem deepfake, sem citação fora de contexto, sem manipulação visual
+- Domínio na white-list da task `obter-print-autoridade` (ou aprovado por upload manual)
+
+### Gate de Hook Forte (Layout no-print)
+Quando o slide 1 = texto-tweet, o Reviewer valida que:
+- O ex-slide-2 promovido tem hook forte o suficiente para abrir o post sem o ancoramento visual do print
+- Conteúdo do post não foi perdido com o encolhimento N→N-1 (Copywriter ajusta hierarquia)
 
 ---
 
@@ -62,23 +108,69 @@ Formato premium/editorial — fundo claro, tipografia bold sans-serif, cor de de
 - O conteúdo é só dados numéricos comparativos (vai melhor como Data-Driven)
 - A peça não pede premium — é opinião rápida (vai melhor como Notebook Raw)
 
-### Especificações
-- **Fundo:** `#F4F4F5` (Cloud — `--bg-light`)
-- **Texto principal:** `#18181B` (Ink — `--text-primary-light`)
-- **Accent:** `#14B8A6` (Teal — `--accent-primary`)
-- **Tipografia:** Inter 800 para hero (56px), Inter 500 para body (36px)
-- **Layout:** Grid assimétrico, alinhado à esquerda, whitespace 40%+
-- **Perfil no topo:** Foto circular pequena (48px) + nome + @
-- **Barra lateral:** Linha vertical 5px na cor Teal (`--accent-primary`) para citações e dados-chave
-- **Separador:** Linha horizontal 80px × 4px em Teal no topo de slides de conteúdo
-- **Sem imagens decorativas** — 100% tipografia + dados
-- **Footer:** "Thiago C.Lima" em Inter 500, 20px, cor `#94A3B8` (`--text-secondary`), separado por borda top sutil
+### Especificações (pós-auditoria Uma — REFAC-004)
+
+> **Fonte das specs:** auditoria completa em `aiox-project/docs/auditoria-editorial-clean.md`. O template `editorial-clean-base.html` declara 6 tokens em `:root` — proibido hex literal fora deles.
+
+#### Paleta (6 tokens — únicos permitidos)
+| Token | Valor | Uso |
+|-------|-------|-----|
+| `--bg` | `#F4F4F5` (Cloud) | Fundo do slide |
+| `--ink` | `#18181B` | Hero, profile-name, citação |
+| `--ink-secondary` | `#3F3F46` | Body text, list-text (token único) |
+| `--muted` | `#71717A` | Profile-handle, footer-brand, swipe-hint, eyebrow (passa WCAG AA 4.6:1) |
+| `--accent` | `#14B8A6` (Teal) | Highlight, accent-bar, divider, list-marker, data-hero, quote-mark, CTA. **Único accent permitido — proibido azul.** |
+| `--divider` | `#E5E5E5` | Border-top do footer |
+
+#### Tipografia (mín. §5.2 + auditoria)
+- **Hero (base):** Inter 800, **64px**, line-height 1.12, letter-spacing -0.03em
+- **Body:** Inter 500, **38px**, line-height 1.45, color `--ink-secondary`
+- **Profile-name:** Inter 700, 24px, letter-spacing -0.02em
+- **Profile-handle:** Inter 400, 19px, color `--muted`
+- **Footer-brand:** Inter 600, 20px, uppercase, letter-spacing 0.05em, color `--muted`
+- **Font-family:** `'Inter', system-ui, -apple-system, sans-serif` (fallback gracioso)
+
+#### Estrutura
+- **Padding slide:** 72px top/bottom × 80px left/right (whitespace 40%+)
+- **Profile-photo:** 56px (presença editorial sem competir com hero)
+- **Gap content:** 32px (24px na variant `dense-text`)
+- **Accent-bar:** `border-left: 6px solid var(--accent)` + padding-left 28px + margin 12px 0
+- **Divider top:** 80×4px em `--accent` (sinal de slide com hierarquia)
+- **CTA-button:** `border-radius: 0px` (anti-AI rule — sem rounded)
+- **Sem imagens decorativas** — 100% tipografia
+
+### Variantes (REFAC-004 — auditoria Uma §3)
+
+O template `editorial-clean-base.html` documenta **5 blocos** marcados por comentário. Designer escolhe o bloco apropriado por slide:
+
+| Bloco | Quando usar | Ajustes principais |
+|-------|-------------|--------------------|
+| `<!-- LAYOUT: base -->` | Slide de hook ou slide com hierarquia padrão (hero + accent-bar opcional) | Hero 64px, body 38px, divider top |
+| `<!-- VARIANT: data-feature -->` | UM dado é o protagonista (ex: "47% em 12 dias") | Eyebrow 22px uppercase + data-hero 96px Teal + data-body 32px |
+| `<!-- VARIANT: quote -->` | Citação ou frase de autoridade | Aspas decorativas 120px Teal + corpo 44px italic 600 + atribuição 22px |
+| `<!-- VARIANT: dense-text -->` | Slide com >30 palavras (densidade controlada) | Hero 48px, body 36px, gap 24px, line-height-body 1.42 |
+| `<!-- VARIANT: closing -->` | Slide de fechamento minimalista (não-CTA) | Centralizado, divider auto-margin, hero 44px max-width 720px |
+| `<!-- CTA-SLIDE -->` | Apenas se `is_lead_magnet=true` (REFAC-002) | Eyebrow Teal "Próximo passo" + cta-slide-text 56px + accent-bar 6px Teal |
+
+#### Exemplo de uso por carrossel de 6 slides
+
+```
+Slide 1: LAYOUT base (hook + accent-bar com dado)
+Slide 2: LAYOUT base (hero + body texto)
+Slide 3: VARIANT data-feature (47% — protagonista)
+Slide 4: VARIANT quote (citação de cliente)
+Slide 5: LAYOUT base (resumo)
+Slide 6: VARIANT closing (sem lead magnet) OU CTA-SLIDE (com lead magnet)
+```
+
+**Anti-AI gate:** pelo menos **2 slides do carrossel devem usar variantes diferentes do base** — evita pattern uniforme que algoritmo §6.1 classifica como "AI polish".
 
 ### Strengths
-- Legibilidade máxima mobile
-- Maior save rate por ser conteúdo-referência
+- Legibilidade máxima mobile (body 38px + line-height 1.45 + contraste 9.1:1 em texto secundário)
+- Maior save rate (§5.2 — saves 1.8× em document posts; variant `data-feature` privilegia dado salvável)
 - Sério e premium sem ser corporativo
-- Template mais versátil dos 4
+- Template mais versátil dos 4 (5 variantes documentadas)
+- Conformidade WCAG AA em todos os elementos (correção das cores #94A3B8 e #888888 que falhavam 4.5:1)
 
 ---
 

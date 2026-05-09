@@ -1,0 +1,299 @@
+storyId: REFAC-004
+storyTitle: "Squads Visuais V2 — Twitter-style refeito + Editorial Clean auditado"
+gateDate: 2026-05-09
+reviewer: Quinn (QA Guardian)
+verdict: PASS_WITH_CONCERNS
+
+summary: |
+  Refactor de configuração de squads visuais (templates HTML + agentes em
+  Markdown + YAML + checklists + auditoria de design). Não introduz código
+  de aplicação executável — é trabalho de conteúdo/spec sobre o squad
+  carrosseis-linkedin (e move de task para shared/).
+
+  Trabalho entregue em 5 commits atômicos no branch
+  `feature/refac-004-visuais-v2` (b8cd285, 83fcf88, f5a30a5, 01358d6, 7456119),
+  cobrindo as 4 sub-tarefas A/B/C/D conforme story. Coordenação Dex+Uma
+  funcionou: Uma fez auditoria Editorial Clean com diff por linha, Dex
+  aplicou recomendações sem desvio.
+
+  Verdict CONCERNS por 3 issues low — nenhum bloqueante. Trabalho está
+  sólido e os 10 ACs estão atendidos no nível de artefato (smoke tests
+  E2E pendem do operador no CCC, conforme DoD).
+
+quality_checks:
+  - check: code_review
+    status: CONCERNS
+    severity: low
+    notes: |
+      Review independente (grep + diff dos 5 commits) confirmou:
+
+      • Twitter-style template tem 2 layouts marcados (`<!-- LAYOUT: with-print -->`
+        e `<!-- LAYOUT: no-print -->`) como blocos completos no body, mais o
+        `<!-- LAYOUT: body -->` reutilizável e o `<!-- CTA-SLIDE -->`. Classes
+        CSS `.slide-with-print` e `.slide-no-print` declaradas e aplicadas
+        nos divs corretos.
+
+      • Editorial Clean template tem 6 tokens em `:root`, 4 variantes como
+        blocos no body (data-feature, quote, dense-text, closing) + LAYOUT
+        base + CTA-SLIDE. Classes CSS `.variant-data`, `.variant-quote`,
+        `.variant-dense`, `.variant-closing` declaradas e aplicadas.
+
+      • Capas-linkedin: zero referência antiga a `tasks/obter-print-autoridade`
+        sem prefixo `../../shared/` (grep). Os 5 paths atualizados.
+
+      • Designer (carrosseis): 5 menções a with-print/no-print — protocolo
+        documentado.
+
+      • Copywriter (carrosseis): 7 menções a N-1/encolhimento/with-print/no-print
+        — regra de ajuste de slide-count documentada.
+
+      ⚠️ CONCERN encontrado: linha 207 do editorial-clean-base.html mantém
+      `color: #FFFFFF;` (texto do `.cta-button` sobre fundo Teal). É hex
+      literal fora de `:root`, violando o gate "nenhum hex literal fora
+      do :root" estabelecido pela auditoria Uma. Cor é justificável (branco
+      neutro sobre accent), mas o token rule está incompleto.
+
+      Recomendação minor: adicionar `--cta-text: #FFFFFF;` ao `:root` ou
+      documentar `#FFFFFF` como exceção explícita no checklist específico
+      (editorial-clean-checklist.md §2). Não bloqueia.
+
+  - check: unit_tests
+    status: WAIVED
+    notes: |
+      Story é refactor de markdown + YAML + HTML estático (templates). Não
+      há código JavaScript/TypeScript executável testável de forma unitária.
+      Validação real só acontece em smoke E2E rodando o squad com prompt
+      do CCC (ver `regressions` abaixo).
+
+  - check: acceptance_criteria
+    status: PASS
+    notes: |
+      10/10 ACs atendidos no nível de artefato:
+
+      AC #1 (capas continua funcionando após move) — verificado por grep:
+        zero refs antigas; 5 refs atualizadas para `../../shared/...`
+        (smoke E2E E2E real depende de rodar squad capa, ver regressions).
+
+      AC #2 (carrosseis chama task shared) — squad.yaml seção `tasks:`
+        adicionada com path correto; designer.md instrui chamar a task
+        antes de renderizar Twitter-style.
+
+      AC #3 (template Twitter com 2 layouts marcados) — confirmado:
+        `<!-- LAYOUT: with-print -->` (linha 226) e `<!-- LAYOUT: no-print -->`
+        (linha 265).
+
+      AC #4 (Twitter com print → slide 1 image-fill com hero por cima) —
+        bloco `with-print` tem `.authority-print` com `flex: 1` e `<img>`
+        com `max-height: 100%; object-fit: contain;`; hero reduzido para
+        32px conforme spec.
+
+      AC #5 (Twitter sem print → slide 1 texto-tweet, conteúdo do slide 2
+        sobe) — bloco `no-print` com BG #0F1419, body 56px, sem imagem.
+        Designer.md tabela explícita: "null → no-print, conteúdo do slide
+        2 sobe". Total slides muda de N para N-1 (documentado em copywriter).
+
+      AC #6 (auditoria Uma com diagnóstico + diff por linha + variantes +
+        lente algoritmo) — auditoria-editorial-clean.md tem §1 Diagnóstico,
+        §2.1 Tabela de mudanças cirúrgicas com 21 linhas referenciadas
+        (L29, L54-55, L66, L73, L75, L84, L88, L96, L99, L110, L112,
+        L122-123, L137, L144, L147, L160, L162, L170, L194, L207, L217),
+        §3 com 4 variantes (data-feature, quote, dense-text, closing),
+        §4 lente algoritmo (§3.1, §5.2, §3.4, §6.1).
+
+      AC #7 (Editorial pós-aplicação reflete recomendações) — diff aplicado
+        no template: tokens :root, hero 56→64, body 36→38, profile-photo
+        48→56, paleta unificada Teal, WCAG fixes #94A3B8→#71717A.
+        Smoke visual real depende de render PNG.
+
+      AC #8 (editorial-clean-checklist.md criado, específico) — arquivo
+        de 111 linhas com 7 seções (tipografia, cor, espaçamento,
+        hierarquia, variantes, anti-AI, algoritmo) + 7 veto conditions.
+
+      AC #9 (visual-styles.md §14 Twitter-Style com fluxo print-first +
+        exemplo de cada layout) — tabela de retorno + ASCII art de
+        with-print e no-print.
+
+      AC #10 (review-checklist gate Twitter — autenticidade vs hook forte)
+        — seção "Gate condicional por layout (REFAC-004)" com sub-checklist
+        para cada caso.
+
+  - check: regressions
+    status: CONCERNS
+    severity: low
+    notes: |
+      Mudanças em capas-linkedin foram só de path (move + 5 refs atualizadas).
+      Smoke A.4 da story foi cumprido por grep — confirma zero refs antigas
+      remanescentes.
+
+      RISCO RESIDUAL BAIXO: o smoke E2E real (rodar squad capa em modo Print
+      de Autoridade após o merge) NÃO foi executado. Se o resolver de paths
+      do squad runtime tiver bug com `../../shared/...`, capas-linkedin pode
+      quebrar.
+
+      Mitigação: o path é convencional (mesmo padrão de `../../data/` e
+      `../../scripts/` já usado no squad). Recomenda-se rodar 1 capa real
+      de Print de Autoridade após o merge para confirmar zero regressão
+      antes de uso amplo.
+
+      DoD da story tem 2 itens de smoke E2E pendentes:
+      • Twitter-style com print + sem print
+      • Editorial Clean cobrindo variantes
+      Esses não foram executados na sessão (dependem do Thiago no CCC) —
+      são o gate final antes de Done.
+
+  - check: performance
+    status: PASS
+    notes: |
+      Refactor não introduz código novo executável. Templates HTML têm
+      ligeiro aumento de complexidade (1 :root block + 4 variant CSS rules
+      no Editorial Clean; 2 layouts no Twitter), mas o footprint de render
+      via Playwright permanece o mesmo (1 slide por arquivo).
+
+      Hero 64px em vez de 56px (Editorial Clean) e body 38px em vez de 36px
+      são ajustes tipográficos — zero impacto em performance.
+
+  - check: security
+    status: PASS
+    notes: |
+      A task `obter-print-autoridade.md` (movida em sub-tarefa A) foi
+      auditada de segurança no gate VISUAL-003 (PASS_WITH_CONCERNS minor).
+      Move para shared/ não muda a postura de segurança — mesmo arquivo,
+      mesmo conteúdo.
+
+      Sub-tarefa B adiciona ao review-checklist gate de autenticidade
+      explícito quando slide 1 = print real:
+        • URL pública
+        • Atribuição correta
+        • Sem deepfake/manipulação
+        • Domínio na white-list
+      Isso é endurecimento de segurança vs estado anterior (que não tinha
+      esse gate).
+
+      Sem novos pontos de exposição introduzidos pela story.
+
+  - check: documentation
+    status: PASS
+    notes: |
+      Documentação completa em 4 níveis:
+
+      1. Auditoria formal: aiox-project/docs/auditoria-editorial-clean.md
+         (347 linhas, com diff por linha, variantes, lente algoritmo).
+
+      2. Visual-styles.md: §14 Twitter-Style reescrita com fluxo print-first
+         e ASCII art; §50 Editorial Clean reescrita com paleta de 6 tokens,
+         tabela de variantes e exemplo de carrossel de 6 slides.
+
+      3. Checklists:
+         • review-checklist.md atualizado (gate Twitter condicional + ref
+           ao Editorial específico)
+         • editorial-clean-checklist.md criado (7 seções, 7 vetos)
+
+      4. Story REFAC-004: File List + Change Log com 4 entradas detalhadas;
+         16 sub-tarefas marcadas; status InReview.
+
+      Todos os commits citam §3.1, §3.4, §5.2, §6.1 do
+      linkedin-algorithm-2026-reference.md onde aplicável (DoD ✓).
+
+issues:
+  - severity: low
+    category: code
+    description: |
+      Linha 207 do editorial-clean-base.html mantém `color: #FFFFFF;` no
+      `.cta-button`. É hex literal fora do `:root`, violando o gate
+      "nenhum hex literal fora do :root" estabelecido pela auditoria Uma
+      (auditoria §6 + checklist §2).
+    recommendation: |
+      Adicionar `--cta-text: #FFFFFF;` ao `:root` e usar `var(--cta-text)`
+      no seletor `.cta-button`. Alternativa aceitável: documentar #FFFFFF
+      como exceção explícita no editorial-clean-checklist.md §2 (texto
+      neutro sobre accent — não conta como cor de paleta semântica).
+      Não bloqueia merge; pode ser ajustado em commit separado de polish.
+
+  - severity: low
+    category: tests
+    description: |
+      Smoke E2E pendentes (DoD da story tem 2 itens não-marcados):
+      • Twitter-style: rodar 1 post com print (esperado total = N) + 1
+        sem print (esperado total = N-1, conteúdo do slide 2 promovido).
+      • Editorial Clean: rodar 1 carrossel cobrindo variantes data-feature,
+        quote, dense-text, closing — validar render visual coerente.
+    recommendation: |
+      Operador (Thiago) executa os 2 smoke tests via prompt do CCC após
+      merge. Se algum render falhar visualmente, abrir story de bugfix
+      cirúrgico. Nenhum smoke é blocker para o merge — são gates finais
+      antes de marcar Done.
+
+  - severity: low
+    category: tests
+    description: |
+      Smoke A.4 (capas-linkedin continua funcionando após o move) foi
+      cumprido por grep, não por execução real do squad capa.
+    recommendation: |
+      Rodar 1 capa real de Print de Autoridade (estilo 4) após o merge
+      para confirmar que o resolver de paths do squad runtime aceita
+      `../../shared/tasks/obter-print-autoridade.md`. O path segue
+      convenção já usada (`../../data/`, `../../scripts/`), então o risco
+      é baixo, mas a verificação é barata.
+
+recommendations:
+  - severity: low
+    description: "Tokenizar #FFFFFF como --cta-text no :root do editorial-clean-base.html (ou documentar como exceção)"
+    owner: dev
+    blocking: false
+
+  - severity: low
+    description: "Executar 2 smoke tests E2E do CCC (Twitter-style com/sem print + Editorial Clean com variantes)"
+    owner: operator
+    blocking: false
+
+  - severity: low
+    description: "Rodar 1 capa real estilo 4 após merge para confirmar resolver de paths shared/"
+    owner: operator
+    blocking: false
+
+evidence:
+  files_changed:
+    moved:
+      - "aiox-squads/squads/capas-linkedin/tasks/obter-print-autoridade.md → aiox-squads/shared/tasks/obter-print-autoridade.md"
+    modified_capas:
+      - "aiox-squads/squads/capas-linkedin/agents/designer.md (L71, L89)"
+      - "aiox-squads/squads/capas-linkedin/data/visual-styles.md (L168)"
+      - "aiox-squads/squads/capas-linkedin/workflows/workflow.yaml (L46)"
+      - "aiox-squads/squads/capas-linkedin/README.md (L102)"
+    modified_carrosseis:
+      - "aiox-squads/squads/carrosseis-linkedin/squad.yaml"
+      - "aiox-squads/squads/carrosseis-linkedin/templates/twitter-style-base.html"
+      - "aiox-squads/squads/carrosseis-linkedin/templates/editorial-clean-base.html"
+      - "aiox-squads/squads/carrosseis-linkedin/agents/designer.md"
+      - "aiox-squads/squads/carrosseis-linkedin/agents/copywriter.md"
+      - "aiox-squads/squads/carrosseis-linkedin/data/visual-styles.md"
+      - "aiox-squads/squads/carrosseis-linkedin/checklists/review-checklist.md"
+    created:
+      - "aiox-project/docs/auditoria-editorial-clean.md (347 linhas, Uma)"
+      - "aiox-squads/squads/carrosseis-linkedin/checklists/editorial-clean-checklist.md (111 linhas)"
+  commits:
+    - "b8cd285 — refactor(refac-004): A — move obter-print-autoridade para shared/tasks"
+    - "83fcf88 — feat(refac-004): B — Twitter-style com 2 layouts (with-print / no-print)"
+    - "f5a30a5 — docs(refac-004): C — auditoria Editorial Clean (Uma)"
+    - "01358d6 — feat(refac-004): D — aplica recomendações Editorial Clean + checklist específico"
+    - "7456119 — docs(refac-004): close story — DoD complete (A/B/C/D), aguarda QA"
+  independent_checks:
+    twitter_2_layouts_present: 7 # ocorrências de slide-with-print|slide-no-print
+    editorial_4_variants_present: 17 # ocorrências de variant-{data,quote,dense,closing}
+    auditoria_diff_por_linha_present: 23 # ocorrências de "diff" + linhas L\d+
+    capas_no_old_refs: 0 # refs antigas a tasks/obter-print-autoridade sem prefix
+    designer_with_print_no_print_mentions: 5
+    copywriter_encolhimento_mentions: 7
+    editorial_template_hex_literals_outside_root: 1 # #FFFFFF na linha 207
+
+next_action: |
+  Story aprovada com 3 concerns low (não bloqueantes). Pode seguir para
+  @devops *push do branch feature/refac-004-visuais-v2 (5 commits).
+
+  Após merge, operador executa:
+  1. 1 smoke E2E Twitter-style com print + 1 sem print
+  2. 1 smoke E2E Editorial Clean cobrindo variantes
+  3. 1 smoke regressão capa Print de Autoridade (estilo 4)
+
+  Se todos passarem, marcar story como Done. Se algum falhar, abrir story
+  de bugfix cirúrgico — não bloquear o merge desta.

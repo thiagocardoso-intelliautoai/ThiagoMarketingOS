@@ -2,15 +2,23 @@
   Template Base: Editorial Clean — Carrosséis LinkedIn
   Squad: carrosseis-linkedin
   Viewport: 1080 x 1350 (4:5, otimizado para feed LinkedIn)
-  
+
+  ═══════════════════════════════════════════════════════════════════
+  REFAC-004 — AUDITORIA UMA (lente dupla: fundamentos + algoritmo 2026)
+  Doc completa: aiox-project/docs/auditoria-editorial-clean.md
+  Variantes documentadas abaixo como blocos <!-- VARIANT: nome -->.
+  Designer: escolhe a variante apropriada por slide ANTES de copiar.
+  Checklist específico: checklists/editorial-clean-checklist.md
+  ═══════════════════════════════════════════════════════════════════
+
   INSTRUÇÕES PARA O DESIGNER (Denis Design):
-  1. Use este template como BASE — personalize para cada carrossel
-  2. Estilo premium/editorial: fundo claro, tipografia bold, whitespace generoso
-  3. Cor de accent personalizável por carrossel (default: azul editorial #2563EB)
-  4. Barra lateral em accent para citações e dados-chave
-  5. 100% tipografia — sem imagens decorativas
-  6. HTML self-contained (sem dependências externas exceto Google Fonts)
-  7. Renderizar via Playwright para PNG
+  1. Use este template como BASE — escolha variante por tipo de slide.
+  2. Estilo premium/editorial: fundo claro, tipografia bold, whitespace 40%+.
+  3. Paleta = 6 tokens em :root. Proibido hex literal fora do :root.
+  4. Accent é Teal #14B8A6 em TODO slide — sem azul, sem outras cores.
+  5. 100% tipografia — sem imagens decorativas.
+  6. HTML self-contained (sem dependências externas exceto Google Fonts).
+  7. Renderizar via Playwright para PNG.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -19,6 +27,15 @@
   <meta name="viewport" content="width=1080">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #F4F4F5;
+      --ink: #18181B;
+      --ink-secondary: #3F3F46;
+      --muted: #71717A;
+      --accent: #14B8A6;
+      --divider: #E5E5E5;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -26,9 +43,9 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: #F4F4F5;
-      color: #18181B;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
       width: 1080px;
       height: 1350px;
       overflow: hidden;
@@ -51,8 +68,8 @@
     }
 
     .profile-photo {
-      width: 48px;
-      height: 48px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
       object-fit: cover;
     }
@@ -63,16 +80,16 @@
     }
 
     .profile-name {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 700;
-      color: #18181B;
+      color: var(--ink);
       letter-spacing: -0.02em;
     }
 
     .profile-handle {
-      font-size: 17px;
+      font-size: 19px;
       font-weight: 400;
-      color: #888888;
+      color: var(--muted);
     }
 
     /* ── Conteúdo ── */
@@ -81,39 +98,39 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 36px;
+      gap: 32px;
     }
 
     .hero-text {
-      font-size: 56px;
+      font-size: 64px;
       font-weight: 800;
       line-height: 1.12;
-      color: #18181B;
+      color: var(--ink);
       letter-spacing: -0.03em;
     }
 
     .body-text {
-      font-size: 36px;
+      font-size: 38px;
       font-weight: 500;
       line-height: 1.45;
-      color: #444444;
+      color: var(--ink-secondary);
     }
 
-    /* ── Accent (cor personalizável por carrossel) ── */
+    /* ── Accent inline ── */
     .highlight {
-      color: #14B8A6;
+      color: var(--accent);
       font-weight: 800;
     }
 
     /* ── Barra Lateral de Citação/Dado ── */
     .accent-bar {
-      border-left: 5px solid #14B8A6;
+      border-left: 6px solid var(--accent);
       padding-left: 28px;
-      margin: 8px 0;
+      margin: 12px 0;
     }
 
     .accent-bar .body-text {
-      color: #18181B;
+      color: var(--ink);
       font-weight: 600;
     }
 
@@ -121,7 +138,7 @@
     .divider {
       width: 80px;
       height: 4px;
-      background: #14B8A6;
+      background: var(--accent);
       border-radius: 2px;
     }
 
@@ -134,17 +151,17 @@
     }
 
     .list-marker {
-      font-size: 36px;
+      font-size: 38px;
       font-weight: 800;
-      color: #14B8A6;
+      color: var(--accent);
       min-width: 44px;
     }
 
     .list-text {
-      font-size: 34px;
+      font-size: 36px;
       font-weight: 500;
       line-height: 1.4;
-      color: #333333;
+      color: var(--ink-secondary);
     }
 
     /* ── Footer ── */
@@ -153,13 +170,13 @@
       justify-content: space-between;
       align-items: center;
       padding-top: 24px;
-      border-top: 1px solid #E5E5E5;
+      border-top: 1px solid var(--divider);
     }
 
     .footer-brand {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 600;
-      color: #94A3B8;
+      color: var(--muted);
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
@@ -167,10 +184,10 @@
     .swipe-hint {
       font-size: 20px;
       font-weight: 500;
-      color: #94A3B8;
+      color: var(--muted);
     }
 
-    /* ── CTA (Último Slide) ── */
+    /* ── CTA (Último Slide informativo) ── */
     .cta-container {
       text-align: left;
     }
@@ -180,18 +197,18 @@
       font-weight: 800;
       line-height: 1.2;
       margin-bottom: 40px;
-      color: #18181B;
+      color: var(--ink);
       letter-spacing: -0.02em;
     }
 
     .cta-button {
       display: inline-block;
-      background: #14B8A6;
+      background: var(--accent);
       color: #FFFFFF;
       font-size: 28px;
       font-weight: 700;
       padding: 18px 44px;
-      border-radius: 8px;
+      border-radius: 0px;
       text-decoration: none;
       letter-spacing: -0.01em;
     }
@@ -204,33 +221,123 @@
       justify-content: center;
       align-items: flex-start;
       gap: 32px;
-      border-left: 6px solid #2563EB;
+      border-left: 6px solid var(--accent);
       padding-left: 36px;
     }
 
     .cta-slide-eyebrow {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       font-size: 22px;
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #2563EB;
+      color: var(--accent);
     }
 
     .cta-slide-text {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       font-size: 56px;
       font-weight: 800;
       line-height: 1.18;
-      color: #18181B;
+      color: var(--ink);
       letter-spacing: -0.02em;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       VARIANTES (REFAC-004 — auditoria Uma §3)
+       ═══════════════════════════════════════════════════════════════ */
+
+    /* VARIANT: data-feature — slide com dado numérico pontual */
+    .variant-data .eyebrow {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .variant-data .data-hero {
+      font-size: 96px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .variant-data .data-body {
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      line-height: 1.4;
+    }
+
+    /* VARIANT: quote — slide com citação */
+    .variant-quote .quote-mark {
+      font-size: 120px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 0.6;
+      height: 64px;
+    }
+
+    .variant-quote .quote-body {
+      font-size: 44px;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .variant-quote .quote-attribution {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    /* VARIANT: dense-text — slide com >30 palavras (densidade controlada) */
+    .variant-dense .content {
+      gap: 24px;
+    }
+
+    .variant-dense .hero-text {
+      font-size: 48px;
+      line-height: 1.16;
+    }
+
+    .variant-dense .body-text {
+      font-size: 36px;
+      line-height: 1.42;
+    }
+
+    /* VARIANT: closing — slide de fechamento minimalista */
+    .variant-closing {
+      align-items: center;
+      text-align: center;
+    }
+
+    .variant-closing .content {
+      justify-content: center;
+      align-items: center;
+    }
+
+    .variant-closing .divider {
+      margin: 0 auto;
+    }
+
+    .variant-closing .hero-text {
+      font-size: 44px;
+      max-width: 720px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <!-- ═══════════════════════════════════════════
-       SLIDE: Editorial Clean — Hook
-       ═══════════════════════════════════════════ -->
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       LAYOUT: base (slide hook + slides com hierarquia padrão)
+       ═══════════════════════════════════════════════════════════════ -->
+  <!-- LAYOUT: base -->
   <div class="slide">
     <div class="profile">
       <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
@@ -244,14 +351,14 @@
       <div class="divider"></div>
 
       <h1 class="hero-text">
-        <!-- HOOK: max 210 chars -->
+        <!-- HOOK: max 210 chars; até 4 linhas com line-height 1.12 -->
         Seu texto de hook vai aqui.
-        <span class="highlight">Destaque</span> em azul.
+        <span class="highlight">Destaque</span> em Teal.
       </h1>
 
       <div class="accent-bar">
         <p class="body-text">
-          Dado ou citação de impacto aqui.
+          Dado ou citação de impacto aqui (slide com hierarquia hero+ancoragem).
         </p>
       </div>
     </div>
@@ -261,12 +368,118 @@
       <span class="swipe-hint">Deslize →</span>
     </div>
   </div>
+  <!-- /LAYOUT: base -->
 
-  <!-- ═══════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════════════════════
+       VARIANT: data-feature — usar quando UM dado é o protagonista
+       ═══════════════════════════════════════════════════════════════ -->
+  <!-- VARIANT: data-feature -->
+  <div class="slide variant-data">
+    <div class="profile">
+      <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <span class="eyebrow">RESULTADO</span>
+      <h2 class="data-hero">47%</h2>
+      <p class="data-body">Em 12 dias. Sem ferramenta nova, só workflow novo.</p>
+    </div>
+
+    <div class="footer">
+      <span class="footer-brand">Thiago C.Lima</span>
+      <span class="swipe-hint">Deslize →</span>
+    </div>
+  </div>
+  <!-- /VARIANT: data-feature -->
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       VARIANT: quote — usar para citação ou frase de autoridade
+       ═══════════════════════════════════════════════════════════════ -->
+  <!-- VARIANT: quote -->
+  <div class="slide variant-quote">
+    <div class="profile">
+      <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <span class="quote-mark">&ldquo;</span>
+      <p class="quote-body">A gente não tem problema de tráfego. Tem problema de conversão.</p>
+      <span class="quote-attribution">— CMO de SaaS B2B, em call de discovery</span>
+    </div>
+
+    <div class="footer">
+      <span class="footer-brand">Thiago C.Lima</span>
+      <span class="swipe-hint">Deslize →</span>
+    </div>
+  </div>
+  <!-- /VARIANT: quote -->
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       VARIANT: dense-text — slide com >30 palavras (densidade controlada)
+       ═══════════════════════════════════════════════════════════════ -->
+  <!-- VARIANT: dense-text -->
+  <div class="slide variant-dense">
+    <div class="profile">
+      <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="divider"></div>
+      <h2 class="hero-text">Hero condensado para slide denso.</h2>
+      <p class="body-text">Corpo denso de até 6 linhas. Mantém legibilidade — body 36px com line-height 1.42 para ganhar 1 linha sem prejudicar leitura mobile.</p>
+    </div>
+
+    <div class="footer">
+      <span class="footer-brand">Thiago C.Lima</span>
+      <span class="swipe-hint">Deslize →</span>
+    </div>
+  </div>
+  <!-- /VARIANT: dense-text -->
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       VARIANT: closing — slide de fechamento minimalista (não-CTA)
+       Usar como penúltimo slide quando NÃO há lead magnet.
+       ═══════════════════════════════════════════════════════════════ -->
+  <!-- VARIANT: closing -->
+  <div class="slide variant-closing">
+    <div class="profile">
+      <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
+      <div class="profile-info">
+        <span class="profile-name">Thiago C.Lima</span>
+        <span class="profile-handle">@othiago-clima</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="divider"></div>
+      <h2 class="hero-text">Vira a página. O próximo prompt é seu.</h2>
+    </div>
+
+    <div class="footer">
+      <span class="footer-brand">Thiago C.Lima</span>
+      <span class="swipe-hint">Deslize →</span>
+    </div>
+  </div>
+  <!-- /VARIANT: closing -->
+
+  <!-- ═══════════════════════════════════════════════════════════════
        CTA-SLIDE: render only when is_lead_magnet=true
        Copywriter: slide N+1 (final). Designer: se is_lead_magnet=false,
        REMOVER o bloco inteiro abaixo antes do render. Interpolar {{ cta_arte }}.
-       ═══════════════════════════════════════════ -->
+       ═══════════════════════════════════════════════════════════════ -->
+  <!-- CTA-SLIDE -->
   <div class="slide" data-cta-slide="true">
     <div class="profile">
       <img class="profile-photo" src="assets/profile-photo.png" alt="Thiago C.Lima">
