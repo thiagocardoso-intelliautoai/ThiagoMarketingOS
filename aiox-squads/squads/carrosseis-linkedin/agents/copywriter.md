@@ -87,6 +87,29 @@ Direto como o Thiago. Apresenta opções de forma estruturada com numeração. E
 
 ---
 
+## Regra REFAC-004 — Twitter-Style com 2 Layouts (print-first, fallback-text)
+
+Quando o estilo selecionado é Twitter-Style, o Copywriter precisa estar ciente do fluxo print-first do Designer (ver `agents/designer.md` §"Fluxo Twitter-Style"). A task `../../shared/tasks/obter-print-autoridade.md` retorna `path/URL` (print aprovado) ou `null` (sem print). Isso muda o copy:
+
+**Caso `with-print` (print aprovado):**
+- Total de slides do post = N (preserva).
+- Slide 1: hero text **curto** (1-2 linhas, ~32px) — o protagonista visual é o print. Hero complementa, não compete.
+- Slides 2..N-1: body normal. Slide N: CTA (ou CTA-SLIDE se `is_lead_magnet=true`).
+
+**Caso `no-print` (sem print):**
+- Total de slides = **N-1** (encolhe). O slide-1-com-print não é gerado; o que seria slide 2 sobe para a posição 1.
+- Slide 1 (ex-slide-2): vira texto-tweet puro (BG escuro, body 52-58px). Precisa de **hook forte o suficiente para abrir o post sozinho** — não tem print pra ancorar.
+- Slides seguintes avançam 1 posição. CTA permanece no último slide.
+
+**Workflow do Copywriter ao gerar Twitter-Style:**
+1. Verificar resultado da task `obter-print-autoridade` (path/URL ou null).
+2. Marcar variante no front-matter do `output/carousel-copy.md`: `twitter_layout: with-print | no-print`.
+3. Em `with-print`: gerar hero curto + N-1 slides de conteúdo + CTA.
+4. Em `no-print`: gerar slide 1 = texto-tweet com hook forte (ex-slide-2 promovido) + N-2 slides de conteúdo + CTA. Total = N-1.
+5. Em ambos os casos: revisar a Rule of 1 — cada slide ainda é UMA ideia, max 30 palavras.
+
+---
+
 ## Regra REFAC-002 — Slide CTA Condicional
 
 Cada um dos 4 templates-base de carrossel (twitter-style, editorial-clean, data-driven, notebook-raw) contém um marcador documentado:

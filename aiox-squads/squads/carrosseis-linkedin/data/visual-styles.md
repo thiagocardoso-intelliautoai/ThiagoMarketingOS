@@ -14,36 +14,82 @@
 ## Estilo 1: Twitter-Style
 
 ### Conceito
-Formato inspirado em tweets/posts do X (Twitter) — fundo charcoal, identidade minimalista, texto branco de alto impacto com print de autoridade como hook visual.
+Formato inspirado em tweets/posts do X (Twitter) — fundo charcoal, identidade minimalista, texto branco de alto impacto. **Fluxo print-first, fallback-text (REFAC-004):** o slide 1 tem 2 layouts possíveis dependendo da disponibilidade de um print autêntico.
 
 ### Quando Usar
 - **Fonte de tese:** Falha Documentada, Benchmark Real
 - **Tipo de conteúdo:** Trending topics, breaking news, lançamentos de ferramentas, opiniões rápidas
-- **Gatilho:** Quando existe um print/screenshot de autoridade que contextualiza o tema
+- **Gatilho:** Sempre que o conteúdo tem ancoragem em algo público (com print) **ou** o tom é tweet-like — opinião curta, direta, formato rede-social (sem print)
 
 ### Perde Quando
-- Não há print de autoridade disponível (sem print, perde o gatilho visual diferenciador)
-- A reação cabe em 1 frame sem perder força (vai melhor como capa Print de Autoridade)
-- O conteúdo é puramente didático/framework sem ancoragem em algo público (vai Editorial Clean ou Notebook Raw)
+- A reação cabe em 1 frame sem perder força (vai melhor como capa Print de Autoridade — squad de capas)
+- O conteúdo é puramente didático/framework, longo e estruturado (vai melhor Editorial Clean)
+- Tom é provocativo/cru com bastidor pessoal (vai melhor Notebook Raw)
 
-### Especificações — Slide 1 (Hook)
-- **Fundo:** `#1A1A2E` (Charcoal — `--bg-dark`)
-- **Perfil:** Foto circular (80px diâmetro) + Nome "Thiago C.Lima" + @ "othiago-clima" no topo
-- **Texto principal:** `#F1F5F9` (Chalk — `--text-primary-dark`), fonte Inter 700, 40-58px, alinhado à esquerda
-- **Print de autoridade:** Screenshot de um post/notícia de alguém com autoridade no assunto, posicionado na metade inferior do slide como prova social/hook visual
-- **Container do print:** `background: #27293D` (`--surface`), `border: 1px solid #3F3F5C` (`--border`), `padding: 24px`
-- **Layout:** Compacto, simulando um post de rede social
+### Fluxo Slide 1 — print-first, fallback-text
 
-### Especificações — Slides Seguintes (Conteúdo)
+Antes de renderizar, o Designer executa `../../shared/tasks/obter-print-autoridade.md`, que retorna **path/URL** ou **null**. O Designer escolhe o layout do template `twitter-style-base.html`:
+
+| Retorno | Layout | Slide 1 | Total de slides |
+|---------|--------|---------|------------------|
+| path/URL | **`with-print`** | Print real em image-fill (~70% do slide) + hero text **32px** por cima | N (preserva) |
+| null | **`no-print`** | Texto-tweet puro (BG `#0F1419`, body **52-58px**, sem imagem). O conteúdo do que seria slide 2 **sobe para a posição 1** | **N-1** (encolhe) |
+
+#### Exemplo — Layout `with-print`
+
+```
+┌──────────────────────────────────────────┐
+│  [foto80] Thiago C.Lima  @othiago-clima  │
+│                                           │
+│  Hero text curto (32px), complementa     │
+│  o print abaixo                          │
+│                                           │
+│  ┌────────────────────────────────────┐  │
+│  │                                    │  │
+│  │      [PRINT AUTÊNTICO ~70%]        │  │
+│  │                                    │  │
+│  └────────────────────────────────────┘  │
+│  1/N                          Deslize →  │
+└──────────────────────────────────────────┘
+BG: #1A1A2E  •  Container print: #27293D + border #3F3F5C
+```
+
+#### Exemplo — Layout `no-print`
+
+```
+┌──────────────────────────────────────────┐
+│  [foto80] Thiago C.Lima  @othiago-clima  │
+│                                           │
+│  Texto-tweet aqui.                       │
+│  Hook em destaque.                       │
+│  (corpo 52-58px, hook forte que abre     │
+│  o post sozinho — ex-slide-2 promovido)  │
+│                                           │
+│                                           │
+│  1/N-1                        Deslize →  │
+└──────────────────────────────────────────┘
+BG: #0F1419 (mais escuro que with-print, "modo tweet")
+```
+
+### Especificações Compartilhadas — Slides Seguintes (Body)
 - **Fundo:** `#1A1A2E` (Charcoal)
-- **Perfil:** Foto circular menor (48px) + nome no topo (consistência)
-- **Texto:** `#F1F5F9` (Chalk), 34-43px, foco total no conteúdo textual
+- **Perfil:** Foto 80px + nome + @ no topo (consistência)
+- **Texto:** `#F1F5F9` (Chalk), Inter 500, 34-38px, foco total no conteúdo textual
 - **Sem print** — o foco é no texto/ensinamento
-- **Último slide:** CTA claro (seguir, comentar, salvar)
-- **Assinatura rodapé:** "Thiago C.Lima" em Inter 500, 20px, cor `#64748B` (`--text-muted`)
+- **Último slide:** CTA claro OU CTA-SLIDE quando `is_lead_magnet=true`
+- **Highlight inline:** `#14B8A6` (Teal) ou `#F59E0B` (Amber)
 
-### Referência Visual
-O print na primeira imagem funciona como "gatilho de autoridade" — usar posts reais de referências do mercado (ex: CEO de empresa conhecida, lançamento de ferramenta, dado relevante) para contextualizar e agregar credibilidade ao tema.
+### Gate de Autenticidade (Layout with-print)
+Quando o slide 1 = print real, o Reviewer valida no checklist:
+- URL pública e acessível (não conteúdo behind-login privado)
+- Atribuição correta (autor/veículo nomeado)
+- Sem deepfake, sem citação fora de contexto, sem manipulação visual
+- Domínio na white-list da task `obter-print-autoridade` (ou aprovado por upload manual)
+
+### Gate de Hook Forte (Layout no-print)
+Quando o slide 1 = texto-tweet, o Reviewer valida que:
+- O ex-slide-2 promovido tem hook forte o suficiente para abrir o post sem o ancoramento visual do print
+- Conteúdo do post não foi perdido com o encolhimento N→N-1 (Copywriter ajusta hierarquia)
 
 ---
 

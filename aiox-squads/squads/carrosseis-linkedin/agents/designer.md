@@ -38,10 +38,11 @@ Visual primeiro: apresenta o design system documentado antes de mostrar slides. 
 ## Estilos Visuais (4 disponíveis)
 
 ### 1. Twitter-Style (`templates/twitter-style-base.html`)
-- Fundo charcoal `#1A1A2E` (`--bg-dark`), texto `#F1F5F9` (`--text-primary-dark`), print de autoridade
+- Fundo charcoal `#1A1A2E` (`--bg-dark`), texto `#F1F5F9` (`--text-primary-dark`)
 - Perfil: foto 80px + nome + @
-- Highlight: `#F59E0B` (`--accent-secondary` Amber)
-- Uso: Alcance (A), trending topics, breaking news
+- Highlight: `#14B8A6` (`--accent-primary` Teal) ou `#F59E0B` (`--accent-secondary` Amber)
+- **Slide 1 com 2 layouts (REFAC-004):** `with-print` (print real ~70% do slide) ou `no-print` (texto-tweet puro, BG #0F1419). Designer escolhe pelo retorno da task `obter-print-autoridade`. Ver §"Fluxo Twitter-Style" abaixo.
+- Uso: Alcance (A), trending topics, breaking news, opiniões com ancoragem pública
 
 ### 2. Editorial Clean (`templates/editorial-clean-base.html`)
 - Fundo claro `#F4F4F5` (`--bg-light` Cloud), texto `#18181B` (`--text-primary-light`), accent `#14B8A6` (`--accent-primary` Teal)
@@ -66,6 +67,29 @@ Visual primeiro: apresenta o design system documentado antes de mostrar slides. 
 - Anti-AI: zero gradientes, zero simetria perfeita, zero imagens geradas
 - Footer: assinatura "— Thiago C.Lima" em Caveat (sem foto de perfil)
 - Uso: Engajamento (E), provocação, bastidores, opinião
+
+---
+
+## Fluxo Twitter-Style (REFAC-004 — print-first, fallback-text)
+
+Quando o estilo selecionado é Twitter-Style, ANTES de renderizar o slide 1 o Designer DEVE executar a task compartilhada `../../shared/tasks/obter-print-autoridade.md`. A task oferece 3 caminhos ao operador (upload manual / EXA + Playwright / EXA curado com 3 candidatos) e exige checkpoint humano.
+
+A task retorna **path/URL** (print aprovado) ou **null** (sem print). O Designer decide o layout do slide 1 pelo retorno:
+
+| Retorno | Layout | Comportamento | Total de slides |
+|---------|--------|---------------|------------------|
+| path/URL | `with-print` | Slide 1 = print real em image-fill (~70%) + hero text 32px por cima | N (preserva) |
+| null | `no-print` | Slide 1 = texto-tweet puro (BG #0F1419, body 56px). O slide-1-com-print **NÃO é gerado** — o conteúdo do que seria slide 2 sobe para a posição 1 | N-1 (encolhe) |
+
+No template `twitter-style-base.html`, os 2 layouts estão marcados por comentários:
+```html
+<!-- LAYOUT: with-print -->  ...  <!-- /LAYOUT: with-print -->
+<!-- LAYOUT: no-print -->    ...  <!-- /LAYOUT: no-print -->
+```
+
+Designer copia o bloco apropriado para `output/slides/{slug}/slide-01.html`, descarta o outro, e segue com os slides body (`<!-- LAYOUT: body -->`) e CTA-SLIDE quando aplicável.
+
+**Gate de autenticidade (com-print):** validar URL pública, autoria correta, sem deepfake/manipulação ANTES de renderizar — ver `checklists/review-checklist.md`.
 
 ---
 
