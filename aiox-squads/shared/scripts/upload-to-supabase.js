@@ -80,6 +80,10 @@ async function savePost(postData) {
     post_number:    postData.postNumber || null,
     series:         postData.series || null,
     series_order:   postData.seriesOrder || null,
+    // REFAC-002: marcação semântica de lead magnet (defaults garantem regressão zero)
+    is_lead_magnet:       postData.isLeadMagnet === true,
+    lead_magnet_resource: postData.leadMagnetResource || null,
+    cta_arte:             postData.ctaArte || null,
   };
 
   const { data, error } = await supabase
