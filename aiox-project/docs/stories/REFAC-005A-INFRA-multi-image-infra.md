@@ -6,7 +6,7 @@
 **🔗 Bloqueia:** REFAC-005A-DESIGN (fase 2 — implementação das variantes precisa desta infra pronta)
 **👤 Assignee:** Data Engineer (Dara) + Dev (Dex)
 **🏷️ Labels:** `refactor`, `infra`, `supabase`, `multi-image`, `algoritmo-2026`
-**📊 Status:** InReview (código implementado em yolo; aplicação da migration + smoke test pendentes do Thiago)
+**📊 Status:** Done (migration aplicada + smoke test E2E aprovado por Thiago em 2026-05-09)
 
 **📚 Brief:** [REFAC-005A original (superseded)](REFAC-005A-multi-image-design-impl.md) — análise estratégica do @analyst (Atlas) em 2026-05-09 separou infra (esta story) do design (REFAC-005A-DESIGN).
 
@@ -94,11 +94,11 @@ São formatos diferentes em tabelas diferentes. **Não confundir.**
 
   COMMENT ON COLUMN covers.sequence IS 'Ordem da imagem no post multi-image (1..N). Single-image = 1.';
   ```
-- [ ] **1.2 (Dara)** Validar pós-migration:
-  - `\d covers` mostra `sequence INT NOT NULL DEFAULT 1` + `UNIQUE(post_id, sequence)` + ausência de `UNIQUE(post_id)` antiga.
-  - Rodar 2× para confirmar idempotência.
-  - Verificar que posts existentes com 1 cover continuam abrindo no CCC sem regressão.
-  - **Status:** 🟡 Aguardando Thiago aplicar via Supabase CLI/dashboard. Migration está em `aiox-project/supabase/migrations/004-covers-multi-image.sql` e foi escrita pra ser idempotente + falhar alto se houver dado sujo (validação prévia inclusa).
+- [x] **1.2 (Dara)** Validar pós-migration:
+  - `\d covers` mostra `sequence INT NOT NULL DEFAULT 1` + `UNIQUE(post_id, sequence)` + ausência de `UNIQUE(post_id)` antiga. ✅
+  - Rodar 2× para confirmar idempotência. ✅
+  - Verificar que posts existentes com 1 cover continuam abrindo no CCC sem regressão. ✅
+  - **Status:** ✅ Aplicada e validada por Thiago em 2026-05-09.
 
 ### CLI (Dex)
 
@@ -128,9 +128,8 @@ São formatos diferentes em tabelas diferentes. **Não confundir.**
   - Mobile-first: touch swipe handlers no carousel container. ✅
   - Card thumbnail: badge "1/N" quando multi-image. ✅
   - CSS: `_preview.css` tem novas classes `.li-cover-multi-tag` e `.li-cover-carousel`. ✅
-- [ ] **3.3 (Dex)** Smoke test E2E (manual por Thiago):
-  - **Status:** 🟡 Aguardando aplicação da migration + execução manual.
-  - Roteiro abaixo em [Smoke Test Manual](#smoke-test-manual).
+- [x] **3.3 (Dex)** Smoke test E2E (manual por Thiago):
+  - **Status:** ✅ Aprovado por Thiago em 2026-05-09 — todos os cenários relevantes do roteiro [Smoke Test Manual](#smoke-test-manual) passaram (single-image regressão zero, multi-image upload + carousel CCC, validação no Supabase).
 
 ---
 
@@ -338,3 +337,5 @@ INSERT INTO covers (post_id, slug, style, image_url, image_path)
 | 2026-05-09 | @sm (River) | Story criada (Draft) — split de REFAC-005A original após análise do @analyst (Atlas). Foco: infra técnica pura, sem decisão de estilo. |
 | 2026-05-09 | @po (Pax) | Validação 10-point: **10/10 GO**. Status: Draft → Ready. Story técnica/determinística — modo yolo apropriado para @dev. Backward compatibility é AC explícita (#2, #4). Validação prévia da migration mitiga risco de drop UNIQUE em estado sujo. |
 | 2026-05-09 | @run-wave | Implementação completa em modo yolo: migration 004 + `uploadCoverMultiImage` + CLI `--slides-dir` + `coversList[]` em data.js + carousel multi-image em linkedin-preview.js + badge thumbnail + CSS. 6 sub-tarefas marcadas [x]. 2 sub-tarefas (1.2 validação migration + 3.3 smoke E2E) ficam **InReview** aguardando Thiago aplicar a migration e rodar smoke. Status: Ready → InReview. |
+| 2026-05-09 | @devops (Gage) | Push para `origin/main` (commits b04b9e8 + aaae81b). |
+| 2026-05-09 | Thiago | Migration aplicada no Supabase + smoke test E2E aprovado (single regressão zero + multi-image carousel + Supabase rows OK). Story fecha. Status: InReview → **Done**. Sub-tarefas 1.2 e 3.3 marcadas [x]. QA gate atualizado: CONCERNS → PASS. |

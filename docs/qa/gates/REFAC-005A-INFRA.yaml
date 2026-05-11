@@ -1,9 +1,11 @@
 storyId: REFAC-005A-INFRA
 title: Suporte Técnico ao Formato Multi-Image
-verdict: CONCERNS
+verdict: PASS
 reviewedAt: 2026-05-09
-reviewedBy: '@run-wave (qa-gate)'
+reviewedBy: '@run-wave (qa-gate) + Thiago (smoke approval)'
 wave: 0-antecipado
+closedAt: 2026-05-09
+previousVerdict: CONCERNS (até smoke E2E aprovado por Thiago)
 
 summary: |
   Implementação de código completa em modo yolo. Todos os artefatos esperados foram
@@ -32,16 +34,15 @@ quality_checks:
       e pra _mapPostFromDB() (sort por sequence). Não bloqueia esta story.
 
   acceptance_criteria:
-    status: concerns
+    status: pass
     notes: |
-      8 ACs no total. Estado por AC:
-      - AC #1 (schema sequence + UNIQUE composto): ⚠️ código pronto, pendente
-        aplicação da migration no Supabase pelo Thiago.
+      8 ACs no total. Estado por AC após smoke test do Thiago em 2026-05-09:
+      - AC #1 (schema sequence + UNIQUE composto): ✅ migration aplicada e validada.
       - AC #2 (regressão zero single-image): ✅ default sequence=1, derivations.cover preservado.
       - AC #3 (idempotência migration): ✅ DO blocks + IF EXISTS/NOT EXISTS, drop antes de re-add.
       - AC #4 (CLI --file legacy): ✅ caminho único (uploadCover) preservado.
       - AC #5 (CLI --slides-dir + manifest): ✅ implementado com fallback alfabético.
-      - AC #6 (vitrine carousel + dots): ⚠️ código pronto, pendente smoke visual pelo Thiago.
+      - AC #6 (vitrine carousel + dots): ✅ validado visualmente — carousel + setas + dots + counter funcionando.
       - AC #7 (partial failure handling): ✅ delete-then-insert + storage upsert.
       - AC #8 (data.js sempre array): ✅ coversList[] sempre array (mesmo vazio).
 
@@ -80,17 +81,6 @@ quality_checks:
       - CLI --help atualizado com ambos os modos.
 
 issues:
-  - severity: medium
-    category: requirements
-    description: |
-      Migration 004-covers-multi-image.sql não foi aplicada no Supabase (sem
-      acesso ao ambiente nesta sessão). AC #1 e #6 visual ficam não-validados.
-    recommendation: |
-      Thiago deve aplicar a migration via Supabase dashboard SQL editor ou
-      `supabase db push`, depois rodar os 6 cenários do smoke test (seção
-      "Smoke Test Manual" da story). Após smoke OK, story pode ir Done.
-    owner: thiago
-
   - severity: low
     category: tests
     description: Sem cobertura unit testes para detectMultiImages() e _mapPostFromDB() multi-image.
@@ -100,11 +90,21 @@ issues:
       tests/data-cover-mapping.test.js (sort + coversList shape).
     owner: backlog
 
+resolved_issues:
+  - severity: medium
+    category: requirements
+    description: |
+      Migration 004-covers-multi-image.sql não tinha sido aplicada no Supabase
+      durante a implementação (AC #1 e #6 ficaram pendentes).
+    resolution: |
+      Thiago aplicou a migration via Supabase dashboard em 2026-05-09 e rodou
+      o smoke test E2E aprovando todos os cenários relevantes (single-image
+      regressão zero, multi-image upload + carousel CCC, validação no Supabase).
+    resolvedAt: 2026-05-09
+
 next_steps:
-  - Thiago aplica migration 004-covers-multi-image.sql no Supabase
-  - Thiago roda os 6 cenários do Smoke Test Manual
-  - Se OK → marcar Status: InReview → Done; senão → criar follow-up story
-  - Story habilita REFAC-005A-DESIGN fase 2 (que depende desta infra)
+  - ✅ Story Done. Habilita REFAC-005A-DESIGN fase 2.
+  - Próximas sessões: design de variantes (REFAC-005A-DESIGN) ou infográfico (REFAC-005B) com squad-creator + Thiago.
 
 unblocks:
-  - REFAC-005A-DESIGN (fase 2 — implementação das variantes)
+  - REFAC-005A-DESIGN (fase 2 — implementação das variantes multi-image)
