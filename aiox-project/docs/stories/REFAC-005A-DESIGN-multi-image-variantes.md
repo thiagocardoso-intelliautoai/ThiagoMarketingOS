@@ -8,7 +8,7 @@
 - **Fase 1 (design):** Squad Creator + Thiago (checkpoint humano DURO) + UX Design Expert (Uma)
 - **Fase 2 (impl):** Dev (Dex)
 **🏷️ Labels:** `refactor`, `feature`, `design`, `squad-creator`, `multi-image`, `algoritmo-2026`, `checkpoint-humano`
-**📊 Status:** Ready (validada por @po — 10/10 GO em 2026-05-09; impl bloqueada por checkpoint humano duro na fase 1 + dependência REFAC-005A-INFRA)
+**📊 Status:** **Deferred** (decisão estratégica em 2026-05-09: NÃO implementar variantes agora. Padrão de produção atual do Thiago não justifica o investimento. Doc de decisão completo: [`design-multi-image-variantes.md`](../design-multi-image-variantes.md). Gate de reabertura documentado lá.)
 
 **📚 Brief:** [REFAC-005A original (superseded)](REFAC-005A-multi-image-design-impl.md) — análise estratégica do @analyst (Atlas) em 2026-05-09. Esta story trata APENAS de design + impl das variantes; infra técnica está em [REFAC-005A-INFRA](REFAC-005A-INFRA-multi-image-infra.md).
 
@@ -234,3 +234,4 @@ Decisões estratégicas do Thiago capturadas antes de soltar o squad-creator na 
 | 2026-05-09 | @sm (River) | Story criada (Draft) — split de REFAC-005A original após análise do @analyst (Atlas). Foco: design + impl das variantes multi-image dos estilos existentes. Pré-decisões de Thiago capturadas (carousel horizontal, overlay só na primeira). Depende de REFAC-005A-INFRA. |
 | 2026-05-09 | @po (Pax) | Validação 10-point: **10/10 GO**. Status: Draft → Ready. **Atenção:** fase 2 só começa após (a) Thiago assinar `design-multi-image-variantes.md` (gate humano duro AC #5), (b) REFAC-005A-INFRA estar Done (AC #6), e (c) doc cumprir decisão Sim/Não/Condicional por estilo (AC #1) com gate explícito de fonte de fotos (AC #3). Hipóteses iniciais tabeladas equilibram liberdade do squad-creator com guard-rails. |
 | 2026-05-09 | @run-wave | Decisões pré-execução normalizadas em seção canônica (`## Decisões Confirmadas (pré-execução)`). 4 decisões consolidadas: vitrine carousel, overlay primeira, range por variante, narrativa caso a caso. |
+| 2026-05-09 | @squad-creator (Craft) | Sessão de análise de viabilidade com Thiago. Conclusão: padrão de produção atual NÃO justifica nenhuma variante: Pessoa+Texto Multi-Image (Thiago raramente tem 3-5 fotos autorais coerentes); Print Multi-Image (compounding evidence muito raro); Rascunho não fit por design. **Status: Ready → Deferred.** Doc de decisão escrito em `aiox-project/docs/design-multi-image-variantes.md` com gate de reabertura documentado. REFAC-005A-INFRA Done permanece valendo como capacidade dormente. |
