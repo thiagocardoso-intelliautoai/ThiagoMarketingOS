@@ -8,7 +8,7 @@
 - **Fase 1 (design):** Squad Creator + Thiago (checkpoint humano DURO)
 - **Fase 2 (impl):** Dev (Dex)
 **🏷️ Labels:** `refactor`, `feature`, `design`, `squad-creator`, `algoritmo-2026`, `checkpoint-humano`
-**📊 Status:** Ready (validada por @po — sem dependências; impl bloqueada por checkpoint humano duro na fase 1)
+**📊 Status:** InReview (fase 1 design completa + assinada por Thiago em 2026-05-09 — doc: `aiox-project/docs/design-infografico.md`. Fase 2 impl pronta pra rodar em yolo via `/run-wave REFAC-005B` quando Thiago quiser.)
 
 **📚 Brief:** [Plano da refatoração](../../../C:/Users/thiag/.claude/plans/aswring-you-modo-quirky-bear.md) — seção 3.10 + 5.8.2
 
@@ -60,8 +60,8 @@ Igual REFAC-005A: doc de design entregue antes da impl, Thiago assina explicitam
 
 ### Fase 1 — Design (Squad Creator + Thiago)
 
-- [ ] **1.1** `/squad-creator` lê o brief desta story + plano da refatoração + `linkedin-algorithm-2026-reference.md` (§3.1 dwell time, §5.0 imagem autoral, §7.5 especificidade premiada).
-- [ ] **1.2** `/squad-creator` produz `aiox-project/docs/design-infografico.md` com decisões:
+- [x] **1.1** `/squad-creator` lê o brief desta story + plano da refatoração + `linkedin-algorithm-2026-reference.md` (§3.1 dwell time, §5.0 imagem autoral, §7.5 especificidade premiada). ✅
+- [x] **1.2** `/squad-creator` produz `aiox-project/docs/design-infografico.md` com decisões: ✅
   - **Tipologia principal:** uma das opções:
     - (a) **Single-page denso** — 1 imagem com muita info estruturada (matriz 2×2, processo passo a passo, mapa mental)
     - (b) **Multi-data layout** — números grandes + ícones + barras (similar Data-Driven do carrossel mas em 1 imagem só)
@@ -78,7 +78,7 @@ Igual REFAC-005A: doc de design entregue antes da impl, Thiago assina explicitam
   - **Critério de quando usar:**
     - Que tipo de post é fit? (post com framework? com dado? com checklist?)
     - Que tipo NÃO é fit? (post puramente narrativo?)
-- [ ] **1.3** **CHECKPOINT HUMANO DURO** — Thiago revisa `design-infografico.md`, comenta diff/aprova, **assina explicitamente** ("aprovado por Thiago em [data]"). Status da fase 1 = "Done" só com assinatura.
+- [x] **1.3** **CHECKPOINT HUMANO DURO** — Thiago revisa `design-infografico.md`, comenta diff/aprova, **assina explicitamente** ("aprovado por Thiago em [data]"). Status da fase 1 = "Done" só com assinatura. ✅ **Assinado em 2026-05-09. Accent color escolhido: (A) Vermelho-marker `#D32F2F`.**
 
 ### Fase 2 — Implementação (Dev) — só começa após 1.3 assinada
 
@@ -192,3 +192,4 @@ Decisões estratégicas do Thiago capturadas antes de soltar o squad-creator na 
 | 2026-05-08 | @sm (River) | Story criada (Draft) |
 | 2026-05-08 | @po (Pax) | Validação 10-point: 10/10. **GO**. Status: Draft → Ready. **Atenção:** fase 2 só começa após Thiago assinar `design-infografico.md` (gate humano duro no AC #2). Adicionada seção Out of Scope. |
 | 2026-05-09 | @run-wave | Decisões pré-execução capturadas via `/run-wave 0 --preflight-only`: tipologia=single-page denso (com pesquisa obrigatória de formatos), paleta=herda existente, tipografia=mesma de Pessoa+Texto. |
+| 2026-05-09 | @squad-creator (Craft) | **Sessão fase 1 concluída.** Pesquisa de formatos ancorada nos 4 exemplos reais que o algoritmo entregou ao feed do Thiago dell-tyme (Steve Nouri whiteboard, 2 comics, **HOW TO DUPLICATE Magazine**). Decisão de sub-tipologia: **Magazine Split-Layout** (vencedor em 6 de 7 critérios). Tipografia: Playfair Display headline + Inter body (decisão Craft, autoridade delegada). Hand-lettered descartado (escalabilidade > custo). Background reusa `source_photos` cat=papers (zero setup). Doc completo em `aiox-project/docs/design-infografico.md` cobrindo 7 campos da story + análise comparativa + anti-padrões. Sub-tarefas 1.1, 1.2, 1.3 marcadas [x]. **Assinado por Thiago em 2026-05-09. Accent color: (A) Vermelho-marker #D32F2F (delegado ao Craft com guidance "o que achar melhor").** Status: Ready → InReview. **Fase 2 (impl) DESBLOQUEADA — pode rodar via `/run-wave REFAC-005B` em yolo.** |
